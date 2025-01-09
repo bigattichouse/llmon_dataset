@@ -18,7 +18,7 @@ I'd also like to add potential
 
 # Example with some possible future enhancements
 
-```module.c.json
+```json:module.c.json
 [
   {
     "function": "proxy_connect_handler",
