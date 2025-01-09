@@ -18,7 +18,8 @@ I'd also like to add potential
 
 # Example with some possible future enhancements
 
-```module.c.json 
+```module.c.json
+[
   {
     "function": "proxy_connect_handler",
     "message_template": "tunnel timed out",
