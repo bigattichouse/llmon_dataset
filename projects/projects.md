@@ -1,4 +1,4 @@
-#Project Files
+###Project Files
 
 Each project here is a user/repo associated with a mapped project, for example "apache/httpd". We should probably include software versions or commits somehow.
 
@@ -16,7 +16,7 @@ I'd also like to add potential
 
 ****
 
-#Example with some possible future enhancements
+###Example with some possible future enhancements
 
 ```module.c.json 
   {
@@ -30,5 +30,6 @@ I'd also like to add potential
 ```
 
 *resolution is something I'm trying to get the llm to do reliably, it may have to be added later in a second step
+
 **I'm working to create a "Hash" sort of representation of an embedding vector that can be easily translated.  The placeholder text is just Base64 encoded Lorem Ipsum.
 
