@@ -20,8 +20,11 @@ echo "Preprocess Files $1..."
 3A-preprocess-files/preprocess.sh $1
 echo "Prepare Prompts $1..."
 3B-prepare-prompts/prepare.sh $1
-echo "Begin LLM processing inference..."
-4-llm-process-files/process.sh $1
+echo "*Begin LLM processing inference*"
+echo "    Summarize all source files..."
+4A-llm-summarize-files/summarize.sh $1
+echo "    Process completed prompts..."
+4B-llm-process-prompts/process.sh $1
 echo "Generate embeddings from JSON..."
 5-generate-embeddings/generate.sh $1
 echo "Consolidate project data in output project/ directory"

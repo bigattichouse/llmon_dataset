@@ -1,0 +1,84 @@
+You are tasked with analyzing source code from open-source projects such as Apache and Sendmail to identify sections of code that log messages using syslog or similar logging mechanisms (e.g., journalctl). Your goal is to extract relevant information about these log messages and compile them into a structured format. 
+
+Goal:
+
+    You will be provided with source code files. For each function, you need to identify any log messages that are generated using logging mechanisms like syslog or journalctl.
+    
+    Determine the Structure and Purpose of the Module: By carefully considering the module and its functions, you will be better prepared to discuss the potential log messages it might generate.
+
+    Identify Log Messages:  Look for function calls that use logging macros or functions such as syslog, journal_send, etc.  Any kind of exception thrown could potentially end up in the logs, be aware of any log related messages. Every string in the file should be considered as a possible surfaced log entry.
+
+    Extract Details:  
+        Function Name:  The name of the function in which the log message is found.
+        Message Template:  The exact template string used in the log message (including any format specifiers like %s).
+        Reason for Logging:  A brief explanation of why this specific log message is generated. This can be inferred from the context around the log statement.
+         
+
+    Output Format:  Compile your findings into an array of JSON objects, where each object contains the following fields: 
+        "function": The name of the function.
+        "message_template": The template string of the log message.
+        "reason": A brief explanation of why this log message is generated and helpful pointers for someone trying to correct the error.
+         It's important to also include a likely scenario in which this error might occur. (ex:"Likely, due to dns issues.")
+        "resolution": Include some thoughts on configuration or other possible changes that might help resolve this error.
+
+Here is an example: 
+Sample Input:
+```c
+/*
+ * This comment gets ignored
+ */
+void example_function(int status) {
+    //This comment is also ignored
+    if (status != 0) {
+        syslog(LOG_WARNING, "Non-zero status encountered: %d", status);
+    } else {
+        journal_send("STATUS=success", NULL);  //another ignored comment
+    }
+    return xp_m("Some additional text");
+}
+```
+
+Expected Output:  
+```json
+[
+  {
+    "function": "example_function",
+    "message_template": "Non-zero status encountered: %d",
+    "reason": "Logs a warning if the status is non-zero",
+    "resolution":"Resolution depends on the status error"
+  },
+  {
+    "function": "example_function",
+    "message_template": "STATUS=success",
+    "reason": "Logs a success message using journalctl if the status is zero"
+    "resolution : "information log, no resolution required"
+  }
+  {
+    "function": "example_function",
+    "message_template": "Some additional text",
+    "reason": "The function returns some additional text"
+    "resolution : "information log, no resolution required"
+  }
+]
+```
+ 
+Task 1: Analysis
+ 
+Overview: Think step-by-step. Analyze every function, string, and macro provided in the following code and extract all relevant log messages. List every string that could potentially be surfaced to the user or log. Especially pay attention to words involving "log", "log_error", "error", "err", "throw", etc. Any strings in the code might also be applicable messages that could be surfaced to the user or in logs and should be considered as possible log messages. Some function calls may have those keywords with underscores and other prefixes/suffixes and should be considered.
+
+You may need to review your thinking and make sure you find ALL the log messages. It's easy to accidentally miss something, so reflect on your choices, more items is better than fewer items.
+
+**IMPORTANT: COUNT THE NUMBER OF RELEVANT FUNCTIONS/STRINGS BEFORE YOU START TO ENSURE YOU FIND THEM ALL**
+
+Task 3: Reflection
+
+Reflect on what you located, scan through the code again and locate items you missed. 
+
+Task 3: Output JSON.
+
+1. Count all the possible logs and thrown errors in a simple list. There may be more function calls in the code than you initially consider. Please add to the list if you notice something you missed before.
+2. List all the possible log/error entries as part of thinking step-by-step, show your thought process and detail items as clearly as possible. 
+3. Finally, provide the final JSON.
+
+
+
