@@ -88,8 +88,9 @@ int main(int argc, char *argv[]) {
      
     
 
-    char *last_slash = strrchr(repo_path, '/');
-    const char *local_path = last_slash ? last_slash + 1 : repo_path;
+    //char *last_slash = strrchr(repo_path, '/');
+    //const char *local_path = last_slash ? last_slash + 1 : repo_path;
+    const char *local_path = repo_path;
 
     git_repository *repo = NULL;
     int error = git_clone(&repo, clone_url, local_path, &clone_opts);
