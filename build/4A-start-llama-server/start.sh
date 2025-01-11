@@ -38,33 +38,6 @@ start_server() {
     fi
 }
 
-# Function to stop the server
-stop_server() {
-    echo "Stopping llama-server..."
-    pkill -f "llama-server"
-    sleep 2
-}
-
-# Function to send prompt to server and save response
-process_prompt() {
-    local input_file=$1
-    local output_file="$OUTPUT_DIR/$(basename "$input_file" .txt)_response.txt"
-    
-    # Create output directory if it doesn't exist
-    mkdir -p "$OUTPUT_DIR"
-    
-    # Read prompt from file
-    local prompt=$(cat "$input_file")
-    
-    # Send prompt to server and save response
-    curl -X POST "http://localhost:$LLAMA_PORT/completion" \
-        -H "Content-Type: application/json" \
-        -d "{\\"prompt\\": \\"$prompt\\"}" \
-        > "$output_file"
-    
-    echo "Processed $input_file -> $output_file"
-}
-
 # Main script
 main() {
     # Check if server is running, start if not
@@ -72,13 +45,6 @@ main() {
         start_server
     fi
     
-    # Process all input files
-    for file in "$@"; do
-        process_prompt "$file"
-    done
-    
-    # Stop server after processing all files
-    stop_server
 }
 
 # Run main function with all command line arguments
