@@ -22,7 +22,7 @@ fi
 # Find all .c and .h files and process them
 find "$SOURCEFILES" -type f \( -name "*.c" -o -name "*.h" \) | while read -r file; do
     echo "Processing $file..."
-    ./bin/c_string_extractor "$file" > "${file}.strings"
+    ./bin/c_string_extractor "$file" | grep "String Line" > "${file}.strings"
 done
 
 echo "String extraction complete"
