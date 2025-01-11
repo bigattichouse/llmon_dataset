@@ -1,6 +1,7 @@
 #!/bin/bash
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 cd "$SCRIPT_DIR"
+make clean; make
 SOURCEFILES="../working/$1"
 #extract strings from the project 
 #find/grep to get all the .c and .h files
@@ -13,8 +14,8 @@ if [ ! -d "$SOURCEFILES" ]; then
 fi
 
 # Check if extract_strings executable exists and is executable
-if [ ! -x "bin/string_extractor" ]; then
-    echo "Error: extract_strings not found or not executable"
+if [ ! -x "bin/c_string_extractor" ]; then
+    echo "Error: c_string_extractor not found or not executable"
     exit 1
 fi
 
