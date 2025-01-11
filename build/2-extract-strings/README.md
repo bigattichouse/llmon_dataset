@@ -3,6 +3,10 @@
 The LLMs can wander off if you don't use faster parsing techniques to identify a list of strings for it to pay attention to.
 By pointing out these strings, it seems to keep it on task of identifying potential log entries (which are also usually strings)
 
+Note that it should search header and source files in case the C files make use of constants. I may need to include headers and an extra step to map them if this becomes a problem. That can be a problem to solve when I run into it.
+
+For now, this step is just the brute force extraction of strings related to a file, and I can easily expand that to include headers.
+
 Example:
 
 ```
