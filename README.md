@@ -14,6 +14,6 @@ Reading and analyzing errors in system logs is not trivial and requires a lot of
 Since most linux software is based on open source, why not use those project public git repos and anaylze the code base for instances of thrown errors and logged information. By having an LLM analyze all the individual models in the codebase, we can create a large knowledgebase of potential log messages and the original intent of those messages. Then, at run time, we can use RAG to locate relevant information and use that intermixed with the actual log messages to allow a small reasoning LLM to give us a summary of events and potential changes to be made.
 
 # Build Process
-You should not need to build projects (apache/httpd), they should all be available in the `projects/` directory. The build process is only included in case you wish to add your own project to the dataset and handle a pull request. It's also nice if people want to help improve the build logic and pipeline when such tools are created.
+You should not need to build projects (apache/httpd), they should all be available in the `projects/` directory. The build process is only included in case you wish to add your own project to the dataset and initiate a pull request to have your project accessible to everyone. It's also nice if people want to help improve the build logic and pipeline when such tools are created.
 
 In all things, I hoped to keep this tool as dead simple as possible - using bash and C (or C++) to run with as few external requirements as possible.
