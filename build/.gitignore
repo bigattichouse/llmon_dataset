@@ -1,0 +1,6 @@
+# Ignore all files and directories in working/
+working/*
+
+# But do not ignore files in the root of working/
+!working/*.md
+
