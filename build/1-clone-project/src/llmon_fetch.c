@@ -8,13 +8,13 @@
 #define BUFFER_SIZE 1024
 
 void print_help() {
-    printf("Usage: llmon_checkout [options] organization/repository\n\n");
+    printf("Usage: llmon_fetch [options] organization/repository\n\n");
     printf("Options:\n");
     printf("  --help              Show this help message\n");
     printf("  --repo URL          Specify base repository URL (default: https://github.com)\n\n");
     printf("Examples:\n");
-    printf("  llmon_checkout apache/httpd\n");
-    printf("  llmon_checkout --repo https://bitbucket.com apache/httpd\n");
+    printf("  llmon_fetch apache/httpd\n");
+    printf("  llmon_fetch --repo https://bitbucket.com apache/httpd\n");
 }
 
 void checkout_progress(const char *path, size_t completed_steps, size_t total_steps, void *payload) {
