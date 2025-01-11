@@ -21,14 +21,18 @@ echo "Preprocess Files $1..."
 echo "Prepare Prompts $1..."
 3B-prepare-prompts/prepare.sh $1
 echo "*Begin LLM processing inference*"
+echo "    Starting llama server..."
+4A-start-llama-server/start.sh $1
 echo "    Summarize all source files..."
-4A-llm-summarize-files/summarize.sh $1
+4B-llm-summarize-files/summarize.sh $1
 echo "    Process completed prompts..."
-4B-llm-process-prompts/process.sh $1
+4C-llm-process-prompts/process.sh $1
 echo "Generate embeddings from JSON..."
 5-generate-embeddings/generate.sh $1
+echo "    Stop llama server..."
+6-stop-llama-server/stop.sh $1
 echo "Consolidate project data in output project/ directory"
-6-consolidate-dataset/consolidate.sh $1
+7-consolidate-dataset/consolidate.sh $1
 
 if [ "$NO_CLEAN" = false ]; then
     echo "Clean up.."
