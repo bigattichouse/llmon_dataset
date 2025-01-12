@@ -23,4 +23,9 @@ You should not need to build projects (apache/httpd), they should all be availab
 Thinking of maybe doing branches for each major project Apache, Mysql, Sendmail, etc.  Then I could do packages like LAMP (Apache/Mysql/PHP) as branches.  This way you could pull/merge what you want without needing everything else.
 
 # TODO  
-The `jq` parsing isn't quite what I need, I get `./summarize.sh: line 30: /usr/bin/jq: Argument list too long` errors, which aren't good. For now it's fine, but I'm sure I'm missing important messages. I need to better handle parsing the JSON.
+1. The `jq` parsing isn't quite what I need, I get `./summarize.sh: line 30: /usr/bin/jq: Argument list too long` errors, which aren't good. For now it's fine, but I'm sure I'm missing important messages. I need to better handle parsing the JSON.
+2. Need to implement chunking to handle larger files (related to #1 above)
+3. Summaries should probably be much shorter and be relevant to troubleshooting, maybe like a bullet list of 5-10 items about the module and how it might cause problems in logs.. this is likely just prompt engineering.
+4. abstract the inference steps to use ollama/openai/llama.cpp/kobold or whatever people want to use.
+
+For now though - I just want to build the minimum viable product.
