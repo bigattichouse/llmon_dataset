@@ -35,7 +35,7 @@ done
 #build the final JSON output
 find "$SOURCEFILES" -type f \( -name "*.c" -o -name "*.h" \) | while read -r file; do
     echo "Processing $file..."
-    ./bin/build_json_object --summary "${file}.summary.text" --logs "${file}.prompt.json" --embeddings "${file}.prompt.embeddings"  > "${file}.llmon.json"
+    ./bin/build_json_object --summary "${file}.summary.text" --logs "${file}.prompt.json" --embeddings "${file}.prompt.json.embedding"  > "${file}.llmon.json"
 done
 
 echo "String extraction complete"
