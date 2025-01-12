@@ -21,3 +21,6 @@ You should not need to build projects (apache/httpd), they should all be availab
 # Branches
 
 Thinking of maybe doing branches for each major project Apache, Mysql, Sendmail, etc.  Then I could do packages like LAMP (Apache/Mysql/PHP) as branches.  This way you could pull/merge what you want without needing everything else.
+
+# TODO  
+The `jq` parsing isn't quite what I need, I get `./summarize.sh: line 30: /usr/bin/jq: Argument list too long` errors, which aren't good. For now it's fine, but I'm sure I'm missing important messages. I need to better handle parsing the JSON.
