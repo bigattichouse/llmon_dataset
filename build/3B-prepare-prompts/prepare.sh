@@ -31,6 +31,13 @@ find "$SOURCEFILES" -type f \( -name "*.c" -o -name "*.h" \) | while read -r fil
     echo "\`\`\`" >> "${file}.prompt"
     cat ${file} >> "${file}.prompt"
     echo "\`\`\`" >> "${file}.prompt"
+    
+    
+    touch "${file}.summary"
+    echo "Please summarize the purpose of the following code module from the $1 project:\n" >> "${file}.summary"
+    echo "\`\`\`" >> "${file}.summary"
+    cat ${file} >> "${file}.summary"
+    echo "\`\`\`" >> "${file}.summary"
      
 done
 

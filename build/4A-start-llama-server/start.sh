@@ -6,6 +6,7 @@ OUTPUT_DIR="responses"
 LLAMA_SERVER_PATH=${LLAMA_SERVER_PATH:-"llama-server"}  # Default path if not provided
 LLAMA_MODEL_PATH=${LLAMA_MODEL_PATH:-"models/model.gguf"}  # Default path if not provided
 LLAMA_CONTEXT_SIZE=${LLAMA_CONTEXT_SIZE:-"32500"} #default for my graphics card
+GPU_LAYERS="1"
 
 # Function to check if llama-server is running
 check_server() {
@@ -25,8 +26,13 @@ start_server() {
         exit 1
     fi
 
-    nohup "$LLAMA_SERVER_PATH" -m $LLAMA_MODEL_PATH --port $LLAMA_PORT -c $LLAMA_CONTEXT_SIZE > "$SERVER_LOG" 2>&1 &
-    
+    nohup "$LLAMA_SERVER_PATH" \
+    --port $LLAMA_PORT \
+    --model $LLAMA_MODEL_PATH \
+    --ctx-size $LLAMA_CONTEXT_SIZE \
+    --n-gpu-layers $GPU_LAYERS \
+    > "$SERVER_LOG" 2>&1 &
+        
     # Wait for server to start (adjust sleep time as needed)
     sleep 5
     

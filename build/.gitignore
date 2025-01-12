@@ -1,6 +1,7 @@
 # Ignore all files and directories in working/
 working/*
 models/*
+env
 
 # But do not ignore files in the root of working/
 !working/*.md

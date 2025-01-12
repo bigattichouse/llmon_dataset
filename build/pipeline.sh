@@ -29,10 +29,11 @@ echo "    Process completed prompts..."
 4C-llm-process-prompts/process.sh $1
 echo "Generate embeddings from JSON..."
 5-generate-embeddings/generate.sh $1
-echo "    Stop llama server..."
-6-stop-llama-server/stop.sh $1
 echo "Consolidate project data in output project/ directory"
-7-consolidate-dataset/consolidate.sh $1
+6-consolidate-dataset/consolidate.sh $1
+echo "    Stop llama server..."
+7-stop-llama-server/stop.sh $1
+
 
 if [ "$NO_CLEAN" = false ]; then
     echo "Clean up.."
