@@ -1,5 +1,5 @@
 # 🍋-llmon dataset
-Open synthetic dataset for parsing syslog and journalctl output, created by analysis of open project repos.
+Open synthetic dataset for parsing syslog and journalctl output, created by analysis of open project repos. Intended to be used in (https://github.com/bigattichouse/llmon)[https://github.com/bigattichouse/llmon] to provide RAG and context information about log messages in realtime `journalctl` and `syslog` analysis.
 
 # Primary purpose
 Dataset will be used for Retrieval Augmented Generation (RAG) for the 🍋-LLmon system monitor.
