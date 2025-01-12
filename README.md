@@ -17,3 +17,7 @@ Since most linux software is based on open source, why not use those project pub
 You should not need to build projects (apache/httpd), they should all be available in the `projects/` directory. The build process is only included in case you wish to add your own project to the dataset and initiate a pull request to have your project accessible to everyone. It's also nice if people want to help improve the build logic and pipeline when such tools are created.
 
 In all things, I hoped to keep this tool as dead simple as possible - using bash and C (or C++) to run with as few external requirements as possible.
+
+# Branches
+
+Thinking of maybe doing branches for each major project Apache, Mysql, Sendmail, etc.  Then I could do packages like LAMP (Apache/Mysql/PHP) as branches.  This way you could pull/merge what you want without needing everything else.
