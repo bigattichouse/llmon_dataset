@@ -1,4 +1,12 @@
-# Project Files
+# Repo specific branches
+
+The intent is to create a branch of this repo for each specific project.  For example, there will exist a `apache/httpd` branch, a `postfix/postfix` branch, and a `mysql/mysql-server` branch along with any other common projects with public repos.  I'll create some "rollup" branches for common deployements `webserver/lamp` based on server roles... I may need some help from the community.
+
+The core llmon_dataset repo will therefore contain no project specific output files, which feels a bit weird, but we'll see how long I keep that idea up.  I suppose I could write a script to check for installed packages and ask the user which branches to pull.
+
+This will also allow closed-source projects to publish pull requests for their project output without exposing their actual code. Maybe this will encourage troubleshooting details from companies with less than stellar documentation.
+
+# Project Structure
 
 Each project here is a user/repo associated with a mapped project, for example "apache/httpd". We should probably include software versions or commits somehow.
 
