@@ -42,6 +42,7 @@ main() {
     # Process all input files
     find "$SOURCEFILES" -type f -name "*.prompt" -print0 | while IFS= read -r -d '' file; do
         process_prompt "$file"
+        exit
     done
 }
 

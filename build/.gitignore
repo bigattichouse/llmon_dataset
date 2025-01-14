@@ -1,4 +1,5 @@
 # Ignore all files and directories in working/
+*/*.o
 working/*
 models/*
 env
