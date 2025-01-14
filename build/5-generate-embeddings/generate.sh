@@ -26,7 +26,7 @@ process_embedding() {
     local content=$(cat "$input_file")
     
     # This will properly escape all special characters including quotes
-    json_data=$(jq -n --arg c "$content" --arg m "$MODEL" '{"content": $c, "model": $m}' | tr -d '\n')
+    json_data=$(jq -n --arg c "$content" --arg m "$MODEL" '{"content": $c, "context_size": $c, "num_ctx": $c, "model": $m}' | tr -d '\n')
 
     curl -s -X POST "$OLLAMA_API_URL" \
         -H "Content-Type: application/json" \

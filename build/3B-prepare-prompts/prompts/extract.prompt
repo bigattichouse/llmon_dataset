@@ -78,7 +78,9 @@ Task 3: Output JSON.
 
 1. Count all the possible logs and thrown errors in a simple list. There may be more function calls in the code than you initially consider. Please add to the list if you notice something you missed before.
 2. List all the possible log/error entries as part of thinking step-by-step, show your thought process and detail items as clearly as possible. 
-3. Finally, provide the final JSON.
+3. It is mandatory you start your final JSON output with "```json "
+4. Finally, provide the final JSON as an array of "function","message_template","reason","resolution" formatted responses. Do not alter this format, another LLM will aggregate these.
+
 
 
 
