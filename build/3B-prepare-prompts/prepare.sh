@@ -34,7 +34,7 @@ find "$SOURCEFILES" -type f \( -name "*.c" -o -name "*.h" \) | while read -r fil
     
     
     touch "${file}.summary"
-    echo "Please summarize the purpose of the following code module from the $1 project:\n" >> "${file}.summary"
+    echo "Please summarize the purpose and role of the module `${file}` from the `$1` project from the following source code. Only output the summary text, only use 3 to 4 sentences and be succinct and accurate." >> "${file}.summary"
     echo "\`\`\`" >> "${file}.summary"
     cat ${file} >> "${file}.summary"
     echo "\`\`\`" >> "${file}.summary"

@@ -68,11 +68,11 @@ Overview: Think step-by-step. Analyze every function, string, and macro provided
 
 You may need to review your thinking and make sure you find ALL the log messages. It's easy to accidentally miss something, so reflect on your choices, more items is better than fewer items.
 
-**IMPORTANT: COUNT THE NUMBER OF RELEVANT FUNCTIONS/STRINGS BEFORE YOU START TO ENSURE YOU FIND THEM ALL**
+Ignore License details found in the header of each file.
 
-Task 3: Reflection
+Task 2: Reflection
 
-Reflect on what you located, scan through the code again and locate items you missed. 
+Reflect on what you located, scan through the code again and locate items you missed.  Keep this section concise and brief.
 
 Task 3: Output JSON.
 
