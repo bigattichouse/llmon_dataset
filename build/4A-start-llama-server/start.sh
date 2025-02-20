@@ -26,12 +26,22 @@ start_server() {
         exit 1
     fi
 
+#    "$LLAMA_SERVER_PATH" \
+#    --port $LLAMA_PORT \
+#    --model $LLAMA_MODEL_PATH \
+#    --ctx-size $LLAMA_CONTEXT_SIZE \
+#    --n-gpu-layers $GPU_LAYERS \
+#    > "$SERVER_LOG" 
+
+
     nohup "$LLAMA_SERVER_PATH" \
     --port $LLAMA_PORT \
     --model $LLAMA_MODEL_PATH \
     --ctx-size $LLAMA_CONTEXT_SIZE \
     --n-gpu-layers $GPU_LAYERS \
     > "$SERVER_LOG" 2>&1 &
+
+    #--no-warmup
         
     # Wait for server to start (adjust sleep time as needed)
     sleep 5
