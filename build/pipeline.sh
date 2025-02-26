@@ -10,10 +10,10 @@ done
 
 if [ "$NO_CLEAN" = false ]; then
     echo "Preparing workspace"
-    0-prep/prepare.sh $1
+#    0-prep/prepare.sh $1
 fi
 echo "Clone project $1..."
-1-clone-project/clone.sh $1
+#1-clone-project/clone.sh $1
 echo "Extracting strings from $1..."
 2-extract-strings/extract.sh $1
 echo "Preprocess Files $1..."
@@ -25,6 +25,7 @@ echo "    Starting llama server..."
 4A-start-llama-server/start.sh $1
 echo "    Summarize all source files..."
 4B-llm-summarize-files/summarize.sh $1
+exit
 echo "    Process completed prompts..."
 4C-llm-process-prompts/process.sh $1
 echo "Generate embeddings from JSON..."

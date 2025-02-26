@@ -14,6 +14,8 @@ SERVER_LOG="llama_server.log"
 LLAMA_SERVER_PATH=${LLAMA_SERVER_PATH:-"llama-server"}  # Default path if not provided
 LLAMA_MODEL_PATH=${LLAMA_MODEL_PATH:-"models/model.gguf"}  # Default path if not provided
 LLAMA_CONTEXT_SIZE=${LLAMA_CONTEXT_SIZE:-"32500"} #default for my graphics card
+MAX_RETRIES=30  # Maximum number of retries
+RETRY_DELAY=60  # Delay between retries in seconds
 
 # Function to check if llama-server is running
 check_server() {
@@ -36,12 +38,39 @@ process_prompt() {
     # This will properly escape all special characters including quotes
     json_data=$(jq -n --arg p "$prompt" '{"prompt": $p}' | tr -d '\n')
 
-    curl -X POST "http://localhost:$LLAMA_PORT/completion" \
-        -H "Content-Type: application/json" \
-        -d "$json_data" \
-        > "$output_file"
-    
-    echo "Processed $input_file -> $output_file"
+
+    local retries=0
+    while [ $retries -lt $MAX_RETRIES ]; do
+        # Make the request and capture both stdout and stderr
+        response=$(curl -s -w "\n%{http_code}" -X POST "http://localhost:$LLAMA_PORT/completion" \
+            -H "Content-Type: application/json" \
+            -d "$json_data")
+        
+        # Extract the HTTP status code
+        http_code=$(echo "$response" | tail -n1)
+        # Extract the response body (everything except the last line)
+        body=$(echo "$response" | sed \$d)
+        
+        if [ "$http_code" = "503" ]; then
+            retries=$((retries + 1))
+            echo "Server returned 503 (Loading model). Retry $retries of $MAX_RETRIES..."
+            if [ $retries -lt $MAX_RETRIES ]; then
+                sleep $RETRY_DELAY
+                continue
+            else
+                echo "Error: Maximum retries reached. Server still not ready."
+                return 1
+            fi
+        elif [ "$http_code" = "200" ]; then
+            echo "$body" > "$output_file"
+            echo "Successfully processed $input_file -> $output_file"
+            return 0
+        else
+            echo "Error: Unexpected response code: $http_code"
+            echo "Response body: $body"
+            return 1
+        fi
+    done
 }
 
 # Main script

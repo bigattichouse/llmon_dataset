@@ -15,7 +15,7 @@ LLAMA_SERVER_PATH=${LLAMA_SERVER_PATH:-"llama-server"}  # Default path if not pr
 LLAMA_MODEL_PATH=${LLAMA_MODEL_PATH:-"models/model.gguf"}  # Default path if not provided
 LLAMA_CONTEXT_SIZE=${LLAMA_CONTEXT_SIZE:-"32500"} #default for my graphics card
 MAX_RETRIES=30  # Maximum number of retries
-RETRY_DELAY=10  # Delay between retries in seconds
+RETRY_DELAY=60  # Delay between retries in seconds
 
 # Function to check if llama-server is running
 check_server() {

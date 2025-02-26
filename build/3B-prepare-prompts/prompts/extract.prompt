@@ -8,6 +8,8 @@ Goal:
 
     Identify Log Messages:  Look for function calls that use logging macros or functions such as syslog, journal_send, etc.  Any kind of exception thrown could potentially end up in the logs, be aware of any log related messages. Every string in the file should be considered as a possible surfaced log entry.
 
+    Extract Summary: Create one, two, or three sentences that summarize the module. Be succinct/concise. This information will help another AI model create embeddings or other searchable information and help developers locate bugs and errors faster.
+
     Extract Details:  
         Function Name:  The name of the function in which the log message is found.
         Message Template:  The exact template string used in the log message (including any format specifiers like %s).
@@ -19,7 +21,7 @@ Goal:
         "message_template": The template string of the log message.
         "reason": A brief explanation of why this log message is generated and helpful pointers for someone trying to correct the error.
          It's important to also include a likely scenario in which this error might occur. (ex:"Likely, due to dns issues.")
-        "resolution": Include some thoughts on configuration or other possible changes that might help resolve this error.
+        "resolution": Include some thoughts on configuration or other possible changes that might help resolve this error. Some logged entries may be informational, but may require an operations engineer make configuration changes or check for other problems if the message shows up repeatedly in logs.
 
 Here is an example: 
 Sample Input:
@@ -40,26 +42,30 @@ void example_function(int status) {
 
 Expected Output:  
 ```json
-[
-  {
-    "function": "example_function",
-    "message_template": "Non-zero status encountered: %d",
-    "reason": "Logs a warning if the status is non-zero",
-    "resolution":"Resolution depends on the status error"
-  },
-  {
-    "function": "example_function",
-    "message_template": "STATUS=success",
-    "reason": "Logs a success message using journalctl if the status is zero"
-    "resolution : "information log, no resolution required"
-  }
-  {
-    "function": "example_function",
-    "message_template": "Some additional text",
-    "reason": "The function returns some additional text"
-    "resolution : "information log, no resolution required"
-  }
-]
+{
+  "module":"module_name.c",
+  "summary": "One to three sentences summarizing the purpose of this module. Be succinct/concise."
+  "logs":[
+      {
+        "function": "example_function",
+        "message_template": "Non-zero status encountered: %d",
+        "reason": "Logs a warning if the status is non-zero",
+        "resolution":"Resolution depends on the status error"
+      },
+      {
+        "function": "example_function",
+        "message_template": "STATUS=success",
+        "reason": "Logs a success message using journalctl if the status is zero"
+        "resolution : "information log, no resolution required"
+      }
+      {
+        "function": "example_function",
+        "message_template": "Some additional text",
+        "reason": "The function returns some additional text"
+        "resolution : "information log, no resolution required"
+      }
+  ]
+}
 ```
  
 Task 1: Analysis
