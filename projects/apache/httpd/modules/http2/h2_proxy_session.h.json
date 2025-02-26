@@ -1,0 +1,1 @@
+{"module":"h2_proxy_session.h","summary":"This module defines structures and functions for handling HTTP\/2 proxy sessions in Apache HTTP Server. It manages the lifecycle of proxy connections, stream states, and interactions with the nghttp2 library for HTTP\/2 protocol handling.","logs":[],"project":"apache\/httpd"}

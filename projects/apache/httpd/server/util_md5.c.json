@@ -1,0 +1,1 @@
+{"module":"md5.c","summary":"This module provides MD5 hash computation functionality for the Apache HTTP Server. It contains functions to generate MD5 digests for both binary data and null-terminated strings, returning hexadecimal string representations of the hash values.","logs":[],"project":"apache\/httpd"}

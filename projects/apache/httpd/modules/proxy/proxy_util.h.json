@@ -1,0 +1,1 @@
+{"module":"proxy_util.h","summary":"This header file defines internal interfaces for Apache's mod_proxy module. It declares functions for proxy worker management, URL handling, and other utility operations used privately within the mod_proxy implementation.","logs":[],"project":"apache\/httpd"}

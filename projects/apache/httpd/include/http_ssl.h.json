@@ -1,0 +1,1 @@
+{"module":"http_ssl.h","summary":"A header file defining interfaces for SSL protocol handling in Apache HTTP Server. It provides hooks and functions for SSL connection checking, certificate management, and OCSP status response handling.","logs":[],"project":"apache\/httpd"}

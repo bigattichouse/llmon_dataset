@@ -1,0 +1,1 @@
+{"module":"simple_children.h","summary":"A header file for the Apache MPM Simple module that declares functions for checking children process size and status. It is part of Apache's Multi-Processing Module system and provides interfaces for child process management.","logs":[],"project":"apache\/httpd"}

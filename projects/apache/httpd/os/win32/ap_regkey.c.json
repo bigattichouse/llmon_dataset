@@ -1,0 +1,1 @@
+{"module":"ap_regkey.c","summary":"This Windows-specific module provides Apache with a portable interface to interact with the Windows registry. It contains functions for creating, opening, reading from, writing to, and deleting registry keys and values, with proper character encoding conversion between UTF-8 and UCS-2.","logs":[],"project":"apache\/httpd"}

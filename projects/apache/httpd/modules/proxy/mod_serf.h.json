@@ -1,0 +1,1 @@
+{"module":"mod_serf.h","summary":"This header file defines the interface for the Serf cluster provider within Apache HTTP server. It allows for configuration and management of a cluster of backend servers that mod_serf can connect to, with support for server selection and failure handling.","logs":[],"project":"apache\/httpd"}

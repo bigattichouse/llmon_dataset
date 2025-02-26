@@ -1,0 +1,1 @@
+{"module":"event\/mpm_default.h","summary":"This header file defines default configuration values for the Apache Event MPM (Multi-Processing Module). It specifies constants for managing server processes including initial daemon count, minimum and maximum idle processes, and threads per child process.","logs":[],"project":"apache\/httpd"}

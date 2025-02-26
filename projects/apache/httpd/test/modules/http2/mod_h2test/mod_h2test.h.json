@@ -1,0 +1,1 @@
+{"module":"mod_h2test.h","summary":"This is a header file for an Apache HTTP\/2 testing module. It contains only include guards and no functional code. This appears to be a placeholder or a framework for HTTP\/2 testing functionality that would be implemented elsewhere.","logs":[],"project":"apache\/httpd"}

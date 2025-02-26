@@ -1,0 +1,1 @@
+{"module":"slotmem.h","summary":"This header file defines the Slot Memory Extension Storage Module interface for Apache HTTP Server. It provides an API for managing shared memory divided into fixed-size slots, supporting operations like creation, attachment, data access, and slot allocation\/deallocation.","logs":[],"project":"apache\/httpd"}

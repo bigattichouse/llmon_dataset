@@ -1,0 +1,1 @@
+{"module":"mod_h2_h2_private.h","summary":"This header file sets up the infrastructure for the HTTP\/2 module in Apache. It includes necessary headers, declares the http2_module, and configures the logging system to attribute messages to the 'http2' module. The file contains no actual implementation code or explicit log messages.","logs":[],"project":"apache\/httpd"}

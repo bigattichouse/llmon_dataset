@@ -1,0 +1,1 @@
+{"module":"apreq_module.c","summary":"This module provides utility functions for handling HTTP request parameters in Apache. It includes functions to retrieve individual parameters, combine arguments and body parameters, and copy cookie parameters, with all functions returning either parameter data or NULL for not-found conditions.","logs":[],"project":"apache\/httpd"}

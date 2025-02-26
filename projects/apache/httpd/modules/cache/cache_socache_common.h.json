@@ -1,0 +1,1 @@
+{"module":"cache_socache_common.h","summary":"This header file defines common data structures and constants for the Apache Shared Object Cache module. It specifically defines the cache_socache_info_t structure for storing cache metadata and format version constants, but does not implement any functionality that would generate log messages.","logs":[],"project":"apache\/httpd"}

@@ -1,0 +1,1 @@
+{"module":"mod_ssl_openssl.h","summary":"This header file defines the interface between Apache's mod_ssl module and OpenSSL-specific APIs. It provides hook definitions that allow modules to customize SSL\/TLS behavior such as server initialization, handshake processing, certificate handling, and OCSP stapling.","logs":[],"project":"apache\/httpd"}

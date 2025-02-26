@@ -1,0 +1,1 @@
+{"module":"ssl_ct_sct.h","summary":"This header file defines structures and function prototypes for handling Certificate Transparency (CT) Signed Certificate Timestamps (SCTs) in Apache mod_ssl. It specifies interfaces for parsing, validating, and managing SCTs as part of the SSL\/TLS certificate validation process.","logs":[],"project":"apache\/httpd"}

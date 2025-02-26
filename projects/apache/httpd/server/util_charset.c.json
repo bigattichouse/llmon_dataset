@@ -1,0 +1,1 @@
+{"module":"util_charset.c","summary":"This module provides character set translation functionality for Apache HTTP Server, specifically for converting between EBCDIC and ASCII character sets for HTTP headers. It's conditionally compiled only for systems using EBCDIC encoding.","logs":[],"project":"apache\/httpd"}

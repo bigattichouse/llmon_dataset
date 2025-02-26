@@ -1,0 +1,1 @@
+{"module":"md_acmev2_drive.h","summary":"This header file defines the interface for the ACMEv2 protocol driver, specifically declaring the function for certificate renewal. It's likely part of a module that handles ACME certificate management for an Apache-based project.","logs":[],"project":"apache\/httpd"}

@@ -1,0 +1,1 @@
+{"module":"mod_status.h","summary":"This header file defines the interface for Apache's mod_status module, which generates status reports about the HTTP server. It includes constants for different report types, platform-specific declaration macros, and a hook for extending status output.","logs":[],"project":"apache\/httpd"}

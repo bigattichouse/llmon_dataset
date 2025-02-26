@@ -1,0 +1,1 @@
+{"module":"md_acme_drive.h","summary":"Header file for an ACME (Automated Certificate Management Environment) protocol driver, part of Apache's mod_md module for managing TLS certificates. It defines the driver structure and declares functions for ACME account setup, credential chain setup, and certificate polling.","logs":[],"project":"apache\/httpd"}

@@ -1,0 +1,1 @@
+{"module":"mpmt_os2\/mpm_default.h","summary":"This header file defines default configuration values for the Apache HTTP Server's OS\/2 Multi-Processing Module (MPM). It specifies defaults for the number of server processes, minimum and maximum spare threads, and scoreboard maintenance interval.","logs":[],"project":"apache\/httpd"}

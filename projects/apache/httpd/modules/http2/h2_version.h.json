@@ -1,0 +1,1 @@
+{"module":"mod_h2_h2_version.h","summary":"This header file defines version information for the Apache HTTP\/2 module. It provides the version number as both a string constant (2.0.27) and a hexadecimal representation (0x02001b) for programmatic use within the HTTP\/2 module code.","logs":[],"project":"apache\/httpd"}

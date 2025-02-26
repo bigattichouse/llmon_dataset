@@ -1,0 +1,1 @@
+{"module":"mod_rewrite.h","summary":"This header file defines interfaces and types for Apache's mod_rewrite module, which handles URL rewriting. It contains a definition for a rewrite map function type, a function declaration for registering rewrite map functions, and a constant for the rewrite redirect handler.","logs":[],"project":"apache\/httpd"}

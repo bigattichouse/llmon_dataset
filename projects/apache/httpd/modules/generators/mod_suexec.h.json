@@ -1,0 +1,1 @@
+{"module":"mod_suexec.h","summary":"A header file for the SuExec Extension Module for Apache that defines a configuration structure containing user\/group identity information and an activation flag. This module likely allows Apache to execute CGI scripts under different user identities than the web server itself.","logs":[],"project":"apache\/httpd"}

@@ -1,0 +1,1 @@
+{"module":"win32_config_layout.h","summary":"This header file defines layout configurations for non-autoconf-based Windows builds of Apache HTTP Server. It specifies default relative paths for runtime and state directories, particularly defining the logs directory. This file gets copied to include\/ap_config_layout.h during the build process.","logs":[],"project":"apache\/httpd"}

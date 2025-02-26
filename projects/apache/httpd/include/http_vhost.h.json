@@ -1,0 +1,1 @@
+{"module":"http_vhost.h","summary":"A header file that defines the Virtual Host package API for Apache HTTP Server. It provides function declarations for handling virtual host configuration, parsing, and request routing based on hostname and IP address matching.","logs":[],"project":"apache\/httpd"}

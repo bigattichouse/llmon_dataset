@@ -1,0 +1,1 @@
+{"module":"mod_md_md_store_fs.h","summary":"This header file defines interfaces for filesystem-based storage operations in the mod_md Apache module. It provides functions for initializing storage, setting file permissions, and handling filesystem events, likely used for managing TLS certificates and related resources.","logs":[],"project":"apache\/httpd"}

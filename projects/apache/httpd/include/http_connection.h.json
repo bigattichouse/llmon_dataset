@@ -1,0 +1,1 @@
+{"module":"http_connection.h","summary":"This module provides the Apache connection library which defines interfaces for handling HTTP connections. It includes functions and hooks for processing connections, handling lingering closes to prevent TCP RST issues, and defines bucket types for connection handling operations.","logs":[],"project":"apache\/httpd"}

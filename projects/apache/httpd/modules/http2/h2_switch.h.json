@@ -1,0 +1,1 @@
+{"module":"h2_switch.h","summary":"A header file for the HTTP\/2 protocol switching module in Apache HTTP Server. It declares initialization and hook registration functions for handling protocol switching between HTTP\/1.x and HTTP\/2.","logs":[],"project":"apache\/httpd"}

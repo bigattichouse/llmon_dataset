@@ -1,0 +1,1 @@
+{"module":"h2_workers.h","summary":"This header file defines an API for managing a thread pool specific to executing secondary HTTP\/2 connections in Apache HTTP Server. It provides functions to create, manage, and shut down worker threads, as well as handle connection producers that supply connections to be processed by the workers.","logs":[],"project":"apache\/httpd"}

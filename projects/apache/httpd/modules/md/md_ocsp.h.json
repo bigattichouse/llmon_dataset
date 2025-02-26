@@ -1,0 +1,1 @@
+{"module":"md_ocsp.h","summary":"This header file defines interfaces for the Online Certificate Status Protocol (OCSP) functionality within the Apache server. It provides functions for managing certificate status checks, renewing OCSP responses, and maintaining an OCSP registry to validate X.509 digital certificates.","logs":[],"project":"apache\/httpd"}

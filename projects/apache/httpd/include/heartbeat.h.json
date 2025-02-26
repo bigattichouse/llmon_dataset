@@ -1,0 +1,1 @@
+{"module":"heartbeat.h","summary":"A header file defining common structures and constants for Apache's heartbeat monitoring system. It declares a server slot structure for tracking server health and defines a default storage location for heartbeat data when shared memory is unavailable.","logs":[],"project":"apache\/httpd"}

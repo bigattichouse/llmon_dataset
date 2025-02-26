@@ -1,0 +1,1 @@
+{"module":"bucket_eoc.c","summary":"This module implements the EOC (End-Of-Connection) bucket type for the Apache HTTP Server. It provides functions to create and manipulate EOC buckets, which are metadata buckets that signal the end of a connection in the Apache Portable Runtime (APR) bucket brigade system.","logs":[],"project":"apache\/httpd"}

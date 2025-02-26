@@ -1,0 +1,1 @@
+{"module":"ap_regkey.h","summary":"An APR-style Windows Registry manipulation module that provides functions for Apache to interact with the Windows Registry on Windows platforms. It offers a comprehensive API for opening, closing, reading, writing, and removing registry keys and values.","logs":[],"project":"apache\/httpd"}

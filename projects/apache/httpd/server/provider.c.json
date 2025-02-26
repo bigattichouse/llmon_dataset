@@ -1,0 +1,1 @@
+{"module":"ap_provider.c","summary":"This module implements Apache's provider registry system, allowing modules to register as providers of specific services and for other modules to look up these providers. It maintains a global hash table of providers organized by group, name, and version.","logs":[],"project":"apache\/httpd"}

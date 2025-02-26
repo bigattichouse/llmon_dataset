@@ -1,0 +1,1 @@
+{"module":"util_ebcdic.h","summary":"This header file defines utilities for EBCDIC to ASCII character encoding conversion used in the Apache HTTP Server. It provides function prototypes for translating between EBCDIC and ASCII character sets, with conditional compilation to make these functions available only on EBCDIC systems.","logs":[],"project":"apache\/httpd"}

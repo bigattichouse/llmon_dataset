@@ -1,0 +1,1 @@
+{"module":"mod_ratelimit.h","summary":"A header file for Apache's rate limiting module that defines platform-specific declarations, bucket types for rate limiting operations, and function prototypes for creating rate limiting buckets. It provides the interface for implementing rate limiting functionality in Apache HTTP Server.","logs":[],"project":"apache\/httpd"}

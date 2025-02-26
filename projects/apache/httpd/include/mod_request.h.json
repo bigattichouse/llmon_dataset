@@ -1,0 +1,1 @@
+{"module":"mod_request.h","summary":"Header file for the Apache request module that defines structures and interfaces for request body handling. It defines filter names and configuration structures for body retention functionality.","logs":[],"project":"apache\/httpd"}

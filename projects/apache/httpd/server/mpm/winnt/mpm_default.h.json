@@ -1,0 +1,1 @@
+{"module":"winnt\/mpm_default.h","summary":"This header file defines default configuration parameters for the Windows NT Multi-Processing Module (MPM) in Apache HTTP Server. It sets limits for thread counts and child processes, including default values and hard limits that can be overridden by configuration directives.","logs":[],"project":"apache\/httpd"}

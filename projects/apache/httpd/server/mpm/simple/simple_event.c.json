@@ -1,0 +1,1 @@
+{"module":"simple_event.c","summary":"A timer management module that provides functionality to register, manage, and execute timer callbacks in a thread-safe manner using Apache Portable Runtime (APR). It implements a sorted ring data structure to maintain timers in order of expiration.","logs":[],"project":"apache\/httpd"}

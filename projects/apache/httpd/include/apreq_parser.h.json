@@ -1,0 +1,1 @@
+{"module":"apreq_parser.h","summary":"This module defines the API for HTTP request body parsing in the Apache Request library (libapreq2). It provides structures and functions for handling various content types including URL-encoded forms, multipart form data, and XML, along with a hook mechanism for processing file uploads.","logs":[],"project":"apache\/httpd"}

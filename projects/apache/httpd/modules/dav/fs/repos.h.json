@@ -1,0 +1,1 @@
+{"module":"repos.h","summary":"A header file for the filesystem repository implementation in Apache mod_dav. It declares functions and constants for managing DAV resources, locks, and properties in a filesystem repository, and includes database management functions for DAV state.","logs":[],"project":"apache\/httpd"}

@@ -1,0 +1,1 @@
+{"module":"mod_so.h","summary":"This header file defines the interface for the Shared Object Loader Extension Module for Apache. It declares an optional function to find loaded module symbols by name, enabling dynamic module loading functionality.","logs":[],"project":"apache\/httpd"}

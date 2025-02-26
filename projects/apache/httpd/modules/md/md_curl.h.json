@@ -1,0 +1,1 @@
+{"module":"md_curl.h","summary":"A header file that defines an interface for HTTP implementation using curl. It provides a function to retrieve an implementation of the md_http_impl_t structure, likely used for HTTP communications within an Apache module.","logs":[],"project":"apache\/httpd"}

@@ -1,0 +1,1 @@
+{"module":"ajp_header.h","summary":"This header file defines constants and identifiers for the AJP (Apache JServ Protocol) which is used for communication between Apache HTTP Server and backend servlet containers like Tomcat. It includes definitions for request attributes, HTTP method codes, and frequently used request and response headers.","logs":[],"project":"apache\/httpd"}

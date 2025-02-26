@@ -1,0 +1,1 @@
+{"module":"netware_config_layout.h","summary":"This header file defines layout configurations for non-autoconf-based NetWare builds in Apache. It specifically sets the default relative runtime directory to 'logs' if not already defined elsewhere. This file is copied to include\/ap_config_layout.h during the build process.","logs":[],"project":"apache\/httpd"}

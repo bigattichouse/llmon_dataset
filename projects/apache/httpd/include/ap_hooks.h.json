@@ -1,0 +1,1 @@
+{"module":"ap_hooks.h","summary":"This header file defines macros for declaring and implementing various types of hooks in Apache. It provides the structural framework for the Apache hook system, allowing modules to register functions that get called at specific points during request processing.","logs":[],"project":"apache\/httpd"}

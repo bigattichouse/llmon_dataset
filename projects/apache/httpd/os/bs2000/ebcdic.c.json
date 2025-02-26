@@ -1,0 +1,1 @@
+{"module":"ebcdic.h","summary":"This module provides character set conversion utilities between EBCDIC (used on BS2000 OSD mainframes) and ASCII. It defines three mapping tables and three conversion functions to translate text between these encodings.","logs":[],"project":"apache\/httpd"}

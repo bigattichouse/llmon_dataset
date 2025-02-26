@@ -1,0 +1,1 @@
+{"module":"ssl_policies.h","summary":"A header file for mod_ssl that defines SSL\/TLS security policies based on Mozilla's recommendations. It includes constants for protocol versions, cipher suite strings, and configuration options for modern, intermediate, and old security profiles.","logs":[],"project":"apache\/httpd"}

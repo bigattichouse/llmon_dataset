@@ -1,0 +1,1 @@
+{"module":"passwd_common.h","summary":"A header file for Apache's password management functionality that defines structures, constants, and function prototypes for password hashing and verification. It establishes an error handling framework with error codes and mechanisms for storing and reporting error messages.","logs":[],"project":"apache\/httpd"}

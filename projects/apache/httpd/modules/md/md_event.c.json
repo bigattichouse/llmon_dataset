@@ -1,0 +1,1 @@
+{"module":"md_event.c","summary":"This module implements an event subscription and notification system for managed domains in Apache. It allows components to register callbacks for domain-related events and provides functions to raise events that notify all subscribers, either stopping on first error or continuing regardless of errors.","logs":[],"project":"apache\/httpd"}

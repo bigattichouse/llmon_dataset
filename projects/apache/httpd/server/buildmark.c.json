@@ -1,0 +1,1 @@
+{"module":"server_build.c","summary":"This module provides a function to retrieve the Apache server build date and time. It defines and exposes the ap_get_server_built() function which returns a string indicating when the server was compiled, or 'unknown' if that information is not available.","logs":[],"project":"apache\/httpd"}

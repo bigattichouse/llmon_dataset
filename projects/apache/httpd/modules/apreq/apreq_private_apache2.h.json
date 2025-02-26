@@ -1,0 +1,1 @@
+{"module":"apreq_module.c","summary":"This module is part of the Apache Request module (apreq_module) which handles HTTP request parsing and processing. It defines structures for configuration and filter context management, and provides functions for handling request data through Apache's filter mechanism.","logs":[],"project":"apache\/httpd"}

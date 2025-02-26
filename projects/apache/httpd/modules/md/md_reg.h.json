@@ -1,0 +1,1 @@
+{"module":"md_reg.h","summary":"A header file defining the registry interface for mod_md, an Apache HTTP Server module that manages SSL\/TLS certificates for domains. It provides functions for domain registration, certificate renewal, and certificate validation.","logs":[],"project":"apache\/httpd"}

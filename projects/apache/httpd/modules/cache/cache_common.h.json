@@ -1,0 +1,1 @@
+{"module":"cache_common.h","summary":"This header file defines common cache-related structures for Apache's caching modules. It specifically contains a 'cache_control_t' structure that breaks down and stores various cache control header directives and their values, enabling the cache module to make appropriate caching decisions.","logs":[],"project":"apache\/httpd"}

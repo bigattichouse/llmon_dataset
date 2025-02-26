@@ -1,0 +1,1 @@
+{"module":"simple_run.h","summary":"A header file for the Apache MPM 'simple' module that declares function prototypes for process management including a single process hack, child process loop, and main loop functionality. This header defines the core runtime functions for a simple MPM implementation.","logs":[],"project":"apache\/httpd"}

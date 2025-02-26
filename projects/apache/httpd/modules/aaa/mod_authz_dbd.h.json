@@ -1,0 +1,1 @@
+{"module":"mod_authz_dbd.h","summary":"A header file for the Apache mod_authz_dbd module that defines platform-specific declaration macros and declares an external hook for client login functionality. This module appears to provide database-driven authorization capabilities for Apache HTTPD.","logs":[],"project":"apache\/httpd"}

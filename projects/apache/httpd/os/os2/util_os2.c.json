@@ -1,0 +1,1 @@
+{"module":"ap_os_create_privileged_process.c","summary":"This module provides OS\/2-specific implementation for creating privileged processes in Apache HTTP Server. It's a lightweight wrapper around the apr_proc_create function that maintains a consistent API for process creation across different operating systems.","logs":[],"project":"apache\/httpd"}

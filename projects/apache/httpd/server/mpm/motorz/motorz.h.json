@@ -1,0 +1,1 @@
+{"module":"unknown.c","summary":"This module defines the core data structures for Apache's 'motorz' Multi-Processing Module (MPM). It includes structures for managing server processes, threads, connections, timers, and I\/O handling but does not contain any implementation code that would generate logs.","logs":[],"project":"apache\/httpd"}

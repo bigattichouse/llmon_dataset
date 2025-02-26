@@ -1,0 +1,1 @@
+{"module":"mod_unixd.h","summary":"This header file defines common functionality that Unix Multi-Processing Modules (MPMs) in Apache HTTP Server would use. It declares the ap_unixd_setup_child function, which is likely responsible for setting up child processes in Unix environments.","logs":[],"project":"apache\/httpd"}

@@ -1,0 +1,1 @@
+{"module":"mod_md_md_time.h","summary":"A header file for the Apache mod_md module that defines structures and functions for handling time periods, durations, and time slices. It provides utilities for working with time intervals, formatting durations, and manipulating time periods.","logs":[],"project":"apache\/httpd"}

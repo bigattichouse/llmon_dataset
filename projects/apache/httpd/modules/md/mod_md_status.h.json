@@ -1,0 +1,1 @@
+{"module":"mod_md_md_status.h","summary":"A header file for Apache's mod_md module that declares function prototypes related to certificate, domain, and OCSP status handling. This module appears to provide status information about managed TLS certificates and domains.","logs":[],"project":"apache\/httpd"}

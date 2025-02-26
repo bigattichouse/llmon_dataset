@@ -1,0 +1,1 @@
+{"module":"case_filter_module.c","summary":"This module implements a simple output filter for Apache that converts text to uppercase. It provides a configuration directive 'CaseFilter' to enable or disable the filter at the server level.","logs":[],"project":"apache\/httpd"}

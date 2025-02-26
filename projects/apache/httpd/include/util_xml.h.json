@@ -1,0 +1,1 @@
+{"module":"util_xml.h","summary":"This is a header file for Apache's XML library that defines an interface for parsing XML post data from HTTP requests. It declares a single function ap_xml_parse_input which takes a request record and returns an HTTP status code after parsing XML data.","logs":[],"project":"apache\/httpd"}

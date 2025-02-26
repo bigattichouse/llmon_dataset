@@ -1,0 +1,1 @@
+{"module":"lua_dbd.h","summary":"This header file defines the interface for database operations in Apache's mod_lua module. It provides structures for database handles, result sets, and prepared statements, along with function prototypes for various database operations that can be called from Lua scripts.","logs":[],"project":"apache\/httpd"}

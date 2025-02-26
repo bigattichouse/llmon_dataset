@@ -1,0 +1,1 @@
+{"module":"mod_optional_hook_export.h","summary":"A header file defining an optional hook interface for Apache HTTP Server modules. It declares a single optional hook named 'optional_hook_test' that returns an integer and takes a const char pointer as its parameter.","logs":[],"project":"apache\/httpd"}

@@ -1,0 +1,1 @@
+{"module":"mod_proxy_fdpass.h","summary":"This header file defines interfaces for file descriptor passing functionality in Apache's proxy module. It establishes a structure (proxy_fdpass_flush) that contains a flusher function pointer and related data, which would be used for FD passing operations in the proxy module's implementation.","logs":[],"project":"apache\/httpd"}

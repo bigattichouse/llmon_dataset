@@ -1,0 +1,1 @@
+{"module":"md_event.h","summary":"A header file defining an event handling system for Apache's managed domain module. It provides functions to initialize the event system, subscribe to events, and raise events that can be handled by registered callbacks.","logs":[],"project":"apache\/httpd"}

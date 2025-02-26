@@ -1,0 +1,1 @@
+{"module":"server\/core.h","summary":"This header file defines core private structures for the Apache HTTP Server, specifically the conn_config_t structure which stores connection state information including the socket associated with a connection.","logs":[],"project":"apache\/httpd"}

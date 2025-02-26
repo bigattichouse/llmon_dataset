@@ -1,0 +1,1 @@
+{"module":"mod_xml2enc.h","summary":"This is a header file for the XML2ENC module in Apache HTTP Server that defines interfaces for XML encoding operations. It includes declarations for charset handling, encoding filters, and preprocessing hooks, with platform-specific declaration macros for cross-platform compatibility.","logs":[],"project":"apache\/httpd"}

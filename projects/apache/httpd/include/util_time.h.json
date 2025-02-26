@@ -1,0 +1,1 @@
+{"module":"util_time.h","summary":"This header file defines Apache date-time handling functions optimized for performance, particularly for frequent operations like logging. It provides caching mechanisms for time conversions and various formatting options for timestamps.","logs":[],"project":"apache\/httpd"}

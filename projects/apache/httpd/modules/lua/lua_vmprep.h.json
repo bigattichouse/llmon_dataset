@@ -1,0 +1,1 @@
+{"module":"vmprep.h","summary":"A header file that defines interfaces for managing Lua virtual machines within Apache HTTP server. It specifies structures for Lua VM configurations, handler mappings, and filter handlers, as well as functions to initialize and obtain Lua states with different lifecycle scopes.","logs":[],"project":"apache\/httpd"}

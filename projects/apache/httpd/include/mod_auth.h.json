@@ -1,0 +1,1 @@
+{"module":"mod_auth.h","summary":"This header file defines interfaces and data structures for the Apache authentication and authorization system. It establishes provider groups, status codes, and function signatures for token-based, basic, and authorization operations without implementing actual logging functionality.","logs":[],"project":"apache\/httpd"}

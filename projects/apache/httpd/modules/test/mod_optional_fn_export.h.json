@@ -1,0 +1,1 @@
+{"module":"unknown.c","summary":"This module defines an optional function interface TestOptionalFn that takes a string parameter and returns an integer. It uses the Apache Portable Runtime (APR) optional function mechanism, which allows functions to be optionally present at runtime.","logs":[],"project":"apache\/httpd"}

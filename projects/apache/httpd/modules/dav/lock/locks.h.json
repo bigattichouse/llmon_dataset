@@ -1,0 +1,1 @@
+{"module":"locks.h","summary":"A header file that declares functionality for a generic lock implementation in the Apache mod_dav module. It provides a function to retrieve the path to the lock database.","logs":[],"project":"apache\/httpd"}

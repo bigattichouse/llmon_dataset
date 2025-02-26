@@ -1,0 +1,1 @@
+{"module":"mod_crypto.h","summary":"This header file defines the interface for the Crypto Module for Apache. It provides platform-specific declaration macros and declares hooks for crypto key and initialization vector functionality, but contains no implementation or logging logic.","logs":[],"project":"apache\/httpd"}

@@ -1,0 +1,1 @@
+{"module":"util_md5.h","summary":"This is an Apache header file that defines an API for MD5 checksum calculations. It declares functions for creating MD5 checksums of strings and binary data, building on the apr_md5 functionality. The header is part of Apache's core MD5 package library.","logs":[],"project":"apache\/httpd"}

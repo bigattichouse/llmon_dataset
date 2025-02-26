@@ -1,0 +1,1 @@
+{"module":"simple_io.h","summary":"A header file for the Apache MPM Simple IO module that defines function prototypes for accepting connections and processing IO events. It includes two function declarations for handling socket acceptance and event processing in the simple MPM implementation.","logs":[],"project":"apache\/httpd"}

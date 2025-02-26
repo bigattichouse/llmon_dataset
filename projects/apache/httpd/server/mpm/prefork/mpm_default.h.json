@@ -1,0 +1,1 @@
+{"module":"prefork\/mpm_default.h","summary":"This header file defines default configuration constants for Apache's Prefork Multi-Processing Module (MPM). It specifies the starting number of daemon processes, maximum free daemons, and minimum free daemons for the prefork server model.","logs":[],"project":"apache\/httpd"}

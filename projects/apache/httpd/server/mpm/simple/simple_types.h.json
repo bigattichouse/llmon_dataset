@@ -1,0 +1,1 @@
+{"module":"simple_types.h","summary":"Header file for Apache's simple MPM that defines data structures, constants, and callback functions for process and thread management in the Apache HTTP server. It provides the foundational type definitions for implementing the simple Multi-Processing Module without containing any implementation logic.","logs":[],"project":"apache\/httpd"}

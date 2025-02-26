@@ -1,0 +1,1 @@
+{"module":"mod_http2.h","summary":"A header file defining the interface for Apache's HTTP\/2 module (mod_http2). It declares optional functions for HTTP\/2 environment variable lookup, connection status checking, worker management, and connection polling, along with some deprecated request engine functionality.","logs":[],"project":"apache\/httpd"}

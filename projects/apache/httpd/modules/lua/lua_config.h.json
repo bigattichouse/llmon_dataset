@@ -1,0 +1,1 @@
+{"module":"apl_config.h","summary":"A header file for the Apache Lua module that declares functions for loading Lua configuration modules and mapping handlers. It defines interfaces for integrating Lua scripts with Apache's request handling system.","logs":[],"project":"apache\/httpd"}

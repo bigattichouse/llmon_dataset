@@ -1,0 +1,1 @@
+{"module":"mod_cache_disk.h","summary":"This header file defines data structures and constants for Apache's disk-based HTTP 1.1 caching module. It includes definitions for cache file structures, objects, and configuration parameters that control cache behavior such as directory structure and file size limits.","logs":[],"project":"apache\/httpd"}

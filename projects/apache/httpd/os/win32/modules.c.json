@@ -1,0 +1,1 @@
+{"module":"modules.c","summary":"This module defines which core modules are statically compiled into the Apache HTTP server for Windows. It initializes three arrays: prelinked modules, module symbols with their string names, and preloaded modules, all containing the same set of essential modules for the Windows platform.","logs":[],"project":"apache\/httpd"}

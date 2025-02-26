@@ -1,0 +1,1 @@
+{"module":"apreq_apache2.h","summary":"Header file for mod_apreq2 Apache module that provides an input filter for libapreq2 integration with Apache HTTPD 2.X. It defines the interface for creating an apreq handle for Apache request processing and specifies configuration directives for controlling request processing limits.","logs":[],"project":"apache\/httpd"}

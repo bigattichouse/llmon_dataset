@@ -1,0 +1,1 @@
+{"module":"worker\/mpm_default.h","summary":"This header file defines default configuration values for the Worker MPM (Multi-Processing Module) in Apache HTTP Server. It sets default values for the number of daemon processes to start, minimum and maximum free daemons, and threads per child process.","logs":[],"project":"apache\/httpd"}

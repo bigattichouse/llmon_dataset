@@ -1,0 +1,1 @@
+{"module":"ap_provider.h","summary":"This module defines the Apache Provider API, which offers functions for registering, looking up, and listing providers within the Apache server. It provides a mechanism for modular functionality through a provider registration system.","logs":[],"project":"apache\/httpd"}

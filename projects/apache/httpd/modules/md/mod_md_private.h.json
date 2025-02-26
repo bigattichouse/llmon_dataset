@@ -1,0 +1,1 @@
+{"module":"md_private.h","summary":"A private header file for the Apache mod_md module that declares the module externally and sets up the logging context for files that include it. This header establishes the foundation for logging within the module but doesn't contain actual log messages.","logs":[],"project":"apache\/httpd"}

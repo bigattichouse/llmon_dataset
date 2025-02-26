@@ -1,0 +1,1 @@
+{"module":"mod_session.h","summary":"This header file defines the Apache session module's interface, including structures, hooks, and constants for managing HTTP sessions. It provides a framework for session handling, including session loading, saving, encoding, and decoding, but contains no implementation or logging code.","logs":[],"project":"apache\/httpd"}

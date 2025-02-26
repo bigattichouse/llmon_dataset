@@ -1,0 +1,1 @@
+{"module":"mod_md_md_util.h","summary":"A utility header file for the Apache md module that defines various helper functions for managing domains, DNS validation, file operations, and other common tasks. It provides infrastructure for certificate management and domain validation.","logs":[],"project":"apache\/httpd"}

@@ -1,0 +1,1 @@
+{"module":"mod_log_config.h","summary":"This header file defines the interface for Apache's logging configuration module. It declares function prototypes, structures, and optional functions that implement the logging framework for Apache, enabling custom log handlers and writers to be registered with the server.","logs":[],"project":"apache\/httpd"}

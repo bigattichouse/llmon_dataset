@@ -1,0 +1,1 @@
+{"module":"mod_dbd.h","summary":"A header file for the Database Access Extension Module for Apache that defines the API for database connections and operations within Apache web server modules. It provides functions to acquire, release, and prepare database connections without containing any implementation or logging code.","logs":[],"project":"apache\/httpd"}

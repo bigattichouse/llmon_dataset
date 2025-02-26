@@ -1,0 +1,1 @@
+{"module":"md_ocsp.h","summary":"This header file defines the interface for OCSP (Online Certificate Status Protocol) functionality in the mod_md Apache module. It provides functions for initializing, providing, and monitoring OCSP status for TLS certificates used by the server.","logs":[],"project":"apache\/httpd"}

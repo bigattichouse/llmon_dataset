@@ -1,0 +1,1 @@
+{"module":"bs2000\/ebcdic.h","summary":"A header file that declares functions and constants for EBCDIC\/ASCII character set conversion specific to BS2000 operating systems. It provides conversion tables and functions to translate between EBCDIC and ASCII encodings for Apache web server running on BS2000 mainframe systems.","logs":[],"project":"apache\/httpd"}

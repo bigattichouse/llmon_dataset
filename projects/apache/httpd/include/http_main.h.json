@@ -1,0 +1,1 @@
+{"module":"http_main.h","summary":"This header file defines declarations for Apache server's command-line options, global variables, and server state tracking. It serves as an interface for the core command-line processing functionality of the Apache HTTP server.","logs":[],"project":"apache\/httpd"}

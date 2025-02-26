@@ -1,0 +1,1 @@
+{"module":"h2_ws.h","summary":"A header file defining the interface for WebSocket support in the HTTP\/2 module (mod_h2) of Apache HTTP Server. It declares functions for rewriting WebSocket requests and registering hooks with the Apache server, but contains no implementation or logging code.","logs":[],"project":"apache\/httpd"}

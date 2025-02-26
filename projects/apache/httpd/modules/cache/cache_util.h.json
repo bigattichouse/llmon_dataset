@@ -1,0 +1,1 @@
+{"module":"cache_util.h","summary":"This header file defines structures, macros, and function prototypes for Apache's caching module (mod_cache). It includes declarations for cache storage functions, configuration structures, and utility functions that handle cache validation, locking, and freshness checking according to HTTP specifications.","logs":[],"project":"apache\/httpd"}

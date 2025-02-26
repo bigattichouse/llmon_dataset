@@ -1,0 +1,1 @@
+{"module":"scgi.h","summary":"A header file that defines the default port (4000) for SCGI communication, intended to be used by Apache modules like mod_proxy_scgi. This file contains no actual implementation, just a shared constant definition.","logs":[],"project":"apache\/httpd"}

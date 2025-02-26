@@ -1,0 +1,1 @@
+{"module":"ap_mmn.h","summary":"This header file defines the Module Magic Number mechanism used by Apache HTTP Server to ensure compatibility between modules and the server. It contains version definitions, compatibility macros, and a detailed version history but no actual logging implementations.","logs":[],"project":"apache\/httpd"}

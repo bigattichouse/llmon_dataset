@@ -1,0 +1,1 @@
+{"module":"h2_request.h","summary":"A header file that defines the interface for handling HTTP\/2 requests in Apache. It provides functions for creating, manipulating, and processing HTTP\/2 requests, including header and trailer management.","logs":[],"project":"apache\/httpd"}

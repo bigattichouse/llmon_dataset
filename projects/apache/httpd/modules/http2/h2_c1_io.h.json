@@ -1,0 +1,1 @@
+{"module":"h2_c1_io.h","summary":"This header file defines interfaces for handling I\/O operations in HTTP\/2 connections. It declares functions for initializing, adding data to, and managing buffered output to the connection, as well as reading input data from the connection.","logs":[],"project":"apache\/httpd"}

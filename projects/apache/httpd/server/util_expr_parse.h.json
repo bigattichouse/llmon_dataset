@@ -1,0 +1,1 @@
+{"module":"util_expr_parse.h","summary":"A Bison-generated header file for Apache HTTP Server's expression evaluation system. It defines token types, parser value structures, and interface declarations for parsing expressions. The file doesn't contain actual logging functionality, only token definitions and parser declarations.","logs":[],"project":"apache\/httpd"}

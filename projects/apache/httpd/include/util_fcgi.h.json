@@ -1,0 +1,1 @@
+{"module":"util_fcgi.h","summary":"This header file defines structures, constants, and functions for handling the FastCGI protocol in Apache HTTP Server. It includes definitions for FastCGI record headers, request bodies, role types, and utility functions for packing\/unpacking FastCGI protocol data structures.","logs":[],"project":"apache\/httpd"}

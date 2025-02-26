@@ -1,0 +1,1 @@
+{"module":"util_ldap.h","summary":"This module provides interfaces for Apache's LDAP library, enabling connections to LDAP servers, authentication of users, and caching of LDAP operations. It supports various LDAP operations including binding, comparing DNs, searching, and checking group membership.","logs":[],"project":"apache\/httpd"}

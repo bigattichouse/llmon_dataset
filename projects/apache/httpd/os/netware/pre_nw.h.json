@@ -1,0 +1,1 @@
+{"module":"pre_nw.h","summary":"This header file provides definitions and preprocessor directives for Netware systems. It defines platform-specific macros, handles type compatibility, and sets configuration parameters, serving as part of Apache's cross-platform support for Netware environments.","logs":[],"project":"apache\/httpd"}

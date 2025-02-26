@@ -1,0 +1,1 @@
+{"module":"md_crypt.h","summary":"This module provides cryptographic functionality for the Apache mod_md module, offering capabilities for handling private keys, X.509 certificates, certificate chains, and various cryptographic operations such as signing, validation, and certificate transparency verification.","logs":[],"project":"apache\/httpd"}

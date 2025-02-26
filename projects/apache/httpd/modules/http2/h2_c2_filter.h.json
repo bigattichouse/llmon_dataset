@@ -1,0 +1,1 @@
+{"module":"h2_c2_filter.h","summary":"A header file defining filter functions for HTTP\/2 secondary connections in Apache HTTP Server. It includes declarations for request input filters and response output filters, with different implementations based on whether the AP_HAS_RESPONSE_BUCKETS feature is available.","logs":[],"project":"apache\/httpd"}

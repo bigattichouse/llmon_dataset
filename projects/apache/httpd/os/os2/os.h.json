@@ -1,0 +1,1 @@
+{"module":"os2\/os.h","summary":"This header file defines OS\/2 specific macros and platform configurations for Apache. It identifies OS\/2 as having drive letters, UNC paths, and a case-blind filesystem, providing essential platform information for Apache modules.","logs":[],"project":"apache\/httpd"}

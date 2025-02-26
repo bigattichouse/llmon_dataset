@@ -1,0 +1,1 @@
+{"module":"apreq_util.h","summary":"This header file defines utility functions for the Apache Request library (libapreq2), including string manipulations, URL encoding\/decoding, character set conversions, and bucket brigade operations. It provides functionality for handling HTTP requests but contains no direct logging mechanisms.","logs":[],"project":"apache\/httpd"}

@@ -1,0 +1,1 @@
+{"module":"ap_listen.h","summary":"The Apache Listeners Library header file defines structures and API functions for managing network sockets, including setup, binding, and configuration of listeners. It provides the foundation for Apache's ability to listen for and accept incoming connections across multiple ports and interfaces.","logs":[],"project":"apache\/httpd"}

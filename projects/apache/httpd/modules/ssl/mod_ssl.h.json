@@ -1,0 +1,1 @@
+{"module":"mod_ssl.h","summary":"This header file defines the API and interfaces for the mod_ssl module in Apache HTTP Server. It declares optional functions for SSL operations, hooks for certificate management, and provides cross-platform compatibility macros for SSL functionality.","logs":[],"project":"apache\/httpd"}

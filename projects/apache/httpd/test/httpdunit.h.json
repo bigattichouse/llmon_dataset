@@ -1,0 +1,1 @@
+{"module":"httpdunit.h","summary":"A header file providing macros and utilities for simplifying the creation and management of test cases in the Apache HTTP Server project using the Check testing framework. It automates the process of registering test functions with the framework and reduces boilerplate code required for test cases.","logs":[],"project":"apache\/httpd"}

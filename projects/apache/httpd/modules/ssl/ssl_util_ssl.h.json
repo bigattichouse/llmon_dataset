@@ -1,0 +1,1 @@
+{"module":"ssl_util_ssl.h","summary":"This header file defines utility functions and macros for OpenSSL integration with Apache's mod_ssl module. It includes declarations for SSL certificate handling, session management, and X509 operations, but contains no implementations or direct logging statements.","logs":[],"project":"apache\/httpd"}

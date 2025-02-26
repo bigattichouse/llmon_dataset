@@ -1,0 +1,1 @@
+{"module":"util_cfgtree.c","summary":"This module provides functionality for manipulating configuration directive trees in Apache HTTP Server. It offers tools to build and organize a hierarchical structure of configuration directives by managing parent-child relationships between nodes.","logs":[],"project":"apache\/httpd"}

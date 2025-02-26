@@ -1,0 +1,1 @@
+{"module":"mod_md_md_tailscale.h","summary":"This header file defines interfaces for integrating Tailscale with an Apache module (mod_md). It declares a protocol constant 'tailscale' and a function for adding Tailscale protocols to a hash table.","logs":[],"project":"apache\/httpd"}

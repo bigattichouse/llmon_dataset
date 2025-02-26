@@ -1,0 +1,1 @@
+{"module":"modules.c","summary":"This module defines the core modules compiled into Apache for NetWare. It specifies the loading order of modules, maps symbolic names to module pointers, and initializes the module system without containing any direct logging functionality.","logs":[],"project":"apache\/httpd"}

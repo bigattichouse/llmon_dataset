@@ -1,0 +1,1 @@
+{"module":"unixd.h","summary":"This is a header file defining common functionality needed by Unix-based Multi-Processing Modules (MPMs) in Apache HTTP Server. It declares interfaces for user\/group identity management, mutex permissions, and process control but doesn't contain direct logging implementations.","logs":[],"project":"apache\/httpd"}

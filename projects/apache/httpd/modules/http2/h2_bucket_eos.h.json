@@ -1,0 +1,1 @@
+{"module":"mod_http2_h2_bucket_stream_eos.h","summary":"A header file defining the interface for HTTP\/2 End-Of-Stream (EOS) bucket type in Apache's HTTP\/2 module. It provides function declarations for creating EOS buckets and a macro for checking if a bucket is of EOS type.","logs":[],"project":"apache\/httpd"}

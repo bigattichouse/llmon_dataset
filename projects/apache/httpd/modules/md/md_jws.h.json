@@ -1,0 +1,1 @@
+{"module":"mod_md_md_jws.h","summary":"This header file defines interfaces for JSON Web Signature (JWS) operations in an Apache module. It provides function prototypes for creating and working with JWS signatures, including generating JWK representations, signing JSON messages, calculating key thumbprints, and performing HMAC signatures.","logs":[],"project":"apache\/httpd"}

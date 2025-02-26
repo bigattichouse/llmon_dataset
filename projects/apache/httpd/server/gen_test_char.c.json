@@ -1,0 +1,1 @@
+{"module":"gen_test_char.c","summary":"A utility program that generates a C header file containing a character lookup table used by Apache HTTP Server for character escaping and validation in various contexts. The table defines which characters require special handling in different scenarios like shell commands, URLs, and log entries.","logs":[],"project":"apache\/httpd"}

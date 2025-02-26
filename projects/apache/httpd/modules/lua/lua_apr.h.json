@@ -1,0 +1,1 @@
+{"module":"lua_apr.h","summary":"A header file that defines the interface between Apache's Lua module and the Apache Portable Runtime (APR) library. It declares functions for initializing Lua with APR functionality and for converting between Lua tables and APR tables.","logs":[],"project":"apache\/httpd"}

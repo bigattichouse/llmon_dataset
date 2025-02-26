@@ -1,0 +1,1 @@
+{"module":"cache_disk_common.h","summary":"This header file defines common structures and constants for Apache's disk-based cache module. It specifies cache file naming conventions, format versions, and metadata structures used to track cached HTTP responses. No logging functionality is implemented in this file.","logs":[],"project":"apache\/httpd"}
