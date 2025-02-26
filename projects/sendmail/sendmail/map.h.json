@@ -1,0 +1,1 @@
+{"project":"sendmail","module":"..\/working\/sendmail\/sendmail\/map.h","summary":"This header file defines function prototypes for various map lookup mechanisms in Sendmail. Maps are key-value lookup systems used throughout Sendmail for features like aliases, virtual hosting, and other configuration needs.","logs":[]}

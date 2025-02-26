@@ -1,0 +1,1 @@
+{"project":"sendmail","module":"..\/working\/sendmail\/include\/sm\/xtrap.h","summary":"This header file provides a framework for testing exception handling code in sendmail. It defines macros and external variables to conditionally trigger exceptions based on counter values and debug levels, allowing developers to test error handling paths during development.","logs":[]}

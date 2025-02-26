@@ -1,0 +1,1 @@
+{"project":"sendmail","module":"..\/working\/sendmail\/include\/sm\/bitops.h","summary":"This header file defines a data structure and macros for bit map operations in sendmail. It provides functionality for setting, clearing, and testing bits in a 256-bit map, where each bit can be referenced by an ASCII character.","logs":[]}

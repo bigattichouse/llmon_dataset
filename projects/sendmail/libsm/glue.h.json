@@ -1,0 +1,1 @@
+{"project":"sendmail","module":"..\/working\/sendmail\/libsm\/glue.h","summary":"This header file defines a structure used to manage dynamically allocated FILE handles in the sendmail system. The sm_glue structure forms a linked list where each node contains a count of I\/O buffers and a pointer to an array of file structure objects.","logs":[]}

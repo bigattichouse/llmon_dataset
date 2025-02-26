@@ -1,0 +1,1 @@
+{"project":"sendmail","module":"libsm\/vfscanf.c","summary":"This module implements a variant of the standard C library function vfscanf() with added timeout capabilities. It handles parsing input according to format strings similar to scanf, with additional error handling and timeout functionality.","logs":[]}

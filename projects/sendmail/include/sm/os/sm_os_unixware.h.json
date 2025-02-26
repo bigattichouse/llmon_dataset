@@ -1,0 +1,1 @@
+{"project":"sendmail","module":"..\/working\/sendmail\/include\/sm\/os\/sm_os_unixware.h","summary":"Platform-specific configuration header file for Sendmail when running on UnixWare operating systems. It defines various macros that control behavior related to data types, locking mechanisms, and other system-specific settings to ensure compatibility with UnixWare.","logs":[]}

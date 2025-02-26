@@ -1,0 +1,1 @@
+{"project":"sendmail","module":"..\/working\/sendmail\/include\/sm\/shm.h","summary":"This header file provides function declarations and constants for shared memory operations in sendmail. It defines constants for shared memory keys and error codes, and declares functions for starting, stopping, and setting ownership of shared memory segments.","logs":[]}

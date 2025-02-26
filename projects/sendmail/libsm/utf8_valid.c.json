@@ -1,0 +1,1 @@
+{"project":"sendmail","module":"..\/working\/sendmail\/libsm\/utf8_valid.c","summary":"This module provides a function to validate UTF-8 encoded strings according to Unicode 6.0 encoding rules. The implementation is based on the fastvalidate-utf-8 project and is conditionally compiled for Email Address Internationalization (EAI) support.","logs":[]}

@@ -1,0 +1,1 @@
+{"project":"sendmail","module":"..\/working\/sendmail\/include\/sm\/os\/sm_os_hp.h","summary":"This header file defines platform-specific configurations for HP systems in the sendmail project. It includes definitions for shared memory, semaphores, message queues, and I\/O buffer size constraints tailored for HP platforms.","logs":[]}

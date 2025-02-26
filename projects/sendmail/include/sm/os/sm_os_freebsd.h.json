@@ -1,0 +1,1 @@
+{"project":"sendmail","module":"..\/working\/sendmail\/include\/sm\/os\/sm_os_freebsd.h","summary":"This header file defines platform-specific configurations for the sendmail system on FreeBSD. It sets various macros and features based on the FreeBSD version, including connection backlog settings, string function availability, and IPC mechanism configurations.","logs":[]}

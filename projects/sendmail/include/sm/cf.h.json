@@ -1,0 +1,1 @@
+{"project":"sendmail","module":"..\/working\/sendmail\/include\/sm\/cf.h","summary":"This header file defines a configuration option structure (SM_CF_OPT_T) and declares a function (sm_cf_getopt) for retrieving configuration options from a specified path. It is part of sendmail's configuration handling mechanism.","logs":[]}

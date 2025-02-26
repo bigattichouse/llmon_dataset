@@ -1,0 +1,1 @@
+{"project":"sendmail","module":"..\/working\/sendmail\/include\/sm\/string.h","summary":"This header file defines the interface for Sendmail's string manipulation utility functions in the libsm library. It provides safer alternatives to standard C string functions and includes utilities for string duplication, comparison, concatenation, and formatted string creation.","logs":[]}

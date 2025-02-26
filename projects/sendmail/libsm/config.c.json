@@ -1,0 +1,1 @@
+{"project":"sendmail","module":"..\/working\/sendmail\/libsm\/config.c","summary":"This module provides environment variable manipulation functions (putenv and unsetenv) for systems that lack these functions natively. It also defines a compilation options array that lists various configuration settings used during the build process.","logs":[]}

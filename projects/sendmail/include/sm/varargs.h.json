@@ -1,0 +1,1 @@
+{"project":"sendmail","module":"..\/working\/sendmail\/include\/sm\/varargs.h","summary":"A compatibility header file that provides macros for handling variable argument lists in C, abstracting differences between ANSI C (stdarg.h) and traditional C (varargs.h). It ensures consistent variable argument handling across different C standard implementations.","logs":[]}

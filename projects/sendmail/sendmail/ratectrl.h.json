@@ -1,0 +1,1 @@
+{"project":"sendmail","module":"ratectrl.h","summary":"This module defines data structures and function declarations for connection rate control in Sendmail. It includes structures to track connections from specific IP addresses, functions to check and enforce connection rate limits, and support for both IPv4 and IPv6 addresses.","logs":[]}

@@ -1,0 +1,1 @@
+{"project":"sendmail","module":"..\/working\/sendmail\/libsmutil\/cf.c","summary":"This module provides a utility function to determine the appropriate configuration file path for Sendmail based on operation mode, submit mode, and other parameters. It selects between submit.cf and sendmail.cf files, with support for NetInfo on some systems.","logs":[]}

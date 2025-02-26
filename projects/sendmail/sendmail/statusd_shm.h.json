@@ -1,0 +1,1 @@
+{"project":"sendmail","module":"..\/working\/sendmail\/sendmail\/statusd_shm.h","summary":"This header file defines structures and constants for shared memory communication with a status daemon (statusd) in the sendmail project. It includes a shared memory structure, magic numbers, key values, and offset definitions for tracking sendmail processes.","logs":[]}

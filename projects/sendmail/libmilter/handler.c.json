@@ -1,0 +1,1 @@
+{"project":"sendmail","module":"..\/working\/sendmail\/libmilter\/handler.c","summary":"This module contains functionality for handling connected sessions in the sendmail milter library. It manages thread contexts for milter processing and ensures proper resource cleanup through thread detachment.","logs":[]}

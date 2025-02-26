@@ -1,0 +1,1 @@
+{"project":"sendmail","module":"libsm\/strl.c","summary":"This module provides bounds-checking string handling functions including strlcpy, strlcat, strlcat2, and strlcpyn. These functions are designed as safer alternatives to standard string functions to prevent buffer overflows by always ensuring proper null-termination within size constraints.","logs":[]}

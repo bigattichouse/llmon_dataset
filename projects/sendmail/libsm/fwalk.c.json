@@ -1,0 +1,1 @@
+{"project":"sendmail","module":"fwalk.c","summary":"This module provides functionality to apply a specified function to all open file pointers in sendmail. It implements sm_fwalk which iterates through the global file pointer structure and applies the given function to each active file, managing timeouts for each operation.","logs":[]}

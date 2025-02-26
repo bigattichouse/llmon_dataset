@@ -1,0 +1,1 @@
+{"project":"sendmail","module":"..\/working\/sendmail\/sendmail\/sfsasl.h","summary":"This header file declares functions for Simple Authentication and Security Layer (SASL) and Transport Layer Security (TLS) functionality in Sendmail. It provides interfaces for file descriptor control related to secure connections and TLS retry operations.","logs":[]}

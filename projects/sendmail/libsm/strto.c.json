@@ -1,0 +1,1 @@
+{"project":"sendmail","module":"libsm\/strto.c","summary":"This module provides utility functions to convert strings to numeric values (signed and unsigned long long integers). It handles different numeric bases, overflow\/underflow conditions, and input validation without directly logging errors.","logs":[]}

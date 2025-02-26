@@ -1,0 +1,1 @@
+{"project":"sendmail","module":"..\/working\/sendmail\/include\/sendmail\/mailstats.h","summary":"This header file defines a statistics structure for the Sendmail mail transfer agent. It provides a data format for tracking metrics about mail processing including connection counts, message counts, and data volume organized by mailer type.","logs":[]}

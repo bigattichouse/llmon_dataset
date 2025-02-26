@@ -1,0 +1,1 @@
+{"project":"sendmail","module":"..\/working\/sendmail\/include\/sm\/conf.h","summary":"A comprehensive configuration header file that defines platform-specific behaviors, paths, and features for the sendmail application. It enables logging functionality and defines fallback syslog priority levels, but doesn't contain actual log message invocations.","logs":[]}

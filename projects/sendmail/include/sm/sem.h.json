@@ -1,0 +1,1 @@
+{"project":"sendmail","module":"..\/working\/sendmail\/include\/sm\/sem.h","summary":"A header file defining function prototypes and macros for semaphore operations in the sendmail system. It provides a consistent interface for semaphore initialization, acquisition, release, and management that conditionally compiles based on system support for semaphores.","logs":[]}

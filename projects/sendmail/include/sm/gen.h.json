@@ -1,0 +1,1 @@
+{"project":"sendmail","module":"..\/working\/sendmail\/include\/sm\/gen.h","summary":"A general definitions header file for the sendmail library (libsm) that provides core macros, type definitions, and feature flags. It defines constants for success\/failure status codes, utility macros like MIN\/MAX, and configures internationalization support features.","logs":[]}

@@ -1,0 +1,1 @@
+{"project":"sendmail","module":"..\/working\/sendmail\/include\/sm\/cdefs.h","summary":"This header file defines C language portability macros for the sendmail project, providing a consistent interface across different platforms and compilers. It includes macros for function annotations, variable declarations, and format string checking.","logs":[]}

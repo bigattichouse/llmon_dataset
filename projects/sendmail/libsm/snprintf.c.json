@@ -1,0 +1,1 @@
+{"project":"sendmail","module":"..\/working\/sendmail\/libsm\/snprintf.c","summary":"This module implements sm_snprintf, a utility function that formats a string to a memory location with size restriction. It's similar to the standard C snprintf function, handling buffer limits and returning the number of bytes that would have been written without the limitation.","logs":[]}

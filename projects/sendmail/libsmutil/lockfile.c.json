@@ -1,0 +1,1 @@
+{"project":"sendmail","module":"..\/working\/sendmail\/libsmutil\/lockfile.c","summary":"This module provides file locking functionality for the sendmail system using either flock or fcntl locking mechanisms. It handles platform-specific quirks, particularly for SunOS systems where EINVAL errors on \/tmp can actually indicate successful locks.","logs":[]}

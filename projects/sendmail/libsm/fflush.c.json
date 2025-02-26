@@ -1,0 +1,1 @@
+{"project":"sendmail","module":"libsm\/fflush.c","summary":"This module implements buffer flushing functionality for the sendmail I\/O library. It provides functions to flush file pointer buffers to their underlying devices or files, handling timeouts and error conditions appropriately.","logs":[]}

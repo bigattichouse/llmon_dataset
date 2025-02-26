@@ -1,0 +1,1 @@
+{"project":"sendmail","module":"..\/working\/sendmail\/include\/sm\/ldap.h","summary":"This header file defines constants, structures, and function prototypes for LDAP operations in sendmail. It provides an interface for sendmail to interact with LDAP services, including functions for starting LDAP connections, performing searches, and processing results.","logs":[]}

@@ -1,0 +1,1 @@
+{"project":"sendmail","module":"..\/working\/sendmail\/include\/libmilter\/milter.h","summary":"A header file for the libmilter component of sendmail that provides type definitions for socket and thread portability across platforms. It defines cross-platform aliases and includes necessary headers for the mail filter functionality.","logs":[]}

@@ -1,0 +1,1 @@
+{"project":"sendmail","module":"..\/working\/sendmail\/include\/sm\/fdset.h","summary":"This header file defines wrapper macros for file descriptor set manipulation used in select() operations. It provides SM_FD_* versions of the standard FD_* macros and defines SM_FD_OK_SELECT to check if a file descriptor is within the valid range for select() operations.","logs":[]}

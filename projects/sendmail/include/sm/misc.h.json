@@ -1,0 +1,1 @@
+{"project":"sendmail","module":"..\/working\/sendmail\/include\/sm\/misc.h","summary":"This module defines function prototypes for memory statistics management in Sendmail. It provides functionality to open and close memory statistics tracking, as well as retrieve specific memory statistics by name.","logs":[]}

@@ -1,0 +1,1 @@
+{"project":"sendmail","module":"..\/working\/sendmail\/libsm\/makebuf.c","summary":"This module provides buffer management functionality for file I\/O operations in Sendmail. It contains functions to create appropriate buffers for files and determine buffer properties based on file characteristics, supporting optimized file access patterns.","logs":[]}

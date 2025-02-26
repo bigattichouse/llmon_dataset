@@ -1,0 +1,1 @@
+{"project":"sendmail","module":"libsm\/shm.c","summary":"This module provides functionality for managing shared memory segments in the sendmail application. It includes functions for initializing, stopping, and setting ownership properties of shared memory segments, all using the System V IPC interface.","logs":[]}

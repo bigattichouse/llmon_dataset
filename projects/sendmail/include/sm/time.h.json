@@ -1,0 +1,1 @@
+{"project":"sendmail","module":"..\/working\/sendmail\/include\/sm\/time.h","summary":"This module provides utility macros for timer operations in the sendmail project. It defines the macros timersub, timeradd, and timercmp for manipulating struct timeval values if they are not already defined in the system's time.h.","logs":[]}

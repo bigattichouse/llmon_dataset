@@ -1,0 +1,1 @@
+{"project":"sendmail","module":"..\/working\/sendmail\/include\/sm\/clock.h","summary":"This header file defines structures and functions for managing timed events in the Sendmail system. It provides an interface for scheduling functions to be called at specific times in the future, with support for both signal-safe and regular event registration.","logs":[]}

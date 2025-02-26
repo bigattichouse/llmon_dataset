@@ -1,0 +1,1 @@
+{"project":"sendmail","module":"libsm\/strrevcmp.c","summary":"This module provides utility functions for comparing strings starting from the end. It includes sm_strrevcasecmp (case-insensitive) and sm_strrevcmp (case-sensitive) which operate like strcmp in reverse order.","logs":[]}

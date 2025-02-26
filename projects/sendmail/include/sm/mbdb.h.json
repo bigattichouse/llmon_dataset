@@ -1,0 +1,1 @@
+{"project":"sendmail","module":"..\/working\/sendmail\/include\/sm\/mbdb.h","summary":"This header file defines an abstract interface for looking up local mail recipients in sendmail. It provides data structures and function declarations for interacting with a mail recipient database, including functions to initialize, terminate, and perform lookups in the database.","logs":[]}
