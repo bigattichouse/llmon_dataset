@@ -1,0 +1,6 @@
+{
+    "project": "cronie-crond/cronie",
+    "module": "../working/cronie-crond/cronie/src/structs.h",
+    "summary": "This header file defines the core data structures used by the Cronie cron daemon, including entries for cron jobs, user records, orphaned entries, and the cron database. It defines flags for controlling logging behavior and mail notifications for cron job execution.",
+    "logs": []
+}

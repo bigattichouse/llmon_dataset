@@ -1,0 +1,6 @@
+{
+    "project": "cronie-crond/cronie",
+    "module": "../working/cronie-crond/cronie/src/externs.h",
+    "summary": "This header file provides compatibility declarations and macro definitions to ensure cronie works consistently across different Unix/Linux platforms. It normalizes access to system functions and types, defines lock constants, and handles platform-specific implementation differences.",
+    "logs": []
+}

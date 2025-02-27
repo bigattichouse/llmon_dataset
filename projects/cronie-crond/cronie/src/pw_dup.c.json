@@ -1,0 +1,6 @@
+{
+    "project": "cronie-crond/cronie",
+    "module": "../working/cronie-crond/cronie/src/pw_dup.c",
+    "summary": "This module provides a utility function (pw_dup) that creates a duplicate of a password entry structure. It allocates memory for the new structure and all associated strings in one contiguous block, copies the data, and returns the new password entry. The function is conditionally compiled only for systems that don't already provide this functionality.",
+    "logs": []
+}

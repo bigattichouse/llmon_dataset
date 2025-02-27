@@ -1,0 +1,13 @@
+{
+    "project": "cronie-crond/cronie",
+    "module": "../working/cronie-crond/cronie/src/macros.h",
+    "summary": "A header file defining constants, flags, and macros for the cronie cron daemon. It provides debugging facilities, numerical limits, and various utility macros used throughout the codebase.",
+    "logs": [
+        {
+            "function": "Set_LineNum",
+            "message_template": "linenum=%d\n",
+            "reason": "Logs the current line number during parsing operations when debugging is enabled. This helps track which line in a crontab file is being processed.",
+            "resolution": "This is an informational debug message that only appears when debugging flags DPARS or DEXT are enabled. No resolution required as it's meant for development troubleshooting."
+        }
+    ]
+}

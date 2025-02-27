@@ -1,0 +1,6 @@
+{
+    "project": "cronie-crond/cronie",
+    "module": "../working/cronie-crond/cronie/src/bitstring.h",
+    "summary": "A utility header file that provides macros for manipulating bit strings, including functions for allocating, testing, setting, clearing, and finding bits within a bit string. This is a pure implementation file with no logging functionality.",
+    "logs": []
+}

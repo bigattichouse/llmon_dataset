@@ -1,0 +1,85 @@
+{
+    "project": "cronie-crond/cronie",
+    "module": "anacron/lock.c",
+    "summary": "This module manages lock and timestamp functionality for Anacron, including file locking, timestamp file management, and determining when jobs are due to run based on their last execution time.",
+    "logs": [
+        {
+            "function": "open_tsfile",
+            "message_template": "Can't open timestamp file for job %s",
+            "reason": "Logs an error when the system cannot open or create the timestamp file for a job, which prevents Anacron from tracking when the job was last run.",
+            "resolution": "Check file permissions in the spools directory, ensure proper ownership, and verify that the filesystem is not full or read-only."
+        },
+        {
+            "function": "open_tsfile",
+            "message_template": "Can't chown timestamp file %s",
+            "reason": "Logs an error when unable to change ownership of the timestamp file, which is necessary to ensure proper security for the job lock mechanism.",
+            "resolution": "Verify that Anacron has sufficient permissions to change file ownership. May require running Anacron with appropriate privileges."
+        },
+        {
+            "function": "open_tsfile",
+            "message_template": "Can't chmod timestamp file %s",
+            "reason": "Logs an error when unable to set proper permissions (0600) on the timestamp file, which is required to prevent other users from placing locks on it.",
+            "resolution": "Check if the filesystem supports chmod operations and ensure Anacron has appropriate permissions to change file modes."
+        },
+        {
+            "function": "lock_file",
+            "message_template": "fcntl() error",
+            "reason": "Logs an error when fcntl() fails for reasons other than the file already being locked, indicating a system-level file locking problem.",
+            "resolution": "Check system resources such as maximum number of locks, and verify that the underlying filesystem supports fcntl locking."
+        },
+        {
+            "function": "consider_job",
+            "message_template": "Error reading timestamp file %s",
+            "reason": "Logs an error when unable to read the timestamp file for a job, which prevents Anacron from determining when the job was last run.",
+            "resolution": "Check if the timestamp file exists and is readable. Ensure it hasn't been corrupted or truncated unexpectedly."
+        },
+        {
+            "function": "consider_job",
+            "message_template": "Unknown named period for %s (%d)",
+            "reason": "Logs an error when encountering a job with an unrecognized named period value, which means the system doesn't know how to calculate when the job should next run.",
+            "resolution": "Check the anacrontab file for invalid period specifications. Valid named periods include 'monthly', 'yearly'/'annually', 'daily', and 'weekly'."
+        },
+        {
+            "function": "consider_job",
+            "message_template": "Checking against %d with %d\n",
+            "reason": "Debug log that shows the day_delta (days since last execution) being checked against the period for a job with a named period.",
+            "resolution": "Information log, no resolution required. Useful for debugging period calculations for named periods."
+        },
+        {
+            "function": "consider_job",
+            "message_template": "The job's %s preferred hour %d was missed, skipping the job.",
+            "reason": "Debug log indicating that a job is being skipped because its preferred execution hour has passed for today.",
+            "resolution": "If this job needs to run regardless of the hour, consider using the '-n' (now) option with Anacron or adjust the preferred hour settings."
+        },
+        {
+            "function": "consider_job",
+            "message_template": "The job `%s' falls out of the %02d:00-%02d:00 hours range, skipping.",
+            "reason": "Debug log indicating that a job is being skipped because the current time falls outside the configured start-stop time range.",
+            "resolution": "If the job must run regardless of time constraints, use the '-n' option with Anacron or adjust the start-stop range configuration."
+        },
+        {
+            "function": "consider_job",
+            "message_template": "Job `%s' locked by another anacron - skipping",
+            "reason": "Informational message indicating that the job is already being processed by another instance of Anacron, so this instance will skip it.",
+            "resolution": "Verify that there isn't a stale lock file if you believe no other Anacron process should be running. This could happen if a previous Anacron process terminated abnormally."
+        },
+        {
+            "function": "update_timestamp",
+            "message_template": "Can't lseek timestamp file for job %s",
+            "reason": "Logs an error when unable to seek to the beginning of the timestamp file for updating, preventing the job's execution timestamp from being updated.",
+            "resolution": "Check if the file descriptor is valid and the timestamp file still exists. May indicate file system issues or resource limitations."
+        },
+        {
+            "function": "update_timestamp",
+            "message_template": "Can't write timestamp file for job %s",
+            "reason": "Logs an error when unable to write the new timestamp to the file after a job has executed, which could cause the job to run again prematurely.",
+            "resolution": "Check if the filesystem is full or has become read-only. Ensure proper permissions for writing to the timestamp file."
+        },
+        {
+            "function": "update_timestamp",
+            "message_template": "ftruncate error",
+            "reason": "Logs an error when failing to truncate the timestamp file to the correct size after writing, which could leave the file in an inconsistent state.",
+            "resolution": "Check filesystem support for ftruncate operation and ensure the file is properly opened with write permissions. May indicate disk space issues."
+        }
+    ]
+}

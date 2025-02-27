@@ -1,0 +1,37 @@
+{
+    "project": "cronie-crond/cronie",
+    "module": "../working/cronie-crond/cronie/src/globals.h",
+    "summary": "A header file defining global variables and constants for the Cronie cron daemon, including configuration settings for logging, mail delivery, and debugging, as well as formatting strings for dates and copyright notices.",
+    "logs": [
+        {
+            "function": "global_variables",
+            "message_template": "@(#) ISC Cron V4.1",
+            "reason": "Copyright notice displayed in program output or logs, typically at startup to identify the program version",
+            "resolution": "Informational message, no resolution required"
+        },
+        {
+            "function": "global_variables",
+            "message_template": "@(#) Copyright 1988,1989,1990,1993,1994 by Paul Vixie",
+            "reason": "Copyright notice displayed in program output or logs at startup",
+            "resolution": "Informational message, no resolution required"
+        },
+        {
+            "function": "global_variables",
+            "message_template": "@(#) Copyright 1997,2000 by Internet Software Consortium, Inc.",
+            "reason": "Copyright notice displayed in program output or logs at startup",
+            "resolution": "Informational message, no resolution required"
+        },
+        {
+            "function": "global_variables",
+            "message_template": "@(#) Copyright 2004 by Internet Systems Consortium, Inc.",
+            "reason": "Copyright notice displayed in program output or logs at startup",
+            "resolution": "Informational message, no resolution required"
+        },
+        {
+            "function": "global_variables",
+            "message_template": "@(#) All rights reserved",
+            "reason": "Copyright notice displayed in program output or logs at startup",
+            "resolution": "Informational message, no resolution required"
+        }
+    ]
+}

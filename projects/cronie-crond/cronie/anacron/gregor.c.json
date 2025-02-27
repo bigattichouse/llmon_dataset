@@ -1,0 +1,13 @@
+{
+    "project": "cronie-crond/cronie",
+    "module": "../working/cronie-crond/cronie/anacron/gregor.c",
+    "summary": "This module implements Gregorian calendar utilities for the Anacron system, providing functions to calculate day numbers, determine leap years, and count days in months and years.",
+    "logs": [
+        {
+            "function": "day_num",
+            "message_template": "Invalid date parameters",
+            "reason": "Function returns -1 when provided with invalid date parameters such as negative year, year overflow, invalid month (outside 1-12), or invalid day for the given month and year",
+            "resolution": "Check the date parameters passed to the function. Ensure year is positive and not too large, month is between 1-12, and day is valid for the given month (accounting for leap years in February)."
+        }
+    ]
+}

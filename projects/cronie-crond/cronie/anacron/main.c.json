@@ -1,0 +1,151 @@
+{
+    "project": "cronie-crond/cronie",
+    "module": "../working/cronie-crond/cronie/anacron/main.c",
+    "summary": "This module is the main component of Anacron, a program that runs scheduled commands periodically, particularly on systems that aren't running continuously. It handles command-line arguments, scheduling, and execution of jobs based on configurations in anacrontab.",
+    "logs": [
+        {
+            "function": "parse_opts",
+            "message_template": "%s: invalid option: %c\n",
+            "reason": "Logs an error when the user provides an invalid command-line option. This occurs during command-line argument parsing.",
+            "resolution": "User should check the command syntax and use valid options. Run the program with -h flag to see valid options."
+        },
+        {
+            "function": "parse_opts",
+            "message_template": "type: `%s -h' for more information\n",
+            "reason": "Provides guidance after an invalid option error, directing the user to the help command.",
+            "resolution": "User should run the program with -h flag to see valid options and correct syntax."
+        },
+        {
+            "function": "xfork",
+            "message_template": "Can't fork",
+            "reason": "Logs an error when the program fails to create a new process with fork(). This could happen if the system has reached its process limit.",
+            "resolution": "Check system resources, particularly maximum processes limit. You may need to terminate other processes or increase system limits."
+        },
+        {
+            "function": "xopen",
+            "message_template": "Can't open %s on file-descriptor %d",
+            "reason": "Logs an error when the program fails to open a file on a specific file descriptor. This could occur if the file is not accessible or permissions are incorrect.",
+            "resolution": "Check file permissions and ensure the file exists. Also verify that the specified file descriptor is not already in use."
+        },
+        {
+            "function": "xopen",
+            "message_template": "Can't open %s",
+            "reason": "Logs an error when the program fails to open a file. This could occur if the file is not accessible or permissions are incorrect.",
+            "resolution": "Check file permissions and ensure the file exists and is accessible by the user running anacron."
+        },
+        {
+            "function": "xclose",
+            "message_template": "Can't close file descriptor %d",
+            "reason": "Logs an error when the program fails to close a file descriptor. This is a rare error that might indicate a resource issue or bug.",
+            "resolution": "This is typically a system-level issue. Check for resource leaks or file descriptor exhaustion if this occurs frequently."
+        },
+        {
+            "function": "go_background",
+            "message_template": "setsid() error",
+            "reason": "Logs an error when the program fails to create a new session and detach from the terminal. This might happen in unusual system configurations.",
+            "resolution": "This is a system call failure. Check if the system has appropriate resources and permissions to create new sessions."
+        },
+        {
+            "function": "set_signal_handling",
+            "message_template": "sigset error",
+            "reason": "Logs an error when the program fails to create or manipulate a signal set. This is a low-level error in signal handling setup.",
+            "resolution": "This is typically a system-level issue. If it occurs, check system stability and available resources."
+        },
+        {
+            "function": "set_signal_handling",
+            "message_template": "sigprocmask error",
+            "reason": "Logs an error when the program fails to change the signal mask. This is a low-level error in signal handling setup.",
+            "resolution": "This is typically a system-level issue. If it occurs, check system stability and available resources."
+        },
+        {
+            "function": "set_signal_handling",
+            "message_template": "sigaction error",
+            "reason": "Logs an error when the program fails to set up a signal handler. This is a low-level error in signal handling setup.",
+            "resolution": "This is typically a system-level issue. If it occurs, check system stability and available resources."
+        },
+        {
+            "function": "wait_children",
+            "message_template": "Received SIGUSR1",
+            "reason": "Logs informational message when the program receives a SIGUSR1 signal, which is used to request orderly termination.",
+            "resolution": "Informational log, no resolution required. This indicates someone or something sent a signal requesting the program to terminate."
+        },
+        {
+            "function": "orderly_termination",
+            "message_template": "Received SIGUSR1",
+            "reason": "Logs informational message at the start of orderly termination when SIGUSR1 is received.",
+            "resolution": "Informational log, no resolution required. This indicates someone or something sent a signal requesting the program to terminate."
+        },
+        {
+            "function": "orderly_termination",
+            "message_template": "Exited",
+            "reason": "Logs informational message just before the program exits due to receiving SIGUSR1 signal.",
+            "resolution": "Informational log, no resolution required. This confirms the program is exiting cleanly after being signaled."
+        },
+        {
+            "function": "record_start_time",
+            "message_template": "Invalid date (this is really embarrassing)",
+            "reason": "Logs an error when the program fails to compute a valid day number from the current date. This should never happen in normal circumstances.",
+            "resolution": "This indicates a serious issue with the system date/time configuration. Check system clock and timezone settings."
+        },
+        {
+            "function": "record_start_time",
+            "message_template": "Anacron started on %04d-%02d-%02d",
+            "reason": "Logs an informational message with the date when Anacron starts, unless running in update-only or testing-only mode.",
+            "resolution": "Informational log, no resolution required. This confirms Anacron has started successfully."
+        },
+        {
+            "function": "time_till",
+            "message_template": "System time manipulation detected, job `%s' will run immediately",
+            "reason": "Logs a warning when the system detects a large time discrepancy, likely due to system clock being changed. The affected job will run immediately.",
+            "resolution": "This may indicate the system clock was changed significantly. If this wasn't intentional, check system time synchronization and potential unauthorized changes to the system time."
+        },
+        {
+            "function": "fake_jobs",
+            "message_template": "Updated timestamp for job `%s' to %04d-%02d-%02d",
+            "reason": "Logs an informational message when updating a job timestamp without running the job (when in update-only mode).",
+            "resolution": "Informational log, no resolution required. This confirms the job timestamp was updated successfully."
+        },
+        {
+            "function": "explain_intentions",
+            "message_template": "Will run job `%s'",
+            "reason": "Logs an informational message about which job will run immediately (when in now mode).",
+            "resolution": "Informational log, no resolution required. This indicates the job is scheduled to run immediately."
+        },
+        {
+            "function": "explain_intentions",
+            "message_template": "Will run job `%s' in %d min.",
+            "reason": "Logs an informational message about which job will run and after how many minutes delay.",
+            "resolution": "Informational log, no resolution required. This indicates the job is scheduled to run after a delay."
+        },
+        {
+            "function": "explain_intentions",
+            "message_template": "Jobs will be executed sequentially",
+            "reason": "Logs an informational message when jobs are configured to run one after another rather than in parallel.",
+            "resolution": "Informational log, no resolution required. This confirms sequential execution mode is active."
+        },
+        {
+            "function": "main",
+            "message_template": "Can't get exact time, failure.",
+            "reason": "Logs an error when the program fails to get the current time. This could indicate system clock issues.",
+            "resolution": "Check system clock and time-related services. This might indicate a hardware issue or system misconfiguration."
+        },
+        {
+            "function": "main",
+            "message_template": "Can't save current directory",
+            "reason": "Logs an error when the program fails to open the current directory. This could happen if the permissions are incorrect.",
+            "resolution": "Check directory permissions and ensure the user running anacron has appropriate access to the current working directory."
+        },
+        {
+            "function": "main",
+            "message_template": "Can't chdir to %s",
+            "reason": "Logs an error when the program fails to change to the spool directory. This could happen if the directory doesn't exist or permissions are incorrect.",
+            "resolution": "Verify that the spool directory exists and has appropriate permissions. The default is usually /var/spool/anacron unless configured otherwise."
+        },
+        {
+            "function": "main",
+            "message_template": "Normal exit (%d job%s run)",
+            "reason": "Logs an informational message when the program exits normally, reporting the number of jobs that were run.",
+            "resolution": "Informational log, no resolution required. This confirms Anacron has completed its work successfully."
+        }
+    ]
+}

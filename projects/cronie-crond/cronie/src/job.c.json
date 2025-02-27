@@ -1,0 +1,37 @@
+{
+    "project": "cronie-crond/cronie",
+    "module": "src/job.c",
+    "summary": "This module manages the job queue for cron jobs, providing functions to add jobs to the queue and run the jobs. It verifies user existence and prepares the environment before job execution.",
+    "logs": [
+        {
+            "function": "job_add",
+            "message_template": "user [%s:%ld:%ld:...] cmd=\"%s\"\n",
+            "reason": "Logs debug information about the user and command when a job is added to the queue. Shows the username, UID, GID, and command to be executed.",
+            "resolution": "This is an informational debug message, no resolution required."
+        },
+        {
+            "function": "job_add",
+            "message_template": "ERROR memory allocation failed",
+            "reason": "Logs an error when memory allocation fails after duplicating the password entry structure. This prevents the job from being added to the queue.",
+            "resolution": "Check system memory resources. The system might be running low on memory. Consider increasing available memory or reducing the load on the system."
+        },
+        {
+            "function": "job_add",
+            "message_template": "ERROR memory allocation failed",
+            "reason": "Logs an error when memory allocation fails during environment variable update. This prevents the job from being added to the queue.",
+            "resolution": "Check system memory resources. The system might be running low on memory. Consider increasing available memory or reducing the load on the system."
+        },
+        {
+            "function": "job_add",
+            "message_template": "ERROR getpwnam() failed - user unknown",
+            "reason": "Logs an error when the user specified in the cron job doesn't exist in the system. This prevents the job from being added to the queue.",
+            "resolution": "Verify that the user specified in the cron job exists in the system. If using LDAP or other remote authentication, check connectivity to authentication services. The user may have been deleted or might be temporarily unavailable due to authentication service issues."
+        },
+        {
+            "function": "job_add",
+            "message_template": "%s:%d pid=%d time=%lld getpwnam(%s) failed errno=%d error=%s\n",
+            "reason": "Logs detailed debug information when getpwnam() fails. Includes file, line, process ID, timestamp, username, error number, and error string.",
+            "resolution": "This is a detailed debug message providing more context about user lookup failures. Check the specific error message to diagnose authentication or user database issues."
+        }
+    ]
+}

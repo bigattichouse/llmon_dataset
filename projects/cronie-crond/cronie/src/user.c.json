@@ -1,0 +1,61 @@
+{
+    "project": "cronie-crond/cronie",
+    "module": "src/user.c",
+    "summary": "This module handles loading, parsing, and managing user crontab entries. It processes crontab files, validates their contents, manages environment variables, and maintains user-specific cron configurations.",
+    "logs": [
+        {
+            "function": "log_error",
+            "message_template": "CRON: %s",
+            "reason": "Generic error logging function that reports various errors encountered while processing crontab files. The specific error message is passed as a parameter.",
+            "resolution": "Resolution depends on the specific error being logged. Check the actual error message for details on what went wrong with the crontab."
+        },
+        {
+            "function": "load_user",
+            "message_template": "FAILED: fdopen on crontab_fd in load_user",
+            "reason": "Unable to open a crontab file using the provided file descriptor. This typically indicates file access permission issues or resource limitations.",
+            "resolution": "Check file permissions and ownership of the crontab file. Ensure the cron daemon has sufficient privileges to read the file and that the system has available file descriptors."
+        },
+        {
+            "function": "load_user",
+            "message_template": "too many garbage characters",
+            "reason": "The crontab file contains excessive invalid or unrecognized characters, making proper parsing impossible. This could indicate a corrupted crontab file.",
+            "resolution": "Check and edit the crontab file manually using 'crontab -e' to remove invalid characters. The crontab may need to be recreated if it's severely corrupted."
+        },
+        {
+            "function": "load_user",
+            "message_template": "missing newline before EOF",
+            "reason": "The last line in the crontab file doesn't end with a newline character, which could lead to that line being ignored.",
+            "resolution": "Edit the crontab file to ensure all lines, including the last one, end with a newline character. This is a minor issue that only affects the last entry if it doesn't have a trailing newline."
+        },
+        {
+            "function": "load_user",
+            "message_template": "too many entries",
+            "reason": "The user's crontab contains more entries than the system-defined maximum (MAX_USER_ENTRIES). This prevents the crontab from loading completely.",
+            "resolution": "Reduce the number of entries in the crontab file or consider increasing MAX_USER_ENTRIES in the configuration if you need to support more entries. Combining related tasks or using a script to handle multiple tasks can help reduce entry count."
+        },
+        {
+            "function": "load_user",
+            "message_template": "too many environment variables",
+            "reason": "The crontab file contains more environment variable definitions than the system-defined maximum (MAX_USER_ENVS).",
+            "resolution": "Reduce the number of environment variables in the crontab or increase MAX_USER_ENVS in the configuration. Consider moving environment variables to a script that's called by the crontab to reduce the direct environment variable count."
+        },
+        {
+            "function": "load_user",
+            "message_template": "FAILED: loading cron table",
+            "reason": "A general failure occurred while attempting to load the user's crontab. This is often caused by resource allocation failures or file access issues.",
+            "resolution": "Check system resources (memory, file descriptors), file permissions, and crontab syntax. The accompanying error code may provide more specific information about the cause."
+        },
+        {
+            "function": "load_user",
+            "message_template": "load_user()",
+            "reason": "Debug message indicating the start of the load_user function execution. Only appears when debug mode is enabled.",
+            "resolution": "This is an informational debug message, no resolution required. If seen in production logs, debug logging might be enabled unnecessarily."
+        },
+        {
+            "function": "load_user",
+            "message_template": "...load_user() done",
+            "reason": "Debug message indicating the completion of the load_user function. Only appears when debug mode is enabled.",
+            "resolution": "This is an informational debug message, no resolution required. If seen in production logs, debug logging might be enabled unnecessarily."
+        }
+    ]
+}

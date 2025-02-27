@@ -1,0 +1,6 @@
+{
+    "project": "cronie-crond/cronie",
+    "module": "../working/cronie-crond/cronie/cronie_common.h",
+    "summary": "This header file provides common definitions and utility functions shared between cron and anacron components of the cronie project. It defines compiler attribute macros, sets the maximum length for email address strings, and declares a function for environment variable expansion.",
+    "logs": []
+}

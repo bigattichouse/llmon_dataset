@@ -1,0 +1,6 @@
+{
+    "project": "cronie-crond/cronie",
+    "module": "cronie_common.c",
+    "summary": "This module provides utility functions for identifying and expanding environment variables in strings. It contains two main functions: a helper function to find environment variables and a public function to expand those variables into their values.",
+    "logs": []
+}

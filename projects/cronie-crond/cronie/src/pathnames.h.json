@@ -1,0 +1,6 @@
+{
+    "project": "cronie-crond/cronie",
+    "module": "../working/cronie-crond/cronie/src/pathnames.h",
+    "summary": "This header file defines various path constants used throughout the Cronie project, including PID file locations, shell paths, and standard system directories. It provides consistent path references across the codebase for essential system resources.",
+    "logs": []
+}

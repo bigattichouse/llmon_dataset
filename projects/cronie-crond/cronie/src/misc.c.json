@@ -1,0 +1,133 @@
+{
+    "project": "cronie-crond/cronie",
+    "module": "src/misc.c",
+    "summary": "This module provides utility functions for the cron daemon, including string manipulation, file locking, debug handling, log management, and user privilege switching. It serves as a support library for the core cron functionality.",
+    "logs": [
+        {
+            "function": "set_debug_flags",
+            "message_template": "this program was compiled without debugging enabled",
+            "reason": "The user tried to enable debugging flags, but the program was compiled without debug support",
+            "resolution": "Recompile cronie with debugging support enabled or use a debug-enabled version"
+        },
+        {
+            "function": "set_debug_flags",
+            "message_template": "unrecognized debug flag <%s> <%s>",
+            "reason": "The user specified an invalid debug flag that isn't recognized by the system",
+            "resolution": "Check the documentation for valid debug flags and correct the input"
+        },
+        {
+            "function": "set_debug_flags",
+            "message_template": "debug flags enabled: %s",
+            "reason": "Informational message showing which debug flags have been successfully enabled",
+            "resolution": "Information log, no resolution required"
+        },
+        {
+            "function": "set_cron_uid",
+            "message_template": "seteuid",
+            "reason": "Failed to set effective user ID to root using seteuid()",
+            "resolution": "Ensure the cron daemon has proper permissions to switch to root UID or is being started with sufficient privileges"
+        },
+        {
+            "function": "set_cron_uid",
+            "message_template": "setuid",
+            "reason": "Failed to set user ID to root using setuid()",
+            "resolution": "Ensure the cron daemon has proper permissions to switch to root UID or is being started with sufficient privileges"
+        },
+        {
+            "function": "check_spool_dir",
+            "message_template": "%s: created",
+            "reason": "The cron spool directory was missing and was successfully created",
+            "resolution": "Information log, no resolution required"
+        },
+        {
+            "function": "check_spool_dir",
+            "message_template": "stat retry",
+            "reason": "Failed to stat the spool directory after creating it",
+            "resolution": "Check filesystem permissions and available disk space; the directory was created but can't be accessed"
+        },
+        {
+            "function": "check_spool_dir",
+            "message_template": "%s: mkdir",
+            "reason": "Failed to create the cron spool directory",
+            "resolution": "Check filesystem permissions, disk space, and ensure the parent directory exists and is writable"
+        },
+        {
+            "function": "check_spool_dir",
+            "message_template": "'%s' is not a directory, bailing out.",
+            "reason": "The cron spool path exists but is not a directory (could be a regular file)",
+            "resolution": "Remove or rename the existing file at the spool path location and restart cron"
+        },
+        {
+            "function": "check_spool_dir",
+            "message_template": "chown %s failed: %s",
+            "reason": "Failed to change the owner of the spool directory to the expected group",
+            "resolution": "Ensure cron has sufficient permissions to change ownership of the directory, or manually set the correct ownership"
+        },
+        {
+            "function": "check_spool_dir",
+            "message_template": "chmod 01730 %s failed: %s",
+            "reason": "Failed to set the proper permissions on the spool directory",
+            "resolution": "Ensure cron has sufficient permissions to change directory permissions, or manually set the correct permissions (chmod 01730)"
+        },
+        {
+            "function": "acquire_daemonlock",
+            "message_template": "can't open or create %s",
+            "reason": "Failed to open or create the PID file used for daemon locking",
+            "resolution": "Check permissions of the directory where PID file is stored and ensure it's writable by cron"
+        },
+        {
+            "function": "acquire_daemonlock",
+            "message_template": "can't lock %s, otherpid may be %ld",
+            "reason": "Failed to lock the PID file because another cron instance is already running",
+            "resolution": "Check if another cron process is already running (with the PID shown). If not, remove the stale PID file and restart cron"
+        },
+        {
+            "function": "acquire_daemonlock",
+            "message_template": "can't lock %s, otherpid unknown",
+            "reason": "Failed to lock the PID file, but couldn't determine the other process ID",
+            "resolution": "Check if another cron process is running. If not, remove the PID file and restart cron"
+        },
+        {
+            "function": "acquire_daemonlock",
+            "message_template": "write() failed",
+            "reason": "Failed to write the current PID to the PID file after acquiring the lock",
+            "resolution": "Check disk space and filesystem health; the filesystem may be full or have errors"
+        },
+        {
+            "function": "acquire_daemonlock",
+            "message_template": "ftruncate() failed",
+            "reason": "Failed to truncate the PID file after writing the current PID",
+            "resolution": "Check filesystem health; this may indicate a filesystem error or permission issue"
+        },
+        {
+            "function": "log_it",
+            "message_template": "%s: Run OUT OF MEMORY while %s",
+            "reason": "The cron daemon ran out of memory while trying to allocate space for a log message",
+            "resolution": "Check system memory usage and increase available memory, or identify memory leaks if this occurs repeatedly"
+        },
+        {
+            "function": "log_it",
+            "message_template": "%s: can't open log file",
+            "reason": "Failed to open the cron log file for writing",
+            "resolution": "Check permissions of the log file and its directory, ensure they are writable by cron"
+        },
+        {
+            "function": "log_it",
+            "message_template": "%s: can't write to log file",
+            "reason": "Failed to write a message to the cron log file",
+            "resolution": "Check disk space, file permissions, and filesystem health; the disk may be full or have errors"
+        },
+        {
+            "function": "log_it",
+            "message_template": "(%s) %s (%s)%s%s",
+            "reason": "General format for syslog messages from cron",
+            "resolution": "This is the standard log format; specific resolution depends on the event and detail fields"
+        },
+        {
+            "function": "log_it",
+            "message_template": "log_it: (%s %ld) %s (%s)%s%s",
+            "reason": "Debug output format when debugging is enabled",
+            "resolution": "This is a debug message format; no resolution required"
+        }
+    ]
+}

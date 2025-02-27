@@ -1,0 +1,67 @@
+{
+    "project": "cronie-crond/cronie",
+    "module": "anacron/log.c",
+    "summary": "This module implements the logging system for Anacron, providing functions for logging informational messages ('explain'), errors ('complain'), and fatal errors ('die'). It logs to syslog and conditionally to stderr based on whether the program is running in the foreground and its quiet mode status.",
+    "logs": [
+        {
+            "function": "slog",
+            "message_template": "%s",
+            "reason": "Used to log a message to syslog with the specified priority level. This is a generic formatting template for all messages passed to syslog.",
+            "resolution": "This is an internal implementation detail for logging. Resolution depends on the specific message being logged."
+        },
+        {
+            "function": "slog",
+            "message_template": "%s\n",
+            "reason": "Outputs an explain-level message to stderr when not in quiet mode and not running in the background.",
+            "resolution": "This is an informational message. No resolution required unless the specific message indicates a problem."
+        },
+        {
+            "function": "slog",
+            "message_template": "%s: %s\n",
+            "reason": "Outputs a complain-level message to stderr when not running in the background, prefixed with the program name.",
+            "resolution": "Check the specific error message to determine what configuration or system issue needs to be addressed."
+        },
+        {
+            "function": "log_e",
+            "message_template": "%s: %s",
+            "reason": "Logs a message to syslog with an appended error description corresponding to errno.",
+            "resolution": "Look at the system error description for guidance on resolving the issue, which is likely related to system resource or permission problems."
+        },
+        {
+            "function": "log_e",
+            "message_template": "%s: %s\n",
+            "reason": "Outputs an explain-level message to stderr with an error description when not in quiet mode and not running in the background.",
+            "resolution": "This provides additional error context. Investigate the system error mentioned to resolve the underlying issue."
+        },
+        {
+            "function": "log_e",
+            "message_template": "%s: %s: %s\n",
+            "reason": "Outputs a complain-level message to stderr with an error description when not running in the background, prefixed with the program name.",
+            "resolution": "The error description provides specific details about a system error. Address the issue based on the error message and system error description."
+        },
+        {
+            "function": "make_msg",
+            "message_template": "(vsnprintf failed)",
+            "reason": "Indicates that message formatting failed when trying to construct a log message.",
+            "resolution": "This is a rare internal error. It might indicate memory corruption or extreme resource constraints. Restart the application or check the system resources."
+        },
+        {
+            "function": "make_msg",
+            "message_template": " (truncated)",
+            "reason": "Appended to messages that are too long to fit in the logging buffer.",
+            "resolution": "The log message was too long and has been truncated. The complete information may not be available in logs. Consider checking the source for more details."
+        },
+        {
+            "function": "die",
+            "message_template": "Aborted",
+            "reason": "Logs that the program is being aborted due to a fatal error when the process is the primary process.",
+            "resolution": "The program encountered a fatal error and had to exit. Check previous log messages for the specific cause of the abort."
+        },
+        {
+            "function": "die_e",
+            "message_template": "Aborted",
+            "reason": "Logs that the program is being aborted due to a fatal error with system error information when the process is the primary process.",
+            "resolution": "The program encountered a fatal error related to a system call and had to exit. Check previous log messages and the system error for details on what failed."
+        }
+    ]
+}

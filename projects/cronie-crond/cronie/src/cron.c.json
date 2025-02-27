@@ -1,0 +1,151 @@
+{
+    "project": "cronie-crond/cronie",
+    "module": "src/cron.c",
+    "summary": "The main module for the cronie cron daemon which manages scheduling and execution of cron jobs, handles file system change notifications using inotify, and processes time-based job execution with timezone awareness. It includes functionality for daemon initialization, signal handling, and database management.",
+    "logs": [
+        {
+            "function": "set_cron_watched",
+            "message_template": "This directory or file can't be watched",
+            "reason": "Logs an error when inotify cannot watch a specific directory or file, typically due to permission issues or the path not existing.",
+            "resolution": "Check that the directory exists and has proper permissions. Verify the inotify instance limit hasn't been reached in the kernel (fs.inotify.max_user_watches)."
+        },
+        {
+            "function": "set_cron_watched",
+            "message_template": "running without inotify support",
+            "reason": "Informs that cron is running without inotify support, meaning it won't detect crontab changes automatically and will need to periodically check files for changes.",
+            "resolution": "This is informational. If inotify support is desired, check system capabilities and don't use -i or -c options if inotify is supported."
+        },
+        {
+            "function": "set_cron_watched",
+            "message_template": "running with inotify support",
+            "reason": "Informs that cron is running with inotify support, which allows it to detect filesystem changes automatically.",
+            "resolution": "Information log, no resolution required."
+        },
+        {
+            "function": "main",
+            "message_template": "can't setenv PATH",
+            "reason": "Logs a fatal error when the system is unable to set the PATH environment variable, which would prevent cron jobs from finding necessary executables.",
+            "resolution": "Check system resources such as memory. This is likely a system-level issue requiring investigation of environment variable limitations."
+        },
+        {
+            "function": "main",
+            "message_template": "cron started",
+            "reason": "Debug message indicating that the cron daemon has started successfully and is running in debug mode.",
+            "resolution": "Information log, no resolution required."
+        },
+        {
+            "function": "main",
+            "message_template": "can't fork",
+            "reason": "Logs a critical error when the cron daemon is unable to fork and create a child process, preventing it from daemonizing.",
+            "resolution": "Check system resources, especially for available process slots and memory. The system may be overloaded or have reached its process limit."
+        },
+        {
+            "function": "main",
+            "message_template": "STARTUP",
+            "reason": "Logs when the cron daemon starts up, including the version number of the package.",
+            "resolution": "Information log, no resolution required."
+        },
+        {
+            "function": "main",
+            "message_template": "Syslog will be used instead of sendmail.",
+            "reason": "Informs that cron will log job outputs to syslog instead of mailing them because sendmail is not available or not executable.",
+            "resolution": "If email delivery is preferred, install and configure a sendmail-compatible MTA or specify a mail command with the -m option."
+        },
+        {
+            "function": "main",
+            "message_template": "RANDOM_DELAY will be scaled with factor %d%% if used.",
+            "reason": "Informs about the scaling factor that will be applied to any RANDOM_DELAY settings in crontabs, used to spread out load from simultaneous jobs.",
+            "resolution": "Information log, no resolution required. If the scaling factor is undesirable, restart cron to get a different random value."
+        },
+        {
+            "function": "main",
+            "message_template": "No inotify - daemon runs with -i or -c option",
+            "reason": "Logs when inotify support is disabled due to command-line options (-i for no inotify or -c for clustering).",
+            "resolution": "Information log, no resolution required. If inotify support is desired, restart cron without these options."
+        },
+        {
+            "function": "main",
+            "message_template": "Inotify init failed",
+            "reason": "Logs an error when the daemon fails to initialize inotify, which prevents automatic detection of crontab changes.",
+            "resolution": "Check if the kernel supports inotify and that resource limits aren't exceeded. May need to adjust kernel parameters or system limits."
+        },
+        {
+            "function": "main",
+            "message_template": "Inotify close failed",
+            "reason": "Logs an error when closing the inotify file descriptor fails during shutdown.",
+            "resolution": "This is typically a system-level issue. Check for resource leaks or file descriptor problems if this occurs regularly."
+        },
+        {
+            "function": "main",
+            "message_template": "Shutting down",
+            "reason": "Logs when the cron daemon is gracefully shutting down, typically in response to a termination signal.",
+            "resolution": "Information log, no resolution required."
+        },
+        {
+            "function": "run_reboot_jobs",
+            "message_template": "@reboot jobs will be run at computer's startup.",
+            "reason": "Informs that @reboot jobs will not be run now but are scheduled to run at system startup because a reboot lock file already exists.",
+            "resolution": "Information log, no resolution required. If @reboot jobs should run now, ensure the reboot lock file is not present."
+        },
+        {
+            "function": "run_reboot_jobs",
+            "message_template": "Can't create lock for reboot jobs.",
+            "reason": "Logs an error when the daemon fails to create a lock file for reboot jobs, which might cause @reboot jobs to run multiple times after system startup.",
+            "resolution": "Check permissions and available space in the directory where the lock file should be created. Ensure cron has write access to the directory."
+        },
+        {
+            "function": "set_time",
+            "message_template": "GMToff=%ld",
+            "reason": "Debug message showing the current GMT offset in seconds, useful for tracking timezone changes and DST transitions.",
+            "resolution": "Debug information log, no resolution required."
+        },
+        {
+            "function": "cron_sleep",
+            "message_template": "Target time=%ld, sec-to-wait=%d",
+            "reason": "Debug message showing the target time (in seconds since epoch) and how many seconds cron will sleep until the next minute.",
+            "resolution": "Debug information log, no resolution required."
+        },
+        {
+            "function": "sigchld_reaper",
+            "message_template": "sigchld...no children",
+            "reason": "Debug message when a SIGCHLD signal is received but waitpid() indicates no child processes exist.",
+            "resolution": "Debug information log, no resolution required. If this occurs frequently, it might indicate signal handling issues."
+        },
+        {
+            "function": "sigchld_reaper",
+            "message_template": "sigchld...no dead kids",
+            "reason": "Debug message when a SIGCHLD signal is received but waitpid() found no terminated children.",
+            "resolution": "Debug information log, no resolution required."
+        },
+        {
+            "function": "sigchld_reaper",
+            "message_template": "sigchld...pid #%ld died, stat=%d",
+            "reason": "Debug message when a child process has terminated, showing its PID and exit status.",
+            "resolution": "Debug information log, no resolution required. If non-zero exit statuses are frequent, check the corresponding cron jobs for errors."
+        },
+        {
+            "function": "find_jobs",
+            "message_template": "normal case %d minutes to go",
+            "reason": "Debug message for a small time difference, showing how many minutes need to be processed.",
+            "resolution": "Debug information log, no resolution required."
+        },
+        {
+            "function": "find_jobs",
+            "message_template": "DST begins %d minutes to go",
+            "reason": "Debug message when a DST change has occurred, showing how many minutes need to be processed.",
+            "resolution": "Debug information log, no resolution required."
+        },
+        {
+            "function": "find_jobs",
+            "message_template": "DST ends %d minutes to go",
+            "reason": "Debug message when a DST change ending has occurred, showing how many minutes need to be processed.",
+            "resolution": "Debug information log, no resolution required."
+        },
+        {
+            "function": "find_jobs",
+            "message_template": "clock jumped",
+            "reason": "Debug message when the system clock has changed significantly (large time jump), which requires special handling.",
+            "resolution": "Debug information log, no resolution required. Frequent clock jumps might indicate NTP sync issues or manual time changes."
+        }
+    ]
+}

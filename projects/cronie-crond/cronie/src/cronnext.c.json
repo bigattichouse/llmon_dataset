@@ -1,0 +1,133 @@
+{
+    "project": "cronie-crond/cronie",
+    "module": "../working/cronie-crond/cronie/src/cronnext.c",
+    "summary": "The cronnext utility determines when cron will execute jobs next by analyzing crontab files and calculating the next execution time based on crontab entries. It provides functionality to filter by user, time range, and command, helping administrators inspect and debug cron scheduling.",
+    "logs": [
+        {
+            "function": "database",
+            "message_template": "%s is a directory - skipping\n",
+            "reason": "Generated when a user attempts to load a crontab file that is actually a directory. The operation is skipped as directories cannot be treated as crontab files.",
+            "resolution": "Verify the file path and ensure you're specifying a valid crontab file rather than a directory."
+        },
+        {
+            "function": "database",
+            "message_template": "cannot load crontab %s\n",
+            "reason": "Displayed when a specified crontab file cannot be loaded, which may occur due to permission issues, file not found, or syntax errors in the crontab file.",
+            "resolution": "Check that the file exists, has proper permissions, and contains valid crontab entries. Examine system logs for additional errors."
+        },
+        {
+            "function": "main",
+            "message_template": "unrecognized option: %s\n",
+            "reason": "Occurs when the user provides a command-line option that is not recognized by the program.",
+            "resolution": "Run the program with -h to see a list of valid options and correct the command line arguments accordingly."
+        },
+        {
+            "function": "main",
+            "message_template": "no ending time specified: -f requires -q\n",
+            "reason": "Generated when the user specifies the -f option (print all jobs executed in interval) without specifying an end time with -q option.",
+            "resolution": "Include the -q option with a time value when using the -f option to set the end of the time interval to check."
+        },
+        {
+            "function": "main",
+            "message_template": "spool: %s\n",
+            "reason": "Informational message showing the spool directory location when -c option is specified to print crontabs.",
+            "resolution": "This is an informational message that requires no action. If the spool directory seems incorrect, check your cron configuration."
+        },
+        {
+            "function": "main",
+            "message_template": "next: %ld\n",
+            "reason": "Displays the next time (in seconds since epoch) when a cron job will be executed according to the analyzed crontabs.",
+            "resolution": "This is an informational output providing the result of the utility. No action is required unless the time seems incorrect, in which case verify the crontab entries."
+        },
+        {
+            "function": "main",
+            "message_template": "nextjobs:\n",
+            "reason": "Header for the list of jobs that will be executed at the next scheduled time, printed when the -l option is used.",
+            "resolution": "This is an informational header with no action required."
+        },
+        {
+            "function": "cronnext",
+            "message_template": "crontabs:\n",
+            "reason": "Header printed when listing crontab information with the -c flag, indicating that crontab details will follow.",
+            "resolution": "Informational message that requires no action."
+        },
+        {
+            "function": "cronnext",
+            "message_template": "jobs:\n",
+            "reason": "Header printed when listing all jobs in a time interval with the -f flag.",
+            "resolution": "Informational message that requires no action."
+        },
+        {
+            "function": "printentry",
+            "message_template": "%s  - user: %s\n",
+            "reason": "Part of the job entry information display, showing which user the cron entry belongs to.",
+            "resolution": "Informational message that requires no action."
+        },
+        {
+            "function": "printentry",
+            "message_template": "%s    cmd: \"%s\"\n",
+            "reason": "Part of the job entry information display, showing the command to be executed.",
+            "resolution": "Informational message that requires no action."
+        },
+        {
+            "function": "printentry",
+            "message_template": "%s    flags: 0x%02X\n",
+            "reason": "Part of the job entry information display, showing the hexadecimal flags value for the entry.",
+            "resolution": "Informational message that requires no action."
+        },
+        {
+            "function": "printentry",
+            "message_template": "%s    delay: %d\n",
+            "reason": "Part of the job entry information display, showing the delay value for the entry.",
+            "resolution": "Informational message that requires no action."
+        },
+        {
+            "function": "printentry",
+            "message_template": "%s    next: %ld\n",
+            "reason": "Part of the job entry information display, showing when the job will next execute (in seconds since epoch).",
+            "resolution": "Informational message that requires no action."
+        },
+        {
+            "function": "printentry",
+            "message_template": "%s    nextstring: ",
+            "reason": "Part of the job entry information display, introducing the human-readable format of the next execution time.",
+            "resolution": "Informational message that requires no action."
+        },
+        {
+            "function": "printflags",
+            "message_template": "%s    flagnames:",
+            "reason": "Part of the flag information display, introducing the list of symbolic flag names for the entry.",
+            "resolution": "Informational message that requires no action."
+        },
+        {
+            "function": "printcrontab",
+            "message_template": "  - user: \"%s\"\n",
+            "reason": "Part of the crontab information display, showing the user the crontab belongs to.",
+            "resolution": "Informational message that requires no action."
+        },
+        {
+            "function": "printcrontab",
+            "message_template": "    crontab: %s\n",
+            "reason": "Part of the crontab information display, showing the path to the crontab file.",
+            "resolution": "Informational message that requires no action."
+        },
+        {
+            "function": "printcrontab",
+            "message_template": "    system: %d\n",
+            "reason": "Part of the crontab information display, indicating whether this is a system crontab (1) or a user crontab (0).",
+            "resolution": "Informational message that requires no action."
+        },
+        {
+            "function": "printcrontab",
+            "message_template": "    entries:\n",
+            "reason": "Header in the crontab information display, indicating that the list of crontab entries will follow.",
+            "resolution": "Informational message that requires no action."
+        },
+        {
+            "function": "usage",
+            "message_template": "Find the time of the next scheduled cron job.\n",
+            "reason": "Part of the help message displayed when -h is used or when there's an error in command-line usage.",
+            "resolution": "Read the help message to understand program usage. No action needed if intentionally viewing help."
+        }
+    ]
+}

@@ -1,0 +1,97 @@
+{
+    "project": "cronie-crond/cronie",
+    "module": "database.c",
+    "summary": "This module manages crontab files, including loading, validating, and monitoring crontab entries. It handles file system operations to detect changes in crontab files, verifies file permissions and ownership, and maintains an in-memory database of scheduled jobs.",
+    "logs": [
+        {
+            "function": "check_open",
+            "message_template": "CAN'T OPEN",
+            "reason": "Cannot open a crontab file, which might be due to insufficient permissions, non-existent file, or file system issues.",
+            "resolution": "Check file existence and permissions. Ensure the crontab file is readable by the cron daemon."
+        },
+        {
+            "function": "check_open",
+            "message_template": "STAT FAILED",
+            "reason": "Failed to get file status information (via fstat) for a crontab file.",
+            "resolution": "Verify the file system is healthy and the crontab file exists and is accessible."
+        },
+        {
+            "function": "check_open",
+            "message_template": "NOT REGULAR",
+            "reason": "The crontab file is not a regular file (could be a directory, symlink, etc.).",
+            "resolution": "Remove the non-regular file and replace it with a proper crontab file if needed."
+        },
+        {
+            "function": "check_open",
+            "message_template": "BAD FILE MODE",
+            "reason": "The crontab file has incorrect permissions, which is a security risk.",
+            "resolution": "Change the permissions of the crontab file to 0400 (readable only by owner)."
+        },
+        {
+            "function": "check_open",
+            "message_template": "WRONG FILE OWNER",
+            "reason": "The crontab file is owned by the wrong user, which is a security risk.",
+            "resolution": "Change the ownership of the crontab file to match the expected user or root."
+        },
+        {
+            "function": "check_open",
+            "message_template": "BAD LINK COUNT",
+            "reason": "The crontab file has multiple hard links, which is not allowed for security reasons.",
+            "resolution": "Replace the crontab file with a single-link file. Use 'crontab -e' to edit instead of directly editing."
+        },
+        {
+            "function": "process_crontab",
+            "message_template": "ORPHAN",
+            "reason": "A crontab file exists for a user that does not exist in the password database.",
+            "resolution": "Either create the user account or remove the orphaned crontab file."
+        },
+        {
+            "function": "process_crontab",
+            "message_template": "RELOAD",
+            "reason": "A crontab file has been modified and is being reloaded.",
+            "resolution": "Informational message, no action required. Indicates normal operation when a crontab is edited."
+        },
+        {
+            "function": "cluster_host_is_local",
+            "message_template": "cluster: hostname comparison error",
+            "reason": "Failed to compare the local hostname with the hostname in the CRON_HOSTNAME file in a clustered environment.",
+            "resolution": "Check the system's hostname configuration and the contents of the CRON_HOSTNAME file."
+        },
+        {
+            "function": "cluster_host_is_local",
+            "message_template": "cluster: file %s not found",
+            "reason": "The CRON_HOSTNAME file required for clustered operation was not found.",
+            "resolution": "Create the CRON_HOSTNAME file with the hostname of the server that should run the cron jobs in the cluster."
+        },
+        {
+            "function": "check_inotify_database",
+            "message_template": "INOTIFY: select failed",
+            "reason": "The select() system call for monitoring file system changes via inotify has failed.",
+            "resolution": "Check system resources, file descriptors limits, and kernel inotify support. May require system restart if persistent."
+        },
+        {
+            "function": "check_inotify_database",
+            "message_template": "INOTIFY: read failed",
+            "reason": "Failed to read inotify events, which may indicate a critical system issue.",
+            "resolution": "This is a critical error that causes crond to exit. Check system resources and kernel inotify support."
+        },
+        {
+            "function": "check_inotify_database",
+            "message_template": "OPENDIR FAILED",
+            "reason": "Failed to open either the system crontab directory or the user spool directory.",
+            "resolution": "Verify the directories exist with correct permissions. Create missing directories or fix permissions."
+        },
+        {
+            "function": "load_database",
+            "message_template": "STAT FAILED",
+            "reason": "Failed to get status information for the spool directory or system crontab directory.",
+            "resolution": "Verify the directories exist with correct permissions. Create missing directories or fix permissions."
+        },
+        {
+            "function": "load_database",
+            "message_template": "OPENDIR FAILED",
+            "reason": "Failed to open either the system crontab directory or the user spool directory.",
+            "resolution": "Verify the directories exist with correct permissions. Create missing directories or fix permissions."
+        }
+    ]
+}

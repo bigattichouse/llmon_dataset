@@ -1,0 +1,13 @@
+{
+    "project": "cronie-crond/cronie",
+    "module": "src/popen.c",
+    "summary": "This module provides customized popen-style functionality for cron, allowing it to execute commands securely without invoking the shell. It handles redirecting stdin/stdout, setting appropriate permissions, and managing child processes.",
+    "logs": [
+        {
+            "function": "cron_popen",
+            "message_template": "EXEC FAILED",
+            "reason": "Logs an error when the command execution fails after fork in the child process. This typically happens when the specified command cannot be found or executed due to permission issues, missing executable, or similar problems.",
+            "resolution": "Check if the command exists in the PATH accessible to the cron user. Verify the command permissions and that all required dependencies are installed. Ensure the cron user has appropriate permissions to execute the command. The error number provided in the log can give specific details about why execution failed."
+        }
+    ]
+}

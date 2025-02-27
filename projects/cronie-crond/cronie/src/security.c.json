@@ -1,0 +1,259 @@
+{
+    "project": "cronie-crond/cronie",
+    "module": "security.c",
+    "summary": "This module implements security context transitions and authentication for the Cronie cron daemon, handling PAM authentication, SELinux context management, and user permission checks for cron jobs.",
+    "logs": [
+        {
+            "function": "cron_conv",
+            "message_template": "%s",
+            "reason": "Logs PAM error messages or text information during authentication conversations",
+            "resolution": "Check PAM configuration and authentication system status"
+        },
+        {
+            "function": "cron_restore_default_security_context",
+            "message_template": "failed to restore SELinux context",
+            "reason": "Failed to restore the default SELinux security context after job execution",
+            "resolution": "Verify SELinux is properly configured and that the cron daemon has appropriate permissions"
+        },
+        {
+            "function": "cron_set_job_security_context",
+            "message_template": "Minute-ly job. Recording time %lld",
+            "reason": "Logs the execution time for jobs scheduled to run every minute to prevent duplicate runs",
+            "resolution": "Informational log, no resolution required"
+        },
+        {
+            "function": "cron_set_job_security_context",
+            "message_template": "FAILED to authorize user with PAM",
+            "reason": "PAM authentication failed for a user when trying to execute a cron job",
+            "resolution": "Check PAM configuration, user account status, and authentication system"
+        },
+        {
+            "function": "cron_set_job_security_context",
+            "message_template": "failed to get SELinux context",
+            "reason": "Unable to retrieve the SELinux context for a cron job",
+            "resolution": "Verify SELinux is properly configured and the user has appropriate SELinux contexts defined"
+        },
+        {
+            "function": "cron_set_job_security_context",
+            "message_template": "failed to change SELinux context",
+            "reason": "Failed to apply the required SELinux context for a cron job",
+            "resolution": "Check SELinux policies and ensure the cron daemon has appropriate permissions to change contexts"
+        },
+        {
+            "function": "cron_set_job_security_context",
+            "message_template": "FAILED to open PAM security session",
+            "reason": "Unable to create a PAM session for a cron job",
+            "resolution": "Verify PAM configuration and system resources; may indicate authentication issues or resource constraints"
+        },
+        {
+            "function": "cron_set_job_security_context",
+            "message_template": "Job execution of per-minute job scheduled for %.2u:%.2u delayed into subsequent minute %.2u:%.2u. Skipping job run.",
+            "reason": "A job scheduled to run every minute was delayed into the next minute and is skipped to prevent duplicate runs",
+            "resolution": "Check system load and network authentication performance if this occurs frequently"
+        },
+        {
+            "function": "cron_change_groups",
+            "message_template": "setgid failed",
+            "reason": "Failed to set the group ID for the cron job process",
+            "resolution": "Check user and group configuration in the system, and verify cron daemon permissions"
+        },
+        {
+            "function": "cron_change_groups",
+            "message_template": "initgroups failed",
+            "reason": "Failed to initialize the supplementary group access list for the cron job process",
+            "resolution": "Verify user's group memberships and system group configuration"
+        },
+        {
+            "function": "cron_change_user_permanently",
+            "message_template": "setreuid failed",
+            "reason": "Failed to set the real and effective user IDs for the cron job process",
+            "resolution": "Check user account status and cron daemon permissions"
+        },
+        {
+            "function": "cron_change_user_permanently",
+            "message_template": "ERROR chdir failed",
+            "reason": "Failed to change to the user's home directory before executing the cron job",
+            "resolution": "Verify the user's home directory exists and has appropriate permissions"
+        },
+        {
+            "function": "cron_authorize_context",
+            "message_template": "Failed to translate security class file",
+            "reason": "Unable to translate the 'file' security class in SELinux",
+            "resolution": "Check SELinux policy installation and configuration"
+        },
+        {
+            "function": "cron_authorize_context",
+            "message_template": "Failed to translate av perm entrypoint",
+            "reason": "Unable to translate the 'entrypoint' access vector permission in SELinux",
+            "resolution": "Verify SELinux policy contains the required access vector definitions"
+        },
+        {
+            "function": "cron_authorize_range",
+            "message_template": "Failed to translate security class context",
+            "reason": "Unable to translate the 'context' security class in SELinux",
+            "resolution": "Check SELinux policy installation and configuration"
+        },
+        {
+            "function": "cron_authorize_range",
+            "message_template": "Failed to translate av perm contains",
+            "reason": "Unable to translate the 'contains' access vector permission in SELinux",
+            "resolution": "Verify SELinux policy contains the required access vector definitions"
+        },
+        {
+            "function": "cron_get_job_range",
+            "message_template": "context_new FAILED for MLS_LEVEL",
+            "reason": "Failed to create a new context from the user context for the specified MLS level",
+            "resolution": "Check SELinux MLS policy and verify the level specified is valid"
+        },
+        {
+            "function": "cron_get_job_range",
+            "message_template": "context_range_set FAILED for MLS_LEVEL",
+            "reason": "Failed to set the range in the context for the specified MLS level",
+            "resolution": "Verify the MLS level specified is valid and compatible with the user's allowed ranges"
+        },
+        {
+            "function": "cron_get_job_range",
+            "message_template": "context_str FAILED for MLS_LEVEL",
+            "reason": "Failed to convert the context to a string for the specified MLS level",
+            "resolution": "Check SELinux context handling in the system"
+        },
+        {
+            "function": "cron_get_job_range",
+            "message_template": "strdup FAILED for MLS_LEVEL",
+            "reason": "Memory allocation failure when duplicating the context string",
+            "resolution": "Check system memory resources; may indicate low memory conditions"
+        },
+        {
+            "function": "cron_change_selinux_range",
+            "message_template": "NULL security context for user",
+            "reason": "No SELinux security context was found for the user running the cron job",
+            "resolution": "Check SELinux user mappings and ensure the user has a defined security context"
+        },
+        {
+            "function": "cron_change_selinux_range",
+            "message_template": "NULL security context for user, but SELinux in permissive mode, continuing",
+            "reason": "No security context found, but SELinux is in permissive mode so execution continues",
+            "resolution": "Define a security context for the user if SELinux enforcement will be enabled"
+        },
+        {
+            "function": "cron_change_selinux_range",
+            "message_template": "cron: Unauthorized MLS range acct=%s new_scontext=%s old_scontext=%s",
+            "reason": "The requested MLS range is not authorized for the user according to SELinux policy",
+            "resolution": "Verify the user has permission to use the requested MLS level"
+        },
+        {
+            "function": "cron_change_selinux_range",
+            "message_template": "Unauthorized range in %s for user range in %s",
+            "reason": "The security context range requested is not authorized for the user",
+            "resolution": "Check SELinux policy and user domain transitions"
+        },
+        {
+            "function": "cron_change_selinux_range",
+            "message_template": "Unauthorized range in %s for user range in %s, but SELinux in permissive mod, continuing",
+            "reason": "Unauthorized security range, but SELinux is in permissive mode so execution continues",
+            "resolution": "Update SELinux policy to authorize this range if enforcement will be enabled"
+        },
+        {
+            "function": "cron_change_selinux_range",
+            "message_template": "Could not set exec or keycreate context to %s for user",
+            "reason": "Failed to set the execution context for the cron job",
+            "resolution": "Check SELinux policy and permissions for the cron daemon"
+        },
+        {
+            "function": "cron_change_selinux_range",
+            "message_template": "Could not set exec context to %s for user, but SELinux in permissive mode, continuing",
+            "reason": "Failed to set execution context but SELinux is in permissive mode so execution continues",
+            "resolution": "Fix execution context issues before enabling SELinux enforcement"
+        },
+        {
+            "function": "get_security_context",
+            "message_template": "getseuserbyname FAILED",
+            "reason": "Failed to get the SELinux user mapping for the Linux user",
+            "resolution": "Verify the user exists in SELinux policy and seusers mapping file"
+        },
+        {
+            "function": "get_security_context",
+            "message_template": "getcon FAILED",
+            "reason": "Failed to get the current process security context",
+            "resolution": "Check SELinux system status and daemon permissions"
+        },
+        {
+            "function": "get_security_context",
+            "message_template": "No SELinux security context",
+            "reason": "No security context could be determined for the crontab file",
+            "resolution": "Verify the crontab file has appropriate SELinux labels"
+        },
+        {
+            "function": "get_security_context",
+            "message_template": "No security context but SELinux in permissive mode, continuing",
+            "reason": "No security context found but SELinux is in permissive mode so operation continues",
+            "resolution": "Fix context issues before enabling SELinux enforcement"
+        },
+        {
+            "function": "get_security_context",
+            "message_template": "getfilecon FAILED",
+            "reason": "Failed to get the security context of the crontab file",
+            "resolution": "Check file permissions and SELinux file labels"
+        },
+        {
+            "function": "get_security_context",
+            "message_template": "getfilecon FAILED but SELinux in permissive mode, continuing",
+            "reason": "Failed to get file context but SELinux is in permissive mode so operation continues",
+            "resolution": "Fix file context issues before enabling SELinux enforcement"
+        },
+        {
+            "function": "get_security_context",
+            "message_template": "Unauthorized SELinux context=%s file_context=%s",
+            "reason": "The user's security context is not authorized to access the crontab file",
+            "resolution": "Update SELinux policy to allow the necessary access"
+        },
+        {
+            "function": "get_security_context",
+            "message_template": "Unauthorized SELinux context",
+            "reason": "The security context is not authorized for crontab access",
+            "resolution": "Check SELinux policy and file contexts"
+        },
+        {
+            "function": "get_security_context",
+            "message_template": "SELinux in permissive mode, continuing",
+            "reason": "Unauthorized context but SELinux is in permissive mode so operation continues",
+            "resolution": "Fix context authorization issues before enabling SELinux enforcement"
+        },
+        {
+            "function": "crontab_security_access",
+            "message_template": "Security class \"passwd\" is not defined in the SELinux policy.",
+            "reason": "The SELinux policy does not define the 'passwd' security class needed for crontab",
+            "resolution": "Update SELinux policy to include the required security class definitions"
+        },
+        {
+            "function": "crontab_security_access",
+            "message_template": "Security av permission \"crontab\" is not defined in the SELinux policy.",
+            "reason": "The SELinux policy does not define the 'crontab' permission needed for access control",
+            "resolution": "Update SELinux policy to include the required permission definitions"
+        },
+        {
+            "function": "build_env",
+            "message_template": "ERROR: Initialization of cron environment variables failed",
+            "reason": "Failed to initialize the environment variables for the cron job",
+            "resolution": "Check system memory resources and environment variable configurations"
+        },
+        {
+            "function": "build_env",
+            "message_template": "Setting Cron environment variable failed",
+            "reason": "Failed to set a specific environment variable for the cron job",
+            "resolution": "Check the environment variable syntax and available system memory"
+        },
+        {
+            "function": "allowed",
+            "message_template": "root used -u for user %s not in cron.allow",
+            "reason": "Root user is running a cron job for a user not listed in cron.allow",
+            "resolution": "Informational warning; consider adding the user to cron.allow for clarity"
+        },
+        {
+            "function": "allowed",
+            "message_template": "root used -u for user %s in cron.deny",
+            "reason": "Root user is running a cron job for a user listed in cron.deny",
+            "resolution": "Informational warning; consider removing the user from cron.deny if the access is legitimate"
+        }
+    ]
+}

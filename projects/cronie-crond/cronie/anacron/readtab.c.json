@@ -1,0 +1,133 @@
+{
+    "project": "cronie-crond/cronie",
+    "module": "anacron/readtab.c",
+    "summary": "This module handles parsing of the anacrontab file, which contains job definitions for scheduled tasks. It reads environment variables and job specifications, validates their syntax, and arranges jobs for execution according to their timing specifications.",
+    "logs": [
+        {
+            "function": "xmalloc",
+            "message_template": "Memory exhausted",
+            "reason": "Logs a fatal error when memory allocation fails, which would happen if the system is out of memory.",
+            "resolution": "Verify sufficient system memory is available. Consider increasing system memory or reducing the number of concurrent processes."
+        },
+        {
+            "function": "read_tab_line",
+            "message_template": "Error reading %s",
+            "reason": "Logs a fatal error when there is a problem reading the anacrontab file. This could happen due to file permissions, corruption, or I/O errors.",
+            "resolution": "Check file permissions and ownership of the anacrontab file. Verify the file exists and is readable by the cronie service. Look for disk errors or filesystem issues."
+        },
+        {
+            "function": "job_arg_num",
+            "message_template": "fnmatch() error",
+            "reason": "Logs a fatal error when the fnmatch() function (used for pattern matching) encounters an error when comparing job identifiers.",
+            "resolution": "This is likely a programming error or a system-level issue with the pattern matching function. Report the issue to the cronie developers with the exact context in which it occurred."
+        },
+        {
+            "function": "register_env",
+            "message_template": "Cannot allocate memory.",
+            "reason": "Logs a fatal error when memory allocation fails during environment variable registration.",
+            "resolution": "Verify sufficient system memory is available. Consider increasing system memory or reducing the number of concurrent processes."
+        },
+        {
+            "function": "register_env",
+            "message_template": "on line %d: %s",
+            "reason": "Logs debug information about an environment variable assignment processed from the anacrontab file.",
+            "resolution": "This is an informational debug message. No resolution required."
+        },
+        {
+            "function": "register_job",
+            "message_template": "%s: number out of range on line %d, skipping",
+            "reason": "Logs a warning when a job definition contains a period or delay value that is outside the acceptable range. The job will be skipped.",
+            "resolution": "Edit the anacrontab file and correct the period or delay values on the specified line to be within the acceptable range (positive integers within system limits)."
+        },
+        {
+            "function": "register_job",
+            "message_template": "Cannot allocate memory.",
+            "reason": "Logs a fatal error when memory allocation fails while registering a new job.",
+            "resolution": "Verify sufficient system memory is available. Consider increasing system memory or reducing the number of concurrent processes."
+        },
+        {
+            "function": "register_job",
+            "message_template": "Read job - period=%d, delay=%d, ident=%s, command=%s",
+            "reason": "Logs debug information about a job that has been successfully parsed and registered.",
+            "resolution": "This is an informational debug message. No resolution required."
+        },
+        {
+            "function": "register_period_job",
+            "message_template": "%s: number out of range on line %d, skipping",
+            "reason": "Logs a warning when a job definition with a named period contains a delay value that is outside the acceptable range. The job will be skipped.",
+            "resolution": "Edit the anacrontab file and correct the delay value on the specified line to be within the acceptable range (positive integers within system limits)."
+        },
+        {
+            "function": "register_period_job",
+            "message_template": "Cannot allocate memory.",
+            "reason": "Logs a fatal error when memory allocation fails while registering a new job with a named period.",
+            "resolution": "Verify sufficient system memory is available. Consider increasing system memory or reducing the number of concurrent processes."
+        },
+        {
+            "function": "register_period_job",
+            "message_template": "%s: Unknown named period on line %d, skipping",
+            "reason": "Logs a warning when a job definition uses an unrecognized named period. Only @monthly, @yearly, @annually, @daily, and @weekly are supported.",
+            "resolution": "Edit the anacrontab file and correct the named period on the specified line to use one of the supported values (@monthly, @yearly, @annually, @daily, or @weekly)."
+        },
+        {
+            "function": "register_period_job",
+            "message_template": "Read job - period %d, delay=%d, ident%s, command=%s",
+            "reason": "Logs debug information about a job with a named period that has been successfully parsed and registered.",
+            "resolution": "This is an informational debug message. No resolution required."
+        },
+        {
+            "function": "parse_tab_line",
+            "message_template": "line %d empty",
+            "reason": "Logs debug information when an empty line or comment is encountered in the anacrontab file.",
+            "resolution": "This is an informational debug message. No resolution required."
+        },
+        {
+            "function": "parse_tab_line",
+            "message_template": "Jobs will start in the %02d:00-%02d:00 range.",
+            "reason": "Logs debug information about the START_HOURS_RANGE configuration, which defines the time window when jobs are allowed to start.",
+            "resolution": "This is an informational debug message. No resolution required."
+        },
+        {
+            "function": "parse_tab_line",
+            "message_template": "Randomized delay set: %d",
+            "reason": "Logs debug information about the calculated random delay based on the RANDOM_DELAY configuration.",
+            "resolution": "This is an informational debug message. No resolution required."
+        },
+        {
+            "function": "parse_tab_line",
+            "message_template": "Invalid syntax in %s on line %d - skipping this line",
+            "reason": "Logs a warning when a line in the anacrontab file has invalid syntax and cannot be parsed correctly. The line will be skipped.",
+            "resolution": "Edit the anacrontab file and correct the syntax error on the specified line according to the anacrontab format requirements."
+        },
+        {
+            "function": "parse_tab_line",
+            "message_template": "Regex error reading %s",
+            "reason": "Logs a fatal error when there is a problem with the regular expression matching during parsing of the anacrontab file.",
+            "resolution": "This is likely a programming error in the regular expressions used for parsing. Report the issue to the cronie developers with the exact context in which it occurred."
+        },
+        {
+            "function": "read_tab",
+            "message_template": "Can't chdir to original cwd",
+            "reason": "Logs a fatal error when the program cannot change directory back to the original working directory. This could happen due to filesystem issues or permissions.",
+            "resolution": "Check directory permissions and verify the filesystem is working correctly. Ensure the current working directory still exists and is accessible by the cronie service."
+        },
+        {
+            "function": "read_tab",
+            "message_template": "Can't chdir to %s",
+            "reason": "Logs a fatal error when the program cannot change directory to the spool directory. This could happen due to filesystem issues or permissions.",
+            "resolution": "Check permissions and ownership of the spool directory (typically /var/spool/anacron). Ensure it exists and is accessible by the cronie service."
+        },
+        {
+            "function": "read_tab",
+            "message_template": "Error opening %s",
+            "reason": "Logs a fatal error when the program cannot open the anacrontab file for reading. This could happen due to file permissions, non-existence, or filesystem issues.",
+            "resolution": "Verify the anacrontab file exists and has correct permissions and ownership. Ensure it is readable by the cronie service."
+        },
+        {
+            "function": "read_tab",
+            "message_template": "Error closing %s",
+            "reason": "Logs a fatal error when the program encounters an error while closing the anacrontab file. This might indicate a filesystem issue.",
+            "resolution": "Check for filesystem errors or disk issues that might prevent file operations from completing. This could be an early indicator of disk failures."
+        }
+    ]
+}

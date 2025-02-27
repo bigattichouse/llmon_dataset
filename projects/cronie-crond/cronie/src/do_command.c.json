@@ -1,0 +1,193 @@
+{
+    "project": "cronie-crond/cronie",
+    "module": "do_command.c",
+    "summary": "This module handles the execution of cron jobs. It creates child processes to run commands, handles input/output redirection through pipes, and manages sending command output via email to users based on MAILTO settings.",
+    "logs": [
+        {
+            "function": "do_command",
+            "message_template": "[%ld] do_command(%s, (%s,%ld,%ld))\n",
+            "reason": "Debug message showing the PID and command details being executed",
+            "resolution": "Informational debug message, no resolution required"
+        },
+        {
+            "function": "do_command",
+            "message_template": "CAN'T FORK",
+            "reason": "Logs an error when the system cannot fork a new process to execute a command",
+            "resolution": "Check system resource limits, reduce system load, or increase process limits"
+        },
+        {
+            "function": "do_command",
+            "message_template": "[%ld] child process done, exiting\n",
+            "reason": "Debug message indicating a child process has completed its execution",
+            "resolution": "Informational debug message, no resolution required"
+        },
+        {
+            "function": "do_command",
+            "message_template": "[%ld] main process returning to work\n",
+            "reason": "Debug message showing the main cron process is continuing execution",
+            "resolution": "Informational debug message, no resolution required"
+        },
+        {
+            "function": "child_process",
+            "message_template": "[%ld] child_process('%s')\n",
+            "reason": "Debug message showing the command being processed by a child process",
+            "resolution": "Informational debug message, no resolution required"
+        },
+        {
+            "function": "child_process",
+            "message_template": "The environment variable 'MAILTO' could not be expanded. The non-expanded value will be used.",
+            "reason": "Warning when the MAILTO environment variable contains syntax that cannot be expanded",
+            "resolution": "Check the MAILTO value in the crontab for proper syntax and ensure it doesn't contain invalid variables"
+        },
+        {
+            "function": "child_process",
+            "message_template": "The environment variable 'MAILFROM' could not be expanded. The non-expanded value will be used.",
+            "reason": "Warning when the MAILFROM environment variable contains syntax that cannot be expanded",
+            "resolution": "Check the MAILFROM value in the crontab for proper syntax and ensure it doesn't contain invalid variables"
+        },
+        {
+            "function": "child_process",
+            "message_template": "PIPE() FAILED",
+            "reason": "Error when creating pipes for communication between parent and child processes fails",
+            "resolution": "Check system resource limits for open file descriptors or restart the cron service"
+        },
+        {
+            "function": "child_process",
+            "message_template": "CAN'T FORK",
+            "reason": "Error when the system cannot fork to create a grandchild process for command execution",
+            "resolution": "Check system resource limits, reduce system load, or increase process limits"
+        },
+        {
+            "function": "child_process",
+            "message_template": "CMD",
+            "reason": "Logs the command being executed by a cron job",
+            "resolution": "Informational log, no resolution required"
+        },
+        {
+            "function": "child_process",
+            "message_template": "debug DTEST is on, not exec'ing command.\n",
+            "reason": "Debug message indicating command execution is skipped due to DTEST debug flag",
+            "resolution": "Informational debug message, disable DTEST flag if actual command execution is desired"
+        },
+        {
+            "function": "child_process",
+            "message_template": "\tcmd='%s' shell='%s'\n",
+            "reason": "Debug message showing the command and shell that would be executed",
+            "resolution": "Informational debug message, no resolution required"
+        },
+        {
+            "function": "child_process",
+            "message_template": "execl: couldn't exec `%s'\n",
+            "reason": "Error when the system cannot execute the specified shell",
+            "resolution": "Verify the shell path exists and is executable, check permissions, or update the SHELL environment variable"
+        },
+        {
+            "function": "child_process",
+            "message_template": "[%ld] child continues, closing pipes\n",
+            "reason": "Debug message showing pipe cleanup in the child process",
+            "resolution": "Informational debug message, no resolution required"
+        },
+        {
+            "function": "child_process",
+            "message_template": "[%ld] child2 sending data to grandchild\n",
+            "reason": "Debug message indicating data is being sent to the grandchild process",
+            "resolution": "Informational debug message, no resolution required"
+        },
+        {
+            "function": "child_process",
+            "message_template": "[%ld] child2 done sending to grandchild\n",
+            "reason": "Debug message showing completion of data transfer to the grandchild",
+            "resolution": "Informational debug message, no resolution required"
+        },
+        {
+            "function": "child_process",
+            "message_template": "[%ld] child reading output from grandchild\n",
+            "reason": "Debug message indicating the child is reading output from the grandchild",
+            "resolution": "Informational debug message, no resolution required"
+        },
+        {
+            "function": "child_process",
+            "message_template": "[%ld] got data (%x:%c) from grandchild\n",
+            "reason": "Debug message showing data received from the grandchild process",
+            "resolution": "Informational debug message, no resolution required"
+        },
+        {
+            "function": "child_process",
+            "message_template": "mailcmd snprintf failed\n",
+            "reason": "Error when formatting the mail command string fails",
+            "resolution": "This is a critical internal error. Check memory allocation and consider restarting the cron service"
+        },
+        {
+            "function": "child_process",
+            "message_template": "mailcmd too long\n",
+            "reason": "Error when the mail command string exceeds the maximum allowed length",
+            "resolution": "Check your mail configuration settings and reduce the length of paths/parameters used"
+        },
+        {
+            "function": "child_process",
+            "message_template": "error invalid job pid",
+            "reason": "Error when trying to get the status of a job with an invalid PID",
+            "resolution": "This is an internal error that may indicate process management issues. Restart the cron service if it persists"
+        },
+        {
+            "function": "child_process",
+            "message_template": "[%ld] aborting pipe to mail\n",
+            "reason": "Debug message indicating the mail pipe is being aborted",
+            "resolution": "Informational debug message, no resolution required"
+        },
+        {
+            "function": "child_process",
+            "message_template": "[%ld] closing pipe to mail\n",
+            "reason": "Debug message showing the mail pipe is being closed",
+            "resolution": "Informational debug message, no resolution required"
+        },
+        {
+            "function": "child_process",
+            "message_template": "mailed %d byte%s of output but got status 0x%04x\n",
+            "reason": "Error when mailing the command output fails",
+            "resolution": "Check mail server configuration, connectivity, and permissions to ensure mail delivery works properly"
+        },
+        {
+            "function": "child_process",
+            "message_template": "[%ld] got EOF from grandchild\n",
+            "reason": "Debug message indicating the grandchild has closed its output stream",
+            "resolution": "Informational debug message, no resolution required"
+        },
+        {
+            "function": "child_process",
+            "message_template": "[%ld] waiting for grandchild #%d to finish\n",
+            "reason": "Debug message showing the process is waiting for a grandchild to complete",
+            "resolution": "Informational debug message, no resolution required"
+        },
+        {
+            "function": "child_process",
+            "message_template": "[%ld] no more grandchildren--mail written?\n",
+            "reason": "Debug message when no more child processes are found to wait for",
+            "resolution": "Informational debug message, no resolution required"
+        },
+        {
+            "function": "child_process",
+            "message_template": "[%ld] grandchild #%ld finished, status=%04x",
+            "reason": "Debug message showing a grandchild has completed with the given status",
+            "resolution": "Informational debug message, no resolution required"
+        },
+        {
+            "function": "child_process",
+            "message_template": ", dumped core",
+            "reason": "Debug message indicating a process dumped core, likely due to a crash",
+            "resolution": "Check the core dump and application logs to diagnose the crash; may indicate a bug in the executed command"
+        },
+        {
+            "function": "child_process",
+            "message_template": "**Unknown command**",
+            "reason": "Log message when the command being executed cannot be determined or is invalid",
+            "resolution": "Check the crontab entry for syntax errors or corruption in the command field"
+        },
+        {
+            "function": "safe_p",
+            "message_template": "UNSAFE",
+            "reason": "Security log indicating a string was deemed unsafe for use (typically in email addresses)",
+            "resolution": "Check MAILTO and MAILFROM settings for unsafe characters or potential injection attempts; use only valid email addresses"
+        }
+    ]
+}

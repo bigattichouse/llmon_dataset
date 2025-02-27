@@ -1,0 +1,55 @@
+{
+    "project": "cronie-crond/cronie",
+    "module": "../working/cronie-crond/cronie/anacron/global.h",
+    "summary": "This header file defines the global structures, constants, and function prototypes for Anacron, a program that runs commands periodically. It establishes the logging framework through various functions like explain(), complain(), and die() with different severity levels, and defines data structures for job records and environment variables.",
+    "logs": [
+        {
+            "function": "explain",
+            "message_template": "Format string provided as first argument",
+            "reason": "Logs informational messages at EXPLAIN_LEVEL (LOG_NOTICE) to provide status updates about normal operations",
+            "resolution": "Informational message, no resolution required. These logs help track the normal operation of Anacron."
+        },
+        {
+            "function": "explain_e",
+            "message_template": "Format string provided as first argument (with error context)",
+            "reason": "Logs informational messages at EXPLAIN_LEVEL (LOG_NOTICE) with additional error context from errno",
+            "resolution": "Informational message with error context. Review system state and configuration if these appear unexpectedly."
+        },
+        {
+            "function": "complain",
+            "message_template": "Format string provided as first argument",
+            "reason": "Logs error messages at COMPLAIN_LEVEL (LOG_ERR) to indicate problems during operation",
+            "resolution": "Error condition detected. Check job configurations, permissions, and system resources to resolve the underlying issue."
+        },
+        {
+            "function": "complain_e",
+            "message_template": "Format string provided as first argument (with error context)",
+            "reason": "Logs error messages at COMPLAIN_LEVEL (LOG_ERR) with additional error context from errno",
+            "resolution": "Error condition with system error details. Use the error context to diagnose file system, permission, or resource problems."
+        },
+        {
+            "function": "die",
+            "message_template": "Format string provided as first argument",
+            "reason": "Logs fatal error messages and terminates the program, indicating unrecoverable errors",
+            "resolution": "Fatal error requiring immediate attention. Check Anacron configuration, system resources, and permissions. Program has terminated."
+        },
+        {
+            "function": "die_e",
+            "message_template": "Format string provided as first argument (with error context)",
+            "reason": "Logs fatal error messages with error context from errno and terminates the program",
+            "resolution": "Fatal error with system error details. Examine the error context to resolve file system, permission, or critical resource issues. Program has terminated."
+        },
+        {
+            "function": "xdebug",
+            "message_template": "Format string provided as first argument",
+            "reason": "Logs debug messages at DEBUG_LEVEL (LOG_DEBUG) when DEBUG is defined, useful for troubleshooting",
+            "resolution": "Debug information, no resolution required. These logs are only present in debug builds and provide detailed information about program execution."
+        },
+        {
+            "function": "xdebug_e",
+            "message_template": "Format string provided as first argument (with error context)",
+            "reason": "Logs debug messages at DEBUG_LEVEL (LOG_DEBUG) with error context when DEBUG is defined",
+            "resolution": "Debug information with error context. These detailed logs are only present in debug builds and can help diagnose subtle issues."
+        }
+    ]
+}

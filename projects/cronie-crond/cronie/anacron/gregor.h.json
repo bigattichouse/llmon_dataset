@@ -1,0 +1,6 @@
+{
+    "project": "cronie-crond/cronie",
+    "module": "../working/cronie-crond/cronie/anacron/gregor.h",
+    "summary": "This header file defines function prototypes for Gregorian calendar calculations used by the Anacron utility to determine day counts and month/year durations. These functions support Anacron's periodic job scheduling capabilities by providing date-based calculations.",
+    "logs": []
+}

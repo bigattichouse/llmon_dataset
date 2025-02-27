@@ -1,0 +1,6 @@
+{
+    "project": "cronie-crond/cronie",
+    "module": "../working/cronie-crond/cronie/anacron/matchrx.c",
+    "summary": "This module provides a utility function for matching regular expressions against strings and extracting substrings that match specific parts of the pattern. It uses the POSIX regex library and handles memory allocation for regex operations.",
+    "logs": []
+}

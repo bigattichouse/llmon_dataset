@@ -1,0 +1,6 @@
+{
+    "project": "cronie-crond/cronie",
+    "module": "../working/cronie-crond/cronie/anacron/matchrx.h",
+    "summary": "This header file declares the match_rx function which is likely used for regular expression matching in the Anacron utility. The function appears to match a string against a regular expression pattern and can capture substrings.",
+    "logs": []
+}

@@ -1,0 +1,517 @@
+{
+    "project": "cronie-crond/cronie",
+    "module": "src/crontab.c",
+    "summary": "This module implements the crontab utility that allows users to install, list, edit, and remove crontab entries. It handles user authentication, command-line parsing, file operations, and ensures proper syntax of crontab files.",
+    "logs": [
+        {
+            "function": "log_it",
+            "message_template": "AUTH",
+            "reason": "Logs an authentication failure when a user attempts to use crontab but is not allowed",
+            "resolution": "Check if the user is listed in cron.allow or cron.deny files. Add the user to cron.allow or remove from cron.deny if they should have access."
+        },
+        {
+            "function": "log_it",
+            "message_template": "LIST",
+            "reason": "Logs when a user lists their crontab",
+            "resolution": "Informational log, no resolution required"
+        },
+        {
+            "function": "log_it",
+            "message_template": "DELETE",
+            "reason": "Logs when a user deletes their crontab",
+            "resolution": "Informational log, no resolution required"
+        },
+        {
+            "function": "log_it",
+            "message_template": "BEGIN EDIT",
+            "reason": "Logs when a user starts editing their crontab",
+            "resolution": "Informational log, no resolution required"
+        },
+        {
+            "function": "log_it",
+            "message_template": "END EDIT",
+            "reason": "Logs when a user finishes editing their crontab",
+            "resolution": "Informational log, no resolution required"
+        },
+        {
+            "function": "log_it",
+            "message_template": "REPLACE",
+            "reason": "Logs when a user replaces their crontab",
+            "resolution": "Informational log, no resolution required"
+        },
+        {
+            "function": "log_it",
+            "message_template": "SET HOST",
+            "reason": "Logs when a user sets the host for their crontab in a cluster",
+            "resolution": "Informational log, no resolution required"
+        },
+        {
+            "function": "log_it",
+            "message_template": "GET HOST",
+            "reason": "Logs when a user retrieves the host for their crontab in a cluster",
+            "resolution": "Informational log, no resolution required"
+        },
+        {
+            "function": "usage",
+            "message_template": "%s: usage error: %s",
+            "reason": "Reports an invalid usage of the crontab command",
+            "resolution": "Check the command syntax and parameters. Run 'crontab -h' to see correct usage."
+        },
+        {
+            "function": "main",
+            "message_template": "You (%s) are not allowed to use this program (%s)",
+            "reason": "User is not allowed to use crontab based on cron.allow/cron.deny",
+            "resolution": "Check the cron.allow and cron.deny files. Add user to cron.allow or remove from cron.deny if they should have permission."
+        },
+        {
+            "function": "main",
+            "message_template": "You (%s) are not allowed to access to (%s) because of pam configuration.",
+            "reason": "User is denied access to crontab by PAM configuration",
+            "resolution": "Check PAM configuration files for cron service. Adjust PAM rules if the user should have access."
+        },
+        {
+            "function": "parse_args",
+            "message_template": "%s: your UID isn't in the passwd file.",
+            "reason": "The user's UID does not exist in the system passwd database",
+            "resolution": "Check if the user account is properly set up in the system. The user may have been deleted while their processes are still running."
+        },
+        {
+            "function": "parse_args",
+            "message_template": "username too long",
+            "reason": "The specified username exceeds the maximum length",
+            "resolution": "Use a shorter username that fits within system limits."
+        },
+        {
+            "function": "parse_args",
+            "message_template": "bad debug option",
+            "reason": "An invalid debug option was specified",
+            "resolution": "Check the debug option value provided. Only valid debugging flags are allowed."
+        },
+        {
+            "function": "parse_args",
+            "message_template": "must be privileged to use -u",
+            "reason": "Non-root user attempted to specify a different user with -u",
+            "resolution": "Only root or users with appropriate privileges can specify crontabs for other users. Run with sudo if needed."
+        },
+        {
+            "function": "parse_args",
+            "message_template": "Access denied by SELinux, must be privileged to use -u",
+            "reason": "SELinux policy prevented access to use -u option",
+            "resolution": "SELinux is preventing the operation. Use a user with appropriate SELinux context, or adjust SELinux policy if needed."
+        },
+        {
+            "function": "parse_args",
+            "message_template": "cannot use -u with -n, -c or -T",
+            "reason": "Incompatible command line options were used together",
+            "resolution": "Review the command options. The -u option cannot be used with -n, -c, or -T. Use separate commands instead."
+        },
+        {
+            "function": "parse_args",
+            "message_template": "%s: user `%s' unknown",
+            "reason": "The specified user does not exist in the passwd database",
+            "resolution": "Check the username for typos. Ensure the user account exists in the system."
+        },
+        {
+            "function": "parse_args",
+            "message_template": "only one operation permitted",
+            "reason": "Multiple operations (list, edit, delete, etc.) were specified",
+            "resolution": "Use only one operation flag (-l, -e, -r, etc.) at a time."
+        },
+        {
+            "function": "parse_args",
+            "message_template": "Cannot obtain SELinux process context",
+            "reason": "Failed to get SELinux context for the current process",
+            "resolution": "Check if SELinux is properly configured. This may indicate issues with the SELinux subsystem."
+        },
+        {
+            "function": "parse_args",
+            "message_template": "must be privileged to set host with -n",
+            "reason": "Non-root user attempted to set host with -n",
+            "resolution": "Only root users can set the host for crontabs in a cluster. Run with sudo if needed."
+        },
+        {
+            "function": "parse_args",
+            "message_template": "cannot use -u with -n or -c",
+            "reason": "Incompatible command line options used together",
+            "resolution": "The -u option cannot be used with -n or -c options. Use separate commands instead."
+        },
+        {
+            "function": "parse_args",
+            "message_template": "unrecognized option",
+            "reason": "An invalid option was provided on the command line",
+            "resolution": "Check the command options. Run 'crontab -h' to see valid options."
+        },
+        {
+            "function": "parse_args",
+            "message_template": "hostname too long",
+            "reason": "The provided hostname exceeds the maximum length",
+            "resolution": "Use a shorter hostname that fits within system limits."
+        },
+        {
+            "function": "parse_args",
+            "message_template": "filename too long",
+            "reason": "The specified filename exceeds the maximum length",
+            "resolution": "Use a shorter filename that fits within system limits."
+        },
+        {
+            "function": "parse_args",
+            "message_template": "file name or - (for stdin) must be specified",
+            "reason": "No filename was provided for the operation",
+            "resolution": "Specify a file name or use - for stdin when using the replace or test options."
+        },
+        {
+            "function": "parse_args",
+            "message_template": "no arguments permitted after this option",
+            "reason": "Extra arguments were provided after an option that doesn't accept them",
+            "resolution": "Check the command syntax. Remove extra arguments that aren't needed."
+        },
+        {
+            "function": "parse_args",
+            "message_template": "swapping uids",
+            "reason": "Debug message when swapping UIDs for file operations",
+            "resolution": "Informational log, no resolution required"
+        },
+        {
+            "function": "list_cmd",
+            "message_template": "path too long",
+            "reason": "The path to the crontab file is too long",
+            "resolution": "Use shorter paths or usernames to stay within system path length limits."
+        },
+        {
+            "function": "list_cmd",
+            "message_template": "no crontab for %s",
+            "reason": "The specified user does not have a crontab",
+            "resolution": "Informational message. Create a crontab for the user if needed."
+        },
+        {
+            "function": "list_cmd",
+            "message_template": "No end-of-line character at the end of file",
+            "reason": "The crontab file doesn't end with a newline",
+            "resolution": "Edit the crontab file to ensure it ends with a newline character for proper processing."
+        },
+        {
+            "function": "delete_cmd",
+            "message_template": "crontab: really delete %s's crontab?",
+            "reason": "Confirmation prompt when deleting a crontab with -i flag",
+            "resolution": "Informational message. Respond Y to confirm deletion or N to cancel."
+        },
+        {
+            "function": "delete_cmd",
+            "message_template": "path too long",
+            "reason": "The path to the crontab file is too long",
+            "resolution": "Use shorter paths or usernames to stay within system path length limits."
+        },
+        {
+            "function": "delete_cmd",
+            "message_template": "no crontab for %s",
+            "reason": "The specified user does not have a crontab to delete",
+            "resolution": "Informational message. No action needed if no crontab should exist."
+        },
+        {
+            "function": "backup_crontab",
+            "message_template": "$XDG_CACHE_HOME path too long",
+            "reason": "The XDG_CACHE_HOME path is too long for backup",
+            "resolution": "Use a shorter XDG_CACHE_HOME path or adjust your environment configuration."
+        },
+        {
+            "function": "backup_crontab",
+            "message_template": "$HOME path too long",
+            "reason": "The HOME path is too long for backup",
+            "resolution": "Use a shorter HOME path or adjust directory structure to reduce path length."
+        },
+        {
+            "function": "backup_crontab",
+            "message_template": "Could not find environment variable XDG_CACHE_HOME or HOME to save the backup",
+            "reason": "Neither XDG_CACHE_HOME nor HOME environment variables are set",
+            "resolution": "Set at least one of these environment variables to enable crontab backups."
+        },
+        {
+            "function": "backup_crontab",
+            "message_template": "backup path too long",
+            "reason": "The calculated backup path is too long",
+            "resolution": "Use shorter paths, usernames, or directory structures to reduce overall path length."
+        },
+        {
+            "function": "backup_crontab",
+            "message_template": "swapping uids",
+            "reason": "Debug message when swapping UIDs for backup operations",
+            "resolution": "Informational log, no resolution required"
+        },
+        {
+            "function": "backup_crontab",
+            "message_template": "Failed to write to the backup file",
+            "reason": "Could not write to the backup file",
+            "resolution": "Check permissions and disk space. Ensure the user has write access to the backup directory."
+        },
+        {
+            "function": "backup_crontab",
+            "message_template": "swapping uids back",
+            "reason": "Debug message when restoring original UIDs after backup",
+            "resolution": "Informational log, no resolution required"
+        },
+        {
+            "function": "backup_crontab",
+            "message_template": "Backup of %s's previous crontab saved to %s",
+            "reason": "Successful backup creation notification",
+            "resolution": "Informational log, no resolution required"
+        },
+        {
+            "function": "check_error",
+            "message_template": "\"%s\":%d: %s",
+            "reason": "Reports a syntax error in the crontab file",
+            "resolution": "Fix the syntax error reported in the crontab file at the specified line."
+        },
+        {
+            "function": "edit_cmd",
+            "message_template": "BEGIN EDIT",
+            "reason": "Marks the start of a crontab edit operation",
+            "resolution": "Informational log, no resolution required"
+        },
+        {
+            "function": "edit_cmd",
+            "message_template": "path too long",
+            "reason": "Path to crontab or temporary file is too long",
+            "resolution": "Use shorter paths or usernames to reduce overall path length."
+        },
+        {
+            "function": "edit_cmd",
+            "message_template": "no crontab for %s - using an empty one",
+            "reason": "No existing crontab found, starting with an empty file",
+            "resolution": "Informational message. A new crontab will be created."
+        },
+        {
+            "function": "edit_cmd",
+            "message_template": "swapping uids",
+            "reason": "Debug message when swapping UIDs for file operations",
+            "resolution": "Informational log, no resolution required"
+        },
+        {
+            "function": "edit_cmd",
+            "message_template": "swapping uids back",
+            "reason": "Debug message when restoring original UIDs",
+            "resolution": "Informational log, no resolution required"
+        },
+        {
+            "function": "edit_cmd",
+            "message_template": "%s: error while writing new crontab to %s",
+            "reason": "Failed to write the new crontab file",
+            "resolution": "Check disk space and permissions. Ensure the spool directory is writable."
+        },
+        {
+            "function": "edit_cmd",
+            "message_template": "%s: %s command line too long",
+            "reason": "The editor command line exceeds maximum length",
+            "resolution": "Use a shorter editor command or path. EDITOR or VISUAL environment variables may be too long."
+        },
+        {
+            "function": "edit_cmd",
+            "message_template": "context_new failed",
+            "reason": "Failed to create new SELinux context",
+            "resolution": "Check if SELinux is properly configured. May indicate issues with SELinux subsystem."
+        },
+        {
+            "function": "edit_cmd",
+            "message_template": "context_range failed",
+            "reason": "Failed to get range from SELinux context",
+            "resolution": "Check if SELinux is properly configured with appropriate ranges."
+        },
+        {
+            "function": "edit_cmd",
+            "message_template": "MLS_LEVEL=%s",
+            "reason": "Sets the Multi-Level Security level for SELinux",
+            "resolution": "Informational log, no resolution required"
+        },
+        {
+            "function": "edit_cmd",
+            "message_template": "%s: waitpid() failed waiting for PID %ld from \"%s\": %s",
+            "reason": "Failed to wait for editor process to complete",
+            "resolution": "Check if the system is under heavy load or if the editor process was terminated abnormally."
+        },
+        {
+            "function": "edit_cmd",
+            "message_template": "%s: wrong PID (%ld != %ld) from \"%s\"",
+            "reason": "Received wrong PID when waiting for editor to complete",
+            "resolution": "This could indicate a system issue or a problem with the editor process. Try again or use a different editor."
+        },
+        {
+            "function": "edit_cmd",
+            "message_template": "%s: \"%s\" exited with status %d",
+            "reason": "Editor process exited with non-zero status",
+            "resolution": "The editor encountered an error. Check editor error messages and try again with a different editor."
+        },
+        {
+            "function": "edit_cmd",
+            "message_template": "%s: \"%s\" killed; signal %d (%score dumped)",
+            "reason": "Editor process was killed by a signal",
+            "resolution": "The editor crashed or was terminated. Check system resources and try again or use a different editor."
+        },
+        {
+            "function": "edit_cmd",
+            "message_template": "%s: illegal crontab",
+            "reason": "The edited crontab file is not a regular file",
+            "resolution": "Editor may have saved the file as a symbolic link or other non-regular file. Edit again and ensure proper saving."
+        },
+        {
+            "function": "edit_cmd",
+            "message_template": "%s: no changes made to crontab",
+            "reason": "No changes were detected in the edited crontab",
+            "resolution": "Informational message. No action needed if no changes were intended."
+        },
+        {
+            "function": "edit_cmd",
+            "message_template": "%s: installing new crontab",
+            "reason": "Installing the newly edited crontab",
+            "resolution": "Informational log, no resolution required"
+        },
+        {
+            "function": "edit_cmd",
+            "message_template": "cannot read new crontab",
+            "reason": "Unable to read the edited crontab file",
+            "resolution": "Check file permissions and disk issues. Try editing again."
+        },
+        {
+            "function": "edit_cmd",
+            "message_template": "Do you want to retry the same edit? (Y/N)",
+            "reason": "Prompt after encountering an error during crontab installation",
+            "resolution": "Respond Y to retry editing or N to abort. Fix any reported syntax errors before retrying."
+        },
+        {
+            "function": "edit_cmd",
+            "message_template": "Enter Y or N",
+            "reason": "Invalid response to retry prompt",
+            "resolution": "Enter either Y (yes) or N (no) to respond to the prompt."
+        },
+        {
+            "function": "edit_cmd",
+            "message_template": "%s: edits left in %s",
+            "reason": "User aborted installation, edited file remains",
+            "resolution": "The edited file is left for reference. You can attempt to edit it again later."
+        },
+        {
+            "function": "edit_cmd",
+            "message_template": "%s: panic: bad switch() in replace_cmd()",
+            "reason": "Internal error in replace_cmd function",
+            "resolution": "This indicates a programming error. Report the issue to the cronie maintainers."
+        },
+        {
+            "function": "edit_cmd",
+            "message_template": "END EDIT",
+            "reason": "Marks the end of a crontab edit operation",
+            "resolution": "Informational log, no resolution required"
+        },
+        {
+            "function": "test_cmd",
+            "message_template": "Invalid crontab file. Syntax issues were found.",
+            "reason": "Syntax check failed for the crontab file",
+            "resolution": "Fix the syntax errors reported in the crontab file before installing it."
+        },
+        {
+            "function": "test_cmd",
+            "message_template": "No syntax issues were found in the crontab file.",
+            "reason": "Crontab file passed syntax check",
+            "resolution": "Informational log, no resolution required"
+        },
+        {
+            "function": "replace_cmd",
+            "message_template": "path too long",
+            "reason": "Path to crontab or temporary file is too long",
+            "resolution": "Use shorter paths or usernames to reduce overall path length."
+        },
+        {
+            "function": "replace_cmd",
+            "message_template": "SELINUX_ROLE_TYPE=%s",
+            "reason": "Sets the SELinux role type for the crontab",
+            "resolution": "Informational log, no resolution required"
+        },
+        {
+            "function": "replace_cmd",
+            "message_template": "%s: error while writing new crontab to %s",
+            "reason": "Failed to write the new crontab file",
+            "resolution": "Check disk space and permissions. Ensure the spool directory is writable."
+        },
+        {
+            "function": "replace_cmd",
+            "message_template": "Invalid crontab file, can't install.",
+            "reason": "Crontab file contains syntax errors and cannot be installed",
+            "resolution": "Fix the syntax errors reported in the crontab file before installing it."
+        },
+        {
+            "function": "replace_cmd",
+            "message_template": "%s: error renaming %s to %s",
+            "reason": "Failed to rename temporary file to final crontab file",
+            "resolution": "Check permissions on the spool directory. Ensure no other process is using the crontab file."
+        },
+        {
+            "function": "check_syntax",
+            "message_template": "%s: Cannot allocate memory.",
+            "reason": "Memory allocation failed during syntax check",
+            "resolution": "The system may be low on memory. Close other applications or add more RAM to the system."
+        },
+        {
+            "function": "check_syntax",
+            "message_template": "too much non-parseable content (comments, empty lines, spaces)",
+            "reason": "Crontab contains too many lines that aren't entries",
+            "resolution": "Reduce the number of comment lines, empty lines, or whitespace-only lines in the crontab."
+        },
+        {
+            "function": "check_syntax",
+            "message_template": "premature EOF",
+            "reason": "Unexpected end of file in the crontab",
+            "resolution": "The last line of the crontab may be incomplete. Ensure all entries are properly formatted."
+        },
+        {
+            "function": "check_syntax",
+            "message_template": "There are too many environment variables in the crontab file. Limit: %d",
+            "reason": "Crontab contains more environment variables than allowed",
+            "resolution": "Reduce the number of environment variable definitions in the crontab file to below the limit."
+        },
+        {
+            "function": "check_syntax",
+            "message_template": "There are too many entries in the crontab file. Limit: %d",
+            "reason": "Crontab contains more job entries than allowed",
+            "resolution": "Reduce the number of job entries in the crontab file to below the limit."
+        },
+        {
+            "function": "hostset_cmd",
+            "message_template": "path too long",
+            "reason": "Path to host file is too long",
+            "resolution": "Use shorter paths or hostnames to reduce overall path length."
+        },
+        {
+            "function": "hostset_cmd",
+            "message_template": "%s: error while writing to %s",
+            "reason": "Failed to write to the host file",
+            "resolution": "Check disk space and permissions. Ensure the spool directory is writable."
+        },
+        {
+            "function": "hostset_cmd",
+            "message_template": "%s: error renaming %s to %s",
+            "reason": "Failed to rename temporary host file to final host file",
+            "resolution": "Check permissions on the spool directory. Ensure no other process is using the host file."
+        },
+        {
+            "function": "hostget_cmd",
+            "message_template": "path too long",
+            "reason": "Path to host file is too long",
+            "resolution": "Use shorter paths or hostnames to reduce overall path length."
+        },
+        {
+            "function": "hostget_cmd",
+            "message_template": "File %s not found",
+            "reason": "The host file does not exist",
+            "resolution": "The host hasn't been set yet. Use crontab -n to set the host first."
+        },
+        {
+            "function": "hostget_cmd",
+            "message_template": "Error reading from %s",
+            "reason": "Failed to read from the host file",
+            "resolution": "Check permissions on the host file. File may be corrupted or inaccessible."
+        },
+        {
+            "function": "poke_daemon",
+            "message_template": "crontab: can't update mtime on spooldir",
+            "reason": "Failed to update modification time on the cron spool directory",
+            "resolution": "Check permissions on the spool directory. The cron daemon may not detect the changes immediately."
+        }
+    ]
+}

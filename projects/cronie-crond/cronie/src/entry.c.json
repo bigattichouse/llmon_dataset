@@ -1,0 +1,115 @@
+{
+    "project": "cronie-crond/cronie",
+    "module": "entry.c",
+    "summary": "This module handles parsing and loading of crontab entries from files, converting time specifications into internal bit structures, and managing user permissions and environment variables for cron jobs.",
+    "logs": [
+        {
+            "function": "load_entry",
+            "message_template": "Only privileged user can disable logging",
+            "reason": "Logs an error when a non-privileged user attempts to disable syslog messages about command execution by using the '-' option at the start of a crontab entry.",
+            "resolution": "Only root or the system crontab can use the '-' option. Regular users should remove the '-' prefix from their crontab entries if logging is desired."
+        },
+        {
+            "function": "load_entry",
+            "message_template": "bad value of RANDOM_DELAY",
+            "reason": "Logs an error when the RANDOM_DELAY environment variable has an invalid value (negative or greater than 24*60 minutes).",
+            "resolution": "Ensure RANDOM_DELAY is set to a positive integer value that's at most 1440 (24 hours * 60 minutes)."
+        },
+        {
+            "function": "load_entry",
+            "message_template": "can't set SHELL",
+            "reason": "Logs an error when unable to set the SHELL environment variable for a cron job, likely due to memory allocation failure.",
+            "resolution": "Check system memory usage and possibly increase available memory or reduce the size of the environment."
+        },
+        {
+            "function": "load_entry",
+            "message_template": "can't set PATH",
+            "reason": "Logs an error when unable to set the PATH environment variable for a cron job, likely due to memory allocation failure.",
+            "resolution": "Check system memory usage and possibly increase available memory or reduce the size of the environment."
+        },
+        {
+            "function": "load_entry",
+            "message_template": "can't set LOGNAME",
+            "reason": "Logs an error when unable to set the LOGNAME environment variable for a cron job, likely due to memory allocation failure.",
+            "resolution": "Check system memory usage and possibly increase available memory or reduce the size of the environment."
+        },
+        {
+            "function": "load_entry",
+            "message_template": "can't set USER",
+            "reason": "Logs an error when unable to set the USER environment variable for a cron job, likely due to memory allocation failure.",
+            "resolution": "Check system memory usage and possibly increase available memory or reduce the size of the environment."
+        },
+        {
+            "function": "get_range",
+            "message_template": "Warning: Step size %i higher than possible maximum of %i",
+            "reason": "Warns when a step size in a crontab time specification is larger than the available range, making the specification ineffective.",
+            "resolution": "Adjust the step size in the crontab entry to be smaller than or equal to the range it's applied to. For example, use */15 instead of */60 for minutes."
+        },
+        {
+            "function": "load_entry",
+            "message_template": "no error",
+            "reason": "Indicates no error was encountered during crontab entry parsing.",
+            "resolution": "Information message, no resolution required."
+        },
+        {
+            "function": "load_entry",
+            "message_template": "bad minute",
+            "reason": "Logs an error when the minute field in a crontab entry has invalid syntax or values outside the allowed range (0-59).",
+            "resolution": "Correct the minute field in the crontab entry. Valid values are 0-59, *, or expressions like */5, 1-10, etc."
+        },
+        {
+            "function": "load_entry",
+            "message_template": "bad hour",
+            "reason": "Logs an error when the hour field in a crontab entry has invalid syntax or values outside the allowed range (0-23).",
+            "resolution": "Correct the hour field in the crontab entry. Valid values are 0-23, *, or expressions like */2, 9-17, etc."
+        },
+        {
+            "function": "load_entry",
+            "message_template": "bad day-of-month",
+            "reason": "Logs an error when the day-of-month field in a crontab entry has invalid syntax or values outside the allowed range (1-31).",
+            "resolution": "Correct the day-of-month field in the crontab entry. Valid values are 1-31, *, or expressions like */5, 10-20, etc."
+        },
+        {
+            "function": "load_entry",
+            "message_template": "bad month",
+            "reason": "Logs an error when the month field in a crontab entry has invalid syntax or values outside the allowed range (1-12 or names).",
+            "resolution": "Correct the month field in the crontab entry. Valid values are 1-12, month names (jan-dec), *, or expressions like */3, 4-10, etc."
+        },
+        {
+            "function": "load_entry",
+            "message_template": "bad day-of-week",
+            "reason": "Logs an error when the day-of-week field in a crontab entry has invalid syntax or values outside the allowed range (0-7 or names).",
+            "resolution": "Correct the day-of-week field in the crontab entry. Valid values are 0-7 (0 and 7 are Sunday), day names (sun-sat), *, or expressions like */2, 1-5, etc."
+        },
+        {
+            "function": "load_entry",
+            "message_template": "bad command",
+            "reason": "Logs an error when the command part of a crontab entry is missing or invalid.",
+            "resolution": "Ensure the crontab entry includes a valid command to execute after the time fields. Check for typos or missing commands."
+        },
+        {
+            "function": "load_entry",
+            "message_template": "bad time specifier",
+            "reason": "Logs an error when using an @-prefixed time specifier that's not recognized (e.g., not @hourly, @daily, etc.).",
+            "resolution": "Use only valid @-prefixed time specifiers: @reboot, @yearly, @annually, @monthly, @weekly, @daily, @midnight, @hourly."
+        },
+        {
+            "function": "load_entry",
+            "message_template": "bad username",
+            "reason": "Logs an error when the username in a system crontab entry is invalid or missing.",
+            "resolution": "Ensure system crontab entries include a valid username that exists on the system before the command."
+        },
+        {
+            "function": "load_entry",
+            "message_template": "bad option",
+            "reason": "Logs an error when an invalid crontab option flag is used (only -n is currently supported).",
+            "resolution": "Use only supported option flags. Currently, only -n (to send mail only on error) is supported. Remove any unsupported flags."
+        },
+        {
+            "function": "load_entry",
+            "message_template": "out of memory",
+            "reason": "Logs an error when memory allocation fails during crontab entry parsing, likely due to system memory constraints.",
+            "resolution": "Check system memory usage and possibly increase available memory. If the issue persists, consider simplifying crontab entries or reducing their number."
+        }
+    ]
+}
