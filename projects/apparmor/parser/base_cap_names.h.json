@@ -1,0 +1,6 @@
+{
+    "project": "apparmor",
+    "module": "../working/apparmor/parser/base_cap_names.h",
+    "summary": "Defines a mapping table for Linux capabilities used by AppArmor, associating string names with their corresponding numerical values, backmap values, and feature flags. This header file provides the foundation for capability-based access control in AppArmor profiles.",
+    "logs": []
+}

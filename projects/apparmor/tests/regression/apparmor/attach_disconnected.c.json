@@ -1,0 +1,73 @@
+{
+    "project": "apparmor",
+    "module": "../working/apparmor/tests/regression/apparmor/attach_disconnected.c",
+    "summary": "This module tests AppArmor's attach_disconnected permission by creating a new mount namespace, performing a pivot_root operation, and then attempting to connect to a Unix socket. It verifies that the program can access a disconnected Unix socket only if it has the appropriate attach_disconnected permission.",
+    "logs": [
+        {
+            "function": "pivot_and_get_unix_clientfd",
+            "message_template": "FAIL - asprintf socket_put_old",
+            "reason": "Logs an error when asprintf fails to allocate memory for the socket path in the new root",
+            "resolution": "Check for system memory issues or extremely long path names that might cause memory allocation failures."
+        },
+        {
+            "function": "pivot_and_get_unix_clientfd",
+            "message_template": "FAIL - mkdir new_root",
+            "reason": "Logs an error when mkdir fails to create the new root directory",
+            "resolution": "Verify file system permissions, ensure the parent directory exists and is writable, and check for available disk space."
+        },
+        {
+            "function": "pivot_and_get_unix_clientfd",
+            "message_template": "FAIL - mount disk_img",
+            "reason": "Logs an error when mounting the disk image fails",
+            "resolution": "Verify that the disk image exists, is a valid ext2 filesystem, and that the user has sufficient permissions to perform mount operations."
+        },
+        {
+            "function": "pivot_and_get_unix_clientfd",
+            "message_template": "FAIL - chdir",
+            "reason": "Logs an error when changing directory to the new root fails",
+            "resolution": "Check if the new_root directory exists and is accessible. Ensure there are no permission issues preventing access to the directory."
+        },
+        {
+            "function": "pivot_and_get_unix_clientfd",
+            "message_template": "FAIL - mkdir put_old",
+            "reason": "Logs an error when creating the put_old directory fails",
+            "resolution": "Verify filesystem permissions and ensure the directory doesn't already exist. Check for available disk space and proper permissions."
+        },
+        {
+            "function": "pivot_and_get_unix_clientfd",
+            "message_template": "FAIL - pivot_root",
+            "reason": "Logs an error when the pivot_root system call fails, which is crucial for the test of disconnected paths",
+            "resolution": "Ensure the kernel supports pivot_root, verify that both new_root and put_old are on the same filesystem, and check that the caller has the CAP_SYS_ADMIN capability."
+        },
+        {
+            "function": "main",
+            "message_template": "FAIL - usage: %s <UNIX_SOCKET_PATH> <DISK_IMG> <NEW_ROOT> <PUT_OLD>\n\n  <UNIX_SOCKET_PATH>\tThe path of the unix socket the server will connect to\n  <DISK_IMG>\t\tThe loop device pointing to the disk image\n  <NEW_ROOT>\t\tThe new_root param of pivot_root()\n  <PUT_OLD>\t\tThe put_old param of pivot_root()\n\nThis program clones itself in a new mount namespace, \ndoes a pivot and then connects to the <UNIX_SOCKET_PATH>.\nThe test fails if the program does not have attach_disconnected\npermission to access the unix_socket which is disconnected.\n",
+            "reason": "Displays usage information when the program is run with incorrect arguments",
+            "resolution": "Provide the correct number of arguments as specified in the usage message. Ensure all required paths are valid and accessible."
+        },
+        {
+            "function": "main",
+            "message_template": "FAIL - clone",
+            "reason": "Logs an error when the clone system call fails, preventing the creation of a new mount namespace",
+            "resolution": "Check system resources like available memory. Verify that the kernel supports namespace operations and that the user has sufficient permissions."
+        },
+        {
+            "function": "main",
+            "message_template": "FAIL - waitpid",
+            "reason": "Logs an error when waitpid fails to obtain the status of the child process",
+            "resolution": "This is usually a system-level issue. Verify that the child process exists and that there are no system resource limitations affecting process management."
+        },
+        {
+            "function": "main",
+            "message_template": "FAIL - child didn't exit\n",
+            "reason": "Logs an error when the child process terminates abnormally without properly exiting",
+            "resolution": "Check for signals that might be terminating the child process. Review logs for any segmentation faults or other crashes in the child process."
+        },
+        {
+            "function": "main",
+            "message_template": "PASS\n",
+            "reason": "Indicates successful test completion, meaning the program had the necessary attach_disconnected permission to access the disconnected Unix socket",
+            "resolution": "Information log, no resolution required. This indicates the AppArmor permission is correctly configured."
+        }
+    ]
+}

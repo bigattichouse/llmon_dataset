@@ -1,0 +1,31 @@
+{
+    "project": "apparmor",
+    "module": "../working/apparmor/tests/regression/apparmor/syscall_ptrace.c",
+    "summary": "This module implements a regression test for AppArmor's ptrace syscall functionality in a confined environment. It forks a child process, attempts to change its security hat, and then tries to use ptrace to verify proper security behavior.",
+    "logs": [
+        {
+            "function": "main",
+            "message_template": "usage: %s\n",
+            "reason": "Displays an error message when the program is invoked with incorrect number of arguments. The test expects exactly one argument for the changehat profile.",
+            "resolution": "Run the program with exactly one argument specifying the profile name to be used with changehat."
+        },
+        {
+            "function": "main",
+            "message_template": "FAIL: changehat %s failed - %s\n",
+            "reason": "Logs a failure when the child process cannot change to the specified AppArmor hat profile. This could happen due to misconfigured AppArmor profiles or permissions issues.",
+            "resolution": "Verify that AppArmor is properly configured, check that the specified hat exists in the profile, and ensure the process has appropriate permissions to change hats."
+        },
+        {
+            "function": "main",
+            "message_template": "FAIL: ptrace failed - %s\n",
+            "reason": "Indicates that the ptrace operation failed in the child process. In this test, this might actually be expected behavior depending on the security policy being tested.",
+            "resolution": "If this is an expected failure based on the security policy, no resolution is needed. Otherwise, check AppArmor policies to ensure proper configuration for ptrace operations."
+        },
+        {
+            "function": "main",
+            "message_template": "PASS\n",
+            "reason": "Indicates successful execution of the ptrace operation in the child process, which might not be expected if the security policy should prevent ptrace.",
+            "resolution": "If ptrace should be prevented by the security policy but succeeded, review and adjust the AppArmor profile to properly restrict ptrace operations."
+        }
+    ]
+}

@@ -1,0 +1,25 @@
+{
+    "project": "apparmor",
+    "module": "../working/apparmor/tests/regression/apparmor/dropprivs_wrapper.c",
+    "summary": "A wrapper utility that drops privileges to the 'nobody' user before executing another program. Used in AppArmor regression tests to run test programs without root privileges.",
+    "logs": [
+        {
+            "function": "main",
+            "message_template": "usage: %s testprogram [arguments]\n",
+            "reason": "Displayed when the program is called without sufficient arguments (at least one test program name is required).",
+            "resolution": "Provide the required command line arguments - the name of the test program to run followed by any arguments for that program."
+        },
+        {
+            "function": "main",
+            "message_template": "FAIL: attempted to drop privs",
+            "reason": "Generated when the setresuid() call fails to drop privileges to the 'nobody' user.",
+            "resolution": "Check if the 'nobody' user exists in the system and if the program has sufficient permissions to change its UID. The error may also occur if the system has security policies preventing privilege changes."
+        },
+        {
+            "function": "main",
+            "message_template": "FAIL: malloc",
+            "reason": "Generated when memory allocation fails when trying to create space for the program name.",
+            "resolution": "This typically indicates the system is critically low on memory. Free up system resources or increase available memory."
+        }
+    ]
+}

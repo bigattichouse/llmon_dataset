@@ -1,0 +1,43 @@
+{
+    "project": "apparmor",
+    "module": "../working/apparmor/tests/regression/apparmor/dbus_eavesdrop.c",
+    "summary": "A utility program derived from dbus-send that attempts to eavesdrop on a D-Bus (system or session). It is used as part of the AppArmor regression test framework to verify D-Bus access controls.",
+    "logs": [
+        {
+            "function": "usage",
+            "message_template": "Usage: dbus_eavesdrop [ADDRESS]\n\n    ADDRESS\t\t--system, --session (default), or --address=ADDR\n",
+            "reason": "Displays help information when the program is invoked with incorrect arguments or with the --help flag",
+            "resolution": "Informational message. Use the command with the proper syntax as described in the usage information."
+        },
+        {
+            "function": "do_eavesdrop",
+            "message_template": "FAIL: %s: %s\n",
+            "reason": "Indicates a failure when attempting to add an eavesdropping match rule to the D-Bus connection. The error name and message from D-Bus are included.",
+            "resolution": "This typically indicates permission issues with D-Bus. Check if the running user has sufficient permissions for eavesdropping on the bus, or if AppArmor rules are preventing the eavesdropping operation."
+        },
+        {
+            "function": "main",
+            "message_template": "FAIL: \"--address=\" requires an ADDRESS\n",
+            "reason": "Indicates the --address argument was provided without specifying an actual address value",
+            "resolution": "Correct the command by providing a valid address after the --address= argument, e.g., --address=unix:path=/path/to/socket"
+        },
+        {
+            "function": "main",
+            "message_template": "FAIL: \"--address\" may not be used with \"--system\" or \"--session\"\n",
+            "reason": "Indicates an invalid combination of arguments where --address was used together with either --system or --session flags",
+            "resolution": "Choose either a specific address with --address= OR specify the bus type with --system or --session, but not both."
+        },
+        {
+            "function": "main",
+            "message_template": "FAIL: Failed to open connection to \"%s\" message bus: %s\n",
+            "reason": "Indicates a failure when attempting to connect to the specified D-Bus (system, session, or custom address)",
+            "resolution": "Verify that the D-Bus service is running and accessible. For system bus, ensure the user has appropriate permissions. For custom addresses, verify the address is correct and the service is available at that address."
+        },
+        {
+            "function": "main",
+            "message_template": "PASS\n",
+            "reason": "Indicates successful execution of the program with successful eavesdropping setup on the D-Bus",
+            "resolution": "Informational message indicating success. No action required."
+        }
+    ]
+}

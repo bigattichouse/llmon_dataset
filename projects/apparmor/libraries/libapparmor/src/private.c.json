@@ -1,0 +1,97 @@
+{
+    "project": "apparmor",
+    "module": "../working/apparmor/libraries/libapparmor/src/private.c",
+    "summary": "This module provides utility functions for the AppArmor library including directory traversal, file suffix blacklisting, memory management, and logging facilities. It contains functions for iterating over directories and handling file paths securely with appropriate error handling.",
+    "logs": [
+        {
+            "function": "_aa_dirat_for_each2",
+            "message_template": "could not open directory fd '%d' '%s': %m\n",
+            "reason": "Logs a debug message when a directory cannot be opened using openat() with the given directory file descriptor and path",
+            "resolution": "Check file permissions, path validity, and ensure the directory exists. This could indicate insufficient permissions or a non-existent directory."
+        },
+        {
+            "function": "_aa_dirat_for_each2",
+            "message_template": "could not dup directory fd '%s': %m\n",
+            "reason": "Logs a debug message when the duplicate operation (dup) of a directory file descriptor fails",
+            "resolution": "Check system resource limits, as this typically occurs when the system is out of file descriptors. Consider increasing the ulimit for file descriptors or closing unused file descriptors."
+        },
+        {
+            "function": "_aa_dirat_for_each2",
+            "message_template": "could not open directory '%s' from fd '%d': %m\n",
+            "reason": "Logs a debug message when fdopendir() fails to convert a file descriptor to a DIR stream",
+            "resolution": "Verify that the file descriptor refers to a valid directory and that the system has sufficient resources. This error could indicate an invalid file descriptor or a resource limitation."
+        },
+        {
+            "function": "_aa_dirat_for_each2",
+            "message_template": "dir_for_each callback failed for '%s'\n",
+            "reason": "Logs a debug message when the callback function provided to _aa_dirat_for_each2 returns a non-zero value, indicating a failure",
+            "resolution": "Investigate the specific callback function to understand why it failed for the given directory entry. This is typically application-specific and requires examining the callback implementation."
+        },
+        {
+            "function": "readdirfd",
+            "message_template": "dup of dirfd failed: %m\n",
+            "reason": "Logs a debug message when duplicating the directory file descriptor fails in the readdirfd function",
+            "resolution": "Check system resource limits, as this typically occurs when the system is out of file descriptors. Consider increasing the ulimit for file descriptors or closing unused ones."
+        },
+        {
+            "function": "readdirfd",
+            "message_template": "fdopendir of dirfd failed: %m\n",
+            "reason": "Logs a debug message when fdopendir() fails to create a directory stream from a file descriptor in the readdirfd function",
+            "resolution": "Ensure the file descriptor refers to a valid directory and that system resources are available. This may occur if the descriptor is invalid or if memory allocation fails."
+        },
+        {
+            "function": "readdirfd",
+            "message_template": "readdir of entry[%d] failed: %m\n",
+            "reason": "Logs a debug message when readdir() fails to read the next directory entry at the specified index",
+            "resolution": "This could indicate filesystem corruption, permissions issues, or concurrent filesystem modifications. Check filesystem health and ensure proper permissions."
+        },
+        {
+            "function": "_aa_overlaydirat_for_each",
+            "message_template": "scandirat of dirfd[%d] failed: %m\n",
+            "reason": "Logs a debug message when readdirfd() fails to scan a directory at the specified index in an array of directory file descriptors",
+            "resolution": "Check filesystem permissions, directory existence, and system resources. This error often occurs with permission issues or when trying to read non-directory files."
+        },
+        {
+            "function": "_aa_overlaydirat_for_each",
+            "message_template": "stat failed for '%s': %m\n",
+            "reason": "Logs a debug message when fstatat() fails to get file status information for the specified file in a directory",
+            "resolution": "Check file permissions and existence. This error typically occurs when the file doesn't exist, has been removed, or the process lacks the necessary permissions to access file information."
+        },
+        {
+            "function": "_aa_overlaydirat_for_each",
+            "message_template": "dir_for_each callback failed for '%s'\n",
+            "reason": "Logs a debug message when the callback function provided to _aa_overlaydirat_for_each returns a non-zero value, indicating failure",
+            "resolution": "Investigate the specific callback function to understand why it failed for the given directory entry. The resolution depends on the callback's implementation and purpose."
+        },
+        {
+            "function": "_aa_dirat_for_each",
+            "message_template": "could not open directory '%s': %m\n",
+            "reason": "Logs a debug message when a directory cannot be opened using openat() with the given directory path",
+            "resolution": "Verify that the directory exists and the process has the necessary permissions to access it. Check path validity and filesystem state."
+        },
+        {
+            "function": "_aa_dirat_for_each",
+            "message_template": "scandirat of directory '%s' failed: %m\n",
+            "reason": "Logs a debug message when readdirfd() fails to scan the specified directory",
+            "resolution": "Check directory permissions and existence. Common causes include permission issues, non-existent directories, or attempting to read non-directory files."
+        },
+        {
+            "function": "_aa_dirat_for_each",
+            "message_template": "stat failed for '%s': %m\n",
+            "reason": "Logs a debug message when fstatat() fails to get file status information in the _aa_dirat_for_each function",
+            "resolution": "Check file permissions and existence. The file might have been removed or the process might lack permissions to access its metadata."
+        },
+        {
+            "function": "_aa_dirat_for_each",
+            "message_template": "symlink target stat failed for '%s': %m\n",
+            "reason": "Logs a debug message when fstatat() fails to get status information for a symlink target",
+            "resolution": "Verify that the symlink target exists and is accessible. This error typically occurs when the target file is missing, making the symlink broken, or when there are permission issues."
+        },
+        {
+            "function": "_aa_dirat_for_each",
+            "message_template": "dir_for_each callback failed for '%s'\n",
+            "reason": "Logs a debug message when the callback function provided to _aa_dirat_for_each returns a non-zero value",
+            "resolution": "Investigate the specific callback function to understand the failure. The resolution will depend on the specific implementation of the callback and its purpose."
+        }
+    ]
+}

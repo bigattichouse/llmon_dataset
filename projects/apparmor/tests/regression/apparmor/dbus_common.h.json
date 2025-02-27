@@ -1,0 +1,19 @@
+{
+    "project": "apparmor",
+    "module": "../working/apparmor/tests/regression/apparmor/dbus_common.h",
+    "summary": "This module provides common utilities for D-Bus communication in AppArmor, including functions for logging D-Bus messages and manipulating D-Bus message contents. It serves as a helper library for the AppArmor regression tests related to D-Bus functionality.",
+    "logs": [
+        {
+            "function": "log_message",
+            "message_template": "[Various D-Bus message contents]",
+            "reason": "Logs D-Bus messages with a prefix to the specified file descriptor. Used for debugging and tracing D-Bus communication in AppArmor tests.",
+            "resolution": "This is an informational log used for debugging. If unexpected messages appear, check the D-Bus configuration and message handling in the application."
+        },
+        {
+            "function": "type_to_name",
+            "message_template": "[D-Bus type names]",
+            "reason": "Converts D-Bus message types to human-readable strings, likely for inclusion in logs.",
+            "resolution": "This is a utility function for log formatting. No direct resolution required."
+        }
+    ]
+}

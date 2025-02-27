@@ -1,0 +1,19 @@
+{
+    "project": "apparmor",
+    "module": "../working/apparmor/parser/perms.h",
+    "summary": "This header file defines AppArmor's permission structure, including permission flags, masks, and the aa_perms class that represents permission sets. It provides methods for dumping permission information to output streams for debugging or display purposes.",
+    "logs": [
+        {
+            "function": "dump_header",
+            "message_template": "(allow/deny/prompt//audit/quiet//xindex)\n",
+            "reason": "Outputs a header describing the format of permission information that follows. Used when displaying permission details for debugging or informational purposes.",
+            "resolution": "This is an informational output that describes the permission format. No resolution needed as it's not an error message."
+        },
+        {
+            "function": "dump",
+            "message_template": "(0x%x/0x%x/0x%x//0x%x/0x%x//[unsafe ][c|p][i][u]%d)",
+            "reason": "Outputs detailed permission information showing allow/deny/prompt/audit/quiet flags and the executable transition information (xindex). Used to display the complete permission set for debugging or inspection.",
+            "resolution": "This is an informational output showing the current permission state. No resolution needed as it's not an error message."
+        }
+    ]
+}

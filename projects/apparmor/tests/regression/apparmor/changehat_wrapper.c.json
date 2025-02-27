@@ -1,0 +1,79 @@
+{
+    "project": "apparmor",
+    "module": "../working/apparmor/tests/regression/apparmor/changehat_wrapper.c",
+    "summary": "This module serves as a wrapper for testing AppArmor's change_hat functionality, allowing execution of test programs within a specified subhat. It supports both direct change_hat calls and manual writing to the AppArmor interface, with options to customize the magic token and exit behavior.",
+    "logs": [
+        {
+            "function": "usage",
+            "message_template": "usage: %s testprogram [arguments]\n",
+            "reason": "Displays the correct command-line usage when the program is invoked incorrectly. This typically occurs when required arguments are missing or invalid options are provided.",
+            "resolution": "Use the correct command syntax as described in the usage message. Ensure you provide a test program to execute and any necessary arguments."
+        },
+        {
+            "function": "manual_change_hat",
+            "message_template": "FAIL: unable to open control file",
+            "reason": "The program failed to open the AppArmor control file (/proc/self/attr/current). This could happen if AppArmor is not properly loaded in the kernel or if the user doesn't have sufficient permissions.",
+            "resolution": "Verify that AppArmor is properly installed and running. Check if the process has sufficient permissions to access the control file. This may require running the program with elevated privileges."
+        },
+        {
+            "function": "manual_change_hat",
+            "message_template": "FAIL: asprintf failed\n",
+            "reason": "Memory allocation for the changehat command string failed, likely due to system resource constraints.",
+            "resolution": "Check system memory availability. If the issue persists, it may indicate severe system resource constraints that need to be addressed at the operating system level."
+        },
+        {
+            "function": "main",
+            "message_template": "FAIL: malloc failed\n",
+            "reason": "Memory allocation failed when trying to store the manual changehat string. This typically happens when the system is under memory pressure.",
+            "resolution": "Verify system memory availability. If running in a constrained environment, try increasing available memory or reducing the load on the system."
+        },
+        {
+            "function": "main",
+            "message_template": "FAIL: pipe failed",
+            "reason": "Creation of the communication pipe between parent and child processes failed. This could be due to system resource limitations or file descriptor exhaustion.",
+            "resolution": "Check if the process has reached its limit for open file descriptors. Ensure the system has sufficient resources available."
+        },
+        {
+            "function": "main",
+            "message_template": "FAIL: fork failed - %s\n",
+            "reason": "The fork() system call failed, preventing the creation of a child process. The error string provides specific details about the failure, often related to resource limitations.",
+            "resolution": "Check system resources like memory availability and process limits. The specific error message will provide more guidance on what resource may need adjustment."
+        },
+        {
+            "function": "main",
+            "message_template": "FAIL: wait failed - %s\n",
+            "reason": "The wait() system call failed when the parent process tried to wait for the child to complete. This is uncommon and may indicate system instability.",
+            "resolution": "This is typically a system-level issue. Check for any unusual system behavior or resource constraints. The specific error message will provide more details."
+        },
+        {
+            "function": "main",
+            "message_template": "FAIL: child malloc",
+            "reason": "Memory allocation in the child process failed when trying to allocate space for the program name. This likely indicates memory constraints.",
+            "resolution": "Check system memory availability. If running in a constrained environment, try increasing available memory or reducing memory usage elsewhere."
+        },
+        {
+            "function": "main",
+            "message_template": "FAIL: hat for %s does not exist\n",
+            "reason": "The program attempted to change to a specified hat (subprofile), but that hat does not exist in the current AppArmor profile. This indicates a configuration issue with the AppArmor profile.",
+            "resolution": "Verify that the AppArmor profile for the current process includes the specified hat. You may need to update the AppArmor profile to include this hat or use a different hat name that exists in the profile."
+        },
+        {
+            "function": "main",
+            "message_template": "FAIL: pipe failed",
+            "reason": "The dup2() call failed when attempting to redirect stdout to the pipe. This could be due to file descriptor issues or resource constraints.",
+            "resolution": "Check if the process has reached its limit for open file descriptors. Ensure the system has sufficient resources available."
+        },
+        {
+            "function": "main",
+            "message_template": "FAIL: exiting hat '%s' failed\n",
+            "reason": "The attempt to exit the hat (return to the parent profile) failed. This could indicate issues with the AppArmor profile or system configuration.",
+            "resolution": "Verify that the AppArmor profile is correctly configured and that the magic token used to exit the hat matches the one used to enter it. If using manual mode, check that the format of the command written to the control file is correct."
+        },
+        {
+            "function": "main",
+            "message_template": "PASS\n",
+            "reason": "The test completed successfully. The child process exited with status 0 and output 'PASS'.",
+            "resolution": "Informational message, no resolution required."
+        }
+    ]
+}

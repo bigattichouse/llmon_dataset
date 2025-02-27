@@ -1,0 +1,67 @@
+{
+    "project": "apparmor",
+    "module": "parser_policy.c",
+    "summary": "This module manages AppArmor security profiles, handling profile loading, merging, and processing. It includes functions for adding profiles to policy lists, managing hat sub-profiles, merging profiles, and post-processing profiles before they are loaded into the kernel.",
+    "logs": [
+        {
+            "function": "PDEBUG",
+            "message_template": "Lexer: %s",
+            "reason": "Debug message only printed when DEBUG is defined, related to lexical analysis of profile rules",
+            "resolution": "This is an informational debug message, typically only enabled during development or troubleshooting. No resolution required."
+        },
+        {
+            "function": "add_to_list",
+            "message_template": "Multiple definitions for profile %s exist, bailing out.",
+            "reason": "Error when trying to add a profile to the policy list that already exists. AppArmor won't load duplicate profile definitions to avoid conflicting rules.",
+            "resolution": "Check for and remove duplicate profile definitions in your AppArmor configuration files. Each profile should have a unique name."
+        },
+        {
+            "function": "add_hat_to_policy",
+            "message_template": "Multiple definitions for hat %s in profile %s exist, bailing out.",
+            "reason": "Error when trying to add a hat (sub-profile) to a profile that already has a hat with the same name. AppArmor requires unique hat names within a profile.",
+            "resolution": "Review your AppArmor profile configuration and ensure each hat within a profile has a unique name. Rename or remove duplicate hat definitions."
+        },
+        {
+            "function": "merge_policy",
+            "message_template": "ASSERT: policy merges shouldn't have names %s %s",
+            "reason": "Critical error when merging profiles that unexpectedly have names. This indicates an internal logic error in the AppArmor parser.",
+            "resolution": "This is likely a bug in the AppArmor parser. Report this issue to the AppArmor developers with details about your profile configuration that triggered this error."
+        },
+        {
+            "function": "merge_policy",
+            "message_template": "ASSERT: policy merge with different modes 0x%x != 0x%x",
+            "reason": "Critical error when merging profiles with conflicting modes. AppArmor cannot merge profiles that have incompatible confinement modes.",
+            "resolution": "This is likely an internal error in the AppArmor parser. Check your profiles for consistency in confinement modes (enforce, complain, etc.) and report the issue to AppArmor developers if it persists."
+        },
+        {
+            "function": "process_profile_rules",
+            "message_template": "ERROR processing regexs for profile %s, failed to load",
+            "reason": "Failed to compile or process regular expressions in the profile. This could be due to invalid regex syntax or other regex processing issues.",
+            "resolution": "Review the regular expressions in the specified profile for syntax errors. Look for malformed patterns, unclosed brackets, or other regex syntax issues."
+        },
+        {
+            "function": "process_profile_rules",
+            "message_template": "ERROR processing policydb rules for profile %s, failed to load",
+            "reason": "Failed to process policy database rules for the profile. This could be due to invalid rule syntax or conflicts in the rules.",
+            "resolution": "Check the specified profile for syntax errors in the policy rules. Ensure that file permissions, capability requirements, and other rules are correctly formatted."
+        },
+        {
+            "function": "post_process_profile",
+            "message_template": "ERROR expanding variables for profile %s, failed to load",
+            "reason": "Failed to expand variables in the profile. This could be due to undefined variables or circular references.",
+            "resolution": "Verify that all variables used in the profile are properly defined. Check for circular references where variables reference each other. Ensure variable syntax is correct (typically @{VARNAME})."
+        },
+        {
+            "function": "post_process_profile",
+            "message_template": "ERROR replacing aliases for profile %s, failed to load",
+            "reason": "Failed to replace aliases in the profile. This could be due to undefined aliases or problems with alias definitions.",
+            "resolution": "Check that all aliases used in the profile are properly defined. Ensure alias syntax is correct and that there are no circular references between aliases."
+        },
+        {
+            "function": "post_process_profile",
+            "message_template": "ERROR merging rules for profile %s, failed to load",
+            "reason": "Failed to merge rules in the profile. This could be due to conflicting rules that cannot be reconciled.",
+            "resolution": "Review the profile for conflicting rules. Look for rules that might grant and deny the same permissions or have other logical conflicts. Simplify complex rule sets that may be causing issues."
+        }
+    ]
+}

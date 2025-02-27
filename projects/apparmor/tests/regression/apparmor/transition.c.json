@@ -1,0 +1,103 @@
+{
+    "project": "apparmor",
+    "module": "../working/apparmor/tests/regression/apparmor/transition.c",
+    "summary": "This test module evaluates AppArmor profile transitions, validating operations like profile changes, stacking profiles, and verifying confinement contexts. It provides comprehensive testing of transition functionality with various options including setting execution contexts and verifying profile attributes.",
+    "logs": [
+        {
+            "function": "verify_confinement_context",
+            "message_template": "FAIL - aa_getprocattr (%s): %m",
+            "reason": "Logs an error when the aa_getprocattr() call fails to retrieve information from the specified AppArmor attribute file. The system error message is included for diagnostics.",
+            "resolution": "Check if AppArmor is properly installed and running. Also verify that the process has the necessary permissions to access the AppArmor attributes."
+        },
+        {
+            "function": "verify_confinement_context",
+            "message_template": "FAIL - could not parse current compound label: %s",
+            "reason": "Logs an error when the current compound label retrieved from AppArmor cannot be properly parsed into individual labels.",
+            "resolution": "This could indicate corruption in the AppArmor label format. Verify that AppArmor is functioning correctly and that the profile format is valid."
+        },
+        {
+            "function": "verify_confinement_context",
+            "message_template": "FAIL - could not parse expected compound label: %s",
+            "reason": "Logs an error when the expected compound label provided for verification cannot be properly parsed into individual labels.",
+            "resolution": "Check the format of the expected label specified in the test. Ensure it conforms to the required AppArmor label syntax."
+        },
+        {
+            "function": "verify_confinement_context",
+            "message_template": "FAIL - %s label \"%s\" != expected_label \"%s\"",
+            "reason": "Logs an error when the current AppArmor label does not match the expected label during verification, indicating a profile transition failure or incorrect profile application.",
+            "resolution": "Compare the actual and expected labels to understand the discrepancy. This could indicate issues with profile transitions or that the system is not applying profiles as expected."
+        },
+        {
+            "function": "verify_confinement_context",
+            "message_template": "FAIL - %s mode \"%s\" != expected_mode \"%s\"",
+            "reason": "Logs an error when the current AppArmor mode does not match the expected mode during verification, indicating an incorrect enforcement mode is being applied.",
+            "resolution": "Verify that the expected mode is correctly specified and that the system is properly applying AppArmor enforcement modes. Check for policy issues that might affect mode transitions."
+        },
+        {
+            "function": "verify_confinement_context",
+            "message_template": "FAIL - rc (%d) != expected_rc (%d)",
+            "reason": "Logs an error when the return code from aa_getprocattr() does not match the expected value, indicating potential issues with the AppArmor API.",
+            "resolution": "This may indicate a mismatch between the expected AppArmor behavior and actual implementation. Check for AppArmor API changes or bugs in the library."
+        },
+        {
+            "function": "handle_transition",
+            "message_template": "FAIL - aa_change_onexec",
+            "reason": "Logs an error when the aa_change_onexec() function fails to set a new profile to be applied on next exec call.",
+            "resolution": "Check if the target profile exists and is valid. Ensure the process has the necessary permissions to change profiles. Verify that AppArmor is functioning correctly."
+        },
+        {
+            "function": "handle_transition",
+            "message_template": "FAIL - aa_change_profile",
+            "reason": "Logs an error when the aa_change_profile() function fails to immediately change the current profile of the process.",
+            "resolution": "Verify that the target profile exists and is properly loaded. Check if the current profile permits transitions to the target profile. Ensure AppArmor is properly functioning."
+        },
+        {
+            "function": "handle_transition",
+            "message_template": "FAIL - aa_stack_onexec",
+            "reason": "Logs an error when the aa_stack_onexec() function fails to stack a new profile on next exec call. May indicate that stacking is not supported.",
+            "resolution": "Ensure that your AppArmor version supports profile stacking. If compiled with WITHOUT_STACKING, this operation will always fail with ENOTSUP."
+        },
+        {
+            "function": "handle_transition",
+            "message_template": "FAIL - aa_stack_profile",
+            "reason": "Logs an error when the aa_stack_profile() function fails to immediately stack a profile onto the current profile. May indicate that stacking is not supported.",
+            "resolution": "Verify that your AppArmor version supports profile stacking. If compiled with WITHOUT_STACKING, this operation will always fail with ENOTSUP."
+        },
+        {
+            "function": "handle_transition",
+            "message_template": "FAIL - handle_transition",
+            "reason": "Logs an error when an invalid transition type is specified, which should never happen in normal operation.",
+            "resolution": "This is likely a programming error in the test itself. Check the transition value being passed to handle_transition() and ensure it's one of the defined constants."
+        },
+        {
+            "function": "set_no_new_privs",
+            "message_template": "FAIL - prctl (PR_SET_NO_NEW_PRIVS)",
+            "reason": "Logs an error when the prctl call to set PR_SET_NO_NEW_PRIVS flag fails, which prevents the process from gaining new privileges via execve.",
+            "resolution": "This could indicate that your kernel does not support the NO_NEW_PRIVS option. Check that you're running a Linux kernel version that supports this feature (3.5+)."
+        },
+        {
+            "function": "exec",
+            "message_template": "FAIL - execv",
+            "reason": "Logs an error when the execv() call fails to execute the specified program, which is part of the transition testing process.",
+            "resolution": "Verify that the program specified for execution exists, is executable, and is accessible by the current process. Check path information and permissions."
+        },
+        {
+            "function": "parse_opts",
+            "message_template": "FAIL: immediate change_profile",
+            "reason": "Logs an error when an immediate profile change requested via the -i option fails during command-line parsing.",
+            "resolution": "Check if the target profile specified with -i exists and is properly loaded. Verify that the current profile allows transitions to the target profile."
+        },
+        {
+            "function": "usage",
+            "message_template": "%s: [-O <LABEL> | -P <LABEL> | -o <LABEL> | -p <LABEL>] [-L <LABEL>] [-M <MODE>] [-l <LABEL>] [-m <MODE>] [-f <FILE>] [-- ... [-- ...]]",
+            "reason": "Displays the program usage information when invalid arguments are provided or when help is requested.",
+            "resolution": "This is informational output. Follow the usage instructions to properly use the transition testing tool."
+        },
+        {
+            "function": "main",
+            "message_template": "PASS",
+            "reason": "Indicates that all the specified transition tests have passed successfully.",
+            "resolution": "This is an informational message indicating successful test completion. No resolution needed."
+        }
+    ]
+}

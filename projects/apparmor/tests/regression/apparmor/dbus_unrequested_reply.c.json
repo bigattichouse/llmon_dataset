@@ -1,0 +1,103 @@
+{
+    "project": "apparmor",
+    "module": "../working/apparmor/tests/regression/apparmor/dbus_unrequested_reply.c",
+    "summary": "This module is a test utility for D-Bus that purposely sends invalid unrequested replies (method returns or errors) with a fake reply serial number. It is designed to test how systems handle improper D-Bus communications, likely for security or robustness testing.",
+    "logs": [
+        {
+            "function": "usage",
+            "message_template": "FAIL: Usage: dbus_unrequested_reply [ADDRESS] --name=NAME --type=TYPE\n    ADDRESS\t\t--system, --session (default), or --address=ADDR\n    NAME\t\tthe message destination\n    TYPE\t\tmethod_return or error\n",
+            "reason": "Displays usage information with an error prefix when the program is invoked with incorrect arguments",
+            "resolution": "Follow the usage information provided and ensure all required parameters are specified correctly"
+        },
+        {
+            "function": "do_unrequested_reply",
+            "message_template": "FAIL: Couldn't set reply_serial\n",
+            "reason": "Failed to set a reply serial number on the D-Bus message, likely due to memory allocation issues",
+            "resolution": "Verify that the system has sufficient memory available and isn't under heavy load"
+        },
+        {
+            "function": "do_unrequested_reply",
+            "message_template": "FAIL: Couldn't set error name\n",
+            "reason": "Failed to set an error name on the D-Bus error message, likely due to memory allocation issues",
+            "resolution": "Verify that the system has sufficient memory available and isn't under heavy load"
+        },
+        {
+            "function": "do_unrequested_reply",
+            "message_template": "FAIL: Internal error, unknown message type\n",
+            "reason": "The program encountered an unexpected message type for the unrequested reply",
+            "resolution": "This should not happen during normal operation; it may indicate a programming error or corrupted program state"
+        },
+        {
+            "function": "do_unrequested_reply",
+            "message_template": "FAIL: Couldn't allocate D-Bus message\n",
+            "reason": "Failed to allocate a new D-Bus message, likely due to memory constraints",
+            "resolution": "Check system memory usage and ensure sufficient resources are available"
+        },
+        {
+            "function": "do_unrequested_reply",
+            "message_template": "FAIL: Not enough memory\n",
+            "reason": "Failed to set the destination on the D-Bus message due to memory allocation issues",
+            "resolution": "Free up system memory or reduce memory load on the system"
+        },
+        {
+            "function": "do_unrequested_reply",
+            "message_template": "sent ",
+            "reason": "Logs the contents of the D-Bus message that was sent",
+            "resolution": "Informational log, no resolution required"
+        },
+        {
+            "function": "main",
+            "message_template": "FAIL: \"--address=\" requires an ADDRESS\n",
+            "reason": "The --address parameter was provided without specifying an actual address value",
+            "resolution": "Provide a valid D-Bus address with the --address parameter, e.g., --address=unix:path=/tmp/dbus-test"
+        },
+        {
+            "function": "main",
+            "message_template": "FAIL: \"--name=\" requires a NAME\n",
+            "reason": "The --name parameter was provided without specifying an actual name value",
+            "resolution": "Provide a valid D-Bus service name with the --name parameter, e.g., --name=org.example.Service"
+        },
+        {
+            "function": "main",
+            "message_template": "FAIL: \"--type=\" requires a TYPE\n",
+            "reason": "The --type parameter was provided without specifying an actual type value",
+            "resolution": "Specify either 'method_return' or 'error' with the --type parameter, e.g., --type=method_return"
+        },
+        {
+            "function": "main",
+            "message_template": "FAIL: \"--log=\" requires a PATH\n",
+            "reason": "The --log parameter was provided without specifying a file path",
+            "resolution": "Provide a valid file path with the --log parameter, e.g., --log=/tmp/dbus-test.log"
+        },
+        {
+            "function": "main",
+            "message_template": "FAIL: Couldn't open log file \"%s\": %m\n",
+            "reason": "Failed to open the specified log file for writing",
+            "resolution": "Ensure the directory exists and the process has write permissions to the specified path"
+        },
+        {
+            "function": "main",
+            "message_template": "FAIL: Message type \"%s\" is not supported\n",
+            "reason": "The specified message type is not supported by the program",
+            "resolution": "Use only 'method_return' or 'error' as the message type with the --type parameter"
+        },
+        {
+            "function": "main",
+            "message_template": "FAIL: \"--address\" may not be used with \"--system\" or \"--session\"\n",
+            "reason": "Conflicting D-Bus connection options were specified",
+            "resolution": "Use either --address to connect to a specific address, or --system/--session to connect to standard buses, but not both"
+        },
+        {
+            "function": "main",
+            "message_template": "FAIL: Failed to open connection to \"%s\" message bus: %s\n",
+            "reason": "Failed to establish a connection to the D-Bus message bus",
+            "resolution": "Ensure the D-Bus daemon is running and accessible. Check the error message for specific connection issues"
+        },
+        {
+            "function": "main",
+            "message_template": "PASS\n",
+            "reason": "Indicates successful execution of the program - the unrequested reply was sent successfully",
+            "resolution": "Informational log, no resolution required"
+        }
+    ]
+}

@@ -1,0 +1,79 @@
+{
+    "project": "apparmor",
+    "module": "../working/apparmor/libraries/libapparmor/include/sys/apparmor.h",
+    "summary": "This header file defines the public interface for the AppArmor library, which provides application security and confinement in Linux systems. It declares functions for querying AppArmor state, transitioning between security domains, introspecting task confinement, and managing policy caches and features.",
+    "logs": [
+        {
+            "function": "aa_is_enabled",
+            "message_template": "AppArmor status check",
+            "reason": "Function checks if AppArmor is enabled in the kernel. Failures might indicate AppArmor is not available or properly configured.",
+            "resolution": "Ensure AppArmor is properly installed and the module is loaded in the kernel with 'modprobe apparmor'. Check kernel configuration to verify AppArmor support is enabled."
+        },
+        {
+            "function": "aa_find_mountpoint",
+            "message_template": "AppArmor mountpoint lookup",
+            "reason": "Function attempts to find the AppArmor filesystem mountpoint. Failures might indicate the AppArmor filesystem is not mounted.",
+            "resolution": "Mount the AppArmor filesystem manually with 'mount -t securityfs securityfs /sys/kernel/security' or ensure AppArmor service is properly started."
+        },
+        {
+            "function": "aa_change_hat",
+            "message_template": "AppArmor hat transition",
+            "reason": "Function attempts to change to a subprofile (hat) within the current profile. Failures might indicate invalid subprofile name or incorrect magic token.",
+            "resolution": "Verify the subprofile exists in the current profile and that the magic token is consistent between hat changes."
+        },
+        {
+            "function": "aa_change_profile",
+            "message_template": "AppArmor profile transition",
+            "reason": "Function attempts to change to a different profile. Failures might indicate the profile doesn't exist or current profile lacks permission to change.",
+            "resolution": "Ensure the target profile exists and the current profile has change_profile permissions to the target profile."
+        },
+        {
+            "function": "aa_change_onexec",
+            "message_template": "AppArmor onexec transition",
+            "reason": "Function attempts to set up a profile transition for the next exec. Failures might indicate invalid profile name or permission issues.",
+            "resolution": "Verify the target profile exists and the current profile has permissions to transition to it on exec."
+        },
+        {
+            "function": "aa_getcon",
+            "message_template": "AppArmor confinement query",
+            "reason": "Function retrieves the current confinement context. Failures might indicate AppArmor is not enabled or accessible.",
+            "resolution": "Ensure AppArmor is properly configured and the process has permission to query its own confinement status."
+        },
+        {
+            "function": "aa_gettaskcon",
+            "message_template": "AppArmor task confinement query",
+            "reason": "Function retrieves confinement context for a specific task. Failures might indicate insufficient permissions or invalid task.",
+            "resolution": "Verify the process has permission to query the target task's confinement and the target task exists."
+        },
+        {
+            "function": "aa_getpeercon",
+            "message_template": "AppArmor peer confinement query",
+            "reason": "Function retrieves confinement context for a peer connected via socket. Failures might indicate invalid socket or permission issues.",
+            "resolution": "Ensure the socket is valid and the process has permission to query peer confinement information."
+        },
+        {
+            "function": "aa_query_label",
+            "message_template": "AppArmor label query",
+            "reason": "Function queries if an operation is allowed by a specific label. Failures might indicate invalid query format or memory issues.",
+            "resolution": "Verify the query format is correct and follows the required structure with the appropriate command prefix."
+        },
+        {
+            "function": "aa_features_new",
+            "message_template": "AppArmor features initialization",
+            "reason": "Function initializes AppArmor features from a file. Failures might indicate inaccessible or invalid features file.",
+            "resolution": "Check if the features file exists, is readable, and contains valid AppArmor feature data."
+        },
+        {
+            "function": "aa_kernel_interface_load_policy",
+            "message_template": "AppArmor policy load",
+            "reason": "Function loads policy into the kernel. Failures might indicate invalid policy format or insufficient permissions.",
+            "resolution": "Ensure the policy is in the correct format and the process has sufficient permissions to load AppArmor policies."
+        },
+        {
+            "function": "aa_policy_cache_replace_all",
+            "message_template": "AppArmor policy cache replacement",
+            "reason": "Function replaces all policies in the cache. Failures might indicate permission issues or invalid cache state.",
+            "resolution": "Verify the process has sufficient permissions to modify policy cache and the cache directories are properly configured."
+        }
+    ]
+}

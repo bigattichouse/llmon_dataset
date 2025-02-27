@@ -1,0 +1,25 @@
+{
+    "project": "apparmor",
+    "module": "../working/apparmor/changehat/tomcat_apparmor/tomcat_5_0/src/jni_src/JNIChangeHat.c",
+    "summary": "JNI interface module that provides C functions for Java code to call AppArmor's change_hat capability. It allows Java applications like Tomcat to change their security context (hat) and return to default, handling parameter validation and error propagation.",
+    "logs": [
+        {
+            "function": "Java_com_novell_apparmor_JNIChangeHat_changehat_1in",
+            "message_template": "EINVAL (Invalid argument)",
+            "reason": "Returns EINVAL when the hat name parameter is NULL. This indicates improper usage from the Java side.",
+            "resolution": "Check the Java code calling this function to ensure it always provides a valid hat name string. This likely indicates a programming error in the application."
+        },
+        {
+            "function": "Java_com_novell_apparmor_JNIChangeHat_changehat_1in",
+            "message_template": "errno from change_hat",
+            "reason": "Returns system errno when the change_hat call fails. This could be for various reasons like insufficient permissions, non-existent hat, or AppArmor configuration issues.",
+            "resolution": "Check AppArmor configuration to ensure the specified hat exists and is properly defined. Verify that the application has the necessary permissions to change hats. Ensure the token value is consistent between entering and exiting the hat."
+        },
+        {
+            "function": "Java_com_novell_apparmor_JNIChangeHat_changehat_1out",
+            "message_template": "errno from change_hat",
+            "reason": "Returns system errno when the change_hat call to return to the parent profile fails. This could happen if an incorrect token is provided.",
+            "resolution": "Ensure the token value used to exit the hat matches the one used to enter it. Check if AppArmor is properly configured and running. This error could indicate a potential security issue if tokens don't match."
+        }
+    ]
+}

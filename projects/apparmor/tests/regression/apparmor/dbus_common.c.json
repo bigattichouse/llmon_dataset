@@ -1,0 +1,55 @@
+{
+    "project": "apparmor",
+    "module": "dbus_common.c",
+    "summary": "This module provides utility functions for working with D-Bus messages as part of AppArmor's regression test framework. It includes functionality for logging messages, converting between types and type names, and appending various data types to D-Bus message iterators.",
+    "logs": [
+        {
+            "function": "log_message",
+            "message_template": "%s%s sender=%s -> dest=%s",
+            "reason": "Logs basic information about a D-Bus message including the message type, sender, and destination. This is part of the test framework's message logging mechanism.",
+            "resolution": "This is an informational log, no resolution required. It's used for debugging D-Bus interactions during tests."
+        },
+        {
+            "function": "log_message",
+            "message_template": " path=%s; interface=%s; member=%s\n",
+            "reason": "Logs additional details for method call and signal message types, including the path, interface, and member name.",
+            "resolution": "This is an informational log, no resolution required. It provides details about D-Bus method calls and signals during tests."
+        },
+        {
+            "function": "log_message",
+            "message_template": " error_name=%s\n",
+            "reason": "Logs the error name for D-Bus error message types.",
+            "resolution": "This is informational but could indicate a D-Bus communication issue. Check why the error is occurring by examining the error name and the context of the D-Bus operation."
+        },
+        {
+            "function": "log_message",
+            "message_template": "\n",
+            "reason": "Terminates log entries for message types not explicitly handled (other than method calls, signals, and errors).",
+            "resolution": "This is an informational log, no resolution required."
+        },
+        {
+            "function": "append_arg",
+            "message_template": "FAIL: Expected \"true\" or \"false\" instead of \"%s\"\n",
+            "reason": "Logs an error when a boolean argument is neither 'true' nor 'false'. This indicates an invalid boolean value in the test input.",
+            "resolution": "Correct the test input to use 'true' or 'false' for boolean arguments. Check the test script or configuration for invalid boolean values."
+        },
+        {
+            "function": "append_arg",
+            "message_template": "FAIL: Unsupported data type %c\n",
+            "reason": "Logs an error when an unsupported D-Bus data type is encountered. This indicates a type that the test framework doesn't know how to handle.",
+            "resolution": "Use only supported D-Bus data types in test inputs. Check the test script or configuration and correct the invalid type with one from the supported list (string, int16, uint16, int32, uint32, int64, uint64, double, byte, boolean, objpath)."
+        },
+        {
+            "function": "append_dict",
+            "message_template": "FAIL: Malformed dictionary\n",
+            "reason": "Logs an error when a dictionary input is malformed, typically missing a value for a key. Dictionary entries must be key-value pairs.",
+            "resolution": "Ensure dictionary inputs are properly formatted as key-value pairs. Check the test script or configuration for incomplete dictionary entries and ensure each key has a corresponding value."
+        },
+        {
+            "function": "type_from_name",
+            "message_template": "FAIL: Unknown type \"%s\"\n",
+            "reason": "Logs an error when an unknown type name is provided. The test framework only supports a specific set of type names.",
+            "resolution": "Use only supported type names in test inputs. Review the test script or configuration and correct any invalid type names with one from the supported list (string, int16, uint16, int32, uint32, int64, uint64, double, byte, boolean, objpath)."
+        }
+    ]
+}

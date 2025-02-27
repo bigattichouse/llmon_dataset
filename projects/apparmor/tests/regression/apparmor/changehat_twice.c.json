@@ -1,0 +1,31 @@
+{
+    "project": "apparmor",
+    "module": "../working/apparmor/tests/regression/apparmor/changehat_twice.c",
+    "summary": "This is a test program for AppArmor's change_hat functionality that attempts to switch between two security profiles and then access a file. It verifies that the change_hat operations work correctly with good and bad magic values.",
+    "logs": [
+        {
+            "function": "main",
+            "message_template": "usage: %s profile1 profile2 goodmagic|badmagic file\n",
+            "reason": "Displayed when the program is called with incorrect number of arguments (not exactly 5 arguments).",
+            "resolution": "Ensure the program is called with the correct number of arguments as specified in the usage message."
+        },
+        {
+            "function": "main",
+            "message_template": "FAIL: changehat %s failed - %s\n",
+            "reason": "Logged when the first change_hat operation fails. This could be due to AppArmor not being properly configured, the profile not existing, or insufficient permissions.",
+            "resolution": "Verify that AppArmor is correctly installed and configured, and that the specified profile exists in the AppArmor policy."
+        },
+        {
+            "function": "main",
+            "message_template": "FAIL: changehat %s failed - %s\n",
+            "reason": "Logged when the second change_hat operation fails. Note there appears to be a bug here as it uses argv[1] instead of argv[2] when reporting the error.",
+            "resolution": "Check the AppArmor configuration and verify that both profiles exist. Also, if this is actually a bug, consider fixing the code to use argv[2] for the second error message."
+        },
+        {
+            "function": "main",
+            "message_template": "PASS\n",
+            "reason": "Indicates that the test completed successfully, with both change_hat operations working and the file being successfully opened.",
+            "resolution": "This is an informational message indicating successful operation, no resolution required."
+        }
+    ]
+}

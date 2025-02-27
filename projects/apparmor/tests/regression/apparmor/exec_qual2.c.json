@@ -1,0 +1,31 @@
+{
+    "project": "apparmor",
+    "module": "../working/apparmor/tests/regression/apparmor/exec_qual2.c",
+    "summary": "This module is a test program for AppArmor that checks file access permissions by attempting to open a specified file with read-write permissions after setting up a signal handler for SIGUSR1. It's designed to test the effectiveness of AppArmor profile confinement by allowing the parent process to inspect the profile via /proc.",
+    "logs": [
+        {
+            "function": "main",
+            "message_template": "usage: %s file\n",
+            "reason": "Logs an error message when the program is called with incorrect command-line arguments (requires exactly one argument, which should be a file path).",
+            "resolution": "Ensure the program is called with exactly one argument specifying the file to open."
+        },
+        {
+            "function": "main",
+            "message_template": "FAIL: signal failed - %s:%s\n",
+            "reason": "Logs an error when registering the signal handler for SIGUSR1 fails, showing both the filename and the associated error message.",
+            "resolution": "Check system resources and signal handler configurations. This could indicate system stability issues or resource exhaustion."
+        },
+        {
+            "function": "main",
+            "message_template": "FAIL: open %s failed - %s\n",
+            "reason": "Logs an error when opening the specified file with read-write permissions fails, likely due to AppArmor confinement restrictions.",
+            "resolution": "Verify the AppArmor profile allows read-write access to the specified file. Check file permissions and existence of the file path."
+        },
+        {
+            "function": "main",
+            "message_template": "PASS\n",
+            "reason": "Logs a success message when the file is successfully opened and closed, indicating that the AppArmor profile allows the requested access.",
+            "resolution": "Informational message that indicates successful test completion, no resolution required."
+        }
+    ]
+}

@@ -1,0 +1,79 @@
+{
+    "project": "apparmor",
+    "module": "../working/apparmor/parser/profile.h",
+    "summary": "This module defines the Profile class and associated structures for AppArmor, a Linux Security Module for application confinement. It handles profile flags, capabilities, rules, and provides error checking for conflicting profile configurations.",
+    "logs": [
+        {
+            "function": "flagvals::init",
+            "message_template": "unknown signal specified for kill.signal='%s'",
+            "reason": "This error occurs when an invalid signal name is provided for the kill.signal profile flag. The system cannot recognize the signal name.",
+            "resolution": "Check the signal name specified in the profile and ensure it is a valid signal name supported by the system (e.g., SIGTERM, SIGKILL)."
+        },
+        {
+            "function": "flagvals::init",
+            "message_template": "unknown error code specified for error='%s'",
+            "reason": "This error occurs when an invalid error code name is provided for the error profile flag. The system cannot recognize the error code name.",
+            "resolution": "Check the error code name specified in the profile and ensure it is a valid error code defined in the system (likely one of the standard errno values)."
+        },
+        {
+            "function": "flagvals::init",
+            "message_template": "Invalid profile flag: %s.",
+            "reason": "This error occurs when an unrecognized profile flag is specified in the AppArmor profile.",
+            "resolution": "Review the profile configuration and ensure all flags are valid AppArmor profile flags (e.g., debug, audit, chroot_relative, etc.)."
+        },
+        {
+            "function": "flagvals::merge",
+            "message_template": "Profile flag '%s' conflicts with '%s'",
+            "reason": "This error occurs when attempting to merge profiles with conflicting mode flags (e.g., trying to combine enforce and complain modes).",
+            "resolution": "Revise the profile configuration to ensure consistent mode settings across profile fragments being merged."
+        },
+        {
+            "function": "flagvals::merge",
+            "message_template": "Profile flag chroot_relative conflicts with namespace_relative",
+            "reason": "This error occurs when both chroot_relative and namespace_relative flags are set, which are mutually exclusive path resolution methods.",
+            "resolution": "Choose either chroot_relative or namespace_relative in your profile configuration, as these flags define different path resolution methods."
+        },
+        {
+            "function": "flagvals::merge",
+            "message_template": "Profile flag mediate_deleted conflicts with delegate_deleted",
+            "reason": "This error occurs when both mediate_deleted and delegate_deleted flags are set, which are mutually exclusive ways of handling deleted files.",
+            "resolution": "Choose either mediate_deleted or delegate_deleted in your profile configuration, as these flags define different approaches to handling deleted files."
+        },
+        {
+            "function": "flagvals::merge",
+            "message_template": "Profile flag attach_disconnected conflicts with no_attach_disconnected",
+            "reason": "This error occurs when both attach_disconnected and no_attach_disconnected flags are set, which are contradictory configurations.",
+            "resolution": "Choose either attach_disconnected or no_attach_disconnected in your profile configuration, as these flags represent opposing settings for attachment behavior."
+        },
+        {
+            "function": "flagvals::merge",
+            "message_template": "Profile flag chroot_attach conflicts with chroot_no_attach",
+            "reason": "This error occurs when both chroot_attach and chroot_no_attach flags are set, which are contradictory configurations for chroot attachment behavior.",
+            "resolution": "Choose either chroot_attach or chroot_no_attach in your profile configuration, as these flags represent opposing settings for chroot attachment behavior."
+        },
+        {
+            "function": "flagvals::merge",
+            "message_template": "Profile flag attach_disconnected set to conflicting values: '%s' and '%s'",
+            "reason": "This error occurs when attempting to merge profiles with different path values for the attach_disconnected flag.",
+            "resolution": "Ensure consistent values for attach_disconnected.path across profile fragments being merged."
+        },
+        {
+            "function": "flagvals::merge",
+            "message_template": "Profile flag kill.signal set to conflicting values: '%d' and '%d'",
+            "reason": "This error occurs when attempting to merge profiles with different signal values for the kill.signal flag.",
+            "resolution": "Ensure consistent values for kill.signal across profile fragments being merged."
+        },
+        {
+            "function": "flagvals::merge",
+            "message_template": "Profile flag error set to conflicting values: '%s' and '%s'",
+            "reason": "This error occurs when attempting to merge profiles with different error code values for the error flag.",
+            "resolution": "Ensure consistent error code values across profile fragments being merged."
+        },
+        {
+            "function": "Profile::warn_once",
+            "message_template": "[Warning message passed as parameter]",
+            "reason": "This function issues warnings about profile configuration issues, only showing each unique warning once per profile.",
+            "resolution": "Address the specific warning details which will be contained in the message. The warning is triggered only once to avoid excessive log messages."
+        }
+    ]
+}

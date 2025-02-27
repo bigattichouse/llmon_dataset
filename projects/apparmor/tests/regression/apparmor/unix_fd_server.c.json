@@ -1,0 +1,85 @@
+{
+    "project": "apparmor",
+    "module": "../working/apparmor/tests/regression/apparmor/unix_fd_server.c",
+    "summary": "This module implements a server that tests Unix socket file descriptor passing capability in AppArmor. It opens a file, passes the file descriptor to a client over a Unix domain socket, and verifies the client can read the same data from the passed file descriptor.",
+    "logs": [
+        {
+            "function": "main",
+            "message_template": "Usage: %s <file> <client> <unix_socket> [client args ...]\n",
+            "reason": "Displayed when the program is run with insufficient command line arguments (fewer than 4).",
+            "resolution": "Provide the required arguments: file to open, client program path, unix socket path, and any client arguments."
+        },
+        {
+            "function": "main",
+            "message_template": "FAIL - open failed: %s\n",
+            "reason": "Logged when the program fails to open the specified file with the given error message.",
+            "resolution": "Check if the file exists, has correct permissions, and the path is correct. May also need to verify AppArmor profile allows access to this file."
+        },
+        {
+            "function": "main",
+            "message_template": "FAIL - read failed: %s\n",
+            "reason": "Logged when reading from the file fails with the given error message.",
+            "resolution": "Check if the file is readable, not empty, and the program has appropriate permissions to read it."
+        },
+        {
+            "function": "main",
+            "message_template": "FAIL: unlink before passing fd - %s\n",
+            "reason": "Logged when unlinking (deleting) the file fails before passing the file descriptor to the client.",
+            "resolution": "Verify the program has permissions to delete the file. May require AppArmor profile adjustments to allow file deletion."
+        },
+        {
+            "function": "main",
+            "message_template": "FAIL - socket failed: %s\n",
+            "reason": "Logged when creation of a Unix domain socket fails with the given error message.",
+            "resolution": "Check system resources, file descriptor limits, or AppArmor restrictions on socket creation."
+        },
+        {
+            "function": "main",
+            "message_template": "FAIL - bind failed: %s\n",
+            "reason": "Logged when binding the socket to a path fails with the given error message.",
+            "resolution": "Check if the socket path already exists, if the directory is writable, or if AppArmor profile allows socket creation at that path."
+        },
+        {
+            "function": "main",
+            "message_template": "FAIL - listen failed: %s\n",
+            "reason": "Logged when attempting to listen on the socket fails with the given error message.",
+            "resolution": "Check system resources and if AppArmor profile allows the socket to be used for listening."
+        },
+        {
+            "function": "main",
+            "message_template": "FAIL - accept: %s\n",
+            "reason": "Logged when accepting a connection on the socket fails with the given error message.",
+            "resolution": "Check if client connected properly and if AppArmor profile allows accepting connections on this socket."
+        },
+        {
+            "function": "main",
+            "message_template": "FAIL - could not sendmsg\n",
+            "reason": "Logged when sending a message with the file descriptor fails.",
+            "resolution": "Verify AppArmor profile allows sending file descriptors over this socket and that the connection is still active."
+        },
+        {
+            "function": "main",
+            "message_template": "FAIL - recv %s\n",
+            "reason": "Logged when receiving data from the client fails with the given error message.",
+            "resolution": "Check if the client is properly sending data back and if AppArmor profile allows receiving data on this socket."
+        },
+        {
+            "function": "main",
+            "message_template": "FAIL - buffer comparison. Got \"%s\", expected \"%s\"\n",
+            "reason": "Logged when the data received from the client doesn't match what was expected, indicating the file descriptor passing failed or read different data.",
+            "resolution": "Check if client correctly used the passed file descriptor and if AppArmor profile allows client to read from the passed file descriptor."
+        },
+        {
+            "function": "main",
+            "message_template": "PASS\n",
+            "reason": "Logged when the test succeeds, indicating successful file descriptor passing and verification.",
+            "resolution": "Informational message, no resolution required."
+        },
+        {
+            "function": "main",
+            "message_template": "FAIL - poll() timed out\n",
+            "reason": "Logged when waiting for the client to connect times out after 500ms.",
+            "resolution": "Check if client program is executing properly and attempting to connect to the socket. May need to increase timeout or fix client issues."
+        }
+    ]
+}

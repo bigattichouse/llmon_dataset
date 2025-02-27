@@ -1,0 +1,37 @@
+{
+    "project": "apparmor",
+    "module": "../working/apparmor/tests/regression/apparmor/changehat_pthread.c",
+    "summary": "A regression test for AppArmor that tests the changehat functionality in a multithreaded context. It creates a pthread that changes to a specific hat, attempts a file operation, and then returns to the default hat.",
+    "logs": [
+        {
+            "function": "worker",
+            "message_template": "worker called, changing hat",
+            "reason": "Debug message indicating the worker thread is about to change its AppArmor hat profile",
+            "resolution": "This is a debug message (currently commented out) and doesn't require resolution"
+        },
+        {
+            "function": "worker",
+            "message_template": "worker changed hat",
+            "reason": "Debug message indicating the worker thread has changed its hat and completed the file operation",
+            "resolution": "This is a debug message (currently commented out) and doesn't require resolution"
+        },
+        {
+            "function": "worker",
+            "message_template": "PASS\n",
+            "reason": "Indicates the file access operation succeeded, meaning the AppArmor hat change worked correctly",
+            "resolution": "This is an informational message indicating test success; no resolution required"
+        },
+        {
+            "function": "main",
+            "message_template": "FAIL: usage '%s <filename>'\n",
+            "reason": "Error message when the program is called with incorrect command line arguments (missing filename)",
+            "resolution": "Ensure the program is called with exactly one argument which should be the filename to test with the changehat functionality"
+        },
+        {
+            "function": "main",
+            "message_template": "main",
+            "reason": "Debug message indicating execution has reached the main function",
+            "resolution": "This is a debug message (currently commented out) and doesn't require resolution"
+        }
+    ]
+}

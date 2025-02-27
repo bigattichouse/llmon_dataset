@@ -1,0 +1,43 @@
+{
+    "project": "apparmor",
+    "module": "../working/apparmor/tests/regression/apparmor/syscall_chroot.c",
+    "summary": "A regression test for AppArmor that verifies the chroot syscall works correctly by comparing directory contents before and after performing a chroot operation. The test passes if the root directory contents are different after the chroot, indicating proper isolation.",
+    "logs": [
+        {
+            "function": "read_directory",
+            "message_template": "FAIL: couldn't open directory",
+            "reason": "Logs an error when the specified directory cannot be opened, likely due to permission issues or the directory not existing.",
+            "resolution": "Verify the directory exists and has appropriate permissions. Check if AppArmor profiles are correctly configured to allow directory access."
+        },
+        {
+            "function": "read_directory",
+            "message_template": "FAIL: failed allocation",
+            "reason": "Logs an error when memory allocation fails during directory reading, typically due to system memory constraints.",
+            "resolution": "Check system memory usage and ensure sufficient resources are available. This error is unlikely under normal conditions."
+        },
+        {
+            "function": "main",
+            "message_template": "usage: %s <dir>\n",
+            "reason": "Displays a usage message when the program is invoked with incorrect command-line arguments.",
+            "resolution": "Provide a valid directory path as an argument to the program."
+        },
+        {
+            "function": "main",
+            "message_template": "FAIL: chroot failed",
+            "reason": "Logs an error when the chroot operation fails, which could be due to insufficient permissions (requires root) or an invalid directory.",
+            "resolution": "Ensure the test is run with root privileges and that the target directory exists and is valid for chroot operations."
+        },
+        {
+            "function": "main",
+            "message_template": "FAIL: root directories are the same\n",
+            "reason": "Logs an error when the test detects that the root directory contents before and after chroot are identical, indicating that the chroot operation did not properly change the root context.",
+            "resolution": "This could indicate a bug in the kernel's chroot implementation or in AppArmor's mediation of chroot. Investigate AppArmor profile configurations and verify kernel behavior."
+        },
+        {
+            "function": "main",
+            "message_template": "PASS\n",
+            "reason": "Indicates that the test has passed, confirming that the chroot operation successfully changed the root directory context.",
+            "resolution": "Informational log, no resolution required."
+        }
+    ]
+}

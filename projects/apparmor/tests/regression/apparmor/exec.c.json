@@ -1,0 +1,25 @@
+{
+    "project": "apparmor",
+    "module": "../working/apparmor/tests/regression/apparmor/exec.c",
+    "summary": "This module implements a test program that executes another program as a child process and monitors its execution. It reports success if the child process exits normally and failure otherwise, serving as a test harness for AppArmor's execution controls.",
+    "logs": [
+        {
+            "function": "main",
+            "message_template": "usage: %s program [args] \n",
+            "reason": "Logs an error message when the program is called with insufficient arguments. The user needs to provide at least one argument which is the program to execute.",
+            "resolution": "Provide the required program argument and any optional arguments for that program when invoking this test utility."
+        },
+        {
+            "function": "main",
+            "message_template": "PASS\n",
+            "reason": "Indicates successful execution when the child process exits normally. This is part of the test output indicating that the program under test executed and terminated as expected.",
+            "resolution": "This is an informational log indicating successful test completion, no resolution required."
+        },
+        {
+            "function": "main",
+            "message_template": "FAILED, child did not exit normally\n",
+            "reason": "Indicates that the child process did not exit normally, either due to a signal or because the execve call failed. This suggests that the test program could not be executed properly or was terminated abnormally.",
+            "resolution": "Check if the program specified as the argument exists, is executable, and doesn't crash. Also verify that AppArmor policies aren't preventing execution if this test is used for AppArmor testing."
+        }
+    ]
+}

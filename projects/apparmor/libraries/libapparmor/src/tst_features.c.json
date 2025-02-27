@@ -1,0 +1,343 @@
+{
+    "project": "apparmor",
+    "module": "tst_features.c",
+    "summary": "Test module for AppArmor's libapparmor functionality that tests path component tokenization and walking through nested structures with components and braces. It verifies parsing of paths and navigation through structured data representations.",
+    "logs": [
+        {
+            "function": "test_tokenize_path_components",
+            "message_template": "basic NULL test",
+            "reason": "Test fails when tokenize_path_components does not properly handle NULL input",
+            "resolution": "This is a test assertion. If failing, verify the NULL handling in tokenize_path_components function."
+        },
+        {
+            "function": "test_tokenize_path_components",
+            "message_template": "basic empty string test",
+            "reason": "Test fails when tokenize_path_components does not properly handle empty string input",
+            "resolution": "This is a test assertion. If failing, verify empty string handling in tokenize_path_components function."
+        },
+        {
+            "function": "test_tokenize_path_components",
+            "message_template": "basic empty array test",
+            "reason": "Test fails when tokenize_path_components does not properly handle an empty components array",
+            "resolution": "This is a test assertion. If failing, check that tokenize_path_components correctly handles zero-length output arrays."
+        },
+        {
+            "function": "test_tokenize_path_components",
+            "message_template": "one component full test (num)",
+            "reason": "Test fails when tokenize_path_components does not correctly count a single component",
+            "resolution": "This is a test assertion. If failing, verify single component counting in tokenize_path_components function."
+        },
+        {
+            "function": "test_tokenize_path_components",
+            "message_template": "one component full test (components[0])",
+            "reason": "Test fails when tokenize_path_components does not correctly store a single component",
+            "resolution": "This is a test assertion. If failing, verify single component storage in tokenize_path_components function."
+        },
+        {
+            "function": "test_tokenize_path_components",
+            "message_template": "two component full test (num)",
+            "reason": "Test fails when tokenize_path_components does not correctly count two components",
+            "resolution": "This is a test assertion. If failing, verify multi-component counting in tokenize_path_components function."
+        },
+        {
+            "function": "test_tokenize_path_components",
+            "message_template": "two component full test (components[0])",
+            "reason": "Test fails when tokenize_path_components does not correctly store the first of two components",
+            "resolution": "This is a test assertion. If failing, verify first component storage in multi-component paths."
+        },
+        {
+            "function": "test_tokenize_path_components",
+            "message_template": "two component full test (components[1])",
+            "reason": "Test fails when tokenize_path_components does not correctly store the second of two components",
+            "resolution": "This is a test assertion. If failing, verify second component storage in multi-component paths."
+        },
+        {
+            "function": "test_tokenize_path_components",
+            "message_template": "not enough components full test (num)",
+            "reason": "Test fails when tokenize_path_components does not handle insufficient output array size",
+            "resolution": "This is a test assertion. If failing, verify handling of insufficient output array size in tokenize_path_components."
+        },
+        {
+            "function": "test_tokenize_path_components",
+            "message_template": "not enough components full test (components[0])",
+            "reason": "Test fails when tokenize_path_components does not store the full path as a single component when output array is too small",
+            "resolution": "This is a test assertion. If failing, verify overflow handling in tokenize_path_components function."
+        },
+        {
+            "function": "test_tokenize_path_components",
+            "message_template": "no valid components #1 (num)",
+            "reason": "Test fails when tokenize_path_components does not correctly handle a path with no valid components (just a slash)",
+            "resolution": "This is a test assertion. If failing, verify single-slash path handling in tokenize_path_components."
+        },
+        {
+            "function": "test_tokenize_path_components",
+            "message_template": "no valid components #2 (num)",
+            "reason": "Test fails when tokenize_path_components does not correctly handle a path with multiple slashes and no valid components",
+            "resolution": "This is a test assertion. If failing, verify handling of multiple consecutive slashes in tokenize_path_components."
+        },
+        {
+            "function": "test_tokenize_path_components",
+            "message_template": "many invalid components (num)",
+            "reason": "Test fails when tokenize_path_components does not correctly count valid components in a path with many invalid parts",
+            "resolution": "This is a test assertion. If failing, verify handling of multiple slashes with valid components in between."
+        },
+        {
+            "function": "test_tokenize_path_components",
+            "message_template": "many invalid components (components[0])",
+            "reason": "Test fails when tokenize_path_components does not correctly store a valid component in a path with many invalid parts",
+            "resolution": "This is a test assertion. If failing, verify component extraction from paths with many slashes."
+        },
+        {
+            "function": "test_tokenize_path_components",
+            "message_template": "file (num)",
+            "reason": "Test fails when tokenize_path_components does not correctly count a simple filename as one component",
+            "resolution": "This is a test assertion. If failing, verify basic filename handling in tokenize_path_components."
+        },
+        {
+            "function": "test_tokenize_path_components",
+            "message_template": "file (components[0])",
+            "reason": "Test fails when tokenize_path_components does not correctly store a simple filename component",
+            "resolution": "This is a test assertion. If failing, verify basic filename storage in tokenize_path_components."
+        },
+        {
+            "function": "test_tokenize_path_components",
+            "message_template": "v7 (num)",
+            "reason": "Test fails when tokenize_path_components does not correctly count components in a complex path with multiple slashes",
+            "resolution": "This is a test assertion. If failing, verify complex path handling with multiple slashes in tokenize_path_components."
+        },
+        {
+            "function": "test_tokenize_path_components",
+            "message_template": "v7 (components[0])",
+            "reason": "Test fails when tokenize_path_components does not correctly store the first component in a complex path",
+            "resolution": "This is a test assertion. If failing, verify component extraction from complex paths."
+        },
+        {
+            "function": "test_tokenize_path_components",
+            "message_template": "v7 (components[1])",
+            "reason": "Test fails when tokenize_path_components does not correctly store the second component in a complex path",
+            "resolution": "This is a test assertion. If failing, verify component extraction from complex paths."
+        },
+        {
+            "function": "test_tokenize_path_components",
+            "message_template": "v7 (components[2])",
+            "reason": "Test fails when tokenize_path_components does not correctly store the third component in a complex path",
+            "resolution": "This is a test assertion. If failing, verify component extraction from complex paths."
+        },
+        {
+            "function": "test_tokenize_path_components",
+            "message_template": "dbus send (num)",
+            "reason": "Test fails when tokenize_path_components does not correctly count components in a DBus path",
+            "resolution": "This is a test assertion. If failing, verify path component counting for DBus paths."
+        },
+        {
+            "function": "test_tokenize_path_components",
+            "message_template": "dbus send (components[0])",
+            "reason": "Test fails when tokenize_path_components does not correctly store the first component in a DBus path",
+            "resolution": "This is a test assertion. If failing, verify first component extraction for DBus paths."
+        },
+        {
+            "function": "test_tokenize_path_components",
+            "message_template": "dbus send (components[1])",
+            "reason": "Test fails when tokenize_path_components does not correctly store the second component in a DBus path",
+            "resolution": "This is a test assertion. If failing, verify second component extraction for DBus paths."
+        },
+        {
+            "function": "test_tokenize_path_components",
+            "message_template": "dbus send (components[2])",
+            "reason": "Test fails when tokenize_path_components does not correctly store the third component in a DBus path",
+            "resolution": "This is a test assertion. If failing, verify third component extraction for DBus paths."
+        },
+        {
+            "function": "test_walk_one",
+            "message_template": "basic NULL str test (walk check)",
+            "reason": "Test fails when walk_one does not properly handle NULL string pointer",
+            "resolution": "This is a test assertion. If failing, verify NULL handling in walk_one function."
+        },
+        {
+            "function": "test_walk_one",
+            "message_template": "basic NULL *str test (walk check)",
+            "reason": "Test fails when walk_one does not properly handle NULL string value",
+            "resolution": "This is a test assertion. If failing, verify handling of NULL string value in walk_one function."
+        },
+        {
+            "function": "test_walk_one",
+            "message_template": "basic NULL component test (walk check)",
+            "reason": "Test fails when walk_one does not properly handle NULL component",
+            "resolution": "This is a test assertion. If failing, verify NULL component handling in walk_one function."
+        },
+        {
+            "function": "test_walk_one",
+            "message_template": "basic NULL c.str test (walk check)",
+            "reason": "Test fails when walk_one does not properly handle a component with NULL string",
+            "resolution": "This is a test assertion. If failing, verify handling of NULL component strings in walk_one function."
+        },
+        {
+            "function": "test_walk_one",
+            "message_template": "basic empty c.str test (walk check)",
+            "reason": "Test fails when walk_one does not properly handle a component with empty string",
+            "resolution": "This is a test assertion. If failing, verify handling of empty component strings in walk_one function."
+        },
+        {
+            "function": "test_walk_one",
+            "message_template": "single component (walk check)",
+            "reason": "Test fails when walk_one does not properly handle a single component",
+            "resolution": "This is a test assertion. If failing, verify single component handling in walk_one function."
+        },
+        {
+            "function": "test_walk_one",
+            "message_template": "single component bad str (walk check)",
+            "reason": "Test fails when walk_one does not properly validate string against component",
+            "resolution": "This is a test assertion. If failing, verify string validation in walk_one function."
+        },
+        {
+            "function": "test_walk_one",
+            "message_template": "single component bad c.str (walk check)",
+            "reason": "Test fails when walk_one does not properly validate component against string",
+            "resolution": "This is a test assertion. If failing, verify component validation in walk_one function."
+        },
+        {
+            "function": "test_walk_one",
+            "message_template": "single component empty braces #1 (walk check)",
+            "reason": "Test fails when walk_one does not properly handle empty braces after a component",
+            "resolution": "This is a test assertion. If failing, verify empty brace handling in walk_one function."
+        },
+        {
+            "function": "test_walk_one",
+            "message_template": "single component empty braces #2 (walk check)",
+            "reason": "Test fails when walk_one does not properly handle empty braces with whitespace",
+            "resolution": "This is a test assertion. If failing, verify empty brace handling with whitespace in walk_one function."
+        },
+        {
+            "function": "test_walk_one",
+            "message_template": "single component empty braces #3 (walk check)",
+            "reason": "Test fails when walk_one does not properly handle empty braces without spaces",
+            "resolution": "This is a test assertion. If failing, verify empty brace handling without spaces in walk_one function."
+        },
+        {
+            "function": "test_walk_one",
+            "message_template": "single component empty braces #4 (walk check)",
+            "reason": "Test fails when walk_one does not properly handle empty braces with surrounding whitespace",
+            "resolution": "This is a test assertion. If failing, verify empty brace handling with surrounding whitespace in walk_one function."
+        },
+        {
+            "function": "test_walk_one",
+            "message_template": "single component bad is_top_level (walk check)",
+            "reason": "Test fails when walk_one does not properly handle is_top_level flag",
+            "resolution": "This is a test assertion. If failing, verify is_top_level handling in walk_one function."
+        },
+        {
+            "function": "test_walk_one",
+            "message_template": "brace in the middle #1 (walk check)",
+            "reason": "Test fails when walk_one does not properly handle braces in the middle of a string",
+            "resolution": "This is a test assertion. If failing, verify handling of malformed brace patterns in walk_one function."
+        },
+        {
+            "function": "test_walk_one",
+            "message_template": "brace in the middle #2 (walk check)",
+            "reason": "Test fails when walk_one does not properly handle braces in the middle with is_top_level=false",
+            "resolution": "This is a test assertion. If failing, verify handling of malformed brace patterns in non-top-level scenarios."
+        },
+        {
+            "function": "test_walk_one",
+            "message_template": "animal walk good ardvark (walk check)",
+            "reason": "Test fails when walk_one does not correctly walk a top-level component in a nested structure",
+            "resolution": "This is a test assertion. If failing, verify top-level component walking in nested structures."
+        },
+        {
+            "function": "test_walk_one",
+            "message_template": "animal walk bad deer (walk check)",
+            "reason": "Test fails when walk_one incorrectly walks a nested component at the wrong level",
+            "resolution": "This is a test assertion. If failing, verify proper nesting level checking in walk_one."
+        },
+        {
+            "function": "test_walk_one",
+            "message_template": "animal walk bad top-level deer (walk check)",
+            "reason": "Test fails when walk_one incorrectly treats a nested component as top-level",
+            "resolution": "This is a test assertion. If failing, verify proper nesting level checking for top-level components."
+        },
+        {
+            "function": "test_walk_one",
+            "message_template": "animal walk bad bear (walk check)",
+            "reason": "Test fails when walk_one incorrectly walks a component at the wrong position",
+            "resolution": "This is a test assertion. If failing, verify proper position checking in walk_one."
+        },
+        {
+            "function": "test_walk_one",
+            "message_template": "animal walk good cat (walk check)",
+            "reason": "Test fails when walk_one does not correctly walk a nested component at the correct level",
+            "resolution": "This is a test assertion. If failing, verify nested component handling in walk_one."
+        },
+        {
+            "function": "test_walk_one",
+            "message_template": "animal walk bad ardvark (walk check)",
+            "reason": "Test fails when walk_one incorrectly walks a component that's already been processed",
+            "resolution": "This is a test assertion. If failing, verify position tracking in walk_one after processing components."
+        },
+        {
+            "function": "test_walk_one",
+            "message_template": "animal walk good deer (walk check)",
+            "reason": "Test fails when walk_one does not correctly walk a deeply nested component",
+            "resolution": "This is a test assertion. If failing, verify deep nesting handling in walk_one."
+        },
+        {
+            "function": "test_walk_one",
+            "message_template": "dbus/signal bad hup #1 (walk check)",
+            "reason": "Test fails when walk_one incorrectly handles a deeply nested component at top level",
+            "resolution": "This is a test assertion. If failing, verify proper level checking in complex nested structures."
+        },
+        {
+            "function": "test_walk_one",
+            "message_template": "dbus/signal bad hup #2 (walk check)",
+            "reason": "Test fails when walk_one incorrectly handles a deeply nested component at the wrong level",
+            "resolution": "This is a test assertion. If failing, verify proper level checking in complex nested structures."
+        },
+        {
+            "function": "test_walk_one",
+            "message_template": "dbus/signal bad signal (walk check)",
+            "reason": "Test fails when walk_one incorrectly handles a component at the wrong nesting level",
+            "resolution": "This is a test assertion. If failing, verify proper nesting level checking in complex structures."
+        },
+        {
+            "function": "test_walk_one",
+            "message_template": "dbus/signal good signal (walk check)",
+            "reason": "Test fails when walk_one does not correctly walk a top-level component in a complex structure",
+            "resolution": "This is a test assertion. If failing, verify top-level component handling in complex structures."
+        },
+        {
+            "function": "test_walk_one",
+            "message_template": "dbus/signal bad mask (walk check)",
+            "reason": "Test fails when walk_one incorrectly handles a nested component at the wrong level",
+            "resolution": "This is a test assertion. If failing, verify proper nesting level checking in complex structures."
+        },
+        {
+            "function": "test_walk_one",
+            "message_template": "dbus/signal good mask (walk check)",
+            "reason": "Test fails when walk_one does not correctly walk a nested component in a complex structure",
+            "resolution": "This is a test assertion. If failing, verify nested component handling in complex structures."
+        },
+        {
+            "function": "test_walk_one",
+            "message_template": "dbus/signal good hup (walk check)",
+            "reason": "Test fails when walk_one does not correctly walk a deeply nested component in a complex structure",
+            "resolution": "This is a test assertion. If failing, verify deeply nested component handling in complex structures."
+        },
+        {
+            "function": "test_walk_one",
+            "message_template": "policy good (walk check)",
+            "reason": "Test fails when walk_one does not correctly walk a policy component",
+            "resolution": "This is a test assertion. If failing, verify policy component handling in walk_one."
+        },
+        {
+            "function": "test_walk_one",
+            "message_template": "versions good (walk check)",
+            "reason": "Test fails when walk_one does not correctly walk a versions component inside a policy",
+            "resolution": "This is a test assertion. If failing, verify versions component handling inside policies."
+        },
+        {
+            "function": "test_walk_one",
+            "message_template": "v7 good (walk check)",
+            "reason": "Test fails when walk_one does not correctly walk a version number component",
+            "resolution": "This is a test assertion. If failing, verify version number component handling in walk_one."
+        }
+    ]
+}

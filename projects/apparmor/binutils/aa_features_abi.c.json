@@ -1,0 +1,55 @@
+{
+    "project": "apparmor",
+    "module": "../working/apparmor/binutils/aa_features_abi.c",
+    "summary": "This module is an AppArmor utility that extracts feature ABI information from the kernel or loads it from a file, and then outputs it to stdout or a file. It provides command-line options for specifying sources and output destinations, with error handling for various failure conditions.",
+    "logs": [
+        {
+            "function": "usage",
+            "message_template": "USAGE: %s [OPTIONS] <SOURCE> [OUTPUT OPTIONS]\n\nOutput AppArmor feature abi from SOURCE to OUTPUT\nOPTIONS:\n  -h, --help       display this help\nSOURCE:\n  -f F, --file=F   load features abi from file F\n  -x, --extract    extract features abi from the kernel\nOUTPUT OPTIONS:\n  --stdout         default, write features to stdout\n  -w F, --write=F  write features abi to the file F instead of stdout\n",
+            "reason": "Displays help information about command usage when requested or when invalid arguments are provided",
+            "resolution": "Review the usage documentation and provide valid command-line arguments"
+        },
+        {
+            "function": "main",
+            "message_template": "options --extract and --file are mutually exclusive",
+            "reason": "The user attempted to use both --extract and --file options, which are incompatible with each other",
+            "resolution": "Specify either --extract to obtain features from the kernel or --file to load features from a file, but not both"
+        },
+        {
+            "function": "main",
+            "message_template": "failed to extract features abi from the kernel",
+            "reason": "The program could not extract AppArmor feature ABI information from the kernel, possibly due to permission issues or AppArmor not being enabled",
+            "resolution": "Ensure AppArmor is installed and enabled in the kernel, and that the program has sufficient permissions to access AppArmor information"
+        },
+        {
+            "function": "main",
+            "message_template": "failed to open file '%s'",
+            "reason": "The program could not open the specified input file, possibly due to file permissions, non-existent file, or other file system errors",
+            "resolution": "Verify the file exists, has appropriate permissions, and is accessible by the current user"
+        },
+        {
+            "function": "main",
+            "message_template": "failed to load features abi from file '%s'",
+            "reason": "The program could not parse or load AppArmor feature ABI information from the specified file, likely because the file has invalid format or data",
+            "resolution": "Ensure the file contains valid AppArmor feature ABI information and is not corrupted"
+        },
+        {
+            "function": "main",
+            "message_template": "failed to open output file '%s'",
+            "reason": "The program could not open the specified output file for writing, possibly due to permissions, directory not existing, or disk full",
+            "resolution": "Check that the directory exists, the user has write permissions, and there is sufficient disk space available"
+        },
+        {
+            "function": "main",
+            "message_template": "failed to get stdout",
+            "reason": "The program could not get file descriptor for standard output, which is an unusual failure that might indicate a broken environment",
+            "resolution": "This is a rare error that may indicate a serious system issue. Check if stdout has been closed or redirected improperly"
+        },
+        {
+            "function": "main",
+            "message_template": "failed to write features abi",
+            "reason": "The program could not write the AppArmor feature ABI information to the output destination, possibly due to disk full or I/O errors",
+            "resolution": "Ensure there is sufficient disk space and no I/O issues with the output destination"
+        }
+    ]
+}

@@ -1,0 +1,31 @@
+{
+    "project": "apparmor",
+    "module": "../working/apparmor/tests/regression/apparmor/changehat_fail.c",
+    "summary": "A test program for AppArmor's changehat functionality that verifies proper behavior when changing hats (profiles) and handling failures. It tests both successful hat changes and failures with incorrect magic numbers.",
+    "logs": [
+        {
+            "function": "main",
+            "message_template": "usage: %s profile\n",
+            "reason": "Logs an error message when the program is invoked with incorrect arguments (not exactly one profile name argument).",
+            "resolution": "Provide exactly one argument specifying the profile name to use for testing."
+        },
+        {
+            "function": "main",
+            "message_template": "FAIL: changehat %s failed - %s\n",
+            "reason": "Logs an error message when the attempt to change to the specified hat fails, including the specific error message from the system.",
+            "resolution": "Check if the specified hat exists within the AppArmor profile, verify AppArmor is properly loaded, and ensure the application has the necessary permissions."
+        },
+        {
+            "function": "main",
+            "message_template": "FAIL: changehat %s failed - %s\n",
+            "reason": "Logs an error message when the attempt to change back to the parent profile fails with an incorrect magic number, testing behavior with invalid credentials.",
+            "resolution": "This is an expected failure in a test scenario. In real applications, ensure the correct magic cookie is used when changing hats and that AppArmor is properly configured."
+        },
+        {
+            "function": "main",
+            "message_template": "PASS\n",
+            "reason": "Logs a success message when all changehat operations complete successfully, indicating the test passed.",
+            "resolution": "Informational log, no resolution required."
+        }
+    ]
+}

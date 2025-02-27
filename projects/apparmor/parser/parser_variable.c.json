@@ -1,0 +1,43 @@
+{
+    "project": "apparmor",
+    "module": "../working/apparmor/parser/parser_variable.c",
+    "summary": "This module handles variable processing in AppArmor profiles, including splitting variable references, expanding variables in profile entries, and handling variable-related errors during profile parsing.",
+    "logs": [
+        {
+            "function": "split_string",
+            "message_template": "Memory allocation error\n",
+            "reason": "Logs an error when memory allocation fails during string splitting operation for variable substitution.",
+            "resolution": "This indicates the system is running low on memory. Try closing unnecessary applications or adding more memory to the system."
+        },
+        {
+            "function": "split_out_var",
+            "message_template": "Empty variable name found!\n",
+            "reason": "Reports an error when an empty variable name (e.g., @{}) is encountered in a profile. Empty variable names are not allowed.",
+            "resolution": "Modify the AppArmor profile to ensure all variable references contain a valid variable name between @{ and }."
+        },
+        {
+            "function": "expand_by_alternations",
+            "message_template": "ASSERT: set variable (%s) should always have at least one value assigned to it\n",
+            "reason": "Reports a critical assertion failure when a set variable is referenced but has no values assigned. This should never happen in properly validated profiles.",
+            "resolution": "This is likely a bug in the parser. File a bug report with the AppArmor developers, including the profile that triggered this error."
+        },
+        {
+            "function": "expand_entry_variables",
+            "message_template": "Found reference to variable %s, but is never declared\n",
+            "reason": "Logs an error when a profile references a variable that was never declared. All variables must be declared before use.",
+            "resolution": "Add a variable declaration for the missing variable in the profile, or correct the variable reference if it contains a typo."
+        },
+        {
+            "function": "expand_entry_variables",
+            "message_template": "Found reference to set variable %s, but declared boolean\n",
+            "reason": "Logs an error when a profile references a variable as a set variable, but it was declared as a boolean variable.",
+            "resolution": "Check the variable type and either change the variable reference or change the variable declaration to match the intended usage."
+        },
+        {
+            "function": "process_variables_in_name",
+            "message_template": "attach_disconnected_path value must begin with a /",
+            "reason": "Reports an error when a disconnected path attachment value doesn't start with a '/' character, which is required for absolute paths.",
+            "resolution": "Update the profile's attach_disconnected_path value to begin with a forward slash (/) to indicate an absolute path."
+        }
+    ]
+}

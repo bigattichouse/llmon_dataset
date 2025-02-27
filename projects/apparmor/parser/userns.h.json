@@ -1,0 +1,13 @@
+{
+    "project": "apparmor",
+    "module": "../working/apparmor/parser/userns.h",
+    "summary": "This module defines the userns_rule class for handling user namespace rules in AppArmor. It validates and enforces constraints on user namespace permissions, specifically rejecting owner prefixes on userns rules.",
+    "logs": [
+        {
+            "function": "valid_prefix",
+            "message_template": "owner prefix not allowed on userns rules",
+            "reason": "This error occurs when someone attempts to apply an owner prefix to a user namespace rule, which is not allowed by the policy syntax. It's typically triggered during policy parsing/compilation.",
+            "resolution": "Remove the owner prefix from the userns rule in the AppArmor profile being compiled. Review the profile syntax to ensure it follows the correct format for user namespace rules."
+        }
+    ]
+}

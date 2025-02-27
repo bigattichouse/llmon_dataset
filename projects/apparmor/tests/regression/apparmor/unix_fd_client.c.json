@@ -1,0 +1,6 @@
+{
+    "project": "apparmor",
+    "module": "../working/apparmor/tests/regression/apparmor/unix_fd_client.c",
+    "summary": "A simple test client for Unix domain sockets that attempts to establish a connection to a specified socket path. It's part of the AppArmor regression test suite to verify Unix socket file descriptor functionality.",
+    "logs": []
+}

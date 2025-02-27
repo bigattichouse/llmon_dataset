@@ -1,0 +1,91 @@
+{
+    "project": "apparmor",
+    "module": "dbus_message.c",
+    "summary": "A utility program for sending arbitrary D-Bus messages from the command line, primarily used in AppArmor regression testing. It supports sending signals and method calls with various data types, and provides detailed error reporting for validating D-Bus functionality.",
+    "logs": [
+        {
+            "function": "usage",
+            "message_template": "%6sUsage: dbus_message [ADDRESS] [--name=NAME] [--type=TYPE] <path> <interface.member> [contents ...]\n    ADDRESS\t\t--system, --session (default), or --address=ADDR\n    NAME\t\tthe message destination\n    TYPE\t\tsignal (default) or method_call\n    path\t\tpath to object (such as /org/freedesktop/DBus)\n    interface\t\tinterface to use (such as org.freedesktop.DBus)\n    member\t\tname of the method or signal (such as ListNames)\n",
+            "reason": "Displays usage information when the program is invoked incorrectly or when help is requested. The 'prefix' parameter controls whether to prefix with 'FAIL:' for error cases.",
+            "resolution": "Follow the usage instructions to correctly format your command. Ensure you provide all required parameters in the right order."
+        },
+        {
+            "function": "do_message",
+            "message_template": "FAIL: Internal error, unknown message type\n",
+            "reason": "Logged when the message_type variable contains an unexpected value, which should not occur in normal operation.",
+            "resolution": "This is likely a programming error in the tool itself. It may indicate that an invalid message type was selected or that the message_type variable was corrupted."
+        },
+        {
+            "function": "do_message",
+            "message_template": "FAIL: Couldn't allocate D-Bus message\n",
+            "reason": "Occurs when memory allocation for a new D-Bus message fails.",
+            "resolution": "The system may be low on memory. Try closing other applications or adding more RAM to the system."
+        },
+        {
+            "function": "do_message",
+            "message_template": "FAIL: Not enough memory\n",
+            "reason": "Occurs when setting the destination of a D-Bus message fails due to memory constraints.",
+            "resolution": "The system is likely low on available memory. Free up memory by closing unnecessary applications or add more RAM to the system."
+        },
+        {
+            "function": "do_message",
+            "message_template": "FAIL: %s: Data item \"%s\" is badly formed\n",
+            "reason": "Logged when a command-line argument specifying a D-Bus data item has incorrect syntax, such as missing a colon separator.",
+            "resolution": "Check the format of your data items. Each item should use the format 'type:value' or 'container_type:type:value'. Verify that all required colons are present and properly positioned."
+        },
+        {
+            "function": "do_message",
+            "message_template": "FAIL: %s: %s\n",
+            "reason": "Occurs when a D-Bus method call returns an error. The message contains the error name and description from D-Bus.",
+            "resolution": "The resolution depends on the specific D-Bus error. Check the error message for details. Common issues include permission problems, non-existent interfaces, or invalid arguments."
+        },
+        {
+            "function": "do_message",
+            "message_template": "sent ",
+            "reason": "Logged to the specified log file before sending a D-Bus message, for debugging/tracing purposes.",
+            "resolution": "This is an informational message indicating normal operation, no resolution required."
+        },
+        {
+            "function": "main",
+            "message_template": "FAIL: \"--address=\" requires an ADDRESS\n",
+            "reason": "Occurs when the --address option is used without providing an actual address value.",
+            "resolution": "Provide a valid D-Bus address after the '=' in the --address option, such as '--address=unix:path=/tmp/dbus-socket'."
+        },
+        {
+            "function": "main",
+            "message_template": "FAIL: Couldn't open log file \"%s\": %m\n",
+            "reason": "Logged when the program fails to open the specified log file for writing.",
+            "resolution": "Check that the specified path is writable, that sufficient disk space is available, and that appropriate permissions are set. The %m will be replaced with the system error message explaining the specific failure."
+        },
+        {
+            "function": "main",
+            "message_template": "FAIL: Must use org.mydomain.Interface.Member notation, no dot in \"%s\"\n",
+            "reason": "Occurs when the interface.member argument doesn't contain a dot separator.",
+            "resolution": "Ensure you're using the correct D-Bus notation for the interface and member. The format should be 'org.example.Interface.MethodName', and the program will split it at the last dot."
+        },
+        {
+            "function": "main",
+            "message_template": "FAIL: \"--address\" may not be used with \"--system\" or \"--session\"\n",
+            "reason": "Logged when both the --address option and either --system or --session options are specified, which is not allowed.",
+            "resolution": "Use either the --address option to connect to a specific D-Bus address, or use --system or --session to connect to the system or session bus, but not both."
+        },
+        {
+            "function": "main",
+            "message_template": "FAIL: Message type \"%s\" is not supported\n",
+            "reason": "Occurs when an unsupported message type is specified with the --type option.",
+            "resolution": "Only 'signal' and 'method_call' message types are supported. Check your --type parameter and ensure it's one of these values."
+        },
+        {
+            "function": "main",
+            "message_template": "FAIL: Failed to open connection to \"%s\" message bus: %s\n",
+            "reason": "Logged when the program fails to establish a connection to the specified D-Bus bus.",
+            "resolution": "Ensure the D-Bus daemon is running and accessible. For system bus, you may need appropriate permissions. For custom addresses, verify the address is correct and the bus is available. Check the error message for specific details."
+        },
+        {
+            "function": "main",
+            "message_template": "PASS\n",
+            "reason": "Indicates successful execution of the requested D-Bus operation.",
+            "resolution": "No resolution needed; this indicates success."
+        }
+    ]
+}

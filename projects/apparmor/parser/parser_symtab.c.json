@@ -1,0 +1,139 @@
+{
+    "project": "apparmor",
+    "module": "parser_symtab.c",
+    "summary": "This module implements a symbol table for AppArmor variables during profile parsing. It manages two types of variables (boolean and set variables) and handles operations such as lookup, variable expansion, and error detection for recursive references.",
+    "logs": [
+        {
+            "function": "new_symtab_entry",
+            "message_template": "Failed to allocate memory: %s\n",
+            "reason": "Memory allocation for a new symbol table entry failed. This could happen when the system is low on memory.",
+            "resolution": "Check system memory usage and consider increasing available memory or reducing the complexity of AppArmor profiles being parsed."
+        },
+        {
+            "function": "new_set_value",
+            "message_template": "Failed to allocate memory: %s\n",
+            "reason": "Memory allocation for a new set value failed. This could happen when the system is low on memory.",
+            "resolution": "Check system memory usage and consider increasing available memory or reducing the complexity of AppArmor profiles being parsed."
+        },
+        {
+            "function": "add_boolean_var",
+            "message_template": "Failed to allocate memory: %s\n",
+            "reason": "Memory allocation failed during boolean variable insertion. This could happen when the system is low on memory.",
+            "resolution": "Check system memory usage and consider increasing available memory or reducing the complexity of AppArmor profiles being parsed."
+        },
+        {
+            "function": "add_boolean_var",
+            "message_template": "'%s' is already defined\n",
+            "reason": "Attempting to redefine a variable that already exists in the symbol table.",
+            "resolution": "Check the AppArmor profile for duplicate variable definitions and ensure each variable is defined only once."
+        },
+        {
+            "function": "get_boolean_var",
+            "message_template": "Variable %s is not a boolean variable\n",
+            "reason": "Trying to treat a non-boolean variable as a boolean variable.",
+            "resolution": "Check the AppArmor profile for incorrect variable usage. Make sure boolean operations are only performed on boolean variables."
+        },
+        {
+            "function": "new_set_var",
+            "message_template": "Failed to allocate memory: %s\n",
+            "reason": "Memory allocation failed during set variable insertion. This could happen when the system is low on memory.",
+            "resolution": "Check system memory usage and consider increasing available memory or reducing the complexity of AppArmor profiles being parsed."
+        },
+        {
+            "function": "new_set_var",
+            "message_template": "'%s' is already defined\n",
+            "reason": "Attempting to redefine a set variable that already exists in the symbol table.",
+            "resolution": "Check the AppArmor profile for duplicate variable definitions and ensure each variable is defined only once."
+        },
+        {
+            "function": "add_set_value",
+            "message_template": "Failed to find declaration for: %s\n",
+            "reason": "Trying to add a value to a set variable that hasn't been declared.",
+            "resolution": "Check the AppArmor profile for missing variable declarations. Make sure all set variables are properly declared before adding values to them."
+        },
+        {
+            "function": "add_set_value",
+            "message_template": "Variable %s is not a set variable\n",
+            "reason": "Trying to add a value to a variable that isn't a set variable.",
+            "resolution": "Check the AppArmor profile for incorrect variable usage. Make sure set operations are only performed on set variables."
+        },
+        {
+            "function": "add_set_value",
+            "message_template": "ASSERT: tfind found %s when looking up variable %s\n",
+            "reason": "Internal inconsistency in the symbol table lookup. This should never happen in normal operation.",
+            "resolution": "This indicates a bug in the AppArmor parser. Report this issue to the AppArmor maintainers with steps to reproduce."
+        },
+        {
+            "function": "get_set_var",
+            "message_template": "ASSERT: tfind found %s when looking up variable %s\n",
+            "reason": "Internal inconsistency in the symbol table lookup. This should never happen in normal operation.",
+            "resolution": "This indicates a bug in the AppArmor parser. Report this issue to the AppArmor maintainers with steps to reproduce."
+        },
+        {
+            "function": "get_set_var",
+            "message_template": "failure expanding variable %s\n",
+            "reason": "Error encountered while expanding a set variable. This could happen due to recursive references or undefined variables.",
+            "resolution": "Check the AppArmor profile for circular references between variables and ensure all referenced variables are properly defined."
+        },
+        {
+            "function": "delete_set_var",
+            "message_template": "ASSERT: delete_set_var: tfind found var %s but tdelete failed to delete it\n",
+            "reason": "Internal inconsistency in the symbol table deletion. This should never happen in normal operation.",
+            "resolution": "This indicates a bug in the AppArmor parser. Report this issue to the AppArmor maintainers with steps to reproduce."
+        },
+        {
+            "function": "delete_set_var",
+            "message_template": "ASSERT: delete_set_var: deleting %s but is a boolean variable\n",
+            "reason": "Attempting to delete a boolean variable using a function meant for set variables.",
+            "resolution": "This indicates a bug in the AppArmor parser. Report this issue to the AppArmor maintainers with steps to reproduce."
+        },
+        {
+            "function": "push_seen_var",
+            "message_template": "ASSERT: '%s' is already in the seenlist\n",
+            "reason": "Internal inconsistency in the variable tracking. This should never happen in normal operation.",
+            "resolution": "This indicates a bug in the AppArmor parser. Report this issue to the AppArmor maintainers with steps to reproduce."
+        },
+        {
+            "function": "pop_seen_var",
+            "message_template": "ASSERT: popped var '%s' not found on the seenlist\n",
+            "reason": "Internal inconsistency in the variable tracking. This should never happen in normal operation.",
+            "resolution": "This indicates a bug in the AppArmor parser. Report this issue to the AppArmor maintainers with steps to reproduce."
+        },
+        {
+            "function": "__expand_variable",
+            "message_template": "Referenced variable %s is a boolean used in set context\n",
+            "reason": "Attempting to use a boolean variable in a context where a set variable is expected.",
+            "resolution": "Check the AppArmor profile for incorrect variable usage. Make sure boolean variables are not used in set variable contexts."
+        },
+        {
+            "function": "__expand_variable",
+            "message_template": "Variable @{%s} is referenced recursively (by @{%s})\n",
+            "reason": "Detected a circular reference between variables, where a variable's expansion would include itself.",
+            "resolution": "Check the AppArmor profile for circular references in variable definitions and break these loops."
+        },
+        {
+            "function": "__expand_variable",
+            "message_template": "Variable @{%s} references undefined variable @{%s}\n",
+            "reason": "A variable references another variable that hasn't been defined.",
+            "resolution": "Check the AppArmor profile for undefined variables. Make sure all referenced variables are properly defined before they are used."
+        },
+        {
+            "function": "__expand_variable",
+            "message_template": "ASSERT: Variable @{%s} should have been expanded but isn't\n",
+            "reason": "Internal inconsistency in the variable expansion. This should never happen in normal operation.",
+            "resolution": "This indicates a bug in the AppArmor parser. Report this issue to the AppArmor maintainers with steps to reproduce."
+        },
+        {
+            "function": "__expand_variable",
+            "message_template": "Out of memory\n",
+            "reason": "Memory allocation failed during variable expansion, likely due to system resource constraints.",
+            "resolution": "Check system memory usage and consider increasing available memory or reducing the complexity of AppArmor profiles being parsed."
+        },
+        {
+            "function": "__dump_symtab_entry",
+            "message_template": "ASSERT: unknown symbol table type for %s\n",
+            "reason": "Internal inconsistency - encountered a variable with an unknown type. This should never happen in normal operation.",
+            "resolution": "This indicates a bug in the AppArmor parser. Report this issue to the AppArmor maintainers with steps to reproduce."
+        }
+    ]
+}

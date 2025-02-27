@@ -1,0 +1,6 @@
+{
+    "project": "apparmor",
+    "module": "../working/apparmor/parser/libapparmor_re/policy_compat.h",
+    "summary": "This header file declares functions for computing various types of permissions in AppArmor's policy system. It defines three functions related to permission calculations for users, others, and general entry permissions with no implementation details.",
+    "logs": []
+}

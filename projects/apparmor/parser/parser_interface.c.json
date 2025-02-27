@@ -1,0 +1,157 @@
+{
+    "project": "apparmor",
+    "module": "../working/apparmor/parser/parser_interface.c",
+    "summary": "This module handles serializing and loading AppArmor security profiles to the kernel. It converts in-memory profiles to binary format, handles profile operations (add, replace, remove), and reports errors during these operations.",
+    "logs": [
+        {
+            "function": "print_error",
+            "message_template": "Bad write position\n",
+            "reason": "Logs an error when there's a problem with the write position (ESPIPE). Likely occurs when trying to write to a file or pipe that doesn't support seeking.",
+            "resolution": "Check the file descriptor being written to and ensure it supports the write operation being performed."
+        },
+        {
+            "function": "print_error",
+            "message_template": "Out of memory\n",
+            "reason": "Logs an error when the system cannot allocate memory (ENOMEM). This can happen when serializing large profiles or when the system is under memory pressure.",
+            "resolution": "Reduce memory usage on the system or increase available memory. Check for memory leaks in the application."
+        },
+        {
+            "function": "print_error",
+            "message_template": "Couldn't copy profile: Bad memory address\n",
+            "reason": "Logs an error when trying to access an invalid memory address (EFAULT). This can occur when trying to copy a corrupted profile.",
+            "resolution": "This may indicate a bug in the parser or corrupted profile data. Report the issue with details on the profile that caused the error."
+        },
+        {
+            "function": "print_error",
+            "message_template": "Profile doesn't conform to protocol\n",
+            "reason": "Logs an error when a profile doesn't match the expected protocol format (EPROTO). This can happen with malformed profiles or when using an incompatible profile version.",
+            "resolution": "Check the profile syntax and ensure it conforms to the AppArmor profile format. It may need to be updated to match the current AppArmor version."
+        },
+        {
+            "function": "print_error",
+            "message_template": "Profile does not match signature\n",
+            "reason": "Logs an error when a profile's signature doesn't match (EBADMSG). This can indicate profile tampering or corruption.",
+            "resolution": "Verify the integrity of the profile. If using signed profiles, ensure the signature is valid. It may need to be regenerated or resigned."
+        },
+        {
+            "function": "print_error",
+            "message_template": "Profile version not supported by Apparmor module\n",
+            "reason": "Logs an error when the profile version is not supported by the loaded AppArmor module (EPROTONOSUPPORT). This typically happens when using newer profiles with an older kernel.",
+            "resolution": "Update the kernel or AppArmor module to a version that supports the profile format, or downgrade the profile to a compatible version."
+        },
+        {
+            "function": "print_error",
+            "message_template": "Profile already exists\n",
+            "reason": "Logs an error when trying to add a profile that already exists (EEXIST). This happens during profile addition operations.",
+            "resolution": "Use the replace operation instead of add if you want to update an existing profile, or remove the existing profile first."
+        },
+        {
+            "function": "print_error",
+            "message_template": "Profile doesn't exist\n",
+            "reason": "Logs an error when trying to operate on a profile that doesn't exist (ENOENT). This happens during replace or remove operations.",
+            "resolution": "Verify the profile name and ensure the profile is loaded before attempting to replace or remove it."
+        },
+        {
+            "function": "print_error",
+            "message_template": "%s: Permission denied. You need policy admin privileges to manage profiles.\n\n",
+            "reason": "Logs an error when the user doesn't have sufficient permissions to manage profiles (EPERM). This typically occurs when non-root users try to modify policies.",
+            "resolution": "Run the command with sudo or as root, or configure AppArmor to allow the specific user to manage profiles."
+        },
+        {
+            "function": "print_error",
+            "message_template": "%s: Access denied. You need policy admin privileges to manage profiles.\n\n",
+            "reason": "Logs an error when the user is denied access to manage profiles (EACCES). Similar to permission denied but specifically for access control issues.",
+            "resolution": "Ensure the user has the appropriate permissions and policy admin privileges. You may need to add the user to a specific group or configure AppArmor to allow the user to manage profiles."
+        },
+        {
+            "function": "print_error",
+            "message_template": "Unknown error (%d): %s\n",
+            "reason": "Logs an unknown error with its error code and message. This is a catch-all for errors not specifically handled.",
+            "resolution": "Check the error code and message for more specific information. This may require debugging the specific circumstances that led to the error."
+        },
+        {
+            "function": "load_profile",
+            "message_template": "Serializing policy for %s.\n",
+            "reason": "Debug message indicating that a policy is being serialized for a specific profile. This is informational.",
+            "resolution": "Informational message, no resolution required."
+        },
+        {
+            "function": "load_profile",
+            "message_template": "%s: Unable to add \"%s\".  ",
+            "reason": "Logs an error when a profile cannot be added to the system. This is followed by a more specific error message from print_error().",
+            "resolution": "Check the subsequent error message for more specific information about why the profile couldn't be added."
+        },
+        {
+            "function": "load_profile",
+            "message_template": "%s: Unable to replace \"%s\".  ",
+            "reason": "Logs an error when a profile cannot be replaced. This is followed by a more specific error message from print_error().",
+            "resolution": "Check the subsequent error message for more specific information about why the profile couldn't be replaced."
+        },
+        {
+            "function": "load_profile",
+            "message_template": "%s: Unable to remove \"%s\".  ",
+            "reason": "Logs an error when a profile cannot be removed. This is followed by a more specific error message from print_error().",
+            "resolution": "Check the subsequent error message for more specific information about why the profile couldn't be removed."
+        },
+        {
+            "function": "load_profile",
+            "message_template": "%s: Unable to write to stdout\n",
+            "reason": "Logs an error when the system cannot write to standard output. This can happen when stdout is redirected or closed.",
+            "resolution": "Check if stdout is available and properly configured. This may be an issue with terminal settings or redirection."
+        },
+        {
+            "function": "load_profile",
+            "message_template": "%s: Unable to write to output file\n",
+            "reason": "Logs an error when the system cannot write to the specified output file. This can happen due to permission issues or disk space problems.",
+            "resolution": "Verify file permissions, available disk space, and ensure the path to the output file is valid and accessible."
+        },
+        {
+            "function": "load_profile",
+            "message_template": "%s: ASSERT: Invalid option: %d\n",
+            "reason": "Logs a critical error when an invalid option is provided to the load_profile function. This indicates a programming error.",
+            "resolution": "This is a programming bug. Report the issue with details about what operation was being performed when the error occurred."
+        },
+        {
+            "function": "load_profile",
+            "message_template": "Addition succeeded for \"%s\".\n",
+            "reason": "Logs a success message when a profile has been successfully added. This is an informational message when verbose mode is enabled.",
+            "resolution": "Informational message, no resolution required."
+        },
+        {
+            "function": "load_profile",
+            "message_template": "Replacement succeeded for \"%s\".\n",
+            "reason": "Logs a success message when a profile has been successfully replaced. This is an informational message when verbose mode is enabled.",
+            "resolution": "Informational message, no resolution required."
+        },
+        {
+            "function": "load_profile",
+            "message_template": "Removal succeeded for \"%s\".\n",
+            "reason": "Logs a success message when a profile has been successfully removed. This is an informational message when verbose mode is enabled.",
+            "resolution": "Informational message, no resolution required."
+        },
+        {
+            "function": "sd_serialize_dfa",
+            "message_template": "profile %s network rules not enforced\n",
+            "reason": "Logs a warning when a profile's network rules cannot be enforced. This typically happens when the kernel doesn't support network rules or the features_supports_network flag is not set.",
+            "resolution": "Upgrade to a kernel that supports AppArmor network rules, or modify the profile to avoid using network rules that aren't supported by the current kernel."
+        },
+        {
+            "function": "__sd_serialize_profile",
+            "message_template": "Unable to open stdout - %s\n",
+            "reason": "Logs an error when the system cannot open standard output. This can happen when stdout is redirected to a closed or invalid file descriptor.",
+            "resolution": "Check if standard output is available and properly configured. This may be an issue with terminal settings or redirection."
+        },
+        {
+            "function": "__sd_serialize_profile",
+            "message_template": "Unable to open output file - %s\n",
+            "reason": "Logs an error when the system cannot open the specified output file. This can be due to file permissions or path issues.",
+            "resolution": "Verify file permissions and ensure the path to the output file is valid and accessible. Check if the directory exists and has write permissions."
+        },
+        {
+            "function": "__sd_serialize_profile",
+            "message_template": "%s: Unable to write entire profile entry to cache\n",
+            "reason": "Logs an error when the system cannot write the entire profile to the cache. This typically happens due to disk space issues or I/O problems.",
+            "resolution": "Check available disk space and verify the cache directory is writable. You may need to clear the cache or allocate more space for it."
+        }
+    ]
+}

@@ -1,0 +1,61 @@
+{
+    "project": "apparmor",
+    "module": "../working/apparmor/parser/common_optarg.c",
+    "summary": "This module handles command-line option parsing and displaying help information for the AppArmor parser, particularly focused on DFA (Deterministic Finite Automaton) flags. It provides functionality to display available flags, process command-line options, and show help information.",
+    "logs": [
+        {
+            "function": "print_flag_table",
+            "message_template": "%-*s \t%s\n",
+            "reason": "Displays the 'show' option in the help output which lets users see which flags have been set",
+            "resolution": "Informational output only, no resolution required"
+        },
+        {
+            "function": "print_flag_table",
+            "message_template": "%5s%-*s \t%s\n",
+            "reason": "Displays each available flag with its description in the help output, including whether the flag supports the 'no-' prefix",
+            "resolution": "Informational output only, no resolution required"
+        },
+        {
+            "function": "print_flags",
+            "message_template": "%s=",
+            "reason": "Displays the prefix for a set of enabled flags when showing current configuration",
+            "resolution": "Informational output only, no resolution required"
+        },
+        {
+            "function": "print_flags",
+            "message_template": ", ",
+            "reason": "Separates multiple enabled flags when displaying the current configuration",
+            "resolution": "Informational output only, no resolution required"
+        },
+        {
+            "function": "print_flags",
+            "message_template": "%s",
+            "reason": "Displays each enabled flag's name when showing current configuration",
+            "resolution": "Informational output only, no resolution required"
+        },
+        {
+            "function": "print_flags",
+            "message_template": "\n",
+            "reason": "Adds a newline after listing all enabled flags if any were found",
+            "resolution": "Informational output only, no resolution required"
+        },
+        {
+            "function": "flagtable_help",
+            "message_template": "\n%s: %s[Option]\n\n",
+            "reason": "Displays the command syntax in help output to guide users on how to use the options",
+            "resolution": "Informational output only, no resolution required"
+        },
+        {
+            "function": "flagtable_help",
+            "message_template": "Options:\n--------\n",
+            "reason": "Displays a header for the options section in the help output",
+            "resolution": "Informational output only, no resolution required"
+        },
+        {
+            "function": "flagtable_help",
+            "message_template": "[display_version output]",
+            "reason": "Displays the AppArmor version information at the beginning of help output",
+            "resolution": "Informational output only, no resolution required"
+        }
+    ]
+}

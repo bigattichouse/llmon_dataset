@@ -1,0 +1,91 @@
+{
+    "project": "apparmor",
+    "module": "../working/apparmor/tests/regression/apparmor/named_pipe.c",
+    "summary": "This module is a regression test for AppArmor's changehat functionality, testing the ability to switch security profiles and perform file operations. It creates a parent-child process model where both processes can change their security hat before reading from or writing to a named pipe.",
+    "logs": [
+        {
+            "function": "do_read",
+            "message_template": "FAIL: read failed - %s\n",
+            "reason": "Logs an error when the read operation doesn't return the expected number of bytes. Likely due to permission issues or file access restrictions imposed by AppArmor profiles.",
+            "resolution": "Check AppArmor profile permissions for read access to the test file. Verify that the named pipe is properly created and accessible."
+        },
+        {
+            "function": "do_read",
+            "message_template": "FAIL: comparison failed - %s\n",
+            "reason": "Logs an error when the data read from the file doesn't match the expected content. This indicates data corruption or incomplete data transfer.",
+            "resolution": "Verify that no other processes are writing to the same file. Check for potential buffer size issues or race conditions in the test."
+        },
+        {
+            "function": "do_write",
+            "message_template": "FAIL: write failed - %s\n",
+            "reason": "Logs an error when the write operation doesn't write the expected number of bytes. Likely due to permission issues or file access restrictions imposed by AppArmor profiles.",
+            "resolution": "Check AppArmor profile permissions for write access to the test file. Ensure disk space is available and the filesystem is writable."
+        },
+        {
+            "function": "do_parent",
+            "message_template": "FAIL: changehat %s failed - %s\n",
+            "reason": "Logs an error when the parent process fails to change to the specified hat profile. This indicates issues with AppArmor's changehat functionality.",
+            "resolution": "Verify that the AppArmor module is loaded and functioning. Ensure the hat profile specified exists in the loaded profile and has the correct syntax."
+        },
+        {
+            "function": "do_parent",
+            "message_template": "FAIL: alarm already set\n",
+            "reason": "Logs an error when attempting to set an alarm but one is already active. This indicates unexpected program state or a timing issue.",
+            "resolution": "This should not occur under normal test conditions. Review the test logic for potential race conditions or improper alarm handling."
+        },
+        {
+            "function": "do_parent",
+            "message_template": "FAIL: open read %s failed - %s\n",
+            "reason": "Logs an error when the parent process fails to open the file for reading. Likely due to permission issues, non-existent file, or AppArmor restrictions.",
+            "resolution": "Check if the file exists and has appropriate read permissions. Verify the AppArmor profile allows the file to be opened for reading."
+        },
+        {
+            "function": "do_child",
+            "message_template": "FAIL: changehat %s failed - %s\n",
+            "reason": "Logs an error when the child process fails to change to the specified hat profile. This indicates issues with AppArmor's changehat functionality.",
+            "resolution": "Verify that the AppArmor module is loaded and functioning. Ensure the hat profile specified exists in the loaded profile and has the correct syntax."
+        },
+        {
+            "function": "do_child",
+            "message_template": "FAIL: open write %s failed - %s\n",
+            "reason": "Logs an error when the child process fails to open the file for writing. Likely due to permission issues or AppArmor restrictions.",
+            "resolution": "Check file write permissions and ensure the AppArmor profile allows the file to be opened for writing. Verify the directory is writable if the file needs to be created."
+        },
+        {
+            "function": "sigalrm_handler",
+            "message_template": "FAIL: parent timed out waiting for child\n",
+            "reason": "Logs an error when the parent process times out waiting for the child process to complete. This indicates potential deadlock or hanging in the child process.",
+            "resolution": "Check for potential deadlocks or blocking operations in the child process. Verify that AppArmor permissions allow all necessary operations for test completion."
+        },
+        {
+            "function": "main",
+            "message_template": "usage: %s parent_hatname child_hatname filename\n",
+            "reason": "Logs a usage message when the program is invoked with incorrect arguments. This helps users understand the expected command format.",
+            "resolution": "Run the program with the correct arguments: the parent hat name, child hat name, and the filename to use for testing."
+        },
+        {
+            "function": "main",
+            "message_template": "FAIL: signal failed - %s\n",
+            "reason": "Logs an error when setting up the signal handler for the alarm fails. This indicates a system-level issue with signal handling.",
+            "resolution": "This is a rare system-level error. Check system resource limits and ensure no conflicting signal handlers are in use."
+        },
+        {
+            "function": "main",
+            "message_template": "FAIL: fork failed - %s\n",
+            "reason": "Logs an error when the fork operation to create a child process fails. This typically indicates resource exhaustion on the system.",
+            "resolution": "Check system resources like process limits and available memory. Reduce system load if necessary or increase resource limits."
+        },
+        {
+            "function": "main",
+            "message_template": "FAIL: wait failed - %s\n",
+            "reason": "Logs an error when waiting for the child process fails. This indicates an issue with process management or unexpected child termination.",
+            "resolution": "Check if other processes or signal handlers might be interfering with the wait call. Verify system stability for process management."
+        },
+        {
+            "function": "main",
+            "message_template": "PASS\n",
+            "reason": "Logs a success message when the test completes successfully, indicating that the changehat functionality and file operations worked as expected.",
+            "resolution": "Informational log, no resolution required. This indicates the test passed successfully."
+        }
+    ]
+}

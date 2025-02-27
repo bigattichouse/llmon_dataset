@@ -1,0 +1,145 @@
+{
+    "project": "apparmor",
+    "module": "io_uring.c",
+    "summary": "This module implements a test for Linux io_uring functionality, specifically testing the SQPOLL setup flag and the personality registration feature that allows operations to be performed with different credentials. It verifies that io_uring can be used to enforce file access permissions via registered personalities.",
+    "logs": [
+        {
+            "function": "open_file",
+            "message_template": "FAIL - could not get sqe.",
+            "reason": "Logs an error when the function fails to get a submission queue entry (sqe), which is needed to submit operations to the io_uring interface.",
+            "resolution": "This could indicate resource exhaustion in the io_uring instance. Try increasing the queue size when initializing io_uring or reducing concurrent operations."
+        },
+        {
+            "function": "open_file",
+            "message_template": "FAIL - could not submit: %s",
+            "reason": "Logs an error when the function fails to submit operations to the io_uring interface, with the specific error message included.",
+            "resolution": "Check the specific error message to determine the cause, which could be related to misconfigured io_uring parameters or system resource limitations."
+        },
+        {
+            "function": "open_file",
+            "message_template": "FAIL - wait cqe failed %s",
+            "reason": "Logs an error when the function fails to wait for a completion queue entry (cqe), with the specific error message included.",
+            "resolution": "This could indicate issues with io_uring event processing. Check system load and verify no signals are interrupting the wait operation."
+        },
+        {
+            "function": "test_personality",
+            "message_template": "FAIL - could not register personality: %s",
+            "reason": "Logs an error when the function fails to register a personality with io_uring, which is needed for credential switching, with the specific error message included.",
+            "resolution": "This could happen if the kernel doesn't support personalities (kernel version < 5.6) or if there's a permission issue. Check kernel version and ensure the test runs with appropriate privileges."
+        },
+        {
+            "function": "test_personality",
+            "message_template": "open",
+            "reason": "Logs an error from the system call open() when it fails to create or open the test file.",
+            "resolution": "Check file system permissions, available disk space, and ensure the directory exists and is writable."
+        },
+        {
+            "function": "test_personality",
+            "message_template": "FAIL - root could not open file: %d",
+            "reason": "Logs an error when the test fails because even root cannot open the test file, which should be accessible to root.",
+            "resolution": "Check file system permissions and mount options. The error code will provide more details about what went wrong."
+        },
+        {
+            "function": "test_personality",
+            "message_template": "FAIL - could not switch to uid %u",
+            "reason": "Logs an error when the test fails to switch to the specified UID, which is needed to test credential-based access control.",
+            "resolution": "Ensure the test is run as root or with CAP_SETUID capability, and verify the specified UID exists on the system."
+        },
+        {
+            "function": "test_personality",
+            "message_template": "FAIL - opened with regular credential: %d",
+            "reason": "Logs an error when the test unexpectedly succeeds in opening a file that should be inaccessible with the current credentials.",
+            "resolution": "This indicates a security issue or test setup problem. Verify file permissions are correctly set to 0600 and that effective UID switching worked correctly."
+        },
+        {
+            "function": "test_personality",
+            "message_template": "FAIL - could not open with registered credentials: %d",
+            "reason": "Logs an error when the test fails to open a file using registered personalities, which should have permitted access.",
+            "resolution": "This could indicate issues with the io_uring personality feature. Check that the kernel properly implements this feature and that the file permissions are as expected."
+        },
+        {
+            "function": "test_personality",
+            "message_template": "FAIL - seteuid",
+            "reason": "Logs an error when the test fails to restore the original effective UID (switching back to root) after testing.",
+            "resolution": "This could happen if the process lost privileges or if there was an unexpected signal. The test may leave the process with changed credentials, which could affect subsequent operations."
+        },
+        {
+            "function": "test_personality",
+            "message_template": "FAIL - could not unregister personality: %s",
+            "reason": "Logs an error when the function fails to unregister a previously registered personality, with the specific error message included.",
+            "resolution": "This could indicate issues with the io_uring interface or invalid state. Check the specific error message to determine the cause."
+        },
+        {
+            "function": "usage",
+            "message_template": "Usage: %s [options]",
+            "reason": "Displays the program usage information when invoked with incorrect or missing parameters.",
+            "resolution": "This is informational, providing guidance on how to properly use the program. Follow the displayed options to correct the command line arguments."
+        },
+        {
+            "function": "usage",
+            "message_template": "Options can be:",
+            "reason": "Part of the usage information, showing the available command-line options.",
+            "resolution": "This is informational, no resolution required."
+        },
+        {
+            "function": "usage",
+            "message_template": "    -s   create ring using IORING_SETUP_SQPOLL",
+            "reason": "Part of the usage information, explaining the -s option for testing SQPOLL functionality.",
+            "resolution": "This is informational, no resolution required."
+        },
+        {
+            "function": "usage",
+            "message_template": "    -o   use io_uring personality to open a file",
+            "reason": "Part of the usage information, explaining the -o option for testing personality functionality.",
+            "resolution": "This is informational, no resolution required."
+        },
+        {
+            "function": "usage",
+            "message_template": "    -u   specify UID for option -s (default is %d)",
+            "reason": "Part of the usage information, explaining the -u option for specifying a UID for testing.",
+            "resolution": "This is informational, no resolution required."
+        },
+        {
+            "function": "usage",
+            "message_template": "    -f   specify file opened by option -s (default is %s)",
+            "reason": "Part of the usage information, explaining the -f option for specifying a test file.",
+            "resolution": "This is informational, no resolution required."
+        },
+        {
+            "function": "main",
+            "message_template": "FAIL - operation not selected",
+            "reason": "Logs an error when the program is run without specifying an operation to test (-s or -o options).",
+            "resolution": "Run the program with either -s or -o option to specify which operation to test. Use -h or run without arguments to see usage information."
+        },
+        {
+            "function": "main",
+            "message_template": "FAIL - failed to create sqpoll ring: %s",
+            "reason": "Logs an error when the program fails to create an io_uring instance with SQPOLL flag, with the specific error message included.",
+            "resolution": "SQPOLL requires elevated privileges (usually root). Check the error message to determine why it failed and ensure the process has necessary permissions."
+        },
+        {
+            "function": "main",
+            "message_template": "FAIL - failed to create override_creds ring: %s",
+            "reason": "Logs an error when the program fails to create an io_uring instance for credential override testing, with the specific error message included.",
+            "resolution": "Check the error message for specific cause. Ensure the system supports io_uring functionality and that the process has necessary permissions."
+        },
+        {
+            "function": "main",
+            "message_template": "Personalities not supported, skipping...",
+            "reason": "Logs an informational message when the io_uring personality feature is not supported by the kernel (added in kernel 5.6).",
+            "resolution": "This is informational. To use the personality feature, upgrade to Linux kernel 5.6 or newer."
+        },
+        {
+            "function": "main",
+            "message_template": "FAIL - override_creds failed",
+            "reason": "Logs an error when the credential override test fails, indicating issues with the io_uring personality functionality.",
+            "resolution": "Check previous error messages for specific causes. Ensure the test is run with appropriate privileges and on a kernel that supports io_uring personalities."
+        },
+        {
+            "function": "main",
+            "message_template": "PASS",
+            "reason": "Logs a success message when all tests pass successfully, indicating that the io_uring functionality works as expected.",
+            "resolution": "This is informational, no resolution required."
+        }
+    ]
+}

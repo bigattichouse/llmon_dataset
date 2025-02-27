@@ -1,0 +1,61 @@
+{
+    "project": "apparmor",
+    "module": "query_label.c",
+    "summary": "A test utility for querying AppArmor labels and verifying that permission checks meet expected outcomes. The program takes command-line arguments specifying the label, permissions, and expected results, then performs the query and reports whether the access controls match expectations.",
+    "logs": [
+        {
+            "function": "usage",
+            "message_template": "Usage: %s --expect=EXPECTED --label=LABEL --CLASS=PERMS QUERY...\n\n",
+            "reason": "Displayed when the program is invoked with incorrect arguments or when explicit help is requested.",
+            "resolution": "Review the command syntax and provide all required arguments in the correct format."
+        },
+        {
+            "function": "parse_expected",
+            "message_template": "FAIL: unknown expect: %s\n",
+            "reason": "Logs an error when an unknown expectation value is provided. Only 'allow', 'audit', and 'anything' are valid expectations.",
+            "resolution": "Check the expectation parameter and ensure it contains only valid values (allow, audit, anything)."
+        },
+        {
+            "function": "parse_dbus_perms",
+            "message_template": "FAIL: unknown perm: %s\n",
+            "reason": "Logs an error when an invalid DBUS permission is specified. Only 'send', 'receive', and 'bind' are valid for DBUS class.",
+            "resolution": "Verify that all permissions specified for DBUS class are valid (send, receive, bind)."
+        },
+        {
+            "function": "parse_file_perms",
+            "message_template": "FAIL: unknown perm: %s\n",
+            "reason": "Logs an error when an invalid file permission is specified. Must be one of the supported file permissions like exec, write, read, etc.",
+            "resolution": "Check that all file permissions used are valid according to the supported list (exec, write, read, append, create, delete, setattr, getattr, chmod, chown, link, lock, linksubset, exec_mmap)."
+        },
+        {
+            "function": "main",
+            "message_template": "FAIL: unknown rule class: %s\n",
+            "reason": "Logs an error when an unsupported rule class is specified. Only 'dbus' and 'file' are supported classes.",
+            "resolution": "Use only supported rule classes (dbus or file) in the command arguments."
+        },
+        {
+            "function": "main",
+            "message_template": "FAIL: failed to allocate memory for query string\n",
+            "reason": "Logs an error when memory allocation fails during query string construction.",
+            "resolution": "This indicates a system-level resource issue. Check for memory constraints or increase available memory."
+        },
+        {
+            "function": "main",
+            "message_template": "FAIL: failed to perform query: %m\n",
+            "reason": "Logs an error when the AppArmor query operation fails. The system error message is included.",
+            "resolution": "Check that AppArmor is properly configured and running. Verify that the specified label exists and is accessible."
+        },
+        {
+            "function": "main",
+            "message_template": "PASS\n",
+            "reason": "Logs a success message when the AppArmor query results match the expected permissions.",
+            "resolution": "Informational log, no resolution required."
+        },
+        {
+            "function": "main",
+            "message_template": "FAIL: the access should %sbe allowed and should %sbe audited. mask 0x%x\n",
+            "reason": "Logs a failure when the access permissions don't match the expected values. Shows whether access should be allowed/denied and audited/not audited.",
+            "resolution": "Review the AppArmor policy to ensure the specified label has the expected permissions. Update the policy or adjust the test expectations to match actual behavior."
+        }
+    ]
+}

@@ -1,0 +1,43 @@
+{
+    "project": "apparmor",
+    "module": "../working/apparmor/tests/regression/apparmor/syscall_ioperm.c",
+    "summary": "This module is a test program for the ioperm system call, which grants userspace processes access to I/O ports. It validates command-line arguments and attempts to acquire access to a range of I/O ports, reporting success or failure.",
+    "logs": [
+        {
+            "function": "main",
+            "message_template": "usage: %s <from> <num>\n",
+            "reason": "Logs an error when the user doesn't provide the required command-line arguments. Likely occurs when the program is run with incorrect parameters.",
+            "resolution": "Ensure the program is called with exactly two arguments: the starting port (from) and the number of ports (num)."
+        },
+        {
+            "function": "main",
+            "message_template": "FAIL: no <from> argument in '%s'\n",
+            "reason": "Logs an error when the first argument (from) is invalid or cannot be converted to a number. Occurs when non-numeric values are provided.",
+            "resolution": "Provide a valid numeric value for the starting port. The value should be in the range 0-0x3ff."
+        },
+        {
+            "function": "main",
+            "message_template": "FAIL: no <num> argument in '%s'\n",
+            "reason": "Logs an error when the second argument (num) is invalid or cannot be converted to a number. Note: There's a bug in the code as it references argv[1] instead of argv[2].",
+            "resolution": "Provide a valid numeric value for the number of ports. The combined value (from+num) should not exceed 0x3ff."
+        },
+        {
+            "function": "main",
+            "message_template": "FAIL: out of range (0x3ff)\n",
+            "reason": "Logs an error when the specified port range exceeds the maximum allowed value (0x3ff). This prevents attempts to access invalid I/O ports.",
+            "resolution": "Ensure the starting port (from) and the sum (from+num) are both within the range 0-0x3ff (1023 decimal)."
+        },
+        {
+            "function": "main",
+            "message_template": "FAIL: ioperm failed - %s\n",
+            "reason": "Logs an error when the ioperm system call fails, with the specific error message from the system. This typically occurs due to insufficient permissions or resource constraints.",
+            "resolution": "Ensure the program has sufficient privileges (usually requires root/sudo access). Check system logs for specific permission issues or resource constraints that caused the failure."
+        },
+        {
+            "function": "main",
+            "message_template": "PASS\n",
+            "reason": "Logs a success message when the ioperm call succeeds, indicating the program was able to acquire access to the specified I/O ports.",
+            "resolution": "Informational message, no resolution required."
+        }
+    ]
+}

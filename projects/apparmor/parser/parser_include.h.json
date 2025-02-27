@@ -1,0 +1,6 @@
+{
+    "project": "apparmor",
+    "module": "../working/apparmor/parser/parser_include.h",
+    "summary": "This module defines functions and variables for include file processing and path searching in the AppArmor parser. It handles operations like adding search directories, managing include stacks, and preprocessing profile includes.",
+    "logs": []
+}

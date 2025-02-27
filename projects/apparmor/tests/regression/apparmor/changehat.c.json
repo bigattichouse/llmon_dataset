@@ -1,0 +1,25 @@
+{
+    "project": "apparmor",
+    "module": "../working/apparmor/tests/regression/apparmor/changehat.c",
+    "summary": "This test module verifies AppArmor's changehat functionality by attempting to change to a specified hat and then open a file. It outputs success or failure messages based on the operation's outcome.",
+    "logs": [
+        {
+            "function": "main",
+            "message_template": "usage: %s profile file\n",
+            "reason": "Informs the user about correct command-line usage when incorrect arguments are provided",
+            "resolution": "Ensure the program is called with exactly two arguments: a profile name and a file path"
+        },
+        {
+            "function": "main",
+            "message_template": "FAIL: changehat %s failed - %s\n",
+            "reason": "Reports that changing to the specified hat failed, providing the error reason. This could happen if the specified hat doesn't exist or if AppArmor is not properly configured",
+            "resolution": "Verify that the AppArmor profile includes the specified hat and that AppArmor is properly loaded and configured on the system"
+        },
+        {
+            "function": "main",
+            "message_template": "PASS\n",
+            "reason": "Indicates that the test passed successfully - the program was able to change to the specified hat and open the file",
+            "resolution": "This is an informational message indicating success, no resolution required"
+        }
+    ]
+}

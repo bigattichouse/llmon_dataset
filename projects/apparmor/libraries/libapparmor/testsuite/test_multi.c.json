@@ -1,0 +1,61 @@
+{
+    "project": "apparmor",
+    "module": "../working/apparmor/libraries/libapparmor/testsuite/test_multi.c",
+    "summary": "This module is a test program for the AppArmor log parser library that reads a file containing AppArmor logs, parses it using the parse_record function, and displays the parsed information in a readable format. It demonstrates the capabilities of the AppArmor log parsing functionality by extracting and displaying various fields from the log records.",
+    "logs": [
+        {
+            "function": "main",
+            "message_template": "Usage: test_multi.multi <filename>\n",
+            "reason": "Displayed when the program is called with incorrect number of arguments. The program expects exactly one argument - the filename containing AppArmor logs to parse.",
+            "resolution": "Provide exactly one filename as an argument to the program."
+        },
+        {
+            "function": "main",
+            "message_template": "START\n",
+            "reason": "Informational message indicating the program has started execution.",
+            "resolution": "Information log, no resolution required."
+        },
+        {
+            "function": "main",
+            "message_template": "File: %s\n",
+            "reason": "Displays the name of the file being processed. The basename function extracts just the filename without the path.",
+            "resolution": "Information log, no resolution required."
+        },
+        {
+            "function": "main",
+            "message_template": "Could not open testcase: ",
+            "reason": "Error message when the program fails to open the specified file. The perror function will append the system error message.",
+            "resolution": "Check that the file exists, has correct permissions, and the path is correct."
+        },
+        {
+            "function": "main",
+            "message_template": "Could not read testcase.\n",
+            "reason": "Error message when the program fails to read the contents of the file after opening it successfully.",
+            "resolution": "Check if the file is accessible, not corrupted, and the program has read permissions."
+        },
+        {
+            "function": "main",
+            "message_template": "Parsing failed.\n",
+            "reason": "Error message when the parse_record function fails to parse the log contents from the file. This could be due to invalid log format or corrupted data.",
+            "resolution": "Verify that the file contains valid AppArmor log entries in the expected format."
+        },
+        {
+            "function": "print_results",
+            "message_template": "%s: %s\n",
+            "reason": "Format for printing string fields from the parsed record. Used for numerous fields like Event type, Profile, Name, etc.",
+            "resolution": "Information log, no resolution required."
+        },
+        {
+            "function": "print_results",
+            "message_template": "%s: %ld\n",
+            "reason": "Format for printing long integer fields from the parsed record. Used for fields like fsuid, ouid, PID, etc.",
+            "resolution": "Information log, no resolution required."
+        },
+        {
+            "function": "print_results",
+            "message_template": "Event type: UNKNOWN EVENT TYPE",
+            "reason": "Displayed when the record's event type doesn't match any of the known AppArmor event types. This could indicate a parsing error or a new event type not yet supported.",
+            "resolution": "Check if the log format has changed or if there's a new AppArmor event type that needs to be supported in the code."
+        }
+    ]
+}

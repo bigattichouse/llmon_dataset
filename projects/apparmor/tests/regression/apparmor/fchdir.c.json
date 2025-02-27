@@ -1,0 +1,31 @@
+{
+    "project": "apparmor",
+    "module": "../working/apparmor/tests/regression/apparmor/fchdir.c",
+    "summary": "This module is a test for the fchdir() system call functionality with AppArmor profiles. It attempts to open a specified directory and change to it using fchdir(), reporting success or failure.",
+    "logs": [
+        {
+            "function": "main",
+            "message_template": "usage: %s dir\n",
+            "reason": "Displayed when the program is run with incorrect command line arguments. The user did not provide exactly one directory argument.",
+            "resolution": "Run the program with a single directory path as an argument. Example: fchdir /path/to/directory"
+        },
+        {
+            "function": "main",
+            "message_template": "FAIL: open %s failed - %s\n",
+            "reason": "Indicates that opening the specified directory failed. This could be due to insufficient permissions, the directory not existing, or other file system errors.",
+            "resolution": "Check if the directory exists, ensure the user has appropriate permissions to access it, and verify that AppArmor profiles allow access to this directory."
+        },
+        {
+            "function": "main",
+            "message_template": "PASS\n",
+            "reason": "Indicates that the fchdir() call succeeded, meaning the test was able to change the current working directory to the specified directory.",
+            "resolution": "This is a success message, no resolution required. It indicates that both the system call worked and the AppArmor policy allowed the operation."
+        },
+        {
+            "function": "main",
+            "message_template": "FAIL - %s\n",
+            "reason": "Indicates that the fchdir() call failed, likely due to permission issues. The error message provides the specific reason for failure.",
+            "resolution": "Check if the AppArmor profile allows changing to the specified directory. May need to modify the AppArmor profile to include appropriate permissions for the directory."
+        }
+    ]
+}

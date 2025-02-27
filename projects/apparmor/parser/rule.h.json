@@ -1,0 +1,91 @@
+{
+    "project": "apparmor",
+    "module": "../working/apparmor/parser/rule.h",
+    "summary": "This header file defines the class hierarchy for AppArmor security rules, including rule types, flags, prefixes, and permissions. It provides structures for rule validation, comparison, and serialization that are fundamental to the AppArmor policy framework.",
+    "logs": [
+        {
+            "function": "prefix_rule_t::add_prefix",
+            "message_template": "priority levels not supported",
+            "reason": "Generated when attempting to add a prefix with a non-zero priority value to a rule that already has a non-zero priority, which is not supported by the parser.",
+            "resolution": "Review and adjust your AppArmor policy to ensure you're not using multiple priority specifications on the same rule or rule block."
+        },
+        {
+            "function": "prefix_rule_t::add_prefix",
+            "message_template": "conflicting audit prefix",
+            "reason": "Generated when a rule already has an audit prefix that conflicts with a new audit prefix being added.",
+            "resolution": "Modify your AppArmor policy to ensure consistent audit prefixes within rule definitions. Use either 'audit' or 'quiet', but not both for the same rule."
+        },
+        {
+            "function": "prefix_rule_t::add_prefix",
+            "message_template": "conflicting mode prefix",
+            "reason": "Generated when a rule already has a mode prefix (allow, deny, prompt) that conflicts with a new mode prefix being added.",
+            "resolution": "Review your AppArmor policy and ensure each rule has only one mode prefix. Rules cannot be both 'allow' and 'deny' simultaneously."
+        },
+        {
+            "function": "prefix_rule_t::add_prefix",
+            "message_template": "conflicting owner prefix",
+            "reason": "Generated when a rule already has an owner prefix that conflicts with a new owner prefix being added.",
+            "resolution": "Modify your AppArmor policy to use consistent owner settings. A rule cannot have both 'owner' and '!owner' prefixes simultaneously."
+        },
+        {
+            "function": "prefixes::dump",
+            "message_template": "priority=",
+            "reason": "Debug output showing the priority value of a rule when dumping rule information.",
+            "resolution": "Informational only, no resolution required. This appears when examining rule details in logs or debug output."
+        },
+        {
+            "function": "prefixes::dump",
+            "message_template": "audit",
+            "reason": "Debug output indicating the rule has an audit prefix, meaning actions matching this rule will be logged.",
+            "resolution": "Informational only. If you see excessive audit messages, consider reviewing your AppArmor policy to make auditing more selective."
+        },
+        {
+            "function": "prefixes::dump",
+            "message_template": "quiet",
+            "reason": "Debug output indicating the rule has a quiet prefix, meaning actions matching this rule will not be logged.",
+            "resolution": "Informational only. If important security events aren't being logged, check if 'quiet' prefixes are preventing desired audit messages."
+        },
+        {
+            "function": "prefixes::dump",
+            "message_template": "allow",
+            "reason": "Debug output indicating this is a permissive rule that allows the specified action.",
+            "resolution": "Informational only. If security concerns arise, review 'allow' rules to ensure they're not overly permissive."
+        },
+        {
+            "function": "prefixes::dump",
+            "message_template": "deny",
+            "reason": "Debug output indicating this is a restrictive rule that denies the specified action.",
+            "resolution": "Informational only. If applications are failing due to permission issues, review 'deny' rules that might be too restrictive."
+        },
+        {
+            "function": "prefixes::dump",
+            "message_template": "prompt",
+            "reason": "Debug output indicating the rule is set to prompt for confirmation when the specified action is attempted.",
+            "resolution": "Informational only. The 'prompt' mechanism may require user interaction; consider whether this is appropriate for your deployment scenario."
+        },
+        {
+            "function": "prefixes::dump",
+            "message_template": "owner",
+            "reason": "Debug output indicating the rule applies only when the subject and object have the same owner.",
+            "resolution": "Informational only. If permission issues occur, check if 'owner' restrictions are preventing necessary actions by non-owner processes."
+        },
+        {
+            "function": "prefixes::dump",
+            "message_template": "!owner",
+            "reason": "Debug output indicating the rule applies only when the subject and object have different owners.",
+            "resolution": "Informational only. Review if '!owner' rules might be preventing legitimate owner access to resources."
+        },
+        {
+            "function": "perms_rule_t::dump",
+            "message_template": "(0x%x/orig %x) ",
+            "reason": "Debug output showing the current permissions value and the original permissions value before rule merging occurred.",
+            "resolution": "Informational only. Useful for debugging permission issues when rules have been merged during policy compilation."
+        },
+        {
+            "function": "dedup_perms_rule_t::dump",
+            "message_template": "(0x%x) ",
+            "reason": "Debug output showing the permissions value for the rule.",
+            "resolution": "Informational only. Helps in understanding which permissions are granted by a specific rule during debugging."
+        }
+    ]
+}

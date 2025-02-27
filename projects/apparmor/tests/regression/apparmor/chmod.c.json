@@ -1,0 +1,31 @@
+{
+    "project": "apparmor",
+    "module": "../working/apparmor/tests/regression/apparmor/chmod.c",
+    "summary": "This module is a test program for AppArmor's chmod functionality, verifying that a process can successfully change file permissions. It checks that the file can be chmod'd to a specified mode and reports success or failure.",
+    "logs": [
+        {
+            "function": "main",
+            "message_template": "usage: %s file mode\n",
+            "reason": "Logs an error when the program is called with incorrect number of arguments. This indicates the user didn't provide the required file and mode arguments.",
+            "resolution": "Ensure the program is called with exactly two arguments: the target file path and the octal mode to set."
+        },
+        {
+            "function": "main",
+            "message_template": "FAIL: bad mode %s\n",
+            "reason": "Logs an error when the provided mode argument cannot be parsed as an octal number. This happens when the user provides a non-octal value for the file permissions.",
+            "resolution": "Ensure the mode argument is a valid octal number (e.g. 644, 755). The mode should only contain digits 0-7."
+        },
+        {
+            "function": "main",
+            "message_template": "FAIL: fchmod %s %o failed - %s\n",
+            "reason": "Logs an error when the chmod operation fails, including the specific error message from errno. This could happen due to permission issues, non-existent file, or AppArmor policy restrictions.",
+            "resolution": "Check if the file exists, if the process has sufficient permissions, and if AppArmor policy allows chmod operations on the file. The specific error message will provide more details about the failure cause."
+        },
+        {
+            "function": "main",
+            "message_template": "PASS\n",
+            "reason": "Logs a success message when the chmod operation completes successfully, indicating that the file permissions were changed as requested.",
+            "resolution": "Informational message, no resolution required. This indicates that the test passed successfully."
+        }
+    ]
+}

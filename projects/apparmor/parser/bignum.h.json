@@ -1,0 +1,6 @@
+{
+    "project": "apparmor",
+    "module": "../working/apparmor/parser/bignum.h",
+    "summary": "This header file defines a bignum class for handling arbitrary-precision numbers in AppArmor. It provides various operations including addition, subtraction, comparison operators, and utility functions for working with large numbers in different bases. The implementation contains no logging or error handling mechanisms.",
+    "logs": []
+}

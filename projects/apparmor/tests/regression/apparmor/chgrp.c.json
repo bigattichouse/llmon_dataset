@@ -1,0 +1,31 @@
+{
+    "project": "apparmor",
+    "module": "../working/apparmor/tests/regression/apparmor/chgrp.c",
+    "summary": "This module is a test utility for AppArmor that changes the group ownership of a file. It validates that a process confined by AppArmor can successfully use the chown system call to modify group permissions of a file, which is part of AppArmor's regression test suite.",
+    "logs": [
+        {
+            "function": "main",
+            "message_template": "usage: %s file groupname|gid\n",
+            "reason": "Logs an error when the user does not provide exactly two arguments (file and group ID). This indicates improper usage of the command.",
+            "resolution": "Ensure the command is invoked with exactly two arguments: the file path and the numeric group ID."
+        },
+        {
+            "function": "main",
+            "message_template": "FAIL: bad gid %s\n",
+            "reason": "Logs an error when the provided group ID cannot be parsed as a numeric value. The test expects a numeric group ID only.",
+            "resolution": "Provide a valid numeric group ID (not a group name). Check that the group ID exists on the system."
+        },
+        {
+            "function": "main",
+            "message_template": "FAIL: chgrp %s %d failed - %s\n",
+            "reason": "Logs an error when the chown operation fails to change the group ownership of the file. The error includes the system error message.",
+            "resolution": "Check file permissions, ensure the process has sufficient privileges to change ownership, and verify the group ID exists. If running under AppArmor confinement, ensure the profile allows the chown operation on the specified file."
+        },
+        {
+            "function": "main",
+            "message_template": "PASS\n",
+            "reason": "Logs a success message when the group ownership change succeeds. Used to verify that AppArmor correctly allows the chown operation.",
+            "resolution": "Informational log, no resolution required. This indicates the test passed successfully."
+        }
+    ]
+}

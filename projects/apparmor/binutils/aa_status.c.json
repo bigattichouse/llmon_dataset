@@ -1,0 +1,139 @@
+{
+    "project": "apparmor",
+    "module": "binutils/aa_status.c",
+    "summary": "A utility for displaying information about the currently loaded AppArmor policy, including profiles and processes. It provides filtering capabilities and can output in both human-readable and JSON formats.",
+    "logs": [
+        {
+            "function": "open_profiles",
+            "message_template": "apparmor not present.\n",
+            "reason": "Indicates that the AppArmor module is not loaded in the kernel",
+            "resolution": "Install and enable AppArmor or load the AppArmor kernel module with 'modprobe apparmor'"
+        },
+        {
+            "function": "open_profiles",
+            "message_template": "apparmor module is loaded.\n",
+            "reason": "Informational message confirming AppArmor is loaded",
+            "resolution": "Information log, no resolution required"
+        },
+        {
+            "function": "open_profiles",
+            "message_template": "apparmor filesystem is not mounted.\n",
+            "reason": "The AppArmor securityfs is not mounted, which prevents accessing profiles",
+            "resolution": "Mount the AppArmor filesystem with 'mount -t securityfs securityfs /sys/kernel/security'"
+        },
+        {
+            "function": "open_profiles",
+            "message_template": "You do not have enough privilege to read the profile set.\n",
+            "reason": "User lacks sufficient permissions to access AppArmor profiles",
+            "resolution": "Run the command with elevated privileges (sudo) or adjust permissions"
+        },
+        {
+            "function": "open_profiles",
+            "message_template": "Could not open %s: %s",
+            "reason": "Failed to open the AppArmor profiles file, likely due to permission or path issues",
+            "resolution": "Check if the AppArmor filesystem is properly mounted and accessible"
+        },
+        {
+            "function": "get_profiles",
+            "message_template": "Error: failed profile name split of '%s'.\n",
+            "reason": "Couldn't parse a profile entry due to malformed format",
+            "resolution": "Check if there are corrupted profile entries in the AppArmor profiles file"
+        },
+        {
+            "function": "get_processes",
+            "message_template": "ERROR: Failed to allocate memory\n",
+            "reason": "Memory allocation failed, likely due to system resource constraints",
+            "resolution": "Check system memory usage and free up resources if possible"
+        },
+        {
+            "function": "detailed_profiles",
+            "message_template": "Error: failed to compile sub filter '%s'\n",
+            "reason": "Failed to compile a regular expression filter for profile modes",
+            "resolution": "Check the regular expression syntax in the filter argument"
+        },
+        {
+            "function": "detailed_processes",
+            "message_template": "Error: failed to compile sub filter '%s'\n",
+            "reason": "Failed to compile a regular expression filter for process statuses",
+            "resolution": "Check the regular expression syntax in the filter argument"
+        },
+        {
+            "function": "main",
+            "message_template": "Error: failed to compile mode filter '%s'\n",
+            "reason": "Failed to compile a regular expression for filtering by mode",
+            "resolution": "Use a valid regular expression for the mode filter"
+        },
+        {
+            "function": "main",
+            "message_template": "Error: failed to compile profiles filter '%s'\n",
+            "reason": "Failed to compile a regular expression for filtering profiles",
+            "resolution": "Use a valid regular expression for the profiles filter"
+        },
+        {
+            "function": "main",
+            "message_template": "Error: failed to compile ps filter '%s'\n",
+            "reason": "Failed to compile a regular expression for filtering processes by pid",
+            "resolution": "Use a valid regular expression for the pid filter"
+        },
+        {
+            "function": "main",
+            "message_template": "Error: failed to compile exe filter '%s'\n",
+            "reason": "Failed to compile a regular expression for filtering executables",
+            "resolution": "Use a valid regular expression for the executable filter"
+        },
+        {
+            "function": "main",
+            "message_template": "Failed to open memstream: %m\n",
+            "reason": "Failed to open memory stream for JSON formatting, likely due to system resource constraints",
+            "resolution": "Check system memory usage and free up resources if possible"
+        },
+        {
+            "function": "main",
+            "message_template": "Failed to get profiles: %d....\n",
+            "reason": "Failed to retrieve AppArmor profiles, possibly due to system or permission issues",
+            "resolution": "Check AppArmor setup and permissions, ensure the security filesystem is mounted"
+        },
+        {
+            "function": "main",
+            "message_template": "Failed to get processes: %d....\n",
+            "reason": "Failed to retrieve process information, possibly due to permission issues",
+            "resolution": "Run the command with elevated privileges or check process access permissions"
+        },
+        {
+            "function": "main",
+            "message_template": "Failed to parse json output",
+            "reason": "JSON parsing failed, likely due to malformed JSON data",
+            "resolution": "This is an internal error, may require debugging the application"
+        },
+        {
+            "function": "main",
+            "message_template": "Failed to print pretty json",
+            "reason": "Failed to format JSON output, likely due to memory constraints",
+            "resolution": "Check system memory usage or run without pretty printing"
+        },
+        {
+            "function": "parse_args",
+            "message_template": "Error: Invalid --help option '%s'.\n",
+            "reason": "User specified an invalid option for help command",
+            "resolution": "Use one of the valid help options: 'legacy' or 'filters'"
+        },
+        {
+            "function": "parse_args",
+            "message_template": "Error: Invalid --show option '%s'.\n",
+            "reason": "User specified an invalid option for show command",
+            "resolution": "Use one of the valid show options: 'all', 'profiles', or 'processes'"
+        },
+        {
+            "function": "parse_args",
+            "message_template": "Error: Invalid command.\n",
+            "reason": "User specified an invalid command line option",
+            "resolution": "Check the usage with --help for valid commands and options"
+        },
+        {
+            "function": "parse_args",
+            "message_template": "Error: Unknown options.\n",
+            "reason": "User specified unknown command line options",
+            "resolution": "Check the usage with --help for valid commands and options"
+        }
+    ]
+}

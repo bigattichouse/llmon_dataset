@@ -1,0 +1,73 @@
+{
+    "project": "apparmor",
+    "module": "pwrite.c",
+    "summary": "A test program that validates pwrite and pread system call functionality. It writes test data to a file, reads it back, verifies the content, and repeats the process after receiving a signal, to ensure consistent behavior across signal interruptions.",
+    "logs": [
+        {
+            "function": "main",
+            "message_template": "Usage: %s <file>\n",
+            "reason": "Logs an error when the program is invoked with incorrect arguments. The program requires exactly one argument - the file path.",
+            "resolution": "Provide the correct path to a file as an argument when executing the program."
+        },
+        {
+            "function": "main",
+            "message_template": "FAIL - signal failed %s\n",
+            "reason": "Logs an error when setting up the SIGUSR1 signal handler fails, indicating system resource issues or permissions problems.",
+            "resolution": "Check system resources and process permissions. This could indicate that the process is exceeding signal handler limits or has insufficient privileges."
+        },
+        {
+            "function": "main",
+            "message_template": "FAIL - sigemptyset\n",
+            "reason": "Logs an error when initializing the signal set fails, indicating a potential system resource issue.",
+            "resolution": "This is a rare system-level error. Verify system resource limits and consider rebooting the system if this error persists."
+        },
+        {
+            "function": "main",
+            "message_template": "FAIL: open %s failed - %s\n",
+            "reason": "Logs an error when opening the specified file fails, including the specific reason from errno.",
+            "resolution": "Verify the file path exists and the process has proper permissions to create/read/write the file. Check for disk space issues or directory permissions."
+        },
+        {
+            "function": "main",
+            "message_template": "FAIL: pwrite failed - 0 bytes written\n",
+            "reason": "Logs an error when pwrite successfully returns but wrote 0 bytes, indicating a possible file system or device issue.",
+            "resolution": "Check disk space, file system health, and ensure the file is not on a read-only device or file system."
+        },
+        {
+            "function": "main",
+            "message_template": "FAIL: pwrite failed - %s\n",
+            "reason": "Logs an error when pwrite fails with an error code, including the specific reason from errno.",
+            "resolution": "Investigate the specific error message. Common issues include disk full, permissions problems, or hardware failures. May require fixing file system permissions or freeing disk space."
+        },
+        {
+            "function": "main",
+            "message_template": "FAIL: pwrite failed - wrote %zi expected %zi\n",
+            "reason": "Logs an error when pwrite only partially writes the data, indicating potential disk space or I/O issues.",
+            "resolution": "Check for disk space issues, file system corruption, or hardware problems. Consider running disk health diagnostics or filesystem checks."
+        },
+        {
+            "function": "main",
+            "message_template": "FAIL: pread failed - %s\n",
+            "reason": "Logs an error when pread fails with an error code, including the specific reason from errno.",
+            "resolution": "Investigate the specific error message. May indicate file system corruption, hardware failure, or permission issues. Consider checking disk health or file system integrity."
+        },
+        {
+            "function": "main",
+            "message_template": "FAIL: pread failed - read %zi expected %zi\n",
+            "reason": "Logs an error when pread reads fewer bytes than expected, indicating possible file truncation or I/O issues.",
+            "resolution": "Check if the file was modified by another process. Verify disk and file system health, as this could indicate fragmentation or corruption issues."
+        },
+        {
+            "function": "main",
+            "message_template": "FAIL: pread comparison mismatch: %s vs. %s\n",
+            "reason": "Logs an error when the data read from the file doesn't match what was written, indicating possible data corruption or concurrent file modification.",
+            "resolution": "Verify that no other process is modifying the file. Check for disk errors, memory corruption, or filesystem issues that could cause data integrity problems."
+        },
+        {
+            "function": "main",
+            "message_template": "PASS\n",
+            "reason": "Logs a success message when all pwrite/pread tests complete successfully, including the test after signal interruption.",
+            "resolution": "Informational log, no resolution required. Indicates that the pwrite/pread functionality is working correctly."
+        }
+    ]
+}

@@ -1,0 +1,85 @@
+{
+    "project": "apparmor",
+    "module": "../working/apparmor/tests/regression/apparmor/dbus_service.c",
+    "summary": "This module implements a DBus service utility that can handle method calls and signals for AppArmor regression testing. It connects to a DBus bus, registers with a well-known name, and processes incoming messages while logging activities.",
+    "logs": [
+        {
+            "function": "usage",
+            "message_template": "Usage: dbus_service [ADDRESS] --name=<NAME> <path> <interface>\n\n    ADDRESS\t\t--system, --session (default), or --address=ADDR\n    NAME\t\tthe well-known name to bind to\n    path\t\tpath to object (such as /org/freedesktop/DBus)\n    interface\t\tinterface to use (such as org.freedesktop.DBus)\n\n    The method <interface>.Method replies with an empty method_reply message.\n    The signal <interface>.Signal is accepted by the service.\n",
+            "reason": "Displays command usage information when invoked with incorrect arguments or with --help",
+            "resolution": "Read the usage instructions and provide the required arguments in the correct format"
+        },
+        {
+            "function": "handle_messages",
+            "message_template": "FAIL: Connection is closed\n",
+            "reason": "Indicates that the DBus connection has been closed unexpectedly during message handling",
+            "resolution": "Check if the DBus daemon is running and accessible. Verify network connectivity if using a remote bus. Check for permission issues."
+        },
+        {
+            "function": "handle_messages",
+            "message_template": "received ",
+            "reason": "Logs information about a received DBus message for debugging purposes",
+            "resolution": "Informational log, no resolution required"
+        },
+        {
+            "function": "handle_messages",
+            "message_template": "sent ",
+            "reason": "Logs information about a sent DBus message for debugging purposes",
+            "resolution": "Informational log, no resolution required"
+        },
+        {
+            "function": "setup_signal_handling",
+            "message_template": "FAIL: Could not set up signal handling\n",
+            "reason": "Failed to set up the SIGTERM signal handler, which is needed for clean program termination",
+            "resolution": "Check system resources and signal handler limits. This may indicate the process is running in a restricted environment."
+        },
+        {
+            "function": "unlock_fd",
+            "message_template": "FAIL: Failed to unlock lock file: %m\n",
+            "reason": "Failed to release the lock on the lock file. The %m format specifier would be replaced with the system error message.",
+            "resolution": "Check for file system issues or permission problems. Verify that the lock file exists and is accessible."
+        },
+        {
+            "function": "do_service",
+            "message_template": "FAIL: %s: %s\n",
+            "reason": "DBus error occurred when requesting or releasing a name on the bus. The first %s is the error name and the second %s is the error message.",
+            "resolution": "Check if the requested DBus name is already taken. Verify that the DBus daemon is running and that the service has appropriate permissions."
+        },
+        {
+            "function": "main",
+            "message_template": "FAIL: Couldn't set up signal handler\n",
+            "reason": "Unable to set up signal handling at program initialization",
+            "resolution": "Check system resources and verify the process has appropriate permissions to set up signal handlers."
+        },
+        {
+            "function": "main",
+            "message_template": "FAIL: \"--address=\" requires an ADDRESS\n",
+            "reason": "The --address option was used without providing an actual address value",
+            "resolution": "Provide a valid DBus address string after the = sign, such as --address=unix:path=/tmp/dbus-test"
+        },
+        {
+            "function": "main",
+            "message_template": "FAIL: Couldn't open log file \"%s\"\n",
+            "reason": "Unable to open the specified log file for writing",
+            "resolution": "Check file permissions and path validity. Ensure the directory exists and is writable by the user running the program."
+        },
+        {
+            "function": "main",
+            "message_template": "FAIL: \"--address\" may not be used with \"--system\" or \"--session\"\n",
+            "reason": "Conflicting command line options: --address cannot be used with --system or --session because they specify different ways to connect to DBus",
+            "resolution": "Use either --address=ADDR to connect to a specific address, or use --system/--session to connect to standard buses, but not both."
+        },
+        {
+            "function": "main",
+            "message_template": "FAIL: Failed to open connection to \"%s\" message bus: %s\n",
+            "reason": "Failed to establish a connection to the specified DBus message bus",
+            "resolution": "Verify that the DBus daemon is running and accessible. Check permissions and authentication. For system bus, ensure the user has appropriate access rights."
+        },
+        {
+            "function": "main",
+            "message_template": "PASS\n",
+            "reason": "Indicates successful execution of the program",
+            "resolution": "Informational log, no resolution required"
+        }
+    ]
+}

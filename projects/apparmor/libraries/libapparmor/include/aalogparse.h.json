@@ -1,0 +1,13 @@
+{
+    "project": "apparmor",
+    "module": "../working/apparmor/libraries/libapparmor/include/aalogparse.h",
+    "summary": "This header file defines the API and data structures for parsing AppArmor log messages. It includes enumerations for event types, a comprehensive structure to hold parsed log data, and function declarations for parsing and freeing log records.",
+    "logs": [
+        {
+            "function": "preprocessor",
+            "message_template": "SWIG and __cplusplus are defined together",
+            "reason": "This error is triggered when both SWIG and __cplusplus are defined together, which would cause compilation issues. The preprocessor check prevents incompatible combinations of build configurations.",
+            "resolution": "Ensure that your build environment doesn't attempt to use SWIG with C++ compilation mode simultaneously. This is a compile-time check to prevent potential API inconsistencies."
+        }
+    ]
+}

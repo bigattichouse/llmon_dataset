@@ -1,0 +1,6 @@
+{
+    "project": "apparmor",
+    "module": "../working/apparmor/libraries/libapparmor/src/PMurHash.c",
+    "summary": "An implementation of the MurmurHash3 algorithm that provides progressive data feeding capabilities to handle streaming or large data that doesn't fit in memory. The module is written in portable ANSI C, handles different CPU endianness, and provides a consistent API for computing hash values.",
+    "logs": []
+}

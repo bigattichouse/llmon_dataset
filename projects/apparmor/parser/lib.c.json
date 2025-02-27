@@ -1,0 +1,13 @@
+{
+    "project": "apparmor",
+    "module": "../working/apparmor/parser/lib.c",
+    "summary": "This module provides utility functions for string handling, escape sequence processing, and directory iteration in AppArmor. It includes functions for octal/decimal/hex conversion, character testing, and escape sequence processing, with extensive unit tests.",
+    "logs": [
+        {
+            "function": "dirat_for_each",
+            "message_template": "dirat_for_each failed: %m\n",
+            "reason": "Logs a debug message when the directory iteration function fails. The %m format specifier is replaced by the error message string corresponding to the current value of errno.",
+            "resolution": "Check file system permissions, directory existence, and possible file system corruption. This error typically occurs when there are permission issues, the directory doesn't exist, or there are I/O problems."
+        }
+    ]
+}

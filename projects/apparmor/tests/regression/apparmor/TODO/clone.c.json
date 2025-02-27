@@ -1,0 +1,6 @@
+{
+    "project": "apparmor",
+    "module": "../working/apparmor/tests/regression/apparmor/TODO/clone.c",
+    "summary": "A planned test program for evaluating AppArmor's behavior with the clone system call. This file is currently just a placeholder with no actual implementation.",
+    "logs": []
+}

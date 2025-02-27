@@ -1,0 +1,13 @@
+{
+    "project": "apparmor",
+    "module": "../working/apparmor/parser/mqueue.h",
+    "summary": "This header file defines the structure and permissions for AppArmor's message queue (mqueue) mediation, supporting both POSIX and SysV message queues. It contains declarations for mqueue permissions, the mqueue_rule class, and related validation methods for enforcing security constraints on mqueue operations.",
+    "logs": [
+        {
+            "function": "mqueue_rule::valid_prefix",
+            "message_template": "owner prefix not allowed on mqueue rules",
+            "reason": "This error occurs when a user attempts to use the 'owner' prefix in a mqueue rule definition, which is not supported by the AppArmor parser for message queue operations.",
+            "resolution": "Remove the 'owner' prefix from the mqueue rule in your AppArmor profile. Message queue rules should be specified without owner qualification."
+        }
+    ]
+}

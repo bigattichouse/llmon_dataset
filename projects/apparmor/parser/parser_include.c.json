@@ -1,0 +1,43 @@
+{
+    "project": "apparmor",
+    "module": "parser_include.c",
+    "summary": "This module handles AppArmor include directives during preprocessing, supporting both system includes (<name>) that search predefined paths and relative/absolute includes (\"name\") for specific file paths. It manages include search paths, handles include file stacking and nesting, and maintains current file position information.",
+    "logs": [
+        {
+            "function": "set_base_dir",
+            "message_template": "Error: Out of memory.\n",
+            "reason": "Logs an error when the system cannot allocate memory for duplicating the directory path string. This typically occurs when the system is running out of memory resources.",
+            "resolution": "Check system memory resources and potentially increase available memory. Look for memory leaks or other processes consuming excessive memory."
+        },
+        {
+            "function": "set_base_dir",
+            "message_template": "Error: basedir %s is not a directory, skipping.\n",
+            "reason": "Logs an error when the specified base directory either doesn't exist or is not a directory. This happens when an invalid path is provided as the base directory for AppArmor profiles.",
+            "resolution": "Verify the specified base directory exists and is a valid directory. Check file permissions and ensure the path provided to the -b option is correct."
+        },
+        {
+            "function": "add_search_dir",
+            "message_template": "Error: Could not add directory %s to search path.\n",
+            "reason": "Logs an error when attempting to add a directory to the search path but the maximum number of paths (MAX_PATH=100) has been reached.",
+            "resolution": "Reduce the number of include directories specified in configuration, or consider modifying the code to increase MAX_PATH if a larger number of include directories is necessary."
+        },
+        {
+            "function": "add_search_dir",
+            "message_template": "Error: Could not allocate memory.\n",
+            "reason": "Logs an error when memory allocation fails while trying to duplicate the directory path string. This happens when the system is low on memory resources.",
+            "resolution": "Check system memory resources and potentially increase available memory. Look for memory leaks or other processes consuming excessive memory."
+        },
+        {
+            "function": "search_path",
+            "message_template": "asprintf",
+            "reason": "Logs a system error when the asprintf function fails to allocate memory for the full path string. This typically happens when constructing a full filepath by combining a directory and filename.",
+            "resolution": "Check system memory resources. This is a critical error that causes program termination, so ensuring adequate memory is available is essential."
+        },
+        {
+            "function": "push_include_stack",
+            "message_template": "malloc of included file stack tracker",
+            "reason": "Logs a system error when memory allocation fails for tracking included files in the stack. This occurs when pushing a new file onto the include stack during preprocessing.",
+            "resolution": "The code indicates this is non-fatal, but it could lead to improper tracking of include positions. Check system memory resources and potentially increase available memory."
+        }
+    ]
+}

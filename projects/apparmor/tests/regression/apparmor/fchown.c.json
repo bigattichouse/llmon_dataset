@@ -1,0 +1,43 @@
+{
+    "project": "apparmor",
+    "module": "../working/apparmor/tests/regression/apparmor/fchown.c",
+    "summary": "This module tests the AppArmor security controls for the fchown system call. It attempts to change the owner of a specified file to a given user ID and reports success or failure.",
+    "logs": [
+        {
+            "function": "main",
+            "message_template": "usage: %s file username|uid\n",
+            "reason": "Logs usage information when the program is called with incorrect number of arguments. This helps users understand how to properly use the program.",
+            "resolution": "Provide the correct number of arguments: the filename and the target user ID."
+        },
+        {
+            "function": "main",
+            "message_template": "FAIL: bad uid %s\n",
+            "reason": "Logs an error when the provided user ID cannot be parsed as a numeric value. This occurs when a non-numeric string is provided as the second argument.",
+            "resolution": "Provide a valid numeric user ID as the second argument."
+        },
+        {
+            "function": "main",
+            "message_template": "FAIL: open %s failed - %s\n",
+            "reason": "Logs an error when opening the specified file fails. The error includes the filename and the system error message.",
+            "resolution": "Ensure the file exists and is accessible to the user running the program, and that proper permissions are set."
+        },
+        {
+            "function": "main",
+            "message_template": "FAIL: open",
+            "reason": "Logs an error using perror when opening the file fails. This includes the system error message automatically.",
+            "resolution": "Ensure the file exists and is accessible to the user running the program, and that proper permissions are set."
+        },
+        {
+            "function": "main",
+            "message_template": "FAIL: chown %s %d failed - %s\n",
+            "reason": "Logs an error when changing the file ownership fails. This could be due to insufficient permissions or AppArmor restrictions preventing the operation.",
+            "resolution": "Check if the user has sufficient permissions to change ownership or if AppArmor is configured to allow this operation. May require modifying AppArmor policy or running with elevated privileges."
+        },
+        {
+            "function": "main",
+            "message_template": "PASS\n",
+            "reason": "Logs a success message when the operation of changing ownership completes successfully.",
+            "resolution": "Informational log, no resolution required."
+        }
+    ]
+}

@@ -1,0 +1,43 @@
+{
+    "project": "apparmor",
+    "module": "../working/apparmor/tests/stress/apparmor/change_hat.c",
+    "summary": "This module is a stress test for AppArmor's change_hat functionality. It tests changing to a specified subprofile and back to the parent profile in an infinite loop, checking file access permissions in each state to verify that AppArmor policy constraints are properly enforced.",
+    "logs": [
+        {
+            "function": "main",
+            "message_template": "before entering change_hat\n",
+            "reason": "Indicates the program is about to transition to a subprofile using change_hat. This message helps track the sequence of operations in the test.",
+            "resolution": "This is an informational message for debugging purposes. No resolution needed."
+        },
+        {
+            "function": "main",
+            "message_template": "change_hat(%s, 0x%x): %s\n",
+            "reason": "Reports the result of attempting to change to a hat/subprofile, including the hat name, magic value, and any error message. Useful for diagnosing permission or configuration issues with AppArmor hat transitions.",
+            "resolution": "If an error occurs, check that the specified hat exists in the AppArmor profile for the application and that the magic value is correct. Also verify that AppArmor is properly loaded and enabled in the kernel."
+        },
+        {
+            "function": "main",
+            "message_template": "open(%s): %s\n",
+            "reason": "Reports the result of trying to open a file while in the subprofile, showing whether AppArmor correctly enforces the access permissions defined for that subprofile.",
+            "resolution": "If access is denied when it should be allowed (or vice versa), review the AppArmor profile for the application and ensure the subprofile has appropriate access rules for the file being accessed."
+        },
+        {
+            "function": "main",
+            "message_template": "before leaving change_hat\n",
+            "reason": "Indicates the program is about to exit the subprofile and return to the parent profile. This message helps track the sequence of operations in the test.",
+            "resolution": "This is an informational message for debugging purposes. No resolution needed."
+        },
+        {
+            "function": "main",
+            "message_template": "change_hat(%s, 0x%x): %s\n",
+            "reason": "Reports the result of attempting to exit a hat/subprofile by passing NULL as the hat name. Shows whether the transition back to the parent profile succeeded or failed.",
+            "resolution": "If this fails, check the AppArmor configuration and ensure that the magic value used matches the one from the original change_hat call. Also verify AppArmor's state in the kernel with tools like aa-status."
+        },
+        {
+            "function": "main",
+            "message_template": "open(%s): %s\n",
+            "reason": "Reports the result of trying to open a file after exiting the subprofile, showing whether AppArmor correctly restored the access permissions of the parent profile.",
+            "resolution": "If access permissions don't match expectations after returning to the parent profile, check the AppArmor profile configuration for both the parent and subprofile to ensure they're correctly defined."
+        }
+    ]
+}

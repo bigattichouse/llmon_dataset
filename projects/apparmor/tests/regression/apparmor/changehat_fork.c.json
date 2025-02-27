@@ -1,0 +1,37 @@
+{
+    "project": "apparmor",
+    "module": "../working/apparmor/tests/regression/apparmor/changehat_fork.c",
+    "summary": "A test module for AppArmor's change_hat functionality that verifies behavior when changing profiles and forking processes. It specifically tests what happens when change_hat fails and checks if child processes can properly open files under different profile contexts.",
+    "logs": [
+        {
+            "function": "main",
+            "message_template": "usage: %s profile file\n",
+            "reason": "Informs the user about incorrect command line arguments when they don't provide exactly 3 arguments (the program name, profile name, and file path).",
+            "resolution": "Ensure the correct number of arguments are provided when running the program: the program name, the profile name, and the file path to test."
+        },
+        {
+            "function": "main",
+            "message_template": "FAIL: fork failed - %s\n",
+            "reason": "Indicates that the fork system call failed, preventing the creation of a child process. The error message provides the specific reason for the failure.",
+            "resolution": "Check system resources like memory and process limits. This could be due to the system reaching its maximum process limit or insufficient memory to create a new process."
+        },
+        {
+            "function": "main",
+            "message_template": "FAIL: wait failed - %s\n",
+            "reason": "Indicates that the wait system call failed, preventing the parent process from properly waiting for the child process to complete.",
+            "resolution": "This is likely a system error. Review the specific error message and check if there are any issues with process handling on the system."
+        },
+        {
+            "function": "main",
+            "message_template": "PASS\n",
+            "reason": "Indicates that the child process successfully completed its task (opening the specified file under the given profile).",
+            "resolution": "This is an informational message indicating successful test completion, no resolution required."
+        },
+        {
+            "function": "main",
+            "message_template": "FAIL %d\n",
+            "reason": "Indicates that the child process failed to complete its task, with the exit status code providing more information about the failure. This message is only shown when in a null profile.",
+            "resolution": "Check the exit status code for specific error details. This likely means the file could not be accessed under the applied AppArmor profile, which may require adjusting the profile permissions."
+        }
+    ]
+}

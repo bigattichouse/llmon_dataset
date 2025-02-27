@@ -1,0 +1,25 @@
+{
+    "project": "apparmor",
+    "module": "../working/apparmor/tests/regression/apparmor/chdir.c",
+    "summary": "This module is a test utility that attempts to change the current working directory to a specified path. It's part of AppArmor's regression test suite and is designed to test directory access permissions.",
+    "logs": [
+        {
+            "function": "main",
+            "message_template": "usage: %s dir\n",
+            "reason": "Outputs an error message when the program is not called with exactly one argument (the target directory).",
+            "resolution": "Ensure the correct usage by providing exactly one directory path argument to the program."
+        },
+        {
+            "function": "main",
+            "message_template": "PASS\n",
+            "reason": "Indicates that the program successfully changed to the specified directory.",
+            "resolution": "Informational message, no resolution required."
+        },
+        {
+            "function": "main",
+            "message_template": "FAIL - %s\n",
+            "reason": "Indicates that the program failed to change to the specified directory, with the specific error message from the system.",
+            "resolution": "Check if the directory exists, if the user has appropriate permissions, and if AppArmor policy might be restricting access to the directory."
+        }
+    ]
+}

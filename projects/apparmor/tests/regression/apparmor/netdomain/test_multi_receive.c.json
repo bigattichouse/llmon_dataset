@@ -1,0 +1,103 @@
+{
+    "project": "apparmor",
+    "module": "tests/regression/apparmor/netdomain/test_multi_receive.c",
+    "summary": "This module implements a network testing utility that listens for network messages over UDP or TCP, binding to a specified IP and port. It handles different protocols and provides detailed error reporting for socket operations, making it useful for testing network connectivity and permissions.",
+    "logs": [
+        {
+            "function": "main",
+            "message_template": "Usage: %s bind_ip bind_port proto\n",
+            "reason": "Displayed when the program is executed with insufficient command line arguments, educating the user on proper usage.",
+            "resolution": "Run the program with the correct number of arguments: an IP address to bind to, a port number, and the protocol (udp or tcp)."
+        },
+        {
+            "function": "main",
+            "message_template": "Unknown protocol.\n",
+            "reason": "Printed when the user specifies a protocol that is neither 'udp' nor 'tcp'.",
+            "resolution": "Use either 'udp' or 'tcp' as the protocol argument when running the program."
+        },
+        {
+            "function": "main",
+            "message_template": "Receive message failed.\n",
+            "reason": "Indicates that the receive operation (either UDP or TCP) encountered an error.",
+            "resolution": "Check previous error messages for more specific details on the failure. Could be related to network configuration, permissions, or firewall settings."
+        },
+        {
+            "function": "receive_udp",
+            "message_template": "Socket error: ",
+            "reason": "Occurs when creating a UDP socket fails, likely due to resource limitations or insufficient permissions.",
+            "resolution": "Check system resources, network stack configuration, and ensure the process has sufficient permissions to create sockets."
+        },
+        {
+            "function": "receive_udp",
+            "message_template": "Bind error: ",
+            "reason": "Generated when binding the UDP socket to the specified IP and port fails, commonly due to the port already being in use or insufficient permissions.",
+            "resolution": "Ensure the specified port is not already in use by another process, check if the process has permissions to bind to the specified port (especially if it's below 1024), or try a different port."
+        },
+        {
+            "function": "receive_udp",
+            "message_template": "Select error: ",
+            "reason": "Occurs when the select() system call fails while waiting for UDP data, potentially due to an invalid file descriptor or signal interruption.",
+            "resolution": "Check for system resource limitations or potential signal interruptions. This is often a transient error that might resolve on retry."
+        },
+        {
+            "function": "receive_udp",
+            "message_template": "MESSAGE: %s\n",
+            "reason": "Displays the successfully received UDP message content.",
+            "resolution": "Informational log, no resolution required. Indicates successful receipt of data."
+        },
+        {
+            "function": "receive_udp",
+            "message_template": "recvfrom failed\n",
+            "reason": "Indicates that while select() indicated data was available, the attempt to receive the UDP data failed.",
+            "resolution": "This could be due to a connection reset or network error. Check network connectivity and consider adjusting the receive buffer size if dealing with large packets."
+        },
+        {
+            "function": "receive_tcp",
+            "message_template": "Socket error:",
+            "reason": "Occurs when creating a TCP socket fails, likely due to resource limitations or insufficient permissions.",
+            "resolution": "Check system resources, network stack configuration, and ensure the process has sufficient permissions to create sockets."
+        },
+        {
+            "function": "receive_tcp",
+            "message_template": "Could not bind.",
+            "reason": "Generated when binding the TCP socket to the specified IP and port fails, commonly due to the port already being in use or insufficient permissions.",
+            "resolution": "Ensure the specified port is not already in use by another process, check if the process has permissions to bind to the specified port (especially if it's below 1024), or try a different port."
+        },
+        {
+            "function": "receive_tcp",
+            "message_template": "Could not listen: ",
+            "reason": "Occurs when the socket cannot be placed in a listening state, possibly due to resource limits or socket configuration.",
+            "resolution": "Check the system's TCP backlog configuration and available resources. Ensure the socket is properly configured for listening operations."
+        },
+        {
+            "function": "receive_tcp",
+            "message_template": "Select failed: ",
+            "reason": "Occurs when the select() system call fails while waiting for TCP connections, potentially due to an invalid file descriptor or signal interruption.",
+            "resolution": "Check for system resource limitations or potential signal interruptions. This is often a transient error that might resolve on retry."
+        },
+        {
+            "function": "receive_tcp",
+            "message_template": "Accept failed: ",
+            "reason": "Indicates that while select() indicated a connection was ready, the attempt to accept the connection failed.",
+            "resolution": "This could be due to the client disconnecting before accept() was called, or resource limitations. Check for network stability and system resource availability."
+        },
+        {
+            "function": "receive_tcp",
+            "message_template": "MESSAGE: %s\n",
+            "reason": "Displays the successfully received TCP message content.",
+            "resolution": "Informational log, no resolution required. Indicates successful receipt of data."
+        },
+        {
+            "function": "receive_tcp",
+            "message_template": "recv failure: ",
+            "reason": "Occurs when the connection was established but receiving data from that connection failed.",
+            "resolution": "This could be due to a premature connection close by the client or a network error. Check network connectivity and client behavior."
+        },
+        {
+            "function": "receive_tcp",
+            "message_template": "There were select failures: ",
+            "reason": "Printed when select() indicates an error condition on the socket rather than readiness for accept().",
+            "resolution": "This often indicates a problem with the socket itself, such as it being in an error state. Check socket configuration and network connectivity."
+        }
+    ]
+}

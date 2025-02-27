@@ -1,0 +1,25 @@
+{
+    "project": "apparmor",
+    "module": "parser_merge.c",
+    "summary": "This module manages the merging of AppArmor profile rules, including sorting and combining entries with compatible permissions. It identifies and reports conflicts in merged rules and provides summary information about the merge process.",
+    "logs": [
+        {
+            "function": "process_file_entries",
+            "message_template": "Couldn't merge entries. Out of Memory\n",
+            "reason": "Logs an error when there is insufficient memory to allocate space for the entry table during rule merging. Likely occurs on systems with very low available memory or with extremely large profiles.",
+            "resolution": "Increase available system memory, reduce the size of the AppArmor profiles, or optimize memory usage in the system. Consider closing unnecessary applications to free up memory."
+        },
+        {
+            "function": "process_file_entries",
+            "message_template": "profile %s: has merged rule %s with conflicting x modifiers\n",
+            "reason": "Logs an error when trying to merge rules with incompatible execute (x) permissions. This occurs when rules with contradictory execution modifiers are being merged.",
+            "resolution": "Modify the profile to ensure consistent execution modifiers across rules that might be merged. Review the specific profile mentioned in the error message and resolve the contradictory x permission modifiers."
+        },
+        {
+            "function": "profile_merge_rules",
+            "message_template": "RULE MERGE: deleted %d file rules, %d rules\n",
+            "reason": "Informational message that reports how many rules were eliminated through the merging process. Only displayed when the DUMP_RULE_MERGE flag is set.",
+            "resolution": "This is an informational message that doesn't require resolution. It's useful for debugging and performance analysis of the rule merging process."
+        }
+    ]
+}

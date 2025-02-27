@@ -1,0 +1,55 @@
+{
+    "project": "apparmor",
+    "module": "../working/apparmor/tests/regression/apparmor/pipe_helper.h",
+    "summary": "This module provides utility functions for handling named pipes in AppArmor tests. It includes functions for generating pipe names, opening pipes for reading and writing, and for handling the reading and writing operations with appropriate error handling.",
+    "logs": [
+        {
+            "function": "get_pipes",
+            "message_template": "%s1",
+            "reason": "Used as a format specifier to create the parent pipe name from the base name. This is not a log message per se, but a format string used in asprintf.",
+            "resolution": "Not applicable, as this is a format string for internal use, not an error message."
+        },
+        {
+            "function": "get_pipes",
+            "message_template": "%s2",
+            "reason": "Used as a format specifier to create the child pipe name from the base name. This is not a log message per se, but a format string used in asprintf.",
+            "resolution": "Not applicable, as this is a format string for internal use, not an error message."
+        },
+        {
+            "function": "open_read_pipe",
+            "message_template": "FAIL - open read pipe",
+            "reason": "Logs an error when failing to open a pipe for reading. This may happen due to permission issues, non-existent pipe, or system resource limits.",
+            "resolution": "Check if the pipe exists, verify permissions, and ensure there are sufficient system resources. The pipe may need to be created first with mkfifo()."
+        },
+        {
+            "function": "read_from_pipe",
+            "message_template": "FAIL - invalid read fd\n",
+            "reason": "Logs an error when an invalid file descriptor is provided to the read_from_pipe function. This likely happens if a pipe was not properly opened beforehand.",
+            "resolution": "Ensure that a valid file descriptor is passed to the function, which typically means making sure open_read_pipe() was successful before calling this function."
+        },
+        {
+            "function": "read_from_pipe",
+            "message_template": "FAIL - select",
+            "reason": "Logs an error when the select() system call fails while trying to determine if a pipe is ready for reading. This could happen due to resource limits or signal interruption.",
+            "resolution": "Check system resources and consider increasing descriptor limits if needed. If the issue is due to a signal interruption, the operation may need to be retried."
+        },
+        {
+            "function": "read_from_pipe",
+            "message_template": "FAIL - read timeout\n",
+            "reason": "Logs an error when reading from the pipe times out (no data becomes available within 3 seconds). This may happen if the writing process is delayed or has failed.",
+            "resolution": "Check if the process that should be writing to the pipe is running correctly. Consider increasing the timeout value if the writing process legitimately takes longer than expected."
+        },
+        {
+            "function": "read_from_pipe",
+            "message_template": "FAIL - read pipe",
+            "reason": "Logs an error when the read() system call fails after select() indicated data was available. This could happen due to pipe closure or other I/O errors.",
+            "resolution": "Check if the pipe was closed unexpectedly. This could also indicate a race condition where the pipe was closed between the select() and read() calls."
+        },
+        {
+            "function": "write_to_pipe",
+            "message_template": "FAIL - open write pipe %s - %m\n",
+            "reason": "Logs an error when failing to open a pipe for writing, including the pipe name and error message. This may happen due to permission issues, non-existent pipe, or if no process has the pipe open for reading.",
+            "resolution": "Ensure the pipe exists and has correct permissions. Also, make sure there's a process with the pipe open for reading before attempting to write, as opening a pipe for writing in non-blocking mode will fail if no reader is present."
+        }
+    ]
+}

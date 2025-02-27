@@ -1,0 +1,37 @@
+{
+    "project": "apparmor",
+    "module": "../working/apparmor/tests/regression/apparmor/syscall_iopl.c",
+    "summary": "A simple test program for the iopl system call that sets the I/O privilege level of the process. It validates command-line arguments and attempts to change the I/O privilege level to the specified ring (0-3).",
+    "logs": [
+        {
+            "function": "main",
+            "message_template": "usage: %s <ring>\n",
+            "reason": "Informs the user about the correct way to use the program when an incorrect number of arguments is provided.",
+            "resolution": "Provide exactly one argument to the program, which should be a number between 0 and 3 representing the I/O privilege level."
+        },
+        {
+            "function": "main",
+            "message_template": "FAIL: no <ring> argument in '%s'\n",
+            "reason": "Indicates that the provided argument could not be converted to a valid integer value.",
+            "resolution": "Ensure the argument is a valid integer number."
+        },
+        {
+            "function": "main",
+            "message_template": "FAIL: out of range (0-3)\n",
+            "reason": "Indicates that the provided ring value is outside the acceptable range of 0 to 3.",
+            "resolution": "Provide a ring value between 0 and 3 inclusive."
+        },
+        {
+            "function": "main",
+            "message_template": "FAIL: iopl failed - %s\n",
+            "reason": "Indicates that the iopl system call failed, likely due to insufficient permissions or an invalid ring value.",
+            "resolution": "Ensure the program is run with appropriate privileges (typically root), and the ring value is valid. Check the specific error message for more details."
+        },
+        {
+            "function": "main",
+            "message_template": "PASS\n",
+            "reason": "Indicates that the iopl system call succeeded and the I/O privilege level was successfully changed.",
+            "resolution": "Informational log, no resolution required."
+        }
+    ]
+}

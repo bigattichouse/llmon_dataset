@@ -1,0 +1,55 @@
+{
+    "project": "apparmor",
+    "module": "../working/apparmor/tests/regression/apparmor/rw.c",
+    "summary": "This module is a regression test for AppArmor that tests file read and write functionality. It creates a file, writes data to it, reads it back, verifies the data, waits for a signal, then repeats the test.",
+    "logs": [
+        {
+            "function": "main",
+            "message_template": "usage: %s file\n",
+            "reason": "Displays usage information when the program is invoked with incorrect number of arguments. The user did not provide a filename argument.",
+            "resolution": "Provide the correct command line argument (a filename) when running the test."
+        },
+        {
+            "function": "main",
+            "message_template": "FAIL: internal error signal failed - %s\n",
+            "reason": "Occurs when the program fails to set up a signal handler for SIGUSR1, which is required for the test to proceed.",
+            "resolution": "This indicates a system-level issue with signal handling. Check system resources, permissions, and signal handling capabilities of the current environment."
+        },
+        {
+            "function": "main",
+            "message_template": "FAIL: nullifying sigset",
+            "reason": "Occurs when the program fails to initialize an empty signal set, which is needed for the sigsuspend operation later.",
+            "resolution": "This indicates a system-level issue with signal handling. Check system resources and ensure the system supports the required signal operations."
+        },
+        {
+            "function": "main",
+            "message_template": "FAIL: create %s failed - %s\n",
+            "reason": "Logs an error when the test cannot create the file specified by the user, likely due to permission issues or the file already existing.",
+            "resolution": "Ensure the specified file doesn't already exist and that the user has appropriate permissions to create files in the target directory. The test is using O_EXCL flag, so it will fail if the file already exists."
+        },
+        {
+            "function": "main",
+            "message_template": "FAIL: write failed - %s\n",
+            "reason": "Occurs when the program cannot write data to the test file, possibly due to disk space issues or permission problems.",
+            "resolution": "Check file system permissions, available disk space, and ensure AppArmor profiles aren't preventing write access to the test file."
+        },
+        {
+            "function": "main",
+            "message_template": "FAIL: read failed - %s\n",
+            "reason": "Occurs when the program cannot read the expected amount of data from the test file, possibly due to permission issues.",
+            "resolution": "Check file system permissions and ensure AppArmor profiles aren't preventing read access to the test file."
+        },
+        {
+            "function": "main",
+            "message_template": "FAIL: comparison failed - %s\n",
+            "reason": "Occurs when the data read from the file does not match the data written to it, indicating data corruption or file system issues.",
+            "resolution": "This could indicate file system corruption, disk issues, or AppArmor profiles that modify data during read/write operations. Verify file system integrity and AppArmor configurations."
+        },
+        {
+            "function": "main",
+            "message_template": "PASS\n",
+            "reason": "Indicates that the test completed successfully, verifying that both read and write operations work as expected under the current AppArmor configuration.",
+            "resolution": "Information log, no resolution required. This is the expected outcome of the test."
+        }
+    ]
+}

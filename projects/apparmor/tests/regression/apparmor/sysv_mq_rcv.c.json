@@ -1,0 +1,151 @@
+{
+    "project": "apparmor",
+    "module": "../working/apparmor/tests/regression/apparmor/sysv_mq_rcv.c",
+    "summary": "This is a test program for System V message queues that tests the ability to create, send, and receive messages between processes using IPC mechanisms. It creates a message queue and semaphore, forks a client process, and verifies message reception and content matching.",
+    "logs": [
+        {
+            "function": "receive_message",
+            "message_template": "FAIL - could not receive msg",
+            "reason": "Logs an error when the msgrcv function fails to receive a message from the queue. This could happen due to permission issues, invalid queue ID, or if the queue was removed.",
+            "resolution": "Check if the message queue exists, verify permissions, and ensure the client is properly sending messages to the queue."
+        },
+        {
+            "function": "receive_message",
+            "message_template": "FAIL - msg received does not match: %s - %s",
+            "reason": "Logs an error when the received message content doesn't match the expected content. This indicates a data corruption or communication protocol issue.",
+            "resolution": "Verify the message format on both sender and receiver sides, ensure the message buffer size is adequate, and check for any character encoding issues."
+        },
+        {
+            "function": "receive_message",
+            "message_template": "PASS",
+            "reason": "Logs a success message when a message is successfully received and its content matches the expected value.",
+            "resolution": "Informational log, no resolution required."
+        },
+        {
+            "function": "receive",
+            "message_template": "FAIL - could not wait for semaphore",
+            "reason": "Logs an error when the semtimedop function fails, which might happen if the semaphore operation times out or other IPC errors occur.",
+            "resolution": "Increase the timeout value, check if client is properly signaling the semaphore, and verify semaphore permissions and existence."
+        },
+        {
+            "function": "usage",
+            "message_template": "%s",
+            "reason": "Displays a custom error message passed to the usage function before showing the command usage information.",
+            "resolution": "Read the specific error message and adjust command-line arguments accordingly."
+        },
+        {
+            "function": "usage",
+            "message_template": "Usage: %s [options]",
+            "reason": "Displays the basic usage syntax for the command when invalid arguments are provided or help is requested.",
+            "resolution": "Review the command syntax and provide valid options."
+        },
+        {
+            "function": "usage",
+            "message_template": "Options are:",
+            "reason": "Introduces the list of available command-line options.",
+            "resolution": "Informational log, no resolution required."
+        },
+        {
+            "function": "usage",
+            "message_template": "-k        message queue key (default is %d)",
+            "reason": "Describes the -k option for specifying a custom message queue key.",
+            "resolution": "Use this option if you need to specify a non-default message queue key."
+        },
+        {
+            "function": "usage",
+            "message_template": "-e        message queue type (default is %d)",
+            "reason": "Describes the -e option for specifying a custom message queue type.",
+            "resolution": "Use this option if you need to specify a non-default message queue type."
+        },
+        {
+            "function": "usage",
+            "message_template": "-c        path of the client binary",
+            "reason": "Describes the -c option for specifying the path to the client binary.",
+            "resolution": "Provide the full path to the client executable that will send messages to the queue."
+        },
+        {
+            "function": "usage",
+            "message_template": "-u        run test as specified UID",
+            "reason": "Describes the -u option for running the test as a specific user ID.",
+            "resolution": "Use this option to test with different user permissions by providing a valid UID."
+        },
+        {
+            "function": "usage",
+            "message_template": "-t        timeout in seconds",
+            "reason": "Describes the -t option for specifying a custom timeout value.",
+            "resolution": "Adjust this value if the default timeout is too short for your testing environment."
+        },
+        {
+            "function": "usage",
+            "message_template": "-s        semaphore key (default is %d)",
+            "reason": "Describes the -s option for specifying a custom semaphore key.",
+            "resolution": "Use this option if you need to specify a non-default semaphore key."
+        },
+        {
+            "function": "main",
+            "message_template": "-c option must specify the client binary",
+            "reason": "Logs an error when the -c option is provided but no client binary path is specified.",
+            "resolution": "Provide a valid path to the client binary with the -c option."
+        },
+        {
+            "function": "main",
+            "message_template": "FAIL - could not set output file mode",
+            "reason": "Logs an error when attempting to change the file mode of stdout fails, which is needed before dropping privileges with setuid.",
+            "resolution": "Check file permissions and ensure the process has the necessary privileges to modify the file mode."
+        },
+        {
+            "function": "main",
+            "message_template": "FAIL - could not setuid",
+            "reason": "Logs an error when the setuid function fails to change the user ID of the process.",
+            "resolution": "Ensure the process has sufficient privileges to change the user ID and that the specified UID exists."
+        },
+        {
+            "function": "main",
+            "message_template": "Unrecognized option",
+            "reason": "Logs an error when an unrecognized command-line option is provided.",
+            "resolution": "Check the command-line options and ensure they match the supported options."
+        },
+        {
+            "function": "main",
+            "message_template": "FAIL - could not msgget",
+            "reason": "Logs an error when the msgget function fails to create or access a message queue.",
+            "resolution": "Check if the message queue already exists with conflicting permissions, verify system IPC limits, and ensure proper privileges."
+        },
+        {
+            "function": "main",
+            "message_template": "FAIL - could not get semaphore",
+            "reason": "Logs an error when the semget function fails to create or access a semaphore.",
+            "resolution": "Check if the semaphore already exists with conflicting permissions, verify system IPC limits, and ensure proper privileges."
+        },
+        {
+            "function": "main",
+            "message_template": "FAIL - could not fork",
+            "reason": "Logs an error when the fork function fails to create a new process for the client.",
+            "resolution": "Check system resource limits, available memory, and process limits. The system might be under heavy load or have reached maximum process count."
+        },
+        {
+            "function": "main",
+            "message_template": "client not specified",
+            "reason": "Logs an error when attempting to fork a client process but no client binary was specified.",
+            "resolution": "Specify the client binary using the -c option with a valid path."
+        },
+        {
+            "function": "main",
+            "message_template": "FAIL %d - execl %s %d - %m",
+            "reason": "Logs an error when the execl function fails to execute the client binary. Shows the UID, client path, and message queue key.",
+            "resolution": "Verify the client binary exists, is executable, and the process has the necessary permissions to execute it."
+        },
+        {
+            "function": "main",
+            "message_template": "FAIL - could not remove semaphore",
+            "reason": "Logs an error when the semctl function fails to remove the semaphore during cleanup.",
+            "resolution": "Check if the semaphore still exists and if the process has the necessary permissions to remove it."
+        },
+        {
+            "function": "main",
+            "message_template": "FAIL - could not remove msg queue",
+            "reason": "Logs an error when the msgctl function fails to remove the message queue during cleanup.",
+            "resolution": "Check if the message queue still exists and if the process has the necessary permissions to remove it."
+        }
+    ]
+}

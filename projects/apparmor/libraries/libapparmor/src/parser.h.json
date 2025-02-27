@@ -1,0 +1,25 @@
+{
+    "project": "apparmor",
+    "module": "../working/apparmor/libraries/libapparmor/src/parser.h",
+    "summary": "A header file defining AppArmor audit message types and functions for log record processing. It establishes constants for different categories of AppArmor events (grants, denials, errors, etc.) and declares utility functions for log record formatting.",
+    "logs": [
+        {
+            "function": "_init_log_record",
+            "message_template": "N/A - Function declaration only",
+            "reason": "Initializes AppArmor log record structures before they're populated with event data",
+            "resolution": "No resolution needed - this is part of the normal logging infrastructure"
+        },
+        {
+            "function": "hex_to_string",
+            "message_template": "N/A - Function declaration only",
+            "reason": "Converts hexadecimal values to human-readable strings for inclusion in log messages",
+            "resolution": "No resolution needed - this is a utility function for log formatting"
+        },
+        {
+            "function": "ipproto_to_string",
+            "message_template": "N/A - Function declaration only",
+            "reason": "Converts IP protocol numbers to their corresponding named protocols for clarity in log entries",
+            "resolution": "No resolution needed - this is a utility function for log formatting"
+        }
+    ]
+}

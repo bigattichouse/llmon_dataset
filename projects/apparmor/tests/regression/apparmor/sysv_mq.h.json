@@ -1,0 +1,13 @@
+{
+    "project": "apparmor",
+    "module": "../working/apparmor/tests/regression/apparmor/sysv_mq.h",
+    "summary": "This header file defines constants, structures, and a test message for System V IPC mechanisms including message queues, shared memory, and semaphores. It provides the foundation for AppArmor's System V message queue testing functionality with predefined keys and permissions.",
+    "logs": [
+        {
+            "function": "global",
+            "message_template": "hello world",
+            "reason": "This is a test message string likely used for demonstration of message queue functionality in the testing framework.",
+            "resolution": "This is an informational message used for testing, no resolution required."
+        }
+    ]
+}

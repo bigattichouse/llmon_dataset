@@ -1,0 +1,67 @@
+{
+    "project": "apparmor",
+    "module": "../working/apparmor/libraries/libapparmor/src/features.c",
+    "summary": "This module manages AppArmor security features, providing functionality to read feature specifications from files or kernel, compare features, generate unique identifiers, and check if specific features are supported.",
+    "logs": [
+        {
+            "function": "features_buffer_remaining",
+            "message_template": "Invalid features buffer offset (%td)\n",
+            "reason": "Error occurs when calculating remaining buffer space and finding an invalid offset value (negative or larger than buffer size).",
+            "resolution": "This indicates a memory corruption or logic error in the application. Check for buffer overflows or invalid pointer operations in the code using the features buffer."
+        },
+        {
+            "function": "features_snprintf",
+            "message_template": "Failed to write to features buffer\n",
+            "reason": "The vsnprintf operation failed with a negative return value when trying to write to the features buffer.",
+            "resolution": "This indicates a system-level error with the string formatting operation. Check system resources and ensure correct format strings and arguments are provided."
+        },
+        {
+            "function": "features_snprintf",
+            "message_template": "Feature buffer full.",
+            "reason": "The features buffer doesn't have enough space to write the formatted string.",
+            "resolution": "Increase the size of the feature buffer (STRING_SIZE constant) or reduce the amount of data being written to it."
+        },
+        {
+            "function": "load_features_file",
+            "message_template": "Error reading features file: %m\n",
+            "reason": "Failed to read data from the features file, possibly due to filesystem errors or insufficient permissions.",
+            "resolution": "Check file permissions, file system status, and ensure the AppArmor service has appropriate access to the features file. The %m placeholder will show the specific error message."
+        },
+        {
+            "function": "open_and_load_features_file",
+            "message_template": "Could not open '%s': %m\n",
+            "reason": "Failed to open the specified features file path.",
+            "resolution": "Verify the file exists and has correct permissions. The error details (%m) will provide more specific information about why the file couldn't be opened."
+        },
+        {
+            "function": "open_and_load_features_file",
+            "message_template": "Opened features '%s': %m\n",
+            "reason": "Successfully opened the features file, but reports the errno value which may indicate issues.",
+            "resolution": "This is an informational message, but if it shows an error value in %m, check for potential file access issues."
+        },
+        {
+            "function": "open_and_load_features_file",
+            "message_template": "Error failed to load features file '%s': %m\n",
+            "reason": "Failed to load the contents of a features file after successfully opening it.",
+            "resolution": "Check file permissions, file integrity, and system resources. The file may exist but be unreadable or corrupted."
+        },
+        {
+            "function": "load_features_dir",
+            "message_template": "Failed evaluating %s\n",
+            "reason": "Error while traversing and processing a directory containing feature files.",
+            "resolution": "Check directory permissions and structure. Ensure all files and subdirectories can be accessed by the AppArmor service."
+        },
+        {
+            "function": "init_features_hash",
+            "message_template": "Hash buffer full.",
+            "reason": "Buffer overflow while generating the hash string for features identification.",
+            "resolution": "Increase the HASH_SIZE constant to accommodate larger hash values. This shouldn't happen with the defined 8+1 size for a 32-bit hash."
+        },
+        {
+            "function": "aa_features_check",
+            "message_template": "could not setup new features object for dirfd '%d' '%s'\n",
+            "reason": "Failed to create a new features object when checking if features match between a directory and an existing features object.",
+            "resolution": "Check the specified path and directory file descriptor. Ensure the .features file exists in the specified directory and is accessible."
+        }
+    ]
+}

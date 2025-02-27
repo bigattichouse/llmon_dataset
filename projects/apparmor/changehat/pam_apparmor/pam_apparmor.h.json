@@ -1,0 +1,6 @@
+{
+    "project": "apparmor",
+    "module": "../working/apparmor/changehat/pam_apparmor/pam_apparmor.h",
+    "summary": "Header file for the pam_apparmor PAM module which provides AppArmor integration in the Linux PAM stack. It defines configuration structures and declares external functions for option parsing.",
+    "logs": []
+}

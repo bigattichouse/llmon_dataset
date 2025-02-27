@@ -1,0 +1,13 @@
+{
+    "project": "apparmor",
+    "module": "../working/apparmor/parser/af_unix.h",
+    "summary": "This module defines the unix_rule class for AppArmor's parser, which handles rules for Unix domain sockets. It provides functionality to validate, process, and generate policy rules for Unix socket communications with methods for managing permissions, addresses, and peer relationships.",
+    "logs": [
+        {
+            "function": "valid_prefix",
+            "message_template": "owner prefix not allowed on unix rules",
+            "reason": "This error is generated when a user attempts to apply an 'owner' prefix to a Unix socket rule, which is not supported by AppArmor's policy structure. This typically occurs when parsing an AppArmor profile that contains such an invalid rule specification.",
+            "resolution": "Remove the 'owner' prefix from the Unix socket rule in the AppArmor profile being compiled. AppArmor's Unix socket rules have their own permission structure that doesn't support ownership prefixes in the same way other AppArmor rule types might."
+        }
+    ]
+}

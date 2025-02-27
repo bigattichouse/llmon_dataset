@@ -1,0 +1,79 @@
+{
+    "project": "apparmor",
+    "module": "../working/apparmor/tests/regression/apparmor/netdomain/test_multi_send.c",
+    "summary": "A network testing utility that sends messages using either UDP or TCP protocols based on command-line arguments. It binds to a specified local address and sends a message to a specified remote address, reporting success or failure.",
+    "logs": [
+        {
+            "function": "main",
+            "message_template": "Usage: %s bind_ip bind_port remote_ip remote_port proto message\n",
+            "reason": "Logs a usage message when the program is called with insufficient command-line arguments.",
+            "resolution": "Provide all required command-line arguments in the correct order: bind_ip, bind_port, remote_ip, remote_port, protocol (tcp/udp), and message."
+        },
+        {
+            "function": "main",
+            "message_template": "Unknown protocol.\n",
+            "reason": "Logs an error when the protocol specified is neither 'udp' nor 'tcp'.",
+            "resolution": "Use either 'udp' or 'tcp' as the protocol argument (5th command-line argument)."
+        },
+        {
+            "function": "main",
+            "message_template": "Send message failed.\n",
+            "reason": "Logs an error when the send operation fails, likely due to network issues or incorrect parameters.",
+            "resolution": "Check previous error messages for specific details on the failure. Verify network connectivity, IP addresses, port numbers, and network configurations."
+        },
+        {
+            "function": "send_udp",
+            "message_template": "Could not open socket: ",
+            "reason": "Logs an error when creating a UDP socket fails, possibly due to resource limitations or permissions.",
+            "resolution": "Check system resources, verify the application has appropriate permissions to create sockets, and ensure no system socket limits have been reached."
+        },
+        {
+            "function": "send_udp",
+            "message_template": "Could not bind: ",
+            "reason": "Logs an error when binding to the local address/port fails, likely due to the port being in use or insufficient permissions.",
+            "resolution": "Ensure the specified port is not already in use, the application has permissions to bind to that port, and the IP address is valid on the local system."
+        },
+        {
+            "function": "send_udp",
+            "message_template": "Sending \"%s\"\n",
+            "reason": "Logs an informational message showing the content being sent via UDP.",
+            "resolution": "Informational log, no resolution required."
+        },
+        {
+            "function": "send_udp",
+            "message_template": "Send failed: ",
+            "reason": "Logs an error when the UDP send operation fails, possibly due to network issues.",
+            "resolution": "Check network connectivity, verify the destination address is reachable, and ensure no firewall or network policy is blocking the traffic."
+        },
+        {
+            "function": "send_tcp",
+            "message_template": "Could not open socket: ",
+            "reason": "Logs an error when creating a TCP socket fails, possibly due to resource limitations or permissions.",
+            "resolution": "Check system resources, verify the application has appropriate permissions to create sockets, and ensure no system socket limits have been reached."
+        },
+        {
+            "function": "send_tcp",
+            "message_template": "Could not bind: ",
+            "reason": "Logs an error when binding to the local address/port fails, likely due to the port being in use or insufficient permissions.",
+            "resolution": "Ensure the specified port is not already in use, the application has permissions to bind to that port, and the IP address is valid on the local system."
+        },
+        {
+            "function": "send_tcp",
+            "message_template": "Could not connect: ",
+            "reason": "Logs an error when connecting to the remote TCP server fails, possibly due to connectivity issues or the server not listening.",
+            "resolution": "Verify the remote server is running and listening on the specified port, check network connectivity, and ensure no firewall or network policy is blocking the connection."
+        },
+        {
+            "function": "send_tcp",
+            "message_template": "Sending \"%s\"\n",
+            "reason": "Logs an informational message showing the content being sent via TCP.",
+            "resolution": "Informational log, no resolution required."
+        },
+        {
+            "function": "send_tcp",
+            "message_template": "Send failed: ",
+            "reason": "Logs an error when the TCP send operation fails, possibly due to connection issues.",
+            "resolution": "Check if the TCP connection is still established, verify no network disruption occurred during transmission, and ensure the remote endpoint is still accepting data."
+        }
+    ]
+}

@@ -1,0 +1,31 @@
+{
+    "project": "apparmor",
+    "module": "../working/apparmor/tests/regression/apparmor/fd_inheritance.c",
+    "summary": "This module is a test program for AppArmor that verifies file descriptor inheritance during process execution. It opens a file, reads its contents, and then executes another program passing the file descriptor and the read content as arguments.",
+    "logs": [
+        {
+            "function": "main",
+            "message_template": "Usage: %s <file> <exec>\n",
+            "reason": "Displayed when the program is invoked with incorrect command-line arguments. The program requires exactly two arguments: a file to open and an executable to run.",
+            "resolution": "Ensure the program is called with the correct number of arguments: a file path and the path to an executable."
+        },
+        {
+            "function": "main",
+            "message_template": "FAIL - open",
+            "reason": "Generated when the open() system call fails to open the specified file. This could happen due to file permissions, non-existent file, or other filesystem issues.",
+            "resolution": "Check that the specified file exists, the process has permission to read it, and the filesystem is properly mounted and functioning."
+        },
+        {
+            "function": "main",
+            "message_template": "FAIL - read",
+            "reason": "Generated when the read() system call fails to read from the opened file. This could occur due to I/O errors or other filesystem problems.",
+            "resolution": "Verify the file is readable, has content, and there are no hardware issues with the storage device."
+        },
+        {
+            "function": "main",
+            "message_template": "FAIL - execl",
+            "reason": "Generated when the execl() system call fails to execute the specified program. This could happen if the program doesn't exist, isn't executable, or there are permission issues.",
+            "resolution": "Ensure the specified executable exists, has execution permissions, and is in a valid format for the system."
+        }
+    ]
+}

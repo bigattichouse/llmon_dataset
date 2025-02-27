@@ -1,0 +1,25 @@
+{
+    "project": "apparmor",
+    "module": "../working/apparmor/tests/regression/apparmor/open.c",
+    "summary": "This module is a regression test for AppArmor that tests file opening functionality. It attempts to open a file with read/write permissions and reports success or failure, primarily used to verify AppArmor's file access controls are working correctly.",
+    "logs": [
+        {
+            "function": "main",
+            "message_template": "usage: %s file\n",
+            "reason": "Displayed when the program is run with incorrect number of arguments. It informs the user about the correct usage pattern.",
+            "resolution": "Provide a single filename as an argument to the program. For example: './open testfile'"
+        },
+        {
+            "function": "main",
+            "message_template": "FAIL: open %s failed - %s\n",
+            "reason": "Displayed when the open() operation fails. This could be due to permission issues, non-existent file, or AppArmor restrictions preventing access.",
+            "resolution": "Check if AppArmor profile allows file access, verify file existence and permissions, or run the program with appropriate privileges. This test fails when AppArmor correctly blocks unauthorized access."
+        },
+        {
+            "function": "main",
+            "message_template": "PASS\n",
+            "reason": "Displayed when the file is successfully opened and closed, indicating that the test passed successfully.",
+            "resolution": "This is an informational message indicating successful operation. No resolution required unless the test is expected to fail due to AppArmor restrictions."
+        }
+    ]
+}

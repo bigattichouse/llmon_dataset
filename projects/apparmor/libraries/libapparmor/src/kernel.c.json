@@ -1,0 +1,85 @@
+{
+    "project": "apparmor",
+    "module": "libraries/libapparmor/src/kernel.c",
+    "summary": "The kernel.c module provides utility functions for interacting with the AppArmor kernel module through procfs and securityfs interfaces. It handles profile and hat operations, permission queries, and provides access to AppArmor's security attributes for processes.",
+    "logs": [
+        {
+            "function": "param_check_base",
+            "message_template": "/sys/module/apparmor/parameters/%s",
+            "reason": "Attempts to read AppArmor parameters from sysfs. Failures might indicate missing AppArmor kernel support or permission issues.",
+            "resolution": "Ensure AppArmor is properly installed and loaded. Check kernel configuration and permissions for sysfs access."
+        },
+        {
+            "function": "aa_find_mountpoint",
+            "message_template": "/proc/mounts",
+            "reason": "Attempts to locate the AppArmor securityfs mount point. Failure could mean AppArmor isn't properly mounted.",
+            "resolution": "Verify AppArmor is installed and that securityfs is mounted, typically at /sys/kernel/security/apparmor."
+        },
+        {
+            "function": "aa_find_mountpoint",
+            "message_template": "%s/apparmor",
+            "reason": "Constructs the path to the AppArmor securityfs directory. Failure might indicate an unusual mount configuration.",
+            "resolution": "Check that securityfs is properly mounted and that the AppArmor module is loaded."
+        },
+        {
+            "function": "procattr_path",
+            "message_template": "/proc/%d/attr/%s",
+            "reason": "Constructs the path to a process's AppArmor attributes when using the old interface. Failure might indicate incompatibility with the current kernel.",
+            "resolution": "Use newer AppArmor interfaces if available, or ensure the system has the appropriate AppArmor support."
+        },
+        {
+            "function": "procattr_path",
+            "message_template": "/proc/%d/attr/apparmor/%s",
+            "reason": "Constructs the path to a process's AppArmor attributes using the newer stacking-compatible interface.",
+            "resolution": "No resolution needed unless access is denied, in which case check AppArmor policy or use a less restrictive profile."
+        },
+        {
+            "function": "procattr_path",
+            "message_template": "/proc/%d/attr/apparmor/unavailable/%s",
+            "reason": "Used when AppArmor interfaces are unavailable, possibly due to another LSM controlling the interface.",
+            "resolution": "Check which LSM is active on the system and adjust configuration accordingly. May require kernel configuration changes."
+        },
+        {
+            "function": "aa_change_hat",
+            "message_template": "changehat %016lx^%s",
+            "reason": "Request to change to a different AppArmor hat (sub-profile). Failure may indicate an invalid hat or token.",
+            "resolution": "Verify the hat exists in the profile and that the correct token is being used. Check AppArmor policy logs for more details."
+        },
+        {
+            "function": "aa_change_profile",
+            "message_template": "changeprofile %s",
+            "reason": "Request to change to a different AppArmor profile. Failure may indicate an invalid profile or insufficient permissions.",
+            "resolution": "Verify the profile exists and that the current profile has permission to change to the requested profile."
+        },
+        {
+            "function": "aa_change_onexec",
+            "message_template": "exec %s",
+            "reason": "Request to change to a different AppArmor profile upon next exec. Failure may indicate an invalid profile.",
+            "resolution": "Verify the profile exists and that the current profile has permission to change to the requested profile on exec."
+        },
+        {
+            "function": "aa_stack_profile",
+            "message_template": "stack %s",
+            "reason": "Request to stack a profile on top of the current profile. Failure may indicate the profile doesn't exist or stacking isn't supported.",
+            "resolution": "Verify the profile exists and that AppArmor supports stacking on your kernel. Check kernel version and AppArmor policy."
+        },
+        {
+            "function": "aa_stack_onexec",
+            "message_template": "stack %s",
+            "reason": "Request to stack a profile on next exec. Failure may indicate the profile doesn't exist or stacking isn't supported.",
+            "resolution": "Verify the profile exists and that AppArmor supports stacking on your kernel. Check kernel version and AppArmor policy."
+        },
+        {
+            "function": "query_label",
+            "message_template": "allow 0x%8\\ndeny 0x%8\\naudit 0x%8\\nquiet 0x%8\\n",
+            "reason": "Response from kernel when querying permissions for a label. Contains the permission masks.",
+            "resolution": "Information only; used to determine if an operation would be allowed. No resolution needed."
+        },
+        {
+            "function": "aa_is_enabled",
+            "message_template": "apparmor=<mode>",
+            "reason": "Shows the current enforcement mode of AppArmor (enforce/complain). Found in kernel messages.",
+            "resolution": "Information only. Change enforcement mode if needed using aa-enforce or aa-complain tools."
+        }
+    ]
+}

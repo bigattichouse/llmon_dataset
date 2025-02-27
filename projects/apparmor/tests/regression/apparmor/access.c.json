@@ -1,0 +1,31 @@
+{
+    "project": "apparmor",
+    "module": "../working/apparmor/tests/regression/apparmor/access.c",
+    "summary": "This module is a test utility for checking file access permissions. It takes a path and a permission mode string (containing r/w/x characters) and tests whether the process can access the path with those permissions.",
+    "logs": [
+        {
+            "function": "main",
+            "message_template": "usage: %s path mode\n",
+            "reason": "Logs an error when the program is called with incorrect number of arguments. This happens when the user doesn't provide exactly two arguments.",
+            "resolution": "Ensure the program is called with the correct syntax: provide a path and a mode string (containing r, w, or x characters)."
+        },
+        {
+            "function": "main",
+            "message_template": "Invalid perm '%c'\n",
+            "reason": "Logs an error when an invalid permission character is provided in the mode string. Only 'r', 'w', and 'x' are valid characters.",
+            "resolution": "Modify the mode string to only include valid permission characters: r (read), w (write), and x (execute)."
+        },
+        {
+            "function": "main",
+            "message_template": "FAIL: access %s %s failed - %s\n",
+            "reason": "Logs a failure when the access() system call returns an error, indicating the process doesn't have the requested permissions on the path. The message includes the error explanation from strerror().",
+            "resolution": "Check if the file exists and if the current user has the requested permissions. You may need to change file permissions or run the program with different privileges."
+        },
+        {
+            "function": "main",
+            "message_template": "PASS\n",
+            "reason": "Logs a success message when the access() check succeeds, confirming the process has the requested permissions on the path.",
+            "resolution": "Informational log, no resolution required."
+        }
+    ]
+}

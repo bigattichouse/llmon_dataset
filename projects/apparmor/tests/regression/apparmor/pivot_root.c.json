@@ -1,0 +1,61 @@
+{
+    "project": "apparmor",
+    "module": "tests/regression/apparmor/pivot_root.c",
+    "summary": "This module is a test program for AppArmor that verifies if the AppArmor label is properly maintained after a pivot_root operation in a new mount namespace. It clones itself, executes pivot_root in the child process, and then compares the resulting AppArmor context with an expected label.",
+    "logs": [
+        {
+            "function": "pivot_and_verify_label",
+            "message_template": "FAIL - chdir",
+            "reason": "Logs an error when changing to the new root directory fails. This typically happens if the specified directory doesn't exist or the process doesn't have permission to access it.",
+            "resolution": "Verify that the new root directory path exists and is accessible by the user running the test. Check file permissions and ownership of the directory path."
+        },
+        {
+            "function": "pivot_and_verify_label",
+            "message_template": "FAIL - pivot_root",
+            "reason": "Logs an error when the pivot_root syscall fails. This can happen if the mount points aren't properly set up or if the process doesn't have the right capabilities.",
+            "resolution": "Ensure both the new_root and put_old paths are valid mount points. Check that the process has CAP_SYS_ADMIN capability and is running with sufficient privileges."
+        },
+        {
+            "function": "pivot_and_verify_label",
+            "message_template": "FAIL - aa_getcon",
+            "reason": "Logs an error when retrieving the AppArmor context fails. This typically occurs if AppArmor is not running or properly configured.",
+            "resolution": "Verify that AppArmor is properly installed and running on the system. Check that the kernel supports AppArmor and that it's enabled in the kernel configuration."
+        },
+        {
+            "function": "pivot_and_verify_label",
+            "message_template": "FAIL - expected_label (%s) != label (%s)",
+            "reason": "Logs an error when the actual AppArmor label doesn't match the expected label after pivot_root. This indicates that the AppArmor profile transition didn't work as expected.",
+            "resolution": "Review the AppArmor policy rules for the process and ensure they allow the expected transition during pivot_root. Check for any policy errors in the AppArmor logs."
+        },
+        {
+            "function": "main",
+            "message_template": "FAIL - usage: %s <PUT_OLD> <NEW_ROOT> <LABEL>\n\n  <PUT_OLD>\t\tThe put_old param of pivot_root()\n  <NEW_ROOT>\t\tThe new_root param of pivot_root()\n  <LABEL>\t\tThe expected AA label after pivoting\n\nThis program clones itself in a new mount namespace, \ndoes a pivot and then calls aa_getcon(). The test fails \nif <LABEL> does not match the label returned by \naa_getcon().",
+            "reason": "Displays usage information when the program is invoked with incorrect command-line arguments. This helps users understand how to properly use the test program.",
+            "resolution": "Provide the required three command-line arguments: the directory for put_old, the new root directory, and the expected AppArmor label after pivoting."
+        },
+        {
+            "function": "main",
+            "message_template": "FAIL - clone",
+            "reason": "Logs an error when the clone system call fails. This can happen if the system doesn't support the specified clone flags or if system resources are exhausted.",
+            "resolution": "Verify that the kernel supports namespaces (CLONE_NEWNS). Check system resource limits and for any related errors in dmesg or system logs."
+        },
+        {
+            "function": "main",
+            "message_template": "FAIL - waitpid",
+            "reason": "Logs an error when waiting for the child process fails. This can happen if the child process is already being traced or if there are issues with process management.",
+            "resolution": "Check if any other processes might be interfering with the child process. Verify system stability and look for related errors in system logs."
+        },
+        {
+            "function": "main",
+            "message_template": "FAIL - child didn't exit",
+            "reason": "Logs an error when the child process terminated abnormally (not via exit). This could indicate a crash or a signal termination.",
+            "resolution": "Check for segmentation faults or other crash indicators in the system logs. Examine if the child process might be receiving signals from elsewhere in the system."
+        },
+        {
+            "function": "main",
+            "message_template": "PASS",
+            "reason": "Indicates successful completion of the test, meaning the AppArmor label was properly maintained after pivot_root operation.",
+            "resolution": "Informational log, no resolution required."
+        }
+    ]
+}

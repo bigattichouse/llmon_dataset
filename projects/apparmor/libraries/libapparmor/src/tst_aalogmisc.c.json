@@ -1,0 +1,49 @@
+{
+    "project": "apparmor",
+    "module": "../working/apparmor/libraries/libapparmor/src/tst_aalogmisc.c",
+    "summary": "This is a test module for the AppArmor library that verifies the functionality of utility functions used in log parsing, specifically hex_to_string() which converts hexadecimal to regular strings and ipproto_to_string() which converts IP protocol numbers to their string representations.",
+    "logs": [
+        {
+            "function": "main",
+            "message_template": "basic NULL test",
+            "reason": "Reports the test result when checking if hex_to_string() properly handles NULL input by returning NULL.",
+            "resolution": "If this test fails, there may be an issue with NULL handling in the hex_to_string() function. Check the implementation to ensure proper NULL checks."
+        },
+        {
+            "function": "main",
+            "message_template": "basic allocation",
+            "reason": "Reports the test result when checking if hex_to_string() can properly allocate memory for a new string.",
+            "resolution": "If this test fails, there might be memory allocation issues in the hex_to_string() function. Check for proper memory management and allocation."
+        },
+        {
+            "function": "main",
+            "message_template": "basic dehex 1",
+            "reason": "Reports the test result when verifying if hex_to_string() correctly converts a complex hexadecimal string to its ASCII equivalent.",
+            "resolution": "If this test fails, the hex_to_string() function may have issues with complex string conversion. Verify the algorithm for hexadecimal to ASCII conversion."
+        },
+        {
+            "function": "main",
+            "message_template": "basic dehex 2",
+            "reason": "Reports the test result when verifying if hex_to_string() correctly converts a simple hexadecimal string (61) to its ASCII equivalent (a).",
+            "resolution": "If this test fails, the hex_to_string() function may have issues with basic character conversion. Check the implementation for handling simple hex values."
+        },
+        {
+            "function": "main",
+            "message_template": "empty string",
+            "reason": "Reports the test result when checking if hex_to_string() properly handles an empty string input.",
+            "resolution": "If this test fails, the hex_to_string() function may not handle empty strings correctly. Verify the edge case handling in the implementation."
+        },
+        {
+            "function": "main",
+            "message_template": "invalid protocol test",
+            "reason": "Reports the test result when checking if ipproto_to_string() properly handles invalid protocol numbers by returning 'unknown(protocol_number)'.",
+            "resolution": "If this test fails, the ipproto_to_string() function may not handle invalid protocol numbers properly. Check the implementation for handling out-of-range values."
+        },
+        {
+            "function": "main",
+            "message_template": "protocol=tcp",
+            "reason": "Reports the test result when verifying if ipproto_to_string() correctly converts protocol number 6 to 'tcp'.",
+            "resolution": "If this test fails, the ipproto_to_string() function may have issues with mapping known protocol numbers to their string names. Verify the protocol mapping implementation."
+        }
+    ]
+}

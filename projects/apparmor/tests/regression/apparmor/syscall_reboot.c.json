@@ -1,0 +1,25 @@
+{
+    "project": "apparmor",
+    "module": "../working/apparmor/tests/regression/apparmor/syscall_reboot.c",
+    "summary": "This module tests the reboot system call functionality with various commands (on, off, reboot). It verifies that the process can properly execute the reboot syscall with different parameters, which is important for validating AppArmor's confinement of system management capabilities.",
+    "logs": [
+        {
+            "function": "main",
+            "message_template": "Usage %s [on|off|reboot]",
+            "reason": "Displays a usage error when the program is invoked with incorrect arguments. This occurs when either no arguments are provided or an unrecognized argument is specified.",
+            "resolution": "Run the program with one of the valid arguments: 'on', 'off', or 'reboot'."
+        },
+        {
+            "function": "main",
+            "message_template": "FAIL: reboot failed - %s",
+            "reason": "Indicates that the reboot syscall failed with the error message provided by strerror(errno). This likely occurs due to insufficient permissions or AppArmor restrictions preventing the reboot operation.",
+            "resolution": "Ensure the program has sufficient privileges (typically root) to execute the reboot syscall. If running under AppArmor confinement, verify that the profile allows the reboot capability or modify the profile accordingly."
+        },
+        {
+            "function": "main",
+            "message_template": "PASS",
+            "reason": "Indicates successful execution of the reboot syscall with the specified command. This is output when the system call returns without error.",
+            "resolution": "Informational log, no resolution required. This indicates the test passed successfully."
+        }
+    ]
+}

@@ -1,0 +1,25 @@
+{
+    "project": "apparmor",
+    "module": "../working/apparmor/tests/regression/apparmor/changeprofile.c",
+    "summary": "This module tests the AppArmor profile changing functionality by attempting to change to a specified profile and then open a file. It verifies that the profile change correctly modifies access permissions for file operations.",
+    "logs": [
+        {
+            "function": "main",
+            "message_template": "usage: %s profile file\n",
+            "reason": "Logs an error message when the program is invoked with incorrect arguments. This helps users understand the correct usage pattern.",
+            "resolution": "Provide the correct command-line arguments: the program name, the profile to change to, and the file to open."
+        },
+        {
+            "function": "main",
+            "message_template": "FAIL: changeprofile %s failed - %s\n",
+            "reason": "Logs a failure message when attempting to change the AppArmor profile fails. The message includes the profile name and the specific error message from the system.",
+            "resolution": "Check that the specified profile exists, that the AppArmor service is running, and that the user has sufficient permissions to change profiles. The error message will provide specific details about the failure cause."
+        },
+        {
+            "function": "main",
+            "message_template": "PASS\n",
+            "reason": "Logs a success message when the test completes successfully, indicating that both the profile change and file opening operations worked as expected.",
+            "resolution": "Informational log, no resolution required."
+        }
+    ]
+}

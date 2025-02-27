@@ -1,0 +1,193 @@
+{
+    "project": "apparmor",
+    "module": "changehat/mod_apparmor/mod_apparmor.c",
+    "summary": "The mod_apparmor module integrates Apache with AppArmor security by implementing change_hat functionality. It allows Apache to switch between different security profiles (hats) based on the request URI, server name, or custom configuration, providing fine-grained security confinement for web applications.",
+    "logs": [
+        {
+            "function": "aa_init",
+            "message_template": "Failed to open /dev/urandom",
+            "reason": "Error when the module fails to open /dev/urandom to generate a random magic token for AppArmor hat changes. Likely occurs due to permission issues or if /dev/urandom is not available.",
+            "resolution": "Check file permissions on /dev/urandom and ensure the Apache process has read access. Verify that /dev/urandom exists on the system and is functioning correctly."
+        },
+        {
+            "function": "aa_init",
+            "message_template": "Opened /dev/urandom successfully",
+            "reason": "Information log indicating successful opening of /dev/urandom to generate the magic token used for changing hats.",
+            "resolution": "Information log, no resolution required."
+        },
+        {
+            "function": "aa_child_init",
+            "message_template": "init: calling change_hat with '%s'",
+            "reason": "Debug log showing the module is attempting to change to the default hat as each Apache child process starts up.",
+            "resolution": "Information log, no resolution required."
+        },
+        {
+            "function": "aa_child_init",
+            "message_template": "Failed to change_hat to '%s'",
+            "reason": "Error when the module fails to change to the default hat. This could be due to missing AppArmor profiles or incorrect hat names.",
+            "resolution": "Verify that AppArmor is properly set up and the Apache profile contains the specified hat. Check AppArmor logs for more details and ensure that the DEFAULT_HAT exists in the Apache profile."
+        },
+        {
+            "function": "debug_dump_uri",
+            "message_template": "Dumping uri info scheme='%s' host='%s' path='%s' query='%s' fragment='%s'",
+            "reason": "Debug log showing URI components being processed during a request, useful for troubleshooting hat selection logic.",
+            "resolution": "Information log, no resolution required."
+        },
+        {
+            "function": "debug_dump_uri",
+            "message_template": "Asked to dump NULL uri",
+            "reason": "Warning that the function was called with a NULL URI pointer, indicating a potential issue with request processing.",
+            "resolution": "This could indicate an issue with how Apache is processing the request. Check for errors in request handling earlier in the processing chain."
+        },
+        {
+            "function": "aa_enter_hat",
+            "message_template": "aa_enter_hat (%s) n:0x%lx p:0x%lx main:0x%lx",
+            "reason": "Debug log showing details about the current request when attempting to change hat, includes path and request pointer information.",
+            "resolution": "Information log, no resolution required."
+        },
+        {
+            "function": "aa_enter_hat",
+            "message_template": "[dcfg] adding hat '%s' to aa_change_hat vector",
+            "reason": "Debug log showing that a hat specified in a directory configuration is being added to the list of possible hats to try.",
+            "resolution": "Information log, no resolution required."
+        },
+        {
+            "function": "aa_enter_hat",
+            "message_template": "Dumping scfg info: scfg='0x%lx' scfg->hat_name='%s'",
+            "reason": "Debug log showing details about the server configuration when attempting to change hat.",
+            "resolution": "Information log, no resolution required."
+        },
+        {
+            "function": "aa_enter_hat",
+            "message_template": "scfg is null",
+            "reason": "Warning that the server configuration is null, which may lead to using default hat selection logic instead of configured hats.",
+            "resolution": "Check server configuration settings. This could indicate a problem with Apache's configuration processing."
+        },
+        {
+            "function": "aa_enter_hat",
+            "message_template": "[scfg] adding hat '%s' to aa_change_hat vector",
+            "reason": "Debug log showing that a hat specified in server configuration is being added to the list of possible hats to try.",
+            "resolution": "Information log, no resolution required."
+        },
+        {
+            "function": "aa_enter_hat",
+            "message_template": "[scfg] adding server_name '%s' to aa_change_hat vector",
+            "reason": "Debug log showing that the server name is being used as a potential hat name when no specific hat is configured.",
+            "resolution": "Information log, no resolution required."
+        },
+        {
+            "function": "aa_enter_hat",
+            "message_template": "[vhost+uri] adding vhost+uri '%s' to aa_change_hat vector",
+            "reason": "Debug log showing that a combination of virtual host name and request URI is being added as a potential hat.",
+            "resolution": "Information log, no resolution required."
+        },
+        {
+            "function": "aa_enter_hat",
+            "message_template": "[uri] adding uri '%s' to aa_change_hat vector",
+            "reason": "Debug log showing that the request URI is being added to the list of possible hats to try.",
+            "resolution": "Information log, no resolution required."
+        },
+        {
+            "function": "aa_enter_hat",
+            "message_template": "[default] adding '%s' to aa_change_hat vector",
+            "reason": "Debug log showing that the default URI hat is being added as a fallback option.",
+            "resolution": "Information log, no resolution required."
+        },
+        {
+            "function": "aa_enter_hat",
+            "message_template": "aa_change_hatv call failed",
+            "reason": "Warning that none of the specified AppArmor hats could be successfully changed to. This means the request will run with less specific confinement.",
+            "resolution": "Check that the AppArmor policy for Apache includes all the hat names being tried. Examine AppArmor logs for more details about why the hat changes failed."
+        },
+        {
+            "function": "aa_enter_hat",
+            "message_template": "aa_getcon call failed",
+            "reason": "Warning that the module couldn't retrieve the current AppArmor context, making it unable to verify if the hat change was successful.",
+            "resolution": "Verify AppArmor is properly installed and functioning. Check kernel logs for AppArmor-related errors."
+        },
+        {
+            "function": "aa_enter_hat",
+            "message_template": "AA checks: aa_getcon result is '%s', mode '%s'",
+            "reason": "Debug log showing the current AppArmor context and mode after attempting to change hats.",
+            "resolution": "Information log, no resolution required."
+        },
+        {
+            "function": "aa_enter_hat",
+            "message_template": "AA checks: apache is in hat '%s', mode '%s'",
+            "reason": "Debug log showing which hat Apache is currently running in and the enforcement mode.",
+            "resolution": "Information log, no resolution required."
+        },
+        {
+            "function": "aa_enter_hat",
+            "message_template": "AAHatName '%s' applies, but does not appear to be a hat in the apache apparmor policy",
+            "reason": "Warning that a hat name specified in a directory configuration exists but couldn't be changed to, likely because it doesn't exist in the AppArmor policy.",
+            "resolution": "Add the specified hat to the Apache AppArmor profile or correct the hat name in the Apache configuration to match an existing hat."
+        },
+        {
+            "function": "aa_enter_hat",
+            "message_template": "AADefaultHatName '%s' applies, but does not appear to be a hat in the apache apparmor policy",
+            "reason": "Warning that a default hat name specified in server configuration exists but couldn't be changed to, likely because it doesn't exist in the AppArmor policy.",
+            "resolution": "Add the specified default hat to the Apache AppArmor profile or correct the hat name in the Apache configuration to match an existing hat."
+        },
+        {
+            "function": "aa_exit_hat",
+            "message_template": "exiting change_hat: dir hat %s dir path %s",
+            "reason": "Debug log showing details about the directory configuration when exiting a hat at the end of request processing.",
+            "resolution": "Information log, no resolution required."
+        },
+        {
+            "function": "aa_exit_hat",
+            "message_template": "Failed to change_hat to '%s'",
+            "reason": "Error when the module fails to change back to the default hat after processing a request. This may leave Apache in an unexpected security context.",
+            "resolution": "Verify that the DEFAULT_HAT exists in the Apache AppArmor profile and that AppArmor is functioning correctly. Check AppArmor logs for more details."
+        },
+        {
+            "function": "aa_cmd_ch_path",
+            "message_template": "directory config change hat %s",
+            "reason": "Debug log showing that a directory configuration is changing the hat name to use for requests matching that directory.",
+            "resolution": "Information log, no resolution required."
+        },
+        {
+            "function": "immunix_cmd_ch_path",
+            "message_template": "ImmHatName is deprecated, please use AAHatName instead",
+            "reason": "Notice that a deprecated configuration directive is being used in the Apache configuration.",
+            "resolution": "Update your Apache configuration to use 'AAHatName' instead of the deprecated 'ImmHatName' directive."
+        },
+        {
+            "function": "aa_cmd_ch_srv",
+            "message_template": "server config change hat %s",
+            "reason": "Debug log showing that a server-wide configuration is changing the default hat name.",
+            "resolution": "Information log, no resolution required."
+        },
+        {
+            "function": "immunix_cmd_ch_srv",
+            "message_template": "ImmDefaultHatName is deprecated, please use AADefaultHatName instead",
+            "reason": "Notice that a deprecated configuration directive is being used in the Apache configuration.",
+            "resolution": "Update your Apache configuration to use 'AADefaultHatName' instead of the deprecated 'ImmDefaultHatName' directive."
+        },
+        {
+            "function": "aa_create_dir_config",
+            "message_template": "aa_create_dir_cfg (%s)",
+            "reason": "Debug log showing the creation of a directory configuration object with the specified path.",
+            "resolution": "Information log, no resolution required."
+        },
+        {
+            "function": "aa_create_dir_config",
+            "message_template": "aa_create_dir_config: couldn't alloc dir config",
+            "reason": "Error when the module fails to allocate memory for a directory configuration structure, likely due to memory constraints.",
+            "resolution": "Check system memory usage and consider increasing available memory for Apache. This error indicates serious resource constraints on the server."
+        },
+        {
+            "function": "aa_create_srv_config",
+            "message_template": "in aa_create_srv_config",
+            "reason": "Debug log indicating that the server configuration creation function is being called.",
+            "resolution": "Information log, no resolution required."
+        },
+        {
+            "function": "aa_create_srv_config",
+            "message_template": "aa_create_srv_config: couldn't alloc srv config",
+            "reason": "Error when the module fails to allocate memory for a server configuration structure, likely due to memory constraints.",
+            "resolution": "Check system memory usage and consider increasing available memory for Apache. This error indicates serious resource constraints on the server."
+        }
+    ]
+}

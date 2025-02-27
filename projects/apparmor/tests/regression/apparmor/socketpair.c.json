@@ -1,0 +1,67 @@
+{
+    "project": "apparmor",
+    "module": "../working/apparmor/tests/regression/apparmor/socketpair.c",
+    "summary": "This is a regression test program for AppArmor that verifies socket pair confinement contexts. It checks that socket file descriptors have the expected confinement labels and modes, and can optionally re-execute itself with a changed AppArmor profile to test preservation of socket pair labeling across profile transitions.",
+    "logs": [
+        {
+            "function": "get_socketpair",
+            "message_template": "FAIL - socketpair",
+            "reason": "Logs an error when the socketpair system call fails to create a socket pair. Likely due to resource limitations or system configuration issues.",
+            "resolution": "Check system resource limits, file descriptor limits, and kernel configuration related to Unix domain sockets."
+        },
+        {
+            "function": "verify_confinement_context",
+            "message_template": "FAIL - %s: aa_getpeercon(%d, , ): %m",
+            "reason": "Logs an error when AppArmor fails to retrieve the peer's confinement context for a socket. Likely due to AppArmor not being enabled or misconfigured.",
+            "resolution": "Ensure AppArmor is properly installed, enabled in the kernel, and the required modules are loaded. Check if the current user has sufficient permissions."
+        },
+        {
+            "function": "verify_confinement_context",
+            "message_template": "FAIL - %s: label \"%s\" != expected_label \"%s\"\n",
+            "reason": "Logs an error when the retrieved AppArmor label doesn't match the expected label. This indicates a policy application problem or a test expectation mismatch.",
+            "resolution": "Verify that the expected AppArmor profile is loaded and applied correctly. Review the AppArmor policy configuration for the test environment."
+        },
+        {
+            "function": "verify_confinement_context",
+            "message_template": "FAIL - %s: mode \"%s\" != expected_mode \"%s\"\n",
+            "reason": "Logs an error when the retrieved AppArmor mode doesn't match the expected mode. This indicates a policy enforcement mode issue (complain vs enforce vs audit).",
+            "resolution": "Check the enforcement mode of the AppArmor profile and ensure it matches expectations. Use aa-status or aa-enforce/aa-complain tools to adjust if necessary."
+        },
+        {
+            "function": "verify_confinement_context",
+            "message_template": "FAIL - %s: rc (%d) != expected_rc (%d)\n",
+            "reason": "Logs an error when the return code from aa_getpeercon doesn't match the expected code. This suggests a behavior change in the AppArmor library API.",
+            "resolution": "Investigate changes in the AppArmor API or library version that may have altered the behavior of aa_getpeercon. Update test expectations if the API changed legitimately."
+        },
+        {
+            "function": "reexec",
+            "message_template": "FAIL - aa_change_onexec",
+            "reason": "Logs an error when AppArmor fails to change the profile for the next exec operation. Likely due to insufficient permissions or invalid profile name.",
+            "resolution": "Verify that the specified profile exists, the current user has permission to change profiles, and AppArmor is correctly configured for profile transitions."
+        },
+        {
+            "function": "reexec",
+            "message_template": "FAIL - setenv",
+            "reason": "Logs an error when unable to set environment variables to pass socket file descriptors to the child process. Likely due to memory constraints.",
+            "resolution": "Check system memory resources and ensure there is enough memory available for environment variables. Review the environment size limits if they are restricted."
+        },
+        {
+            "function": "reexec",
+            "message_template": "FAIL - execv",
+            "reason": "Logs an error when the execv system call fails to replace the current process image. Likely due to missing executable, permissions, or resource limits.",
+            "resolution": "Verify the executable path is correct, has proper permissions, and that resource limits allow execution. Check for any file system issues that might prevent execution."
+        },
+        {
+            "function": "main",
+            "message_template": "FAIL - usage: %s <LABEL> <MODE> [<CHANGE_ONEXEC> ...]\n\n  <LABEL>\t\tThe expected confinement label\n  <MODE>\tThe expected confinement mode\n  <CHANGE_ONEXEC>\tThe profile to change to on exec\n\nThis program gets a socket pair and then verifies \nthe confinement label and mode of each file \ndescriptor. If there is no expected mode string, \n<MODE> should be \"%s\".\n\nMultiple <CHANGE_ONEXEC> profiles can be specified \nand the test will run normally for the first pair, \nthen call aa_change_onexec() to rexec itself under \nthe next <CHANGE_ONEXEC> and verify the passed in \nsocket pairs still have the correct labeling.\n",
+            "reason": "Displays usage information when the program is invoked with insufficient arguments. This is triggered when the user provides less than the required arguments for the test.",
+            "resolution": "Provide the correct arguments: the expected AppArmor label and mode, and optionally profiles to change to on exec. Use '(null)' as the MODE argument if no mode is expected."
+        },
+        {
+            "function": "main",
+            "message_template": "PASS\n",
+            "reason": "Indicates that the test has passed successfully. This means all socket pairs had the expected AppArmor confinement labels and modes.",
+            "resolution": "Informational log, no resolution required. This indicates successful test completion."
+        }
+    ]
+}

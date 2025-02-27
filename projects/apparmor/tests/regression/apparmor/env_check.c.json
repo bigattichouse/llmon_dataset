@@ -1,0 +1,25 @@
+{
+    "project": "apparmor",
+    "module": "../working/apparmor/tests/regression/apparmor/env_check.c",
+    "summary": "This module provides a utility for verifying if an environment variable exists with a specific value. It's used for testing environment variable handling in AppArmor regression tests.",
+    "logs": [
+        {
+            "function": "main",
+            "message_template": "Usage: %s VAR=value\n",
+            "reason": "Displays usage information when the program is called with incorrect or missing arguments. Likely occurs when a user runs the program without parameters or with malformed input.",
+            "resolution": "Run the program with the correct format: env_check VAR=value, where VAR is the environment variable name and value is the expected value."
+        },
+        {
+            "function": "main",
+            "message_template": "FAIL: environment variable not found\n",
+            "reason": "Indicates that the environment variable being checked doesn't exist in the current environment. This likely occurs during testing when an expected environment variable isn't properly set.",
+            "resolution": "Ensure the environment variable is set before running the program, for example with 'export VAR=value' in bash before executing the test."
+        },
+        {
+            "function": "main",
+            "message_template": "FAIL: environment variable differs: expected '%s', found '%s'\n",
+            "reason": "Indicates that the environment variable exists but has a different value than expected. This occurs during testing when the environment variable has an incorrect value.",
+            "resolution": "Verify that the environment variable has the correct value by using 'echo $VAR' and reset it if necessary using 'export VAR=value' before running the test again."
+        }
+    ]
+}

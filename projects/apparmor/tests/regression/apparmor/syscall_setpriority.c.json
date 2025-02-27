@@ -1,0 +1,19 @@
+{
+    "project": "apparmor",
+    "module": "../working/apparmor/tests/regression/apparmor/syscall_setpriority.c",
+    "summary": "This is a regression test module that verifies the functionality of the setpriority() system call under AppArmor confinement. It attempts to set the nice value of the current process and reports success or failure.",
+    "logs": [
+        {
+            "function": "main",
+            "message_template": "FAIL: setpriority failed",
+            "reason": "Logs a failure when the setpriority() system call returns an error. This could occur due to AppArmor denying the operation, insufficient permissions, or invalid arguments.",
+            "resolution": "Check the AppArmor profile for the process to ensure it has the necessary capabilities and permissions to modify process priority. For non-root users, verify they have permission to set negative nice values."
+        },
+        {
+            "function": "main",
+            "message_template": "PASS",
+            "reason": "Indicates successful execution of the setpriority() system call, meaning the process was able to change its priority.",
+            "resolution": "Informational message indicating the test passed; no resolution required."
+        }
+    ]
+}

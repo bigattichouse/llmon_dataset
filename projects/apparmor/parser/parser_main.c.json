@@ -1,0 +1,433 @@
+{
+    "project": "apparmor",
+    "module": "../working/apparmor/parser/parser_main.c",
+    "summary": "The main entry point for the AppArmor parser that processes and loads AppArmor profiles into the kernel. It handles command-line arguments, parses/compiles profiles, manages the policy cache, and detects kernel features for compatibility.",
+    "logs": [
+        {
+            "function": "getopt_long_file",
+            "message_template": "%s: unknown option (%s) in config file.\n",
+            "reason": "An unrecognized option was found in the AppArmor parser configuration file.",
+            "resolution": "Check the configuration file and correct the invalid option. Valid options can be found in the AppArmor parser documentation."
+        },
+        {
+            "function": "getopt_long_file",
+            "message_template": "%s: internal error bad longopt value\n",
+            "reason": "An internal error occurred in the option parsing code with an invalid long option value.",
+            "resolution": "This is an internal error in the AppArmor code. Report this bug to the AppArmor developers with steps to reproduce."
+        },
+        {
+            "function": "process_jobs_arg",
+            "message_template": "%s: Invalid option %s=%s%s\n",
+            "reason": "An invalid value was provided for a job-related command line option.",
+            "resolution": "Provide a valid job count or specification. Acceptable values include 'auto', 'max', or a number."
+        },
+        {
+            "function": "process_arg",
+            "message_template": "%s: Invalid --debug option '%s'\n",
+            "reason": "An invalid value was provided for the --debug option.",
+            "resolution": "Use a valid debug option value such as 'jobs' or 'j', or omit the value entirely."
+        },
+        {
+            "function": "process_arg",
+            "message_template": "%s: Invalid --help option %s\n",
+            "reason": "An invalid value was provided for the --help option.",
+            "resolution": "Use a valid help option such as 'Dump', 'Optimize', 'warn', or 'Werror', or omit the value to show general help."
+        },
+        {
+            "function": "process_arg",
+            "message_template": "%s: Could not open file %s\n",
+            "reason": "Failed to open a specified output file for writing profile information.",
+            "resolution": "Check that the specified path exists and that you have permission to write to it."
+        },
+        {
+            "function": "process_arg",
+            "message_template": "%s: Invalid --Dump option %s\n",
+            "reason": "An invalid value was provided for the --Dump option.",
+            "resolution": "Use a valid dump option like 'variables' or 'expanded-variables'. Run with --help=Dump for a complete list."
+        },
+        {
+            "function": "process_arg",
+            "message_template": "%s: Invalid --Optimize option %s\n",
+            "reason": "An invalid value was provided for the --Optimize option.",
+            "resolution": "Use a valid optimization option. Run with --help=Optimize for a complete list of valid options."
+        },
+        {
+            "function": "process_arg",
+            "message_template": "Failed to parse features string: %m\n",
+            "reason": "The parser failed to parse the features string provided with -m option.",
+            "resolution": "Provide a correctly formatted features string. Check the AppArmor documentation for syntax requirements."
+        },
+        {
+            "function": "process_arg",
+            "message_template": "Failed to load features from '%s': %m\n",
+            "reason": "Could not load features from the specified features file provided with -M option.",
+            "resolution": "Verify that the features file exists, is readable, and contains valid features definitions."
+        },
+        {
+            "function": "process_arg",
+            "message_template": "Failed to load kernel features from '%s': %m\n",
+            "reason": "Could not load kernel features from the specified file with --kernel-features option.",
+            "resolution": "Verify that the kernel features file exists, is readable, and contains valid kernel features definitions."
+        },
+        {
+            "function": "process_arg",
+            "message_template": "Failed to load kernel features into the policy-features abi: %m\n",
+            "reason": "Failed to load kernel features into the policy features ABI when using <kernel> as the policy-features source.",
+            "resolution": "Verify that the kernel supports the required AppArmor features and that AppArmor is properly installed."
+        },
+        {
+            "function": "process_arg",
+            "message_template": "Failed to load policy-features from '%s': %m\n",
+            "reason": "Could not load policy features from the specified file with --policy-features option.",
+            "resolution": "Verify that the policy features file exists, is readable, and contains valid policy features definitions."
+        },
+        {
+            "function": "process_arg",
+            "message_template": "%s: Invalid --cacheloc option '%s' %m\n",
+            "reason": "An invalid cache location was specified with the --cacheloc option.",
+            "resolution": "Provide a valid directory path for the cache location. Ensure the path exists and is writable."
+        },
+        {
+            "function": "process_arg",
+            "message_template": "%s: Invalid --warn option %s\n",
+            "reason": "An invalid warning option was specified with the --warn option.",
+            "resolution": "Use a valid warning option. Run with --help=warn for a complete list of valid warning options."
+        },
+        {
+            "function": "process_arg",
+            "message_template": "%s: Invalid --Werror option %s\n",
+            "reason": "An invalid warning-as-error option was specified with the --Werror option.",
+            "resolution": "Use a valid warning option to convert to error. Run with --help=Werror for valid options."
+        },
+        {
+            "function": "do_print_cache_dir",
+            "message_template": "Unable to print the cache directory: %m\n",
+            "reason": "Failed to determine or print the path to the AppArmor cache directory.",
+            "resolution": "Verify that the AppArmor policy cache directory exists and that you have permission to access it."
+        },
+        {
+            "function": "process_binary",
+            "message_template": "Error: Could not load profile %s: %s\n",
+            "reason": "Failed to load a binary AppArmor profile into the kernel.",
+            "resolution": "Check that the profile is valid and that you have permission to load policies. Check the kernel log for more details."
+        },
+        {
+            "function": "process_binary",
+            "message_template": "Error: Could not replace profile %s: %s\n",
+            "reason": "Failed to replace an existing AppArmor profile in the kernel.",
+            "resolution": "Verify that the profile is valid and that you have permission to replace profiles. Check the kernel log for more details."
+        },
+        {
+            "function": "process_binary",
+            "message_template": "Error: Invalid load option specified: %d\n",
+            "reason": "An invalid load option was specified when loading a profile.",
+            "resolution": "This is an internal error with the load option. Valid options are add or replace."
+        },
+        {
+            "function": "process_binary",
+            "message_template": "Cached load succeeded for \"%s\".\n",
+            "reason": "Successfully loaded a cached AppArmor profile into the kernel.",
+            "resolution": "Information log, no resolution required. This indicates successful operation."
+        },
+        {
+            "function": "process_binary",
+            "message_template": "Cached reload succeeded for \"%s\".\n",
+            "reason": "Successfully reloaded a cached AppArmor profile into the kernel.",
+            "resolution": "Information log, no resolution required. This indicates successful operation."
+        },
+        {
+            "function": "reset_parser",
+            "message_template": "Resetting parser for profile %s\n",
+            "reason": "Debug message indicating the parser is being reset for a specific profile.",
+            "resolution": "Information log, no resolution required. This is a debug message for parser state."
+        },
+        {
+            "function": "process_profile",
+            "message_template": "Error: Could not read profile %s: %s.\n",
+            "reason": "Failed to read an AppArmor profile file for parsing.",
+            "resolution": "Verify that the profile file exists, is readable, and has correct permissions."
+        },
+        {
+            "function": "process_profile",
+            "message_template": "%s: cannot use or update cache, disable, or force-complain via stdin\n",
+            "reason": "Attempting to use cache-related features when reading a profile from standard input.",
+            "resolution": "These operations aren't supported when reading from stdin. Provide a file path instead."
+        },
+        {
+            "function": "process_profile",
+            "message_template": "Skipping profile in %s/disable: %s\n",
+            "reason": "A profile is being skipped because it's in the disable directory.",
+            "resolution": "Information log, no resolution required. Move the profile out of the disable directory if you want it to be loaded."
+        },
+        {
+            "function": "process_profile",
+            "message_template": "Warning: found %s in %s/force-complain, forcing complain mode\n",
+            "reason": "A profile is being forced into complain mode because it's in the force-complain directory.",
+            "resolution": "Information log, no resolution required. This is expected behavior for profiles in force-complain."
+        },
+        {
+            "function": "process_profile",
+            "message_template": "Could not get cachename for '%s'\n",
+            "reason": "Failed to generate a cache filename for a profile.",
+            "resolution": "Check that the cache directory exists and is writable. Ensure the profile name is valid."
+        },
+        {
+            "function": "process_profile",
+            "message_template": "Cache miss: %s\n",
+            "reason": "No cache entry was found for the specified profile.",
+            "resolution": "Information log, no resolution required. A new cache entry will be created if caching is enabled."
+        },
+        {
+            "function": "process_profile",
+            "message_template": "%s: Errors found in file. Aborting.\n",
+            "reason": "Errors were found while parsing an AppArmor profile.",
+            "resolution": "Check the profile syntax. Previous error messages should provide specifics about what's wrong."
+        },
+        {
+            "function": "process_profile",
+            "message_template": "----- Debugging built structures -----\n",
+            "reason": "Debug marker indicating that built structures are being dumped for debugging.",
+            "resolution": "Information log, no resolution required. This is a debug message."
+        },
+        {
+            "function": "process_profile",
+            "message_template": "Cache write disabled: Cannot create cache file name '%s': %m\n",
+            "reason": "Failed to create a cache filename, so cache writing is disabled.",
+            "resolution": "Check that the cache directory exists and is writable. Verify that the profile name is valid for caching."
+        },
+        {
+            "function": "process_profile",
+            "message_template": "Cache write disabled: Cannot create setup tmp cache file '%s': %m\n",
+            "reason": "Failed to create a temporary cache file, so cache writing is disabled.",
+            "resolution": "Check that the cache directory exists and is writable. Verify there's enough disk space."
+        },
+        {
+            "function": "process_profile",
+            "message_template": "Caching disabled for: '%s' due to force complain\n",
+            "reason": "Profile caching is disabled because the profile is in force-complain mode.",
+            "resolution": "Information log, no resolution required. Profiles in complain mode aren't cached."
+        },
+        {
+            "function": "process_profile",
+            "message_template": "Failed to create cache: %s\n",
+            "reason": "Failed to create a cache entry for a profile.",
+            "resolution": "Check that the cache directory exists and is writable. Verify there's enough disk space."
+        },
+        {
+            "function": "work_sync_one",
+            "message_template": "    JOBS SYNC ONE: result %d, jobs left %ld\n",
+            "reason": "Debug message showing the synchronization of one job completion.",
+            "resolution": "Information log, no resolution required. This is a debug message for parallel processing."
+        },
+        {
+            "function": "work_sync",
+            "message_template": "JOBS SYNC: jobs left %ld\n",
+            "reason": "Debug message showing the number of jobs left to complete.",
+            "resolution": "Information log, no resolution required. This is a debug message for parallel processing."
+        },
+        {
+            "function": "work_spawn",
+            "message_template": "    JOBS SPAWN: waiting (jobs %ld == max %ld) ...\n",
+            "reason": "Debug message indicating the system is waiting for a job to complete before spawning more.",
+            "resolution": "Information log, no resolution required. This is a debug message for parallel processing."
+        },
+        {
+            "function": "work_spawn",
+            "message_template": "    JOBS SPAWN: created %ld ...\n",
+            "reason": "Debug message showing a new job was created.",
+            "resolution": "Information log, no resolution required. This is a debug message for parallel processing."
+        },
+        {
+            "function": "work_spawn",
+            "message_template": "    JOBS SPAWN: failed error: %d) ...\n",
+            "reason": "Debug message showing a job creation failure.",
+            "resolution": "Check system resources like available memory and process limits. May indicate system under load."
+        },
+        {
+            "function": "setup_parallel_compile",
+            "message_template": "%s: Capping number of jobs to %ld * # of cpus == '%ld'",
+            "reason": "Warning that the requested number of jobs exceeds the maximum and is being capped.",
+            "resolution": "Information log, no resolution required. Consider setting a lower --jobs value."
+        },
+        {
+            "function": "setup_parallel_compile",
+            "message_template": "jobs: %ld\n",
+            "reason": "Debug message showing the number of parallel jobs to be used.",
+            "resolution": "Information log, no resolution required. This is a debug message."
+        },
+        {
+            "function": "get_memstat",
+            "message_template": "Failed to open /proc/meminfo",
+            "reason": "Failed to open the /proc/meminfo file to determine available memory.",
+            "resolution": "Verify that /proc is mounted and accessible. This might happen in restricted containers."
+        },
+        {
+            "function": "get_memstat",
+            "message_template": "Failed to parse mem value",
+            "reason": "Failed to parse memory values from /proc/meminfo.",
+            "resolution": "The /proc/meminfo format may be unexpected. This might happen on non-standard kernels."
+        },
+        {
+            "function": "auto_tune_parameters",
+            "message_template": "Unable to determine number of processors, default to 1",
+            "reason": "Failed to determine the number of available processors.",
+            "resolution": "Information log, no resolution required. This happens on systems where sysconf(_SC_NPROCESSORS_ONLN) fails."
+        },
+        {
+            "function": "auto_tune_parameters",
+            "message_template": "Auto tune: --jobs=0",
+            "reason": "Auto-tuning has determined that no parallel jobs should be used due to limited memory.",
+            "resolution": "Information log, no resolution required. Consider adding more memory if performance is a concern."
+        },
+        {
+            "function": "auto_tune_parameters",
+            "message_template": "Auto tune: --jobs=%ld",
+            "reason": "Auto-tuning has determined the optimal number of parallel jobs based on available memory.",
+            "resolution": "Information log, no resolution required."
+        },
+        {
+            "function": "auto_tune_parameters",
+            "message_template": "Unable to get meminfo, using defaults",
+            "reason": "Failed to get memory information for auto-tuning, so using default values.",
+            "resolution": "Information log, no resolution required. This happens when /proc/meminfo can't be read."
+        },
+        {
+            "function": "profile_dir_cb",
+            "message_template": "Out of memory",
+            "reason": "Memory allocation failed while processing a profile directory.",
+            "resolution": "The system is low on memory. Consider freeing memory, closing other applications, or adding more physical memory."
+        },
+        {
+            "function": "binary_dir_cb",
+            "message_template": "Out of memory",
+            "reason": "Memory allocation failed while processing a binary directory.",
+            "resolution": "The system is low on memory. Consider freeing memory, closing other applications, or adding more physical memory."
+        },
+        {
+            "function": "get_kernel_features",
+            "message_template": "Cache read/write disabled: interface file missing. (Kernel needs AppArmor 2.4 compatibility patch.)\n",
+            "reason": "Cannot access the AppArmor interface files because the kernel lacks AppArmor 2.4 compatibility.",
+            "resolution": "Upgrade to a kernel with AppArmor 2.4 support or apply the compatibility patch to your kernel."
+        },
+        {
+            "function": "main",
+            "message_template": "Kernel features abi not found",
+            "reason": "Failed to detect the AppArmor kernel features ABI.",
+            "resolution": "Verify that AppArmor is properly installed and supported by your kernel. The kernel may need AppArmor enabled."
+        },
+        {
+            "function": "main",
+            "message_template": "Failed to add kernel capabilities to known capabilities set",
+            "reason": "Failed to add kernel capabilities to the known capabilities set.",
+            "resolution": "This might indicate an issue with the AppArmor kernel module. Check if AppArmor is properly loaded in the kernel."
+        },
+        {
+            "function": "main",
+            "message_template": "Warning: unable to find a suitable fs in %s, is it mounted?\nUse --subdomainfs to override.\n",
+            "reason": "Cannot find the AppArmor filesystem at the expected location.",
+            "resolution": "Verify that AppArmor is loaded in the kernel. Mount the securityfs if needed or use --subdomainfs to specify the location."
+        },
+        {
+            "function": "main",
+            "message_template": "Failed to clear cache files (%s): %s\n",
+            "reason": "Failed to clear AppArmor policy cache files.",
+            "resolution": "Check that the cache directory exists and you have permission to delete files from it."
+        },
+        {
+            "function": "main",
+            "message_template": "The --create-cache-dir option is deprecated. Please use --write-cache.\n",
+            "reason": "Using a deprecated command-line option.",
+            "resolution": "Use --write-cache instead of --create-cache-dir in your scripts or commands."
+        },
+        {
+            "function": "main",
+            "message_template": "Failed setting up policy cache (%s): %s\n",
+            "reason": "Failed to set up the AppArmor policy cache.",
+            "resolution": "Verify that the cache directory exists and is writable. Check the specific error message for more details."
+        },
+        {
+            "function": "main",
+            "message_template": "Cache write disabled: Cannot create cache '%s': %m\n",
+            "reason": "Failed to create the cache, so cache writing is disabled.",
+            "resolution": "Check that the cache directory exists and is writable. Verify there's enough disk space."
+        },
+        {
+            "function": "main",
+            "message_template": "Cache read/write disabled: Policy cache is invalid: %m\n",
+            "reason": "The policy cache is invalid, so cache reading and writing are disabled.",
+            "resolution": "Try clearing the cache with --purge-cache. The cache format might be incompatible."
+        },
+        {
+            "function": "main",
+            "message_template": "Cache: added primary location '%s'\n",
+            "reason": "Successfully added a primary cache location.",
+            "resolution": "Information log, no resolution required. This indicates successful cache setup."
+        },
+        {
+            "function": "main",
+            "message_template": "Cache: failed to add read only location '%s', does not contain valid cache directory for the specified feature set\n",
+            "reason": "Failed to add a read-only cache location because it doesn't contain a valid cache directory.",
+            "resolution": "Verify that the specified cache location contains valid AppArmor cache files for the current features."
+        },
+        {
+            "function": "main",
+            "message_template": "Cache: added readonly location '%s'\n",
+            "reason": "Successfully added a read-only cache location.",
+            "resolution": "Information log, no resolution required. This indicates successful cache setup."
+        },
+        {
+            "function": "main",
+            "message_template": "strdup",
+            "reason": "Failed to duplicate a string (memory allocation failed).",
+            "resolution": "The system is low on memory. Consider freeing memory, closing other applications, or adding more physical memory."
+        },
+        {
+            "function": "main",
+            "message_template": "File %s not found, skipping...\n",
+            "reason": "A specified profile file does not exist and is being skipped.",
+            "resolution": "Verify that the profile file exists at the specified path."
+        },
+        {
+            "function": "main",
+            "message_template": "There was an error while loading profiles from %s\n",
+            "reason": "Encountered errors while loading profiles from a directory.",
+            "resolution": "Check the previous error messages for details about specific profile loading failures."
+        },
+        {
+            "function": "have_enough_privilege",
+            "message_template": "%s: Warning! You've set this program setuid root.\nAnybody who can run this program can update your AppArmor profiles.\n\n",
+            "reason": "Warning about the security implications of running the AppArmor parser with setuid root.",
+            "resolution": "Consider not setting the AppArmor parser setuid root unless necessary. Use sudo or other privilege management."
+        },
+        {
+            "function": "process_config_file",
+            "message_template": "config file '%s' not found\n",
+            "reason": "The specified AppArmor parser configuration file does not exist.",
+            "resolution": "If you need custom configuration, create the file. Otherwise, this is just informational."
+        },
+        {
+            "function": "display_version",
+            "message_template": "%s version \n%s\n",
+            "reason": "Displaying the AppArmor parser version information.",
+            "resolution": "Information log, no resolution required. This is displayed when running with --version."
+        },
+        {
+            "function": "process_arg",
+            "message_template": "%s: --estimated-compile-size invalid size '%s'",
+            "reason": "An invalid size was provided for the --estimated-compile-size option.",
+            "resolution": "Provide a valid size value with optional suffix (KB, MB, GB). This is an internal tuning parameter."
+        },
+        {
+            "function": "process_arg",
+            "message_template": "%s: Invalid --prompt-compat option '%s'\n",
+            "reason": "An invalid value was provided for the --prompt-compat option.",
+            "resolution": "Use a valid option: 'permsv2', 'permsv1', 'default', 'dev', 'ignore', or 'flag'."
+        },
+        {
+            "function": "process_arg",
+            "message_template": "Prompt compat mode: ",
+            "reason": "Displaying the current prompt compatibility mode.",
+            "resolution": "Information log, no resolution required. This is displayed when using --print-prompt-compat."
+        }
+    ]
+}

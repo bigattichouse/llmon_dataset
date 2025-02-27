@@ -1,0 +1,73 @@
+{
+    "project": "apparmor",
+    "module": "move_mount.c",
+    "summary": "This module tests mount operations using Linux syscalls, providing functionality to move mounts using either open_tree or fsmount methods. It serves as a regression test for AppArmor's ability to mediate these mount operations.",
+    "logs": [
+        {
+            "function": "do_open_tree_move_mount",
+            "message_template": "FAIL - open_tree",
+            "reason": "Logs when the open_tree syscall fails to open a mount point. This typically happens when the source path doesn't exist, isn't accessible, or the kernel doesn't support this syscall.",
+            "resolution": "Verify that the source path exists and is accessible. Ensure that the kernel supports the open_tree syscall. Check if AppArmor policy allows this operation."
+        },
+        {
+            "function": "do_open_tree_move_mount",
+            "message_template": "FAIL - move_mount",
+            "reason": "Logs when the move_mount syscall fails to relocate a mount from one location to another. This can happen due to permission issues or incorrect target path.",
+            "resolution": "Verify that the target path exists and is accessible. Check if AppArmor policy allows this operation. Ensure that the kernel supports the move_mount syscall."
+        },
+        {
+            "function": "do_fsmount_move_mount",
+            "message_template": "FAIL - fsopen",
+            "reason": "Logs when the fsopen syscall fails to open a filesystem by name. This occurs when the filesystem type is not supported or recognized by the kernel.",
+            "resolution": "Verify that the filesystem name is correct and the required filesystem module is loaded. Ensure that the kernel supports the fsopen syscall."
+        },
+        {
+            "function": "do_fsmount_move_mount",
+            "message_template": "FAIL - fsconfig source",
+            "reason": "Logs when the fsconfig syscall fails to set the source parameter. This can happen if the source path is invalid or inaccessible.",
+            "resolution": "Check that the source path exists and is accessible. Ensure that the kernel supports the fsconfig syscall with the FSCONFIG_SET_STRING operation."
+        },
+        {
+            "function": "do_fsmount_move_mount",
+            "message_template": "FAIL - fsconfig cmd create",
+            "reason": "Logs when the fsconfig syscall fails to create the filesystem configuration. This could be due to invalid parameters or lack of permissions.",
+            "resolution": "Verify that all filesystem parameters are correct. Check if AppArmor policy allows this operation. Ensure that the kernel supports the fsconfig syscall with the FSCONFIG_CMD_CREATE operation."
+        },
+        {
+            "function": "do_fsmount_move_mount",
+            "message_template": "FAIL - fsmount",
+            "reason": "Logs when the fsmount syscall fails to create a kernel mount representation. This may be due to invalid parameters or filesystem-specific errors.",
+            "resolution": "Verify that the filesystem was properly configured. Check if AppArmor policy allows this operation. Ensure that the kernel supports the fsmount syscall."
+        },
+        {
+            "function": "do_fsmount_move_mount",
+            "message_template": "FAIL - move_mount",
+            "reason": "Logs when the move_mount syscall fails to relocate a mount from the file descriptor to the target path. This can happen due to permission issues or incorrect target path.",
+            "resolution": "Verify that the target path exists and is accessible. Check if AppArmor policy allows this operation. Ensure that the kernel supports the move_mount syscall."
+        },
+        {
+            "function": "usage",
+            "message_template": "Usage: %s <fsmount|open_tree> <source> <target> <fs name>\n",
+            "reason": "Displays the correct usage format when the program is invoked incorrectly. This helps users understand the required command-line arguments.",
+            "resolution": "Follow the usage instructions by providing the required arguments in the correct order."
+        },
+        {
+            "function": "main",
+            "message_template": "Missing operation, or source or target mount point, or filesystem name\n",
+            "reason": "Logs when the command is invoked with insufficient arguments. The program requires at least 5 arguments.",
+            "resolution": "Provide all required arguments: the operation type (fsmount or open_tree), source path, target path, and filesystem name."
+        },
+        {
+            "function": "main",
+            "message_template": "Invalid operation %s\n",
+            "reason": "Logs when an unsupported operation type is specified. Only 'fsmount' and 'open_tree' are valid operations.",
+            "resolution": "Use only the supported operation types: 'fsmount' or 'open_tree'."
+        },
+        {
+            "function": "main",
+            "message_template": "PASS\n",
+            "reason": "Indicates that the mount operation completed successfully. This is an informational message.",
+            "resolution": "No resolution required. This is a success message indicating that the operation completed as expected."
+        }
+    ]
+}

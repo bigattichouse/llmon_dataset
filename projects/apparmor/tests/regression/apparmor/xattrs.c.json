@@ -1,0 +1,49 @@
+{
+    "project": "apparmor",
+    "module": "../working/apparmor/tests/regression/apparmor/xattrs.c",
+    "summary": "This module is a test utility for extended attributes (xattrs) operations on files. It tests reading, writing, and removing extended attributes and reports success or failure.",
+    "logs": [
+        {
+            "function": "main",
+            "message_template": "usage: %s file xattr-name_space {read,write,remove}\n",
+            "reason": "Error message displayed when the user provides an incorrect number of command-line arguments. The program requires exactly three arguments.",
+            "resolution": "Make sure to provide the correct command-line arguments: file path, xattr namespace, and operation type (read, write, or remove)."
+        },
+        {
+            "function": "main",
+            "message_template": "arg%d: %s\n",
+            "reason": "Displays the provided command-line arguments when the user provides an incorrect number of arguments, to help debug the issue.",
+            "resolution": "Review the displayed arguments and correct them according to the usage instructions."
+        },
+        {
+            "function": "main",
+            "message_template": "FAIL: get of %s on %s. %s\n",
+            "reason": "Error message when reading an extended attribute fails. The message includes the attribute name, file path, and the system error message.",
+            "resolution": "Check if the file exists, if the extended attribute exists on the file, and if the user has permissions to read extended attributes. The specific error message will provide more details about the cause."
+        },
+        {
+            "function": "main",
+            "message_template": "FAIL: set of %s on %s. %s\n",
+            "reason": "Error message when setting an extended attribute fails. The message includes the attribute name, file path, and the system error message.",
+            "resolution": "Check if the file exists, if the user has permissions to modify the file, and if the filesystem supports extended attributes. The specific error message will provide more details about the cause."
+        },
+        {
+            "function": "main",
+            "message_template": "FAIL: remove of %s on %s. %s\n",
+            "reason": "Error message when removing an extended attribute fails. The message includes the attribute name, file path, and the system error message.",
+            "resolution": "Check if the file exists, if the extended attribute exists on the file, and if the user has permissions to modify the file. The specific error message will provide more details about the cause."
+        },
+        {
+            "function": "main",
+            "message_template": "usage: %s invalid option %s is not one of {read, write, remove}\n",
+            "reason": "Error message displayed when the user provides an operation that is not one of the supported operations (read, write, remove).",
+            "resolution": "Use one of the supported operations: 'read', 'write', or 'remove' as the third command-line argument."
+        },
+        {
+            "function": "main",
+            "message_template": "PASS\n",
+            "reason": "Success message displayed when the requested extended attribute operation completes successfully.",
+            "resolution": "Informational message, no resolution required."
+        }
+    ]
+}

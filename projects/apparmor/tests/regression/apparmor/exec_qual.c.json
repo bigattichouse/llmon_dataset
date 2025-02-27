@@ -1,0 +1,19 @@
+{
+    "project": "apparmor",
+    "module": "../working/apparmor/tests/regression/apparmor/exec_qual.c",
+    "summary": "This module is a test utility for AppArmor's regression tests, attempting to execute another program specified by command-line arguments. It reports failure details when the execution fails.",
+    "logs": [
+        {
+            "function": "main",
+            "message_template": "usage: %s program [args] \n",
+            "reason": "Indicates that the program was called without sufficient command-line arguments (at least one program name is required)",
+            "resolution": "Provide the required command-line arguments. The correct usage is to specify a program name followed by any arguments for that program."
+        },
+        {
+            "function": "main",
+            "message_template": "FAILED: exec failed %s\n",
+            "reason": "The execve() system call failed to execute the specified program. The error message contains the system error description from errno.",
+            "resolution": "Check that the specified program exists, has execute permissions, and is a valid executable. Common failures include 'No such file or directory', 'Permission denied', or 'Exec format error'."
+        }
+    ]
+}

@@ -1,0 +1,25 @@
+{
+    "project": "apparmor",
+    "module": "../working/apparmor/tests/regression/apparmor/symlink.c",
+    "summary": "This module is a test utility for AppArmor's symlink functionality. It creates a symbolic link from a source file to a destination file and reports success or failure, used in regression testing of AppArmor's symlink access controls.",
+    "logs": [
+        {
+            "function": "main",
+            "message_template": "usage: %s dstfile srcfile\n",
+            "reason": "Logs an error message when the program is invoked with an incorrect number of arguments (not exactly 3).",
+            "resolution": "Ensure the program is called with exactly two arguments: the destination file and the source file."
+        },
+        {
+            "function": "main",
+            "message_template": "PASS\n",
+            "reason": "Logs a success message when the symlink is created successfully.",
+            "resolution": "Informational log, no resolution required."
+        },
+        {
+            "function": "main",
+            "message_template": "FAIL - %s\n",
+            "reason": "Logs a failure message when the symlink creation fails, including the specific error message from errno.",
+            "resolution": "Check the error message details to determine why the symlink creation failed. Common issues include insufficient permissions, the target file already exists, or the source path is invalid."
+        }
+    ]
+}

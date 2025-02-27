@@ -1,0 +1,109 @@
+{
+    "project": "apparmor",
+    "module": "../working/apparmor/tests/regression/apparmor/tcp.c",
+    "summary": "This module tests TCP socket functionality for AppArmor by implementing a simple client-server communication test. It creates a server socket, forks a client process, exchanges random data read from /dev/urandom, and verifies data integrity in both directions.",
+    "logs": [
+        {
+            "function": "server_bind_address",
+            "message_template": "FAIL: Server: can't open stream socket",
+            "reason": "The server process failed to create a network socket using the socket() call. This typically happens due to insufficient permissions or resource limitations.",
+            "resolution": "Check if the application has appropriate network permissions in the AppArmor profile. Ensure system has not reached maximum socket limit."
+        },
+        {
+            "function": "server_bind_address",
+            "message_template": "FAIL: Server: can't bind socket",
+            "reason": "The server failed to bind to the specified address and port. This could be due to the port already being in use or insufficient permissions.",
+            "resolution": "Verify no other process is using the specified port. Check network namespace permissions in the AppArmor profile. Try running with elevated privileges."
+        },
+        {
+            "function": "do_server",
+            "message_template": "FAIL: Server: select failed",
+            "reason": "The server's select() call for monitoring the socket for incoming connections failed. This can occur due to invalid file descriptors or signal interruption.",
+            "resolution": "Ensure file descriptors are valid. Check if signals are interrupting the test. Verify AppArmor profile allows select() operations."
+        },
+        {
+            "function": "do_server",
+            "message_template": "FAIL: Server: can't accept socket",
+            "reason": "The server failed to accept an incoming client connection. This could be due to network interruption or resource limitations.",
+            "resolution": "Check network connectivity. Ensure AppArmor profile allows accept() operations. Verify system resource limits allow more socket connections."
+        },
+        {
+            "function": "do_server",
+            "message_template": "FAIL: Server: read failed",
+            "reason": "The server failed to read data from the client connection. This could be due to a closed connection or network error.",
+            "resolution": "Check if client closed connection prematurely. Verify AppArmor profile allows recv() operations. Examine network for errors or interruptions."
+        },
+        {
+            "function": "do_server",
+            "message_template": "FAIL: Server: memory comparison failed",
+            "reason": "The data received by the server doesn't match the expected data, indicating data corruption during transmission.",
+            "resolution": "Check for network issues causing data corruption. Ensure buffer sizes match on both sides. Verify no middleware is modifying the data in transit."
+        },
+        {
+            "function": "do_server",
+            "message_template": "FAIL: Server: problem sending data",
+            "reason": "The server failed to send data back to the client. This could be due to a closed connection or network buffer limitations.",
+            "resolution": "Check if client connection was closed. Ensure AppArmor profile allows send() operations. Verify network throughput is sufficient."
+        },
+        {
+            "function": "do_client",
+            "message_template": "FAIL: Client: can't open stream socket",
+            "reason": "The client failed to create a network socket. This typically happens due to insufficient permissions or resource limitations.",
+            "resolution": "Check if the application has appropriate network permissions in the AppArmor profile. Ensure system has not reached maximum socket limit."
+        },
+        {
+            "function": "do_client",
+            "message_template": "FAIL: Client: can't connect to socket",
+            "reason": "The client failed to connect to the server. This could be due to the server not being ready, incorrect address, or network issues.",
+            "resolution": "Verify server is running and listening. Check if firewall is blocking the connection. Ensure AppArmor profile allows connect() operations."
+        },
+        {
+            "function": "do_client",
+            "message_template": "FAIL: Client: select failed",
+            "reason": "The client's select() call for monitoring the socket for writability or readability failed. This can occur due to invalid file descriptors or signal interruption.",
+            "resolution": "Ensure file descriptors are valid. Check if signals are interrupting the test. Verify AppArmor profile allows select() operations."
+        },
+        {
+            "function": "do_client",
+            "message_template": "FAIL: Client: problem sending data",
+            "reason": "The client failed to send data to the server. This could be due to a closed connection or network buffer limitations.",
+            "resolution": "Check if server connection was closed. Ensure AppArmor profile allows send() operations. Verify network throughput is sufficient."
+        },
+        {
+            "function": "do_client",
+            "message_template": "FAIL: Client: read failed",
+            "reason": "The client failed to read data back from the server. This could be due to a server error or network interruption.",
+            "resolution": "Check if server closed connection prematurely. Verify AppArmor profile allows recv() operations. Examine network for errors or interruptions."
+        },
+        {
+            "function": "do_client",
+            "message_template": "FAIL: Client: memory comparison failed",
+            "reason": "The data received by the client doesn't match what was originally sent, indicating data corruption during server processing or transmission.",
+            "resolution": "Check for network issues causing data corruption. Ensure buffer sizes match on both sides. Verify server did not modify the data before sending it back."
+        },
+        {
+            "function": "main",
+            "message_template": "FAIL: open()ing data source failed",
+            "reason": "The test failed to open /dev/urandom to read random data for testing. This is likely due to permission issues.",
+            "resolution": "Ensure AppArmor profile allows read access to /dev/urandom. Check file permissions on /dev/urandom. Verify the device file exists."
+        },
+        {
+            "function": "main",
+            "message_template": "FAIL: problem reading data source",
+            "reason": "The test failed to read sufficient random data from /dev/urandom. This could be due to an I/O error or interrupted read.",
+            "resolution": "Check system entropy pool. Ensure AppArmor profile allows read operations. Verify no system issues with random number generation."
+        },
+        {
+            "function": "main",
+            "message_template": "FAIL: fork() failed",
+            "reason": "The test failed to create a child process for the client. This is typically due to system resource limitations.",
+            "resolution": "Check system process limits. Ensure sufficient memory is available. Verify AppArmor profile allows process creation."
+        },
+        {
+            "function": "main",
+            "message_template": "PASS",
+            "reason": "The test completed successfully with both server and client processes functioning correctly and verifying data integrity.",
+            "resolution": "Informational log, no resolution required."
+        }
+    ]
+}

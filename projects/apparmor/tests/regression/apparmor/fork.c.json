@@ -1,0 +1,55 @@
+{
+    "project": "apparmor",
+    "module": "../working/apparmor/tests/regression/apparmor/fork.c",
+    "summary": "This module tests file access permissions for files before and after a fork operation, comparing if a child process has the same file access capabilities as its parent. It uses shared memory to communicate results between processes and reports any discrepancies in file access.",
+    "logs": [
+        {
+            "function": "main",
+            "message_template": "usage: %s program [args] \n",
+            "reason": "Displayed when the program is run without specifying at least one file to test. The user did not provide the required command-line arguments.",
+            "resolution": "Run the program with at least one file path as an argument."
+        },
+        {
+            "function": "main",
+            "message_template": "ERROR: a maximum of %d files is supported\n",
+            "reason": "The user attempted to test more files than the program's defined limit (MAX_FILES). This protects against buffer overflows.",
+            "resolution": "Reduce the number of files being tested to MAX_FILES (5) or fewer, or modify the MAX_FILES constant in the source code if more files need to be tested."
+        },
+        {
+            "function": "main",
+            "message_template": "FAIL: shmget failed %s\n",
+            "reason": "Failed to allocate shared memory for interprocess communication. This could be due to system resource limitations or permission issues.",
+            "resolution": "Check system shared memory limits using 'ipcs -l', ensure the user has sufficient permissions, or free up system resources if shared memory is exhausted."
+        },
+        {
+            "function": "main",
+            "message_template": "FAIL: shmat failed %s\n",
+            "reason": "Failed to attach to the allocated shared memory segment. This could be due to invalid memory addresses or permission issues.",
+            "resolution": "Check for system memory issues, verify that the shared memory segment exists, or check for permission problems that might prevent attachment."
+        },
+        {
+            "function": "main",
+            "message_template": "FAILED:",
+            "reason": "Indicates the test has failed because file access permissions differ between parent and child processes, suggesting AppArmor or other security mechanisms are affecting process inheritance.",
+            "resolution": "Examine the AppArmor profiles or other security policies that might be restricting file access differently for parent vs child processes."
+        },
+        {
+            "function": "main",
+            "message_template": " file%d(%d:%d)",
+            "reason": "Details which specific file failed the test and shows the access result codes for parent and child processes (1=access allowed, 0=access denied, -1=file not found).",
+            "resolution": "Check the permissions on the specific file(s) listed, and review AppArmor profiles that might be affecting the child process differently than the parent."
+        },
+        {
+            "function": "main",
+            "message_template": "PASS\n",
+            "reason": "Indicates that all tests passed successfully, meaning the child process has the same file access permissions as the parent process.",
+            "resolution": "Informational message, no resolution required."
+        },
+        {
+            "function": "main",
+            "message_template": "\n",
+            "reason": "Formatting newline printed after listing all failed files to complete the error output.",
+            "resolution": "Informational formatting, no resolution required."
+        }
+    ]
+}

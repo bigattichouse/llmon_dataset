@@ -1,0 +1,37 @@
+{
+    "project": "apparmor",
+    "module": "../working/apparmor/tests/regression/apparmor/fd_inheritor.c",
+    "summary": "This is a regression test utility for AppArmor that verifies file descriptor inheritance by reading content from a specified file descriptor and comparing it with expected content. It reports success or failure based on this comparison, providing specific error messages for different failure scenarios.",
+    "logs": [
+        {
+            "function": "main",
+            "message_template": "Usage: %s <fd#> <contents>\n",
+            "reason": "Displayed when the program is run with incorrect number of arguments, indicating proper usage to the user.",
+            "resolution": "Ensure the program is run with exactly two arguments: the file descriptor number and the expected contents."
+        },
+        {
+            "function": "main",
+            "message_template": "FAIL INHERITOR - lseek",
+            "reason": "Occurs when the lseek operation to position the file descriptor at the beginning fails, indicating a problem with the file descriptor.",
+            "resolution": "Verify that the file descriptor provided is valid and open for reading. Check if the descriptor might have been closed or if there are permission issues."
+        },
+        {
+            "function": "main",
+            "message_template": "FAIL INHERITOR - read",
+            "reason": "Occurs when reading from the file descriptor fails, suggesting issues with the file descriptor or underlying file.",
+            "resolution": "Ensure the file descriptor is valid and readable. Check for permissions, file existence, or potential I/O errors."
+        },
+        {
+            "function": "main",
+            "message_template": "FAIL INHERITOR - expected \"%s\" but read \"%s\"\n",
+            "reason": "Displayed when the content read from the file descriptor doesn't match what was expected, indicating a test failure.",
+            "resolution": "Investigate why the content differs. This could be due to modifications to the file, incorrect file descriptor inheritance, or issues with the test setup."
+        },
+        {
+            "function": "main",
+            "message_template": "PASS\n",
+            "reason": "Printed when the test successfully reads the expected content from the file descriptor, confirming proper file descriptor inheritance.",
+            "resolution": "Information log, no resolution required. Indicates successful test completion."
+        }
+    ]
+}

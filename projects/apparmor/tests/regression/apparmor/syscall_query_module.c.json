@@ -1,0 +1,31 @@
+{
+    "project": "apparmor",
+    "module": "../working/apparmor/tests/regression/apparmor/syscall_query_module.c",
+    "summary": "This module is a test program for the query_module syscall which retrieves information about kernel modules. It accepts an optional module name as input and tests whether query_module works properly, printing PASS or FAIL accordingly.",
+    "logs": [
+        {
+            "function": "main",
+            "message_template": "Usage: %s [module]\n",
+            "reason": "This message is printed when the program is invoked with more than one argument. It explains the correct usage of the program to the user.",
+            "resolution": "User should run the program with either no arguments or a single module name as argument."
+        },
+        {
+            "function": "main",
+            "message_template": "FAIL: query_module failed - %s\n",
+            "reason": "This message is printed when the query_module syscall fails when listing all modules. The error message from strerror(errno) is included to provide more details about the failure.",
+            "resolution": "Check if the query_module syscall is supported in your kernel. This syscall was deprecated in Linux 2.6, so if you're running a modern kernel, this test may fail by design. Check kernel permissions or if the correct modules are loaded."
+        },
+        {
+            "function": "main",
+            "message_template": "FAIL: query_module failed - %s\n",
+            "reason": "This message is printed when the query_module syscall fails when querying information about a specific module. The error message from strerror(errno) is included for debugging.",
+            "resolution": "Verify that the specified module exists and is loaded. Check kernel permissions and ensure that the query_module syscall is supported in your kernel version."
+        },
+        {
+            "function": "main",
+            "message_template": "PASS\n",
+            "reason": "This message indicates that the program executed successfully, meaning the query_module syscall worked without errors.",
+            "resolution": "This is an informational message indicating success, no resolution is required."
+        }
+    ]
+}

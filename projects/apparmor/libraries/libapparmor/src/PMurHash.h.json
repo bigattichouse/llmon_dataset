@@ -1,0 +1,13 @@
+{
+    "project": "apparmor",
+    "module": "../working/apparmor/libraries/libapparmor/src/PMurHash.h",
+    "summary": "A portable ANSI C implementation of MurmurHash3_x86_32 (Murmur3A) that provides type definitions and function prototypes for hash computation with support for progressive processing.",
+    "logs": [
+        {
+            "function": "preprocessor directive",
+            "message_template": "Unable to determine type name for unsigned 32-bit int",
+            "reason": "This error is triggered during compilation when the preprocessor cannot determine a suitable type to use for a 32-bit unsigned integer based on the available platform types and limits.",
+            "resolution": "This is a build-time error that indicates the code is being compiled on a platform with unusual integer size definitions. Modify the preprocessor conditions to include support for the target platform's integer types, or define MH_UINT32 manually for the specific platform."
+        }
+    ]
+}

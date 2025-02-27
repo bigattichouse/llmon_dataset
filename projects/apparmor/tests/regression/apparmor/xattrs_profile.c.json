@@ -1,0 +1,37 @@
+{
+    "project": "apparmor",
+    "module": "../working/apparmor/tests/regression/apparmor/xattrs_profile.c",
+    "summary": "This module tests whether a process is running under a specific AppArmor profile by comparing the current profile from /proc/self/attr/current with a provided profile name.",
+    "logs": [
+        {
+            "function": "main",
+            "message_template": "usage: %s apparmor-profile\n",
+            "reason": "This error message is displayed when the program is executed without exactly one command-line argument, which should be the expected AppArmor profile name.",
+            "resolution": "Run the program with the correct syntax, providing exactly one argument which is the expected AppArmor profile name."
+        },
+        {
+            "function": "main",
+            "message_template": "failed to open %s: %s",
+            "reason": "This error occurs when the program cannot open the file containing the current AppArmor profile (/proc/self/attr/current), likely due to permission issues or if AppArmor is not supported or enabled on the system.",
+            "resolution": "Ensure AppArmor is installed and enabled on the system. Check if the process has permissions to read /proc/self/attr/current. The program might need to be run with elevated privileges."
+        },
+        {
+            "function": "main",
+            "message_template": "failed to read %s: %s",
+            "reason": "This error happens when the program successfully opens the AppArmor profile file but fails to read its contents, which could be due to I/O errors or insufficient memory.",
+            "resolution": "Check system resources, particularly memory availability. If the issue persists, it might indicate a problem with the AppArmor subsystem itself."
+        },
+        {
+            "function": "main",
+            "message_template": "FAILED: run as profile %s, expected %s\n",
+            "reason": "This message is displayed when the test detects that the program is running under a different AppArmor profile than what was expected, indicating a test failure.",
+            "resolution": "Verify that the AppArmor profile configuration is correct and that the profile specified in the command-line argument is properly loaded. Use AppArmor tools like 'aa-status' to check the current profiles."
+        },
+        {
+            "function": "main",
+            "message_template": "PASS\n",
+            "reason": "This message indicates that the test has passed successfully, confirming that the program is running under the expected AppArmor profile.",
+            "resolution": "Informational message only, no resolution required. This confirms that the AppArmor configuration is working as expected."
+        }
+    ]
+}

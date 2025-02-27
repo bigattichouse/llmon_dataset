@@ -1,0 +1,13 @@
+{
+    "project": "apparmor",
+    "module": "../working/apparmor/parser/dbus.h",
+    "summary": "This module defines the dbus_rule class which implements AppArmor's D-Bus access control rules. It handles parsing, validation, and policy generation for D-Bus permissions in AppArmor profiles.",
+    "logs": [
+        {
+            "function": "valid_prefix",
+            "message_template": "owner prefix not allowed on dbus rules",
+            "reason": "This error occurs when trying to use the 'owner' prefix with D-Bus rules, which is not allowed according to AppArmor's policy. This likely happens when a user attempts to write an AppArmor profile with an owner-qualified D-Bus rule.",
+            "resolution": "Remove the 'owner' prefix from the D-Bus rule in your AppArmor profile. D-Bus rules do not support the owner qualifier, so you'll need to structure your policy differently."
+        }
+    ]
+}

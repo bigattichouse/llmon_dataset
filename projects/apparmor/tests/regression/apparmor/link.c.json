@@ -1,0 +1,25 @@
+{
+    "project": "apparmor",
+    "module": "../working/apparmor/tests/regression/apparmor/link.c",
+    "summary": "This is a simple test program that creates a hard link between two files. It takes a source file and a destination file as arguments and attempts to create a hard link using the link() function, reporting success or failure.",
+    "logs": [
+        {
+            "function": "main",
+            "message_template": "usage: %s srcfile dstfile\n",
+            "reason": "Informs the user about the correct usage when the program is called with incorrect number of arguments. This happens when fewer or more than 2 arguments are provided.",
+            "resolution": "Ensure the program is called with exactly two arguments: the source file path and the destination file path."
+        },
+        {
+            "function": "main",
+            "message_template": "PASS\n",
+            "reason": "Indicates that the hard link operation was successful. The program was able to create a link from the source file to the destination file.",
+            "resolution": "Informational message, no resolution required."
+        },
+        {
+            "function": "main",
+            "message_template": "FAIL - %s\n",
+            "reason": "Indicates that the hard link operation failed, with the specific error message provided by strerror(errno). This can happen due to various reasons like insufficient permissions, the source file not existing, or the destination already existing.",
+            "resolution": "Check the specific error message to determine the cause of failure. Common issues include: ensure the source file exists, verify you have appropriate permissions to create the link, and confirm the destination path doesn't already exist."
+        }
+    ]
+}

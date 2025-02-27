@@ -1,0 +1,37 @@
+{
+    "project": "apparmor",
+    "module": "../working/apparmor/tests/regression/apparmor/changehat_misc2.c",
+    "summary": "This test module validates the behavior of AppArmor's change_hat functionality, particularly focusing on failure scenarios in parent-child process execution. It checks what happens when change_hat fails and verifies the system's response to these failures.",
+    "logs": [
+        {
+            "function": "main",
+            "message_template": "usage: %s profile file\n",
+            "reason": "Displayed when the program is executed with incorrect number of arguments. The program requires exactly a profile name and a file path.",
+            "resolution": "Run the program with the correct number of arguments: a profile name and a file path."
+        },
+        {
+            "function": "main",
+            "message_template": "FAIL: fork failed - %s\n",
+            "reason": "Logs an error when the fork system call fails, indicating the program couldn't create a child process. This might occur due to system resource constraints.",
+            "resolution": "Check for system resource limits, high process count, or memory limitations. May require freeing up system resources or increasing system limits."
+        },
+        {
+            "function": "main",
+            "message_template": "FAIL: wait failed - %s\n",
+            "reason": "Logs an error when the wait system call fails, indicating the parent process couldn't properly wait for the child process to complete.",
+            "resolution": "Investigate if signal handling or process management is interfering with the wait call. May indicate system instability or resource issues."
+        },
+        {
+            "function": "main",
+            "message_template": "FAIL: changehat %s failed - %s\n",
+            "reason": "Logs an error when the change_hat function fails in the child process, indicating issues with AppArmor's ability to change security context.",
+            "resolution": "Verify AppArmor is properly installed and configured. Check that the specified hat exists in the profile and that AppArmor is properly loaded in the kernel."
+        },
+        {
+            "function": "main",
+            "message_template": "PASS\n",
+            "reason": "Indicates that the test has passed successfully, meaning the change_hat functionality worked as expected.",
+            "resolution": "Informational log, no resolution required."
+        }
+    ]
+}

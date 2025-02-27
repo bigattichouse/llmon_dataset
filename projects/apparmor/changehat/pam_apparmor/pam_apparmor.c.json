@@ -1,0 +1,85 @@
+{
+    "project": "apparmor",
+    "module": "../working/apparmor/changehat/pam_apparmor/pam_apparmor.c",
+    "summary": "The pam_apparmor module provides PAM integration with AppArmor security by changing to different AppArmor 'hats' when a user logs in. The module attempts to use the user's group name, username, or a default profile, and it handles various error conditions that can occur during this process.",
+    "logs": [
+        {
+            "function": "pam_sm_open_session",
+            "message_template": "Can't determine user\n",
+            "reason": "Logged when the PAM module fails to retrieve the username of the user attempting to authenticate. This likely occurs due to a misconfiguration in the PAM stack or an issue with the user database.",
+            "resolution": "Check the PAM configuration and verify that the user exists in the system database. Ensure there are no permission issues with accessing user information."
+        },
+        {
+            "function": "pam_sm_open_session",
+            "message_template": "Can't determine group for user %s\n",
+            "reason": "Logged when the PAM module cannot retrieve the password entry for the specified user. This may happen if the user exists but has incomplete information in the password database.",
+            "resolution": "Verify that the user has a valid entry in /etc/passwd and that the NSS system is working correctly. Check if there are any issues with directory services if being used."
+        },
+        {
+            "function": "pam_sm_open_session",
+            "message_template": "Can't read info for group %d\n",
+            "reason": "Logged when the PAM module cannot retrieve information about the primary group ID of the user. This can happen due to corruption in the group database or permission issues.",
+            "resolution": "Check the integrity of /etc/group file or LDAP/other group information source. Ensure the services for user/group information are running properly."
+        },
+        {
+            "function": "pam_sm_open_session",
+            "message_template": "Can't open /dev/urandom\n",
+            "reason": "Logged when the module fails to open /dev/urandom, which is needed to generate a random magic token for the AppArmor hat change operation. This could happen due to permission issues or if the device is missing.",
+            "resolution": "Verify that /dev/urandom exists and has proper permissions. Check if there are any issues with the device nodes in the /dev directory. This may require system reconfiguration."
+        },
+        {
+            "function": "pam_sm_open_session",
+            "message_template": "Can't read from /dev/urandom\n",
+            "reason": "Logged when the module fails to read random data from /dev/urandom. This could indicate a system resource issue or a problem with the random number generator.",
+            "resolution": "Check system entropy levels and ensure that the random number generator is functioning. Look for any system-wide I/O issues that might be preventing reads from device files."
+        },
+        {
+            "function": "pam_sm_open_session",
+            "message_template": "Using groupname '%s'\n",
+            "reason": "Logged when in debug mode to indicate that the module is attempting to change to a hat named after the user's primary group. This is informational.",
+            "resolution": "This is a debug information log, no resolution required unless unexpected behavior is observed when changing hats."
+        },
+        {
+            "function": "pam_sm_open_session",
+            "message_template": "Using username '%s'\n",
+            "reason": "Logged when in debug mode to indicate that the module is attempting to change to a hat named after the username. This is informational.",
+            "resolution": "This is a debug information log, no resolution required unless unexpected behavior is observed when changing hats."
+        },
+        {
+            "function": "pam_sm_open_session",
+            "message_template": "Using DEFAULT\n",
+            "reason": "Logged when in debug mode to indicate that the module is attempting to change to the DEFAULT hat. This happens when configured to try the DEFAULT hat or when other hat types have failed.",
+            "resolution": "This is a debug information log, no resolution required. If only DEFAULT is being used when not expected, check the AppArmor profile configuration."
+        },
+        {
+            "function": "pam_sm_open_session",
+            "message_template": "Unknown value in hat table: %x\n",
+            "reason": "Logged when an invalid hat type value is encountered in the configuration. This indicates a programming error or memory corruption.",
+            "resolution": "This suggests a code or configuration corruption issue. Verify the integrity of the PAM module and configuration. If persistent, file a bug report with the AppArmor developers."
+        },
+        {
+            "function": "pam_sm_open_session",
+            "message_template": "Successfully changed to hat '%s'\n",
+            "reason": "Logged when in debug mode to indicate that the module successfully changed to the specified AppArmor hat. This is informational and indicates proper functioning.",
+            "resolution": "This is a debug information log indicating success, no resolution required."
+        },
+        {
+            "function": "pam_sm_open_session",
+            "message_template": "AppArmor not loaded, or application is unconfined\n",
+            "reason": "Logged when in debug mode to indicate that either AppArmor is not loaded in the kernel or the application is running unconfined (without an AppArmor profile).",
+            "resolution": "If AppArmor confinement is desired, ensure that AppArmor is enabled in the kernel and that appropriate profiles are loaded. Use 'aa-status' to check the current status."
+        },
+        {
+            "function": "pam_sm_open_session",
+            "message_template": "Unknown error occurred changing to %s hat: %s\n",
+            "reason": "Logged when an unexpected error occurs during the change_hat operation. The error message from the system is included to provide more detail about the failure.",
+            "resolution": "Investigate the specific error message that accompanies this log entry. It might indicate issues with the AppArmor profiles, permissions, or configuration that need to be addressed."
+        },
+        {
+            "function": "pam_sm_open_session",
+            "message_template": "Can't change to any hat\n",
+            "reason": "Logged when all attempts to change to a hat have failed. This indicates that none of the configured hat types (groupname, username, DEFAULT) could be successfully used.",
+            "resolution": "Verify that the AppArmor profiles for the application include the necessary hat definitions. Check if the application has appropriate permissions to change to the specified hats. Consider enabling debug mode for more detailed logging."
+        }
+    ]
+}

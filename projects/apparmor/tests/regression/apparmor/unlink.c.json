@@ -1,0 +1,25 @@
+{
+    "project": "apparmor",
+    "module": "../working/apparmor/tests/regression/apparmor/unlink.c",
+    "summary": "This is a regression test module that tests the unlink system call functionality in the context of AppArmor. It attempts to delete a specified file and reports the success or failure of the operation.",
+    "logs": [
+        {
+            "function": "main",
+            "message_template": "usage: %s file \n",
+            "reason": "Indicates that the program was called with incorrect arguments. The program requires exactly one argument specifying the file to unlink.",
+            "resolution": "Invoke the program with a single argument that is the path to the file to be deleted (e.g., './unlink /path/to/file')."
+        },
+        {
+            "function": "main",
+            "message_template": "PASS\n",
+            "reason": "Indicates that the unlink operation was successful and the file was deleted.",
+            "resolution": "This is an informational message indicating success, no resolution required."
+        },
+        {
+            "function": "main",
+            "message_template": "FAIL - %s\n",
+            "reason": "Indicates that the unlink operation failed. The error message provides details on why the deletion failed, such as permissions issues, file not found, or other system errors.",
+            "resolution": "Check the error message for specific details. Common issues include insufficient permissions (try running with higher privileges), file not existing, or file being in use by another process. Ensure the file exists and that you have the appropriate permissions to delete it."
+        }
+    ]
+}

@@ -1,0 +1,31 @@
+{
+    "project": "apparmor",
+    "module": "../working/apparmor/tests/regression/apparmor/changehat_misc.c",
+    "summary": "This is a regression test module for AppArmor's changehat functionality. It tests the ability to change to a specified hat and revert back to the parent profile, followed by checking file access permissions.",
+    "logs": [
+        {
+            "function": "main",
+            "message_template": "usage: %s profile file\n",
+            "reason": "Informs the user about correct command-line usage when incorrect arguments are provided. Likely occurs when the user runs the test without specifying the required profile and file arguments.",
+            "resolution": "Provide the correct command-line arguments: a profile name and a file path"
+        },
+        {
+            "function": "main",
+            "message_template": "FAIL: changehat %s failed - %s\n",
+            "reason": "Reports that the initial change_hat operation to the specified hat failed. May occur due to permission issues, non-existent hat, or AppArmor configuration problems.",
+            "resolution": "Verify that the specified hat exists in the AppArmor profile, check AppArmor is properly configured, and ensure the process has the necessary permissions"
+        },
+        {
+            "function": "main",
+            "message_template": "FAIL: changehat %s failed - %s\n",
+            "reason": "Reports that the change_hat operation to revert back to the parent profile failed. This is a more serious error as it indicates the process is stuck in a hat context.",
+            "resolution": "Check AppArmor service status, review kernel logs for AppArmor errors, and ensure the correct magic token is being used"
+        },
+        {
+            "function": "main",
+            "message_template": "PASS\n",
+            "reason": "Indicates that both changehat operations and the file access test were successful, confirming proper AppArmor changehat functionality.",
+            "resolution": "Informational log, no resolution required"
+        }
+    ]
+}

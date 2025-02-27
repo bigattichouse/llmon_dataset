@@ -1,0 +1,6 @@
+{
+    "project": "apparmor",
+    "module": "../working/apparmor/parser/libapparmor_re/flex-tables.h",
+    "summary": "This header file defines data structures and constants for flex-generated tables used by the AppArmor regular expression engine. It includes magic numbers, flags, table header structures, and ID constants for various table types, but contains no executable code.",
+    "logs": []
+}

@@ -1,0 +1,19 @@
+{
+    "project": "apparmor",
+    "module": "../working/apparmor/tests/regression/apparmor/syscall_mlockall.c",
+    "summary": "This module is a regression test for the mlockall() system call under AppArmor. It attempts to lock all current memory pages into RAM and reports success or failure.",
+    "logs": [
+        {
+            "function": "main",
+            "message_template": "FAIL: mlockall failed: %s",
+            "reason": "Logs an error message when the mlockall() system call fails. This could happen due to insufficient privileges, memory limits, or AppArmor restrictions.",
+            "resolution": "Check if the AppArmor profile allows the mlockall syscall. Verify the user has sufficient privileges (CAP_IPC_LOCK capability). Ensure the user's locked memory limits (RLIMIT_MEMLOCK) are sufficient."
+        },
+        {
+            "function": "main",
+            "message_template": "PASS\n",
+            "reason": "Indicates successful execution of the mlockall() system call, meaning the process was able to lock its current memory pages into RAM.",
+            "resolution": "Informational log, no resolution required. This indicates the test passed successfully."
+        }
+    ]
+}

@@ -1,0 +1,31 @@
+{
+    "project": "apparmor",
+    "module": "../working/apparmor/tests/regression/apparmor/ptrace_helper.c",
+    "summary": "This module serves as a helper utility for testing ptrace functionality in AppArmor regression tests. It can be configured to either be traced by a parent process or to trace itself as a child process, depending on the '_tracer' environment variable.",
+    "logs": [
+        {
+            "function": "main",
+            "message_template": "No/invalid _tracer in environ\n",
+            "reason": "The _tracer environment variable is either not set or contains an invalid value (something other than 'parent' or 'child'). This environment variable determines the ptrace testing mode.",
+            "resolution": "Ensure the _tracer environment variable is properly set to either 'parent' or 'child' before running the test."
+        },
+        {
+            "function": "main",
+            "message_template": "FAIL: helper SIGSTOP itself failed -",
+            "reason": "The helper process failed to send SIGSTOP to itself, which is necessary for the parent process to trace it. This is followed by the system error message from perror().",
+            "resolution": "Check system resources and process permissions. This error could indicate issues with signal handling or process limits in the system."
+        },
+        {
+            "function": "main",
+            "message_template": "FAIL: child/helper ptrace(PTRACE_TRACEME) failed - ",
+            "reason": "The ptrace system call with PTRACE_TRACEME operation failed when the helper was configured to trace itself as a child. This is followed by the system error message from perror().",
+            "resolution": "Verify that AppArmor profiles allow the ptrace operation, and check system security settings like ptrace_scope. The error may also indicate permission issues or that another process is already tracing this process."
+        },
+        {
+            "function": "main",
+            "message_template": "FAIL: child/helper SIGSTOP itself failed -",
+            "reason": "After setting up ptrace in child mode, the process failed to stop itself with SIGSTOP. This is necessary for the tracing to work properly. This is followed by the system error message from perror().",
+            "resolution": "Check system resources and process permissions. This error could indicate issues with signal handling after ptrace setup or process limits in the system."
+        }
+    ]
+}

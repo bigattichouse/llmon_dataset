@@ -1,0 +1,145 @@
+{
+    "project": "apparmor",
+    "module": "tests/regression/apparmor/net_inet_rcv.c",
+    "summary": "This module is part of the AppArmor test suite that creates a server to receive network traffic over UDP, TCP, or ICMP protocols. It tests network connectivity by binding to a specified IP/port, then forking a sender process to connect back to itself.",
+    "logs": [
+        {
+            "function": "receive_bind",
+            "message_template": "FAIL - could not parse bind ip address\n",
+            "reason": "The IP address provided for binding couldn't be parsed correctly. This is likely due to an invalid IP address format.",
+            "resolution": "Check that the IP address is in a valid format (IPv4: x.x.x.x or IPv6 format) and represents a valid address on the system."
+        },
+        {
+            "function": "receive_bind",
+            "message_template": "FAIL - Socket error: ",
+            "reason": "Failed to create a socket. This could be due to insufficient permissions or resource limitations.",
+            "resolution": "Check system resources (file descriptors), permissions, and ensure the kernel supports the requested socket type and protocol."
+        },
+        {
+            "function": "receive_bind",
+            "message_template": "FAIL - setsockopt(SO_REUSEADDR) failed",
+            "reason": "Failed to set the socket option SO_REUSEADDR which allows reusing the address immediately after the socket is closed.",
+            "resolution": "This may indicate a system resource limitation or permission issue. Check if your user has sufficient privileges to modify socket options."
+        },
+        {
+            "function": "receive_bind",
+            "message_template": "FAIL - Bind error: ",
+            "reason": "Failed to bind the socket to the specified address/port. This could be because the port is already in use or you don't have permission to bind to it.",
+            "resolution": "Ensure the port isn't already in use, try using a different port, or run with higher privileges if binding to a privileged port (< 1024)."
+        },
+        {
+            "function": "receive_bind",
+            "message_template": "FAIL - Could not listen: ",
+            "reason": "Failed to put the TCP socket in listening mode. This could be due to system resource limitations.",
+            "resolution": "Check system limits for maximum connections and file descriptors. May need to adjust kernel parameters or reduce the backlog value."
+        },
+        {
+            "function": "receive_udp",
+            "message_template": "FAIL - Select error: ",
+            "reason": "An error occurred while waiting for data to arrive on the UDP socket using select().",
+            "resolution": "This could be due to an invalid file descriptor or an interrupted system call. Check if the socket is still valid and if there are any signal handlers that might interrupt the call."
+        },
+        {
+            "function": "receive_udp",
+            "message_template": "FAIL - select timeout\n",
+            "reason": "The select() call timed out while waiting for data on the UDP socket.",
+            "resolution": "Increase the timeout value if needed or ensure the sender is actually sending data to this receiver within the timeout period."
+        },
+        {
+            "function": "receive_udp",
+            "message_template": "FAIL - recvfrom failed\n",
+            "reason": "Failed to receive data on the UDP socket using recvfrom().",
+            "resolution": "Check network connectivity, firewall rules, and ensure the sender is correctly addressing messages to this receiver."
+        },
+        {
+            "function": "receive_tcp",
+            "message_template": "FAIL - Select failed: ",
+            "reason": "An error occurred while waiting for a connection on the TCP socket using select().",
+            "resolution": "This could be due to an invalid file descriptor or an interrupted system call. Check if the socket is still valid and if there are any signal handlers that might interrupt the call."
+        },
+        {
+            "function": "receive_tcp",
+            "message_template": "FAIL - select timeout\n",
+            "reason": "The select() call timed out while waiting for a connection on the TCP socket.",
+            "resolution": "Increase the timeout value if needed or ensure the sender is attempting to connect within the timeout period."
+        },
+        {
+            "function": "receive_tcp",
+            "message_template": "FAIL - Accept failed: ",
+            "reason": "Failed to accept an incoming TCP connection.",
+            "resolution": "This could be due to a network error or system resource limitation. Check system limits for maximum connections and file descriptors."
+        },
+        {
+            "function": "receive_tcp",
+            "message_template": "FAIL - recv failure: ",
+            "reason": "Failed to receive data on the accepted TCP connection.",
+            "resolution": "The connection might have been closed by the sender or there might be network issues. Check network stability and ensure the sender is sending data properly."
+        },
+        {
+            "function": "receive_icmp",
+            "message_template": "FAIL - Select error: ",
+            "reason": "An error occurred while waiting for data to arrive on the ICMP socket using select().",
+            "resolution": "This could be due to an invalid file descriptor or an interrupted system call. Check if the socket is still valid and if there are any signal handlers that might interrupt the call."
+        },
+        {
+            "function": "receive_icmp",
+            "message_template": "FAIL - select timeout\n",
+            "reason": "The select() call timed out while waiting for data on the ICMP socket.",
+            "resolution": "Increase the timeout value if needed or ensure the sender is actually sending ICMP messages to this receiver within the timeout period."
+        },
+        {
+            "function": "receive_icmp",
+            "message_template": "FAIL - recvfrom failed\n",
+            "reason": "Failed to receive data on the ICMP socket using recvfrom().",
+            "resolution": "Check network connectivity, firewall rules, and ensure the sender is correctly addressing ICMP messages to this receiver. ICMP might require elevated privileges."
+        },
+        {
+            "function": "main",
+            "message_template": "FAIL - Unknown protocol.\n",
+            "reason": "The protocol specified as a command-line argument wasn't recognized. Only 'udp', 'tcp', and 'icmp' are supported.",
+            "resolution": "Use one of the supported protocols: 'udp', 'tcp', or 'icmp'."
+        },
+        {
+            "function": "usage",
+            "message_template": "Usage: %s [options]\nOptions are:\n--bind_ip     local ip address\n--bind_port   local port\n--remote_ip   remote ip address\n--remote_port remote port\n--protocol    protocol: udp or tcp\n--sender      path of the sender\n--timeout     timeout in seconds\n",
+            "reason": "The program was invoked with incorrect command-line arguments, showing usage instructions.",
+            "resolution": "Follow the usage instructions to provide the correct command-line arguments."
+        },
+        {
+            "function": "main",
+            "message_template": "Unrecognized option\n",
+            "reason": "An unrecognized command-line option was provided to the program.",
+            "resolution": "Check the usage instructions and provide only valid options."
+        },
+        {
+            "function": "main",
+            "message_template": "FAIL - could not fork",
+            "reason": "Failed to create a child process using fork(). This could be due to system resource limitations.",
+            "resolution": "Check system resources, particularly the maximum number of processes. You might need to increase system limits or free up resources."
+        },
+        {
+            "function": "main",
+            "message_template": "sender not specified",
+            "reason": "The path to the sender executable wasn't provided as a command-line argument.",
+            "resolution": "Provide the path to the sender executable using the --sender option."
+        },
+        {
+            "function": "main",
+            "message_template": "FAIL %d - execlp %s --bind_ip %s --bind_port %s --remote_ip %s --remote_port %s --protocol %s - %m\n",
+            "reason": "Failed to execute the sender program. This could be due to the program not existing or permissions issues.",
+            "resolution": "Verify that the sender executable exists at the specified path and has the appropriate execute permissions."
+        },
+        {
+            "function": "main",
+            "message_template": "FAIL - Receive message failed.\n",
+            "reason": "The receive operation failed for the specified protocol (UDP, TCP, or ICMP).",
+            "resolution": "Check the previous error messages for more specific information about why the receive operation failed."
+        },
+        {
+            "function": "main",
+            "message_template": "PASS\n",
+            "reason": "The test succeeded - the server was able to receive a message from the sender.",
+            "resolution": "Informational message, no resolution required."
+        }
+    ]
+}

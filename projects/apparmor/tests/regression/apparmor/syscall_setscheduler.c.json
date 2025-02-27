@@ -1,0 +1,31 @@
+{
+    "project": "apparmor",
+    "module": "../working/apparmor/tests/regression/apparmor/syscall_setscheduler.c",
+    "summary": "This module tests the AppArmor confinement of the sched_setscheduler system call by attempting to change the scheduling policy of the current process to SCHED_RR and verifying the change was successful.",
+    "logs": [
+        {
+            "function": "main",
+            "message_template": "FAIL: Couldn't get scheduler policy\n",
+            "reason": "Logged when the call to sched_getscheduler fails to retrieve the current scheduling policy. This typically happens due to insufficient permissions or system resource issues.",
+            "resolution": "Check that the AppArmor profile allows the sched_getscheduler syscall. Verify that the system resources are not constrained and that the user has appropriate permissions."
+        },
+        {
+            "function": "main",
+            "message_template": "FAIL: Can't set SCHED_RR",
+            "reason": "Logged when the call to sched_setscheduler fails to set the scheduling policy to SCHED_RR. This may occur due to insufficient permissions or when the AppArmor profile restricts this capability.",
+            "resolution": "Ensure the AppArmor profile allows the sched_setscheduler syscall. Verify the user has sufficient privileges to modify scheduling policies (typically requires root)."
+        },
+        {
+            "function": "main",
+            "message_template": "FAIL: set policy is %d, not SCHED_RR\n",
+            "reason": "Logged when the scheduling policy was supposedly set but verification shows it's not actually SCHED_RR. This suggests partial success of the operation or interference from another process.",
+            "resolution": "Check for race conditions or other processes that might be changing the scheduling policy. Ensure that the AppArmor profile consistently allows both setting and getting scheduler policies."
+        },
+        {
+            "function": "main",
+            "message_template": "PASS\n",
+            "reason": "Logged when the test successfully sets the scheduling policy to SCHED_RR and verifies the change, indicating that the AppArmor profile correctly allows this operation.",
+            "resolution": "Informational log, no resolution required. This indicates proper functioning of the AppArmor policy for scheduler operations."
+        }
+    ]
+}

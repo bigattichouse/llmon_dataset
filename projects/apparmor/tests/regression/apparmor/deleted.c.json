@@ -1,0 +1,73 @@
+{
+    "project": "apparmor",
+    "module": "../working/apparmor/tests/regression/apparmor/deleted.c",
+    "summary": "This test module validates AppArmor's handling of the '(deleted)' indicator appended by the kernel to paths when files are deleted but still have open file descriptors, specifically testing this behavior in the context of changehat operations. It performs a sequence of file operations before and after changing the hat to ensure proper revalidation of file access permissions.",
+    "logs": [
+        {
+            "function": "main",
+            "message_template": "usage: %s hat file\n",
+            "reason": "Indicates incorrect command-line arguments provided to the test program. This occurs when the user doesn't provide exactly two arguments - hat name and filename.",
+            "resolution": "Run the program with the correct arguments: a hat name and a test file path. Review the documentation for proper usage."
+        },
+        {
+            "function": "main",
+            "message_template": "arg%d: %s\n",
+            "reason": "Debug message that dumps all provided command-line arguments when incorrect usage is detected, to help diagnose what was actually passed.",
+            "resolution": "Informational only. Used for debugging incorrect invocation. Ensure you're providing the correct number and type of arguments."
+        },
+        {
+            "function": "main",
+            "message_template": "FAIL: open %s before changehat failed - %s\n",
+            "reason": "Failure to open the test file before performing the changehat operation. The test cannot proceed without this initial file access.",
+            "resolution": "Check file permissions and path correctness. Ensure the file exists and the user running the test has the appropriate permissions to access it."
+        },
+        {
+            "function": "main",
+            "message_template": "FAIL: write before changehat failed - %s\n",
+            "reason": "Unable to write test data to the file before changehat operation. This could be due to permissions, disk space, or other I/O issues.",
+            "resolution": "Verify write permissions on the file and filesystem. Check available disk space and filesystem health."
+        },
+        {
+            "function": "main",
+            "message_template": "FAIL: unlink before changehat failed - %s\n",
+            "reason": "Failed to delete the file while keeping it open. This step is crucial for testing the '(deleted)' behavior.",
+            "resolution": "Check permissions for file deletion. Ensure no other processes are locking the file. Verify the filesystem supports the unlink operation while the file is open."
+        },
+        {
+            "function": "main",
+            "message_template": "FAIL: changehat %s failed - %s\n",
+            "reason": "The AppArmor changehat operation failed. This is a critical failure for the test since it's testing functionality related to changehat.",
+            "resolution": "Verify AppArmor is properly installed and functioning. Check if the specified hat exists in the loaded AppArmor profile. Review AppArmor logs for more detailed errors."
+        },
+        {
+            "function": "main",
+            "message_template": "FAIL: read1 after changehat failed - %s\n",
+            "reason": "Failed to read from the deleted file after changing hat. This indicates potential issues with the kernel's handling of deleted files in conjunction with AppArmor revalidation.",
+            "resolution": "This could indicate a bug in AppArmor's handling of deleted files. Check AppArmor version and consider reporting the issue if using a current version."
+        },
+        {
+            "function": "main",
+            "message_template": "FAIL: creat %s - %s\n",
+            "reason": "Failed to recreate the file after deletion. This tests the ability to create a file with the same name after the original was deleted but still has an open file descriptor.",
+            "resolution": "Check permissions for file creation. Ensure the path is writable by the current user and that no remnants of the deleted file are interfering with creation."
+        },
+        {
+            "function": "main",
+            "message_template": "FAIL: read2 after changehat failed - %s\n",
+            "reason": "Failed on the second read attempt after recreating the file. This tests continued access to the deleted file even after a new file with the same name exists.",
+            "resolution": "This could indicate issues with how the kernel or AppArmor handles duplicate paths, one of which is deleted. Consider checking for kernel or AppArmor updates."
+        },
+        {
+            "function": "main",
+            "message_template": "FAIL: open %s after creat failed - %s\n",
+            "reason": "Failed to open the newly created file. This verifies access to the new file (without '(deleted)' in its path).",
+            "resolution": "Check file permissions and AppArmor profile rules. This may indicate an issue with how AppArmor is handling the non-deleted new file with the same name as a previously deleted file."
+        },
+        {
+            "function": "main",
+            "message_template": "PASS\n",
+            "reason": "Indicates successful completion of all test steps, confirming proper handling of the '(deleted)' marker in AppArmor's path validation.",
+            "resolution": "Informational log, no resolution required. Indicates that the AppArmor implementation is correctly handling the test case."
+        }
+    ]
+}

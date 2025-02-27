@@ -1,0 +1,55 @@
+{
+    "project": "apparmor",
+    "module": "clone.c",
+    "summary": "A regression test for the clone system call under AppArmor confinement. The test creates a child process using clone with various namespace options, and verifies communication between parent and child processes through a pipe.",
+    "logs": [
+        {
+            "function": "usage",
+            "message_template": "usage: %s [arguments]\n",
+            "reason": "Displays command-line usage when incorrect arguments are provided or when help is requested.",
+            "resolution": "Provide correct command-line arguments according to the usage message."
+        },
+        {
+            "function": "usage",
+            "message_template": "%s\n",
+            "reason": "Displays version information (the $Id$ string) when showing program usage.",
+            "resolution": "Informational message, no resolution required."
+        },
+        {
+            "function": "do_child",
+            "message_template": "PASS\n",
+            "reason": "Message written to the pipe by the child process to indicate successful execution.",
+            "resolution": "Informational message, no resolution required."
+        },
+        {
+            "function": "do_child",
+            "message_template": "FAIL: write failed",
+            "reason": "Error message when the child process fails to write to the pipe, which could happen due to pipe closure or other I/O errors.",
+            "resolution": "Check for resource limitations, file descriptor exhaustion, or AppArmor profile restrictions that might prevent writing to pipes."
+        },
+        {
+            "function": "main",
+            "message_template": "FAIL: pipe failed",
+            "reason": "Error message when creating a pipe fails, which could be due to resource limitations.",
+            "resolution": "Check system resource limits (ulimit), available file descriptors, and ensure the AppArmor profile allows pipe creation."
+        },
+        {
+            "function": "main",
+            "message_template": "FAIL: clone failed",
+            "reason": "Error message when the clone system call fails, which could be due to resource limits or missing privileges, especially when using namespace functionality.",
+            "resolution": "Ensure the process has appropriate capabilities (CAP_SYS_ADMIN for namespace operations), check system resource limits, and verify AppArmor profile allows clone operations."
+        },
+        {
+            "function": "main",
+            "message_template": "FAIL: wait failed - %s\n",
+            "reason": "Error message when the waitpid call fails, which could happen if the child process terminates abnormally or if process relationships are disrupted.",
+            "resolution": "Check for signal handlers that might interfere with wait operations, and ensure AppArmor profile allows process management calls."
+        },
+        {
+            "function": "main",
+            "message_template": "PASS\n",
+            "reason": "Success message printed when the test passes, indicating successful clone operation and inter-process communication.",
+            "resolution": "Informational message, no resolution required."
+        }
+    ]
+}

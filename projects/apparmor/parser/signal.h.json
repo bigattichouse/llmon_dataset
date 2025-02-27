@@ -1,0 +1,13 @@
+{
+    "project": "apparmor",
+    "module": "../working/apparmor/parser/signal.h",
+    "summary": "This module defines the signal_rule class and related functions for handling signal permission rules in AppArmor profiles. It includes functionality for validating, comparing, and generating policy expressions for signal rules, and ensures that rules maintain proper format and semantics.",
+    "logs": [
+        {
+            "function": "signal_rule::valid_prefix",
+            "message_template": "owner prefix not allowed on signal rules",
+            "reason": "This error occurs when attempting to use an owner prefix on a signal rule, which is not permitted in AppArmor's policy model. The owner prefix specifies that a rule applies only to a process's owner, but this concept is not applicable to signal rules.",
+            "resolution": "Modify the AppArmor profile to remove the owner prefix from signal rules. Signal rules should be specified without owner qualifiers, as signals are controlled based on process relationships rather than ownership."
+        }
+    ]
+}

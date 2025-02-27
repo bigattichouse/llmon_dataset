@@ -1,0 +1,31 @@
+{
+    "project": "apparmor",
+    "module": "../working/apparmor/tests/regression/apparmor/mkdir.c",
+    "summary": "This module is a test utility for AppArmor that creates or removes directories to test directory operation permissions. It reports success or failure based on whether mkdir or rmdir operations complete successfully, which is useful for validating AppArmor directory access controls.",
+    "logs": [
+        {
+            "function": "main",
+            "message_template": "usage: %s [mkdir|rmdir] dir\n",
+            "reason": "Displayed when the program is called with incorrect arguments (either too few arguments or an invalid operation type). This helps users understand how to properly invoke the program.",
+            "resolution": "Provide the correct command-line arguments following the format specified in the usage message, including a valid operation (mkdir or rmdir) and a directory path."
+        },
+        {
+            "function": "main",
+            "message_template": "FAIL: mkdir %s failed - %s\n",
+            "reason": "Displayed when the mkdir operation fails, showing the directory name and the specific error message. This can occur due to permission issues, when the directory already exists, or when the parent directory doesn't exist.",
+            "resolution": "Check file system permissions, ensure parent directories exist, verify the AppArmor profile allows directory creation in the specified location, or investigate the specific error reported in the message."
+        },
+        {
+            "function": "main",
+            "message_template": "FAIL: rmdir %s failed - %s\n",
+            "reason": "Displayed when the rmdir operation fails, showing the directory name and the specific error message. This can occur due to permission issues, when the directory doesn't exist, or when the directory is not empty.",
+            "resolution": "Check file system permissions, ensure the directory exists and is empty, verify the AppArmor profile allows directory removal in the specified location, or investigate the specific error reported in the message."
+        },
+        {
+            "function": "main",
+            "message_template": "PASS\n",
+            "reason": "Displayed when the requested operation (mkdir or rmdir) completes successfully, indicating that the test passed and the operations were allowed by AppArmor.",
+            "resolution": "Informational message only, no resolution required. This indicates successful operation."
+        }
+    ]
+}

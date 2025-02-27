@@ -1,0 +1,97 @@
+{
+    "project": "apparmor",
+    "module": "tests/regression/apparmor/unix_socket_client.c",
+    "summary": "This module implements a Unix socket client for AppArmor testing that can communicate via stream, datagram, or seqpacket socket types. It supports both connection-based and connectionless messaging protocols and is designed to test socket communication for regression testing.",
+    "logs": [
+        {
+            "function": "connection_based_messaging",
+            "message_template": "FAIL CLIENT - connect '%s'(%d): %m",
+            "reason": "Logs an error when the client fails to connect to the peer socket. This shows the socket path and address length along with the system error message.",
+            "resolution": "Check if the socket path exists and is accessible. Verify that AppArmor policy allows connection to this socket. Ensure the server is running and listening on the specified socket."
+        },
+        {
+            "function": "connection_based_messaging",
+            "message_template": "FAIL CLIENT - read",
+            "reason": "Logs an error when the client fails to read data from the connected socket.",
+            "resolution": "Verify the connection is still active. Check if the server is responding properly. Look for network issues or AppArmor policy restrictions on reading from this socket."
+        },
+        {
+            "function": "connection_based_messaging",
+            "message_template": "FAIL CLIENT - write",
+            "reason": "Logs an error when the client fails to write data to the connected socket.",
+            "resolution": "Check if the connection is still active. Verify the socket hasn't been closed by the peer. Ensure AppArmor policy allows writing to this socket."
+        },
+        {
+            "function": "connectionless_messaging",
+            "message_template": "FAIL CLIENT - path_len too big\n",
+            "reason": "Logs an error when the socket path length plus the client suffix exceeds the maximum allowed length for a Unix socket path.",
+            "resolution": "Use a shorter socket path name. Unix socket paths have a limited length (typically 108 bytes). Consider using an abstract socket (starting with '@') which might have different length constraints."
+        },
+        {
+            "function": "connectionless_messaging",
+            "message_template": "FAIL CLIENT - bind",
+            "reason": "Logs an error when the client fails to bind to its local socket address.",
+            "resolution": "Check if the client socket path already exists. Make sure the directory containing the socket is writable. Verify that AppArmor policy allows binding to this socket path."
+        },
+        {
+            "function": "connectionless_messaging",
+            "message_template": "FAIL CLIENT - sendto",
+            "reason": "Logs an error when the client fails to send an initial empty message to the server.",
+            "resolution": "Verify the server is running and accessible. Check if AppArmor policy allows sending to this socket. Ensure the socket path is correct."
+        },
+        {
+            "function": "connectionless_messaging",
+            "message_template": "FAIL CLIENT - recvfrom",
+            "reason": "Logs an error when the client fails to receive a message from the server.",
+            "resolution": "Check if the server has sent a response. Verify that AppArmor policy allows receiving from this socket. Ensure the socket hasn't been closed unexpectedly."
+        },
+        {
+            "function": "connectionless_messaging",
+            "message_template": "FAIL CLIENT - sendto",
+            "reason": "Logs an error when the client fails to send back the received message to the server.",
+            "resolution": "Verify the server is still accessible. Check if AppArmor policy allows sending to this socket. Ensure the socket connection is still valid."
+        },
+        {
+            "function": "test_getattr",
+            "message_template": "FAIL - getsockname",
+            "reason": "Logs an error when the client fails to get socket name information, which is part of testing socket attribute access.",
+            "resolution": "Check if the socket file descriptor is valid. Verify that AppArmor policy allows querying socket attributes. This could indicate a more fundamental problem with socket initialization."
+        },
+        {
+            "function": "usage",
+            "message_template": "Usage: %s <socket> <type> [<fd_number>]\n\n  type\t\tstream, dgram, or seqpacket\n  fd_number\t\tfd number for inherited unnamed socket\n",
+            "reason": "Displays usage information when the program is invoked with incorrect command line arguments.",
+            "resolution": "Informational message. Follow the usage instructions by providing the correct arguments: socket path, socket type, and optionally fd number for unnamed sockets."
+        },
+        {
+            "function": "main",
+            "message_template": "FAIL CLIENT - socket addr too big\n",
+            "reason": "Logs an error when the abstract socket address (starting with '@') specified by the user exceeds the maximum allowed length.",
+            "resolution": "Use a shorter socket name. Abstract Unix socket addresses (starting with '@') have a maximum length limitation. Try a more concise identifier."
+        },
+        {
+            "function": "main",
+            "message_template": "FAIL CLIENT - socket addr too big\n",
+            "reason": "Logs an error when the pathname socket address specified by the user exceeds the maximum allowed length.",
+            "resolution": "Use a shorter pathname for the socket. Unix socket pathnames typically have a maximum length of 108 bytes. Consider using a path in /tmp or another directory with a shorter path."
+        },
+        {
+            "function": "main",
+            "message_template": "FAIL CLIENT - bad socket type: %s\n",
+            "reason": "Logs an error when an invalid socket type is specified. Valid types are 'stream', 'dgram', or 'seqpacket'.",
+            "resolution": "Provide one of the supported socket types: 'stream', 'dgram', or 'seqpacket'. Check the command line arguments for typos."
+        },
+        {
+            "function": "main",
+            "message_template": "FAIL CLIENT - sscanf",
+            "reason": "Logs an error when the program fails to parse the file descriptor number for an unnamed socket.",
+            "resolution": "Ensure the fd_number argument is a valid integer. This error occurs when trying to use an inherited unnamed socket but the file descriptor number is not properly specified."
+        },
+        {
+            "function": "main",
+            "message_template": "FAIL CLIENT - socket",
+            "reason": "Logs an error when the program fails to create a new socket.",
+            "resolution": "Check if the system has reached its limit of open file descriptors. Verify that AppArmor policy allows socket creation. This could indicate system resource limitations."
+        }
+    ]
+}

@@ -1,0 +1,13 @@
+{
+    "project": "apparmor",
+    "module": "../working/apparmor/libraries/libapparmor/src/libaalogparse.c",
+    "summary": "This module provides functions for parsing AppArmor log records, including initialization, parsing, memory management, and conversion utilities for hex strings and IP protocol numbers.",
+    "logs": [
+        {
+            "function": "ipproto_to_string",
+            "message_template": "unknown(%u)",
+            "reason": "This message is generated when the function encounters an IP protocol number that doesn't match any known protocol in the mapping table. It formats the unknown protocol number as 'unknown(X)' where X is the numeric value.",
+            "resolution": "This is primarily informational and indicates the system encountered a network protocol it doesn't recognize by name. You may need to update protocol definitions or investigate why unusual network protocols are being used."
+        }
+    ]
+}

@@ -1,0 +1,19 @@
+{
+    "project": "apparmor",
+    "module": "../working/apparmor/parser/ptrace.h",
+    "summary": "This header file defines the ptrace_rule class for handling ptrace permissions in AppArmor profiles, including validation and generation of policy rules. It extends the perms_rule_t class and provides methods for validating prefixes, comparing rules, and managing peer labels.",
+    "logs": [
+        {
+            "function": "ptrace_rule::valid_prefix",
+            "message_template": "owner prefix not allowed on ptrace rules",
+            "reason": "Logs an error when someone attempts to use an owner prefix in a ptrace rule, which is not permitted according to AppArmor's security model.",
+            "resolution": "Remove the owner prefix from the ptrace rule in your AppArmor profile. The owner concept does not apply to ptrace operations in the AppArmor security model."
+        },
+        {
+            "function": "ptrace_rule::warn_once",
+            "message_template": "[Unknown - implementation not shown in header]",
+            "reason": "This method likely generates warnings related to ptrace rules, but the specific messages are not defined in this header file.",
+            "resolution": "The resolution would depend on the specific warning message, which would be defined in the implementation file."
+        }
+    ]
+}

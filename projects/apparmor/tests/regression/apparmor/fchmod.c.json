@@ -1,0 +1,43 @@
+{
+    "project": "apparmor",
+    "module": "../working/apparmor/tests/regression/apparmor/fchmod.c",
+    "summary": "This module is a regression test for the AppArmor security module, specifically testing the fchmod system call functionality. It attempts to open a file and change its permissions, reporting success or failure.",
+    "logs": [
+        {
+            "function": "main",
+            "message_template": "usage: %s file mode\n",
+            "reason": "Indicates that the program was called with an incorrect number of arguments. The program requires exactly two arguments: a file path and a permission mode in octal.",
+            "resolution": "Ensure the program is invoked with exactly two arguments: the target file and the desired octal mode."
+        },
+        {
+            "function": "main",
+            "message_template": "FAIL: bad mode %s\n",
+            "reason": "The provided mode argument could not be parsed as a valid octal number. The program expects the second argument to be a valid octal representation of file permissions.",
+            "resolution": "Provide a valid octal number for the mode argument (e.g., 644, 755)."
+        },
+        {
+            "function": "main",
+            "message_template": "FAIL: open %s failed - %s\n",
+            "reason": "The program failed to open the specified file. This could be due to insufficient permissions, the file not existing, or other file system issues.",
+            "resolution": "Verify that the file exists, is accessible, and that the user running the program has appropriate permissions to read the file."
+        },
+        {
+            "function": "main",
+            "message_template": "FAIL: open",
+            "reason": "This is a perror call that provides system-specific error information about why the file open operation failed.",
+            "resolution": "Check the accompanying error message for details on the specific system error that occurred during the open operation."
+        },
+        {
+            "function": "main",
+            "message_template": "FAIL: fchmod %s %o failed - %s\n",
+            "reason": "The program failed to change the permissions of the specified file. This could be due to insufficient permissions or other file system constraints.",
+            "resolution": "Ensure the user running the program has sufficient permissions to change the file's mode. If running under AppArmor, verify that the AppArmor profile allows fchmod operations."
+        },
+        {
+            "function": "main",
+            "message_template": "PASS\n",
+            "reason": "The program successfully opened the file and changed its permissions as requested.",
+            "resolution": "Informational message indicating success. No resolution required."
+        }
+    ]
+}

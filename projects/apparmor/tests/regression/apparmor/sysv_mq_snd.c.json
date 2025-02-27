@@ -1,0 +1,43 @@
+{
+    "project": "apparmor",
+    "module": "../working/apparmor/tests/regression/apparmor/sysv_mq_snd.c",
+    "summary": "A component of the AppArmor regression test suite that tests System V message queue functionality by sending a message to a queue and using a semaphore for notification.",
+    "logs": [
+        {
+            "function": "main",
+            "message_template": "FAIL sender - specify values for message queue key and semaphore key, respectively \n",
+            "reason": "Logs an error when the program is called with an incorrect number of command-line arguments, which should be either 0 or 2 arguments.",
+            "resolution": "Ensure the program is called with either no arguments (to use default keys) or with exactly 2 arguments specifying the message queue key and semaphore key."
+        },
+        {
+            "function": "main",
+            "message_template": "FAIL sender - could not msgget",
+            "reason": "Logs an error when the message queue cannot be created or accessed, which could happen due to permissions issues or resource limitations.",
+            "resolution": "Check if the user has permission to create message queues, if there are enough system resources, or if the key is already in use by another message queue with incompatible permissions."
+        },
+        {
+            "function": "main",
+            "message_template": "FAIL sender - could not get semaphore",
+            "reason": "Logs an error when the semaphore cannot be created or accessed, which could happen due to permissions issues or resource limitations.",
+            "resolution": "Check if the user has permission to create semaphores, if there are enough system resources, or if the key is already in use by another semaphore with incompatible permissions."
+        },
+        {
+            "function": "main",
+            "message_template": "%s",
+            "reason": "Used as a format specifier to copy the predefined message into the message buffer structure.",
+            "resolution": "Informational log, no resolution required."
+        },
+        {
+            "function": "main",
+            "message_template": "FAIL sender - could not msgsnd",
+            "reason": "Logs an error when sending a message to the queue fails, which could happen if the queue is full or has been removed.",
+            "resolution": "Check if the message queue is full, if it still exists, or if there are permission issues preventing sending messages to it."
+        },
+        {
+            "function": "main",
+            "message_template": "FAIL sender - could not notify using semaphore",
+            "reason": "Logs an error when the program fails to perform a semaphore operation to notify the receiver, which could happen if the semaphore has been removed or there are permission issues.",
+            "resolution": "Check if the semaphore still exists, if there are permission issues, or if there are other processes interacting with the semaphore in a conflicting way."
+        }
+    ]
+}

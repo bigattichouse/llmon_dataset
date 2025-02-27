@@ -1,0 +1,6 @@
+{
+    "project": "apparmor",
+    "module": "../working/apparmor/parser/libapparmor_re/parse.h",
+    "summary": "This header file defines the interface for parsing regular expressions into expression trees in the AppArmor library. It declares a single function that takes a rule string and returns a parsed expression tree structure.",
+    "logs": []
+}

@@ -1,0 +1,79 @@
+{
+    "project": "apparmor",
+    "module": "../working/apparmor/tests/regression/apparmor/complain.c",
+    "summary": "This module implements a test utility for AppArmor's complain mode functionality, performing various file operations (read, write, exec, stat, xattr, rename, unlink) based on command-line arguments and reporting success or failure.",
+    "logs": [
+        {
+            "function": "print_usage",
+            "message_template": "Usage: ./complain (operation) [args]\n",
+            "reason": "Displays usage information when the program is invoked with incorrect arguments",
+            "resolution": "Ensure the program is called with the correct arguments following the usage pattern displayed"
+        },
+        {
+            "function": "main",
+            "message_template": "FAIL: Could not open file",
+            "reason": "The program failed to open the specified file for read or write operations, likely due to permission issues or the file not existing",
+            "resolution": "Check if the file exists and that the user has appropriate permissions to access it. May require adjusting file permissions or AppArmor profile settings."
+        },
+        {
+            "function": "main",
+            "message_template": "FAIL: Could not get file len",
+            "reason": "The program failed to determine the length of the file using ftell, likely due to a problem with the file descriptor",
+            "resolution": "Verify that the file was opened correctly and that the file system is functioning properly. Check if the AppArmor profile allows file size queries."
+        },
+        {
+            "function": "main",
+            "message_template": "FAIL: Could not perform file read",
+            "reason": "The program encountered an error while attempting to read from the file, possibly due to I/O errors or AppArmor restrictions",
+            "resolution": "Check if the AppArmor profile allows read operations on the target file and ensure there are no hardware or file system issues."
+        },
+        {
+            "function": "main",
+            "message_template": "FAIL: Could not perform file write",
+            "reason": "The program failed to write data to the file, possibly due to insufficient disk space, I/O errors, or AppArmor restrictions",
+            "resolution": "Verify disk space, file system integrity, and that the AppArmor profile permits write operations to the target location."
+        },
+        {
+            "function": "main",
+            "message_template": "FAIL: execvp of %s failed\n",
+            "reason": "The program failed to execute the specified command using execvp, possibly due to the command not existing or insufficient permissions",
+            "resolution": "Check that the specified command exists in the PATH and that the AppArmor profile permits execution of the target program."
+        },
+        {
+            "function": "main",
+            "message_template": "FAIL: Could not perform file stat",
+            "reason": "The program failed to retrieve file status information, possibly due to file not existing or AppArmor restrictions",
+            "resolution": "Verify that the file exists and that the AppArmor profile allows stat operations on the target file."
+        },
+        {
+            "function": "main",
+            "message_template": "FAIL: Could not get file xattrs",
+            "reason": "The program failed to retrieve extended attributes for the file, possibly due to file system limitations or AppArmor restrictions",
+            "resolution": "Check if the file system supports extended attributes and that the AppArmor profile permits xattr operations on the target file."
+        },
+        {
+            "function": "main",
+            "message_template": "Error: rename operation needs two arguments\n",
+            "reason": "The rename operation was invoked without specifying both source and destination file paths",
+            "resolution": "Provide both source and destination file paths when using the rename operation."
+        },
+        {
+            "function": "main",
+            "message_template": "FAIL: Could not perform file rename",
+            "reason": "The program failed to rename the file, possibly due to permissions, file existence issues, or AppArmor restrictions",
+            "resolution": "Check if both source and destination paths are valid, you have proper permissions, and the AppArmor profile allows rename operations between the specified locations."
+        },
+        {
+            "function": "main",
+            "message_template": "FAIL: Could not perform file removal",
+            "reason": "The program failed to remove (unlink) the specified file, possibly due to permissions or AppArmor restrictions",
+            "resolution": "Verify that you have permission to remove the file and that the AppArmor profile permits unlink operations on the target file."
+        },
+        {
+            "function": "main",
+            "message_template": "PASS\n",
+            "reason": "The requested operation completed successfully, indicating the test has passed",
+            "resolution": "Informational message, no resolution required"
+        }
+    ]
+}

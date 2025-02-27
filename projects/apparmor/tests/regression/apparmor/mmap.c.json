@@ -1,0 +1,67 @@
+{
+    "project": "apparmor",
+    "module": "../working/apparmor/tests/regression/apparmor/mmap.c",
+    "summary": "This test module verifies AppArmor's handling of memory-mapped files by creating a file, mapping it to memory, writing data, and verifying read operations. It includes a signal handler to perform multiple test passes and checks various potential failure points in memory mapping operations.",
+    "logs": [
+        {
+            "function": "main",
+            "message_template": "usage: %s file\n",
+            "reason": "Displayed when the program is run without the required file argument. Informs the user of the correct usage pattern.",
+            "resolution": "Run the program with a valid file path as an argument."
+        },
+        {
+            "function": "main",
+            "message_template": "FAIL: internal error signal failed - %s\n",
+            "reason": "Occurs when the program fails to set up a signal handler for SIGUSR1, which is needed for the test to run properly.",
+            "resolution": "Check system resources and signal handling capabilities. This is likely a system-level issue that may require investigation of signal handling settings or system resource limits."
+        },
+        {
+            "function": "main",
+            "message_template": "FAIL: nullifying sigset",
+            "reason": "Emitted when the function fails to create an empty signal set, which is required for the sigsuspend operation later in the test.",
+            "resolution": "This is a fundamental system call failure. Check system stability and available resources. May require system administrator intervention if persistent."
+        },
+        {
+            "function": "main",
+            "message_template": "FAIL: create %s failed - %s\n",
+            "reason": "Displayed when the program fails to create the test file. This could be due to permission issues, disk space, or the file already existing.",
+            "resolution": "Ensure the user has write permissions to the directory, sufficient disk space is available, and that the file doesn't already exist (since O_EXCL is used)."
+        },
+        {
+            "function": "main",
+            "message_template": "FAIL: ftruncate %s failed - %s\n",
+            "reason": "Occurs when setting the file size fails. This might happen due to file system limitations or permissions.",
+            "resolution": "Check the file system for proper permissions and available space. The test requires the ability to extend the file to a full page size."
+        },
+        {
+            "function": "main",
+            "message_template": "FAIL: mmap failed - %s\n",
+            "reason": "Displayed when memory mapping the file fails. This could be due to resource limitations or system configuration issues.",
+            "resolution": "Check system memory limits and configuration. This might require adjusting system limits or examining AppArmor policy constraints relating to memory operations."
+        },
+        {
+            "function": "main",
+            "message_template": "FAIL: msync failed - %s\n",
+            "reason": "Emitted when synchronizing memory changes to the file fails. This could indicate file system issues or AppArmor constraints.",
+            "resolution": "Ensure the file system is functioning correctly and check AppArmor policies that might restrict memory-to-file operations."
+        },
+        {
+            "function": "main",
+            "message_template": "FAIL: read failed - %s\n",
+            "reason": "Occurs when reading back the data from the file fails or doesn't return the expected number of bytes.",
+            "resolution": "Verify file system integrity and AppArmor policies that might affect file read operations. Check for concurrent access issues that might affect file position."
+        },
+        {
+            "function": "main",
+            "message_template": "FAIL: read comparison failed\n",
+            "reason": "Displayed when the data read from the file doesn't match what was written to memory, indicating potential corruption or improper synchronization.",
+            "resolution": "This suggests a deeper issue with memory mapping or file system integrity. Review system file caching, memory configuration, and AppArmor policies affecting file operations."
+        },
+        {
+            "function": "main",
+            "message_template": "PASS\n",
+            "reason": "Indicates that all tests completed successfully. The program was able to create a file, map it to memory, write data, verify it, receive a signal, and verify again.",
+            "resolution": "Informational log, no resolution required. Indicates proper functioning of memory mapping operations within AppArmor constraints."
+        }
+    ]
+}

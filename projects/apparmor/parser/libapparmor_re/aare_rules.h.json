@@ -1,0 +1,6 @@
+{
+    "project": "apparmor",
+    "module": "../working/apparmor/parser/libapparmor_re/aare_rules.h",
+    "summary": "This module defines the classes and data structures for managing AppArmor rule processing and conversion to a DFA (Deterministic Finite Automaton). It includes functionality for caching unique permissions, adding security rules, and creating compiled rule formats for efficient rule matching in the AppArmor security system.",
+    "logs": []
+}

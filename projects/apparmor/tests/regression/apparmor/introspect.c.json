@@ -1,0 +1,61 @@
+{
+    "project": "apparmor",
+    "module": "../working/apparmor/tests/regression/apparmor/introspect.c",
+    "summary": "This module tests AppArmor's introspection functionality by querying confinement information for the current process or a specified process. It validates the returned profile and mode against expected values, ensuring AppArmor's confinement reporting functions work correctly.",
+    "logs": [
+        {
+            "function": "main",
+            "message_template": "usage: %s <task> <expected profile> [<expect mode>]\n",
+            "reason": "Logs an error when the program is invoked with incorrect number of arguments. The program requires at least 2 arguments and accepts at most 3.",
+            "resolution": "Ensure the program is called with the correct number of arguments. The format should be: introspect <task> <expected profile> [<expect mode>]"
+        },
+        {
+            "function": "main",
+            "message_template": "FAIL: introspect_confinement %s failed - %s\n",
+            "reason": "Logs an error when the aa_getcon function fails to retrieve the confinement information for the current process (self).",
+            "resolution": "Check if AppArmor is properly installed and running. Also verify that the current user has permissions to query AppArmor confinement information."
+        },
+        {
+            "function": "main",
+            "message_template": "FAIL: query_confinement - invalid pid: %s\n",
+            "reason": "Logs an error when the provided process ID is not a valid number.",
+            "resolution": "Ensure that the specified task is a valid PID (numerical value). Check the process exists and is accessible to the current user."
+        },
+        {
+            "function": "main",
+            "message_template": "FAIL: query_confinement %s failed - %s\n",
+            "reason": "Logs an error when the aa_gettaskcon function fails to retrieve the confinement information for a specified process ID.",
+            "resolution": "Verify that the process with the given PID exists and is running. Check if AppArmor is properly installed and the current user has permissions to query information about the specified process."
+        },
+        {
+            "function": "main",
+            "message_template": "FAIL: expected confinement \"%s\" != \"%s\"\n",
+            "reason": "Logs an error when the retrieved profile name doesn't match the expected profile name provided as an argument.",
+            "resolution": "Ensure that the expected profile name is correct and the process is actually confined by the specified profile. If this is a test, adjust the expected profile name to match the actual confinement."
+        },
+        {
+            "function": "main",
+            "message_template": "FAIL: expected return len %zd != actual %d\n",
+            "reason": "Logs an error when there's a mismatch in the return length for a profile with a mode. This indicates a possible issue with the aa_getcon or aa_gettaskcon functions.",
+            "resolution": "This is likely a bug in the AppArmor library if the return length doesn't match expectations. Report this to the AppArmor developers, providing details about the environment and the specific confinement being tested."
+        },
+        {
+            "function": "main",
+            "message_template": "FAIL: expected return len %zd != actual %d\n",
+            "reason": "Logs an error when there's a mismatch in the return length for a profile without a mode. This indicates a possible issue with the aa_getcon or aa_gettaskcon functions.",
+            "resolution": "This is likely a bug in the AppArmor library if the return length doesn't match expectations. Report this to the AppArmor developers, providing details about the environment and the specific confinement being tested."
+        },
+        {
+            "function": "main",
+            "message_template": "FAIL: expected mode \"%s\" != \"%s\"\n",
+            "reason": "Logs an error when the retrieved confinement mode doesn't match the expected mode provided as an argument.",
+            "resolution": "Ensure that the expected mode is correct and the process is actually in the specified mode. If this is a test, adjust the expected mode to match the actual mode of the process."
+        },
+        {
+            "function": "main",
+            "message_template": "PASS\n",
+            "reason": "Logs a success message when all tests pass, indicating that the AppArmor introspection functionality is working correctly.",
+            "resolution": "This is an informational message indicating successful operation, no resolution required."
+        }
+    ]
+}

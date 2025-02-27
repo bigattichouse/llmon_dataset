@@ -1,0 +1,127 @@
+{
+    "project": "apparmor",
+    "module": "../working/apparmor/tests/regression/apparmor/net_inet_snd.c",
+    "summary": "A networking test module for AppArmor that sends messages using UDP, TCP, or ICMP protocols. The code establishes network connections by binding to a local address and sending data to a remote address, testing various network operations that might be restricted by AppArmor profiles.",
+    "logs": [
+        {
+            "function": "send_udp",
+            "message_template": "FAIL SND - could not parse bind ip address\n",
+            "reason": "The function failed to parse the provided bind IP address and port into a valid IP address structure. This could happen if an invalid IP address format is provided.",
+            "resolution": "Verify that the bind IP address and port provided are valid and in the correct format (IPv4: xxx.xxx.xxx.xxx or IPv6 format)."
+        },
+        {
+            "function": "send_udp",
+            "message_template": "FAIL SND - could not parse remote ip address\n",
+            "reason": "The function failed to parse the provided remote IP address and port into a valid IP address structure. This could happen if an invalid IP address format is provided.",
+            "resolution": "Verify that the remote IP address and port provided are valid and in the correct format (IPv4: xxx.xxx.xxx.xxx or IPv6 format)."
+        },
+        {
+            "function": "send_udp",
+            "message_template": "FAIL SND - Could not open socket: ",
+            "reason": "The function failed to create a UDP socket. This could happen due to insufficient permissions, network restrictions, or system resource limitations.",
+            "resolution": "Check if the AppArmor profile allows socket creation. Verify network connectivity and system resources. The specific system error message appended by perror() will provide more details."
+        },
+        {
+            "function": "send_udp",
+            "message_template": "FAIL SND - setsockopt(SO_REUSEADDR) failed",
+            "reason": "The function failed to set the socket options to allow address reuse. This could be due to insufficient permissions or an invalid socket descriptor.",
+            "resolution": "Check if the AppArmor profile allows the setsockopt system call. Verify that the socket was correctly created before attempting to set options."
+        },
+        {
+            "function": "send_udp",
+            "message_template": "FAIL SND - Bind error: ",
+            "reason": "The function failed to bind the socket to the local address. This could happen if the address is already in use, if the user doesn't have sufficient permissions, or if the address is invalid.",
+            "resolution": "Ensure that the bind address is not already in use by another process. Check if the AppArmor profile allows binding to the specified address and port. The specific system error message appended by perror() will provide more details."
+        },
+        {
+            "function": "send_udp",
+            "message_template": "FAIL SND - Send failed: ",
+            "reason": "The function failed to send data over the UDP socket. This could be due to network issues, closed connection, or insufficient permissions.",
+            "resolution": "Check network connectivity. Verify that the destination host is reachable and accepting UDP packets. Check if the AppArmor profile allows sending data. The specific system error message appended by perror() will provide more details."
+        },
+        {
+            "function": "send_tcp",
+            "message_template": "FAIL SND - could not parse bind ip address\n",
+            "reason": "The function failed to parse the provided bind IP address and port into a valid IP address structure. This could happen if an invalid IP address format is provided.",
+            "resolution": "Verify that the bind IP address and port provided are valid and in the correct format (IPv4: xxx.xxx.xxx.xxx or IPv6 format)."
+        },
+        {
+            "function": "send_tcp",
+            "message_template": "FAIL SND - could not parse remote ip address\n",
+            "reason": "The function failed to parse the provided remote IP address and port into a valid IP address structure. This could happen if an invalid IP address format is provided.",
+            "resolution": "Verify that the remote IP address and port provided are valid and in the correct format (IPv4: xxx.xxx.xxx.xxx or IPv6 format)."
+        },
+        {
+            "function": "send_tcp",
+            "message_template": "FAIL SND - Could not open socket: ",
+            "reason": "The function failed to create a TCP socket. This could happen due to insufficient permissions, network restrictions, or system resource limitations.",
+            "resolution": "Check if the AppArmor profile allows socket creation. Verify network connectivity and system resources. The specific system error message appended by perror() will provide more details."
+        },
+        {
+            "function": "send_tcp",
+            "message_template": "FAIL SND - setsockopt(SO_REUSEADDR) failed",
+            "reason": "The function failed to set the socket options to allow address reuse. This could be due to insufficient permissions or an invalid socket descriptor.",
+            "resolution": "Check if the AppArmor profile allows the setsockopt system call. Verify that the socket was correctly created before attempting to set options."
+        },
+        {
+            "function": "send_tcp",
+            "message_template": "FAIL SND - Bind error: ",
+            "reason": "The function failed to bind the socket to the local address. This could happen if the address is already in use, if the user doesn't have sufficient permissions, or if the address is invalid.",
+            "resolution": "Ensure that the bind address is not already in use by another process. Check if the AppArmor profile allows binding to the specified address and port. The specific system error message appended by perror() will provide more details."
+        },
+        {
+            "function": "send_tcp",
+            "message_template": "FAIL SND - Could not connect: ",
+            "reason": "The function failed to establish a TCP connection with the remote host. This could be due to network issues, the remote host being unreachable, or a firewall blocking the connection.",
+            "resolution": "Verify that the remote host is reachable and accepting TCP connections on the specified port. Check firewall settings and network connectivity. The specific system error message appended by perror() will provide more details."
+        },
+        {
+            "function": "send_tcp",
+            "message_template": "FAIL SND - Send failed: ",
+            "reason": "The function failed to send data over the TCP socket. This could be due to network issues, closed connection, or insufficient permissions.",
+            "resolution": "Check if the TCP connection is still established. Verify that the AppArmor profile allows sending data. The specific system error message appended by perror() will provide more details."
+        },
+        {
+            "function": "send_icmp",
+            "message_template": "FAIL SND - Could not open socket: ",
+            "reason": "The function failed to create an ICMP socket. This requires elevated privileges and may be blocked by system policies or AppArmor.",
+            "resolution": "ICMP sockets typically require root privileges. Check if the program is running with sufficient permissions and if the AppArmor profile allows creating ICMP sockets. The specific system error message appended by perror() will provide more details."
+        },
+        {
+            "function": "send_icmp",
+            "message_template": "FAIL SND - setsockopt(SO_REUSEADDR) failed",
+            "reason": "The function failed to set the socket options to allow address reuse. This could be due to insufficient permissions or an invalid socket descriptor.",
+            "resolution": "Check if the AppArmor profile allows the setsockopt system call. Verify that the socket was correctly created before attempting to set options."
+        },
+        {
+            "function": "send_icmp",
+            "message_template": "FAIL SND - Could not bind: ",
+            "reason": "The function failed to bind the ICMP socket to the local address. This could be due to insufficient permissions or an invalid address.",
+            "resolution": "ICMP socket binding typically requires root privileges. Check if the program is running with sufficient permissions and if the AppArmor profile allows binding ICMP sockets. The specific system error message appended by perror() will provide more details."
+        },
+        {
+            "function": "send_icmp",
+            "message_template": "FAIL SND - Send failed: ",
+            "reason": "The function failed to send an ICMP packet. This could be due to network issues, insufficient permissions, or firewall restrictions.",
+            "resolution": "Check if the program has sufficient permissions to send ICMP packets. Verify that there are no firewalls blocking ICMP traffic. The specific system error message appended by perror() will provide more details."
+        },
+        {
+            "function": "main",
+            "message_template": "Usage: %s bind_ip bind_port remote_ip remote_port proto\n",
+            "reason": "The program was called with insufficient command-line arguments. It requires 5 arguments: bind IP, bind port, remote IP, remote port, and protocol.",
+            "resolution": "Provide all required command-line arguments in the correct order: bind_ip bind_port remote_ip remote_port proto, where proto is one of: udp, tcp, or icmp."
+        },
+        {
+            "function": "main",
+            "message_template": "FAIL SND - Unknown protocol.\n",
+            "reason": "The protocol specified as the last command-line argument is not one of the supported protocols (udp, tcp, icmp).",
+            "resolution": "Use one of the supported protocols: 'udp', 'tcp', or 'icmp' as the fifth command-line argument."
+        },
+        {
+            "function": "main",
+            "message_template": "FAIL SND - Send message failed.\n",
+            "reason": "The send function (UDP, TCP, or ICMP) returned an error, indicating that the message could not be sent. The specific error was likely logged earlier.",
+            "resolution": "Check the preceding error messages for more details about why the send operation failed. This could be due to network issues, insufficient permissions, or invalid addresses."
+        }
+    ]
+}

@@ -1,0 +1,6 @@
+{
+    "project": "apparmor",
+    "module": "../working/apparmor/parser/common_optarg.h",
+    "summary": "This header file defines structures and functions for handling command-line options and flags in AppArmor. It provides utilities for flag manipulation, printing, and displaying help information related to option flags.",
+    "logs": []
+}

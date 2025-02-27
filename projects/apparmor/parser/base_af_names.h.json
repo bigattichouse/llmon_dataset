@@ -1,0 +1,6 @@
+{
+    "project": "apparmor",
+    "module": "../working/apparmor/parser/base_af_names.h",
+    "summary": "This header file defines a comprehensive set of address family (AF_*) constants with their numeric values for use in network socket programming. These constants are standard across Linux systems and define the various network address families that can be used for communication.",
+    "logs": []
+}

@@ -1,0 +1,13 @@
+{
+    "project": "apparmor",
+    "module": "../working/apparmor/parser/mount.h",
+    "summary": "This header file defines mount rule functionality for the AppArmor parser, including constants for mount flags and options, and the mnt_rule class that handles validation and policy generation for mount rules.",
+    "logs": [
+        {
+            "function": "valid_prefix",
+            "message_template": "owner prefix not allowed on mount rules",
+            "reason": "This error is generated when a user attempts to specify an owner prefix for a mount rule, which is not supported by AppArmor's policy language. Likely occurs during policy compilation when a user incorrectly formats a mount rule.",
+            "resolution": "Review and modify the AppArmor policy to remove the owner prefix from mount rules. Mount rules should be specified without owner qualifiers."
+        }
+    ]
+}

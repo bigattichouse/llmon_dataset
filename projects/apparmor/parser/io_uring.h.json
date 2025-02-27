@@ -1,0 +1,13 @@
+{
+    "project": "apparmor",
+    "module": "../working/apparmor/parser/io_uring.h",
+    "summary": "This header file defines the io_uring_rule class for AppArmor, which handles permissions and validations for io_uring interfaces in Linux. It provides structures for working with io_uring-specific security permissions and validation mechanisms.",
+    "logs": [
+        {
+            "function": "valid_prefix",
+            "message_template": "owner prefix not allowed on io_uring rules",
+            "reason": "This error occurs when attempting to use an owner prefix with io_uring rules, which is not supported by AppArmor. The prefix validation fails when the 'owner' flag is set.",
+            "resolution": "Remove the owner prefix from the io_uring rule in your AppArmor profile. The io_uring interface does not support owner-based access controls in this implementation."
+        }
+    ]
+}

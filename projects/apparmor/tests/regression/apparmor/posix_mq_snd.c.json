@@ -1,0 +1,37 @@
+{
+    "project": "apparmor",
+    "module": "../working/apparmor/tests/regression/apparmor/posix_mq_snd.c",
+    "summary": "This module is a test utility for AppArmor that tests POSIX message queue sending functionality. It attempts to open a message queue, send a message to it, and close it, reporting any failures that occur during these operations.",
+    "logs": [
+        {
+            "function": "main",
+            "message_template": "FAIL - could not read from pipe\n",
+            "reason": "Logs an error when the process fails to read from the pipe specified as a command-line argument. This pipe is used to synchronize with a receiver process that uses mq_notify.",
+            "resolution": "Check if the pipe file descriptor passed as the second command-line argument is valid and if the receiver process is operating correctly. Ensure proper synchronization between sender and receiver processes."
+        },
+        {
+            "function": "main",
+            "message_template": "FAIL sender - could not open mq",
+            "reason": "Logs an error when the process fails to open the POSIX message queue for writing. This is followed by the specific system error message.",
+            "resolution": "Verify that the queue name is correct and that the queue exists. Check if the user has appropriate permissions to access the queue, and ensure that system resource limits for message queues haven't been exceeded."
+        },
+        {
+            "function": "main",
+            "message_template": "FAIL sender - could not send",
+            "reason": "Logs an error when the process fails to send a message to the queue. This is followed by the specific system error message.",
+            "resolution": "Check if the message queue is full, if the message size exceeds queue limits, or if there are permission issues. Ensure that the message content is properly formatted and within size limits."
+        },
+        {
+            "function": "main",
+            "message_template": "FAIL sender - could not close mq",
+            "reason": "Logs an error when the process fails to close the message queue descriptor. This is followed by the specific system error message.",
+            "resolution": "This is an unusual error that might indicate system resource issues or a bug in the message queue implementation. Check system logs for more information about resource constraints or other system-level issues."
+        },
+        {
+            "function": "main",
+            "message_template": "PASS client\n",
+            "reason": "This commented-out message would log a success if the sender process completes all operations successfully.",
+            "resolution": "Informational log, no resolution required. If you want to see success messages, uncomment this printf statement."
+        }
+    ]
+}

@@ -1,0 +1,6 @@
+{
+    "project": "apparmor",
+    "module": "../working/apparmor/parser/cond_expr.h",
+    "summary": "This module defines a conditional expression class for AppArmor's parser. It provides a simple interface for evaluating boolean expressions, likely used during policy parsing to handle conditional statements within AppArmor profiles.",
+    "logs": []
+}

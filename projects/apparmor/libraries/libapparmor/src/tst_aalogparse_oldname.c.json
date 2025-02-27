@@ -1,0 +1,31 @@
+{
+    "project": "apparmor",
+    "module": "../working/apparmor/libraries/libapparmor/src/tst_aalogparse_oldname.c",
+    "summary": "A test module that verifies the AppArmor log parser correctly handles older C-compatible field naming conventions. It specifically tests parsing an AppArmor denial log message and checks various properties of the parsed record.",
+    "logs": [
+        {
+            "function": "main",
+            "message_template": "Log failed to parse",
+            "reason": "Logs an error when the AppArmor log record fails to parse. This could happen if the log parser library is improperly handling the log format or if there are issues with memory allocation.",
+            "resolution": "Check that the libapparmor library is properly compiled and that the log format is supported by the version of the library being used. This could also indicate a bug in the parser that needs to be fixed."
+        },
+        {
+            "function": "main",
+            "message_template": "Log should have parsed as v2 form",
+            "reason": "Logs an error when the AppArmor log record is not recognized as version 2 syntax. This would occur if the parser incorrectly identified the log format version.",
+            "resolution": "Review the parser code to ensure it correctly identifies v2 format logs. Verify that the log line format matches what the parser expects for v2 syntax."
+        },
+        {
+            "function": "main",
+            "message_template": "Log should have NULL namespace",
+            "reason": "Logs an error when the namespace field in the parsed record is not NULL. This test is verifying that the older naming convention correctly handles the namespace field.",
+            "resolution": "Check the record parsing code to ensure it correctly sets the namespace field to NULL for logs without an explicit namespace. This might indicate a regression in the C-compatible field naming handling."
+        },
+        {
+            "function": "main",
+            "message_template": "Log should have file class",
+            "reason": "Logs an error when the class field in the parsed record is not 'file'. This test is verifying that the class information is correctly extracted from the log.",
+            "resolution": "Verify that the parser correctly extracts the 'class' field from the log message. Check for any changes in the log format or parsing logic that might affect how the class field is identified."
+        }
+    ]
+}

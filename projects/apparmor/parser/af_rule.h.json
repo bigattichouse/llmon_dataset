@@ -1,0 +1,6 @@
+{
+    "project": "apparmor",
+    "module": "../working/apparmor/parser/af_rule.h",
+    "summary": "This module defines the af_rule class for AppArmor's network access control rules. It provides functionality for handling address family rules, socket types, protocols, and labels for both local and peer connections in network security profiles.",
+    "logs": []
+}

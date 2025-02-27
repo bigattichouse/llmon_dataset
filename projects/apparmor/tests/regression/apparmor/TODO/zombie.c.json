@@ -1,0 +1,6 @@
+{
+    "project": "apparmor",
+    "module": "../working/apparmor/tests/regression/apparmor/TODO/zombie.c",
+    "summary": "This module is a placeholder for a test related to zombie processes in AppArmor. The test has not been implemented yet and is marked as TODO.",
+    "logs": []
+}

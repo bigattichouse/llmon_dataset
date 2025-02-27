@@ -1,0 +1,67 @@
+{
+    "project": "apparmor",
+    "module": "../working/apparmor/binutils/aa_enabled.c",
+    "summary": "This module implements a utility that checks if AppArmor is enabled on the system. It provides command-line options to check availability, require shared interfaces, and control output verbosity. The program returns different exit codes based on various conditions of AppArmor availability.",
+    "logs": [
+        {
+            "function": "print_help",
+            "message_template": "%s: [options]\n  options:\n  -x | --exclusive    Shared interfaces must be available\n  -q | --quiet        Don't print out any messages\n  -h | --help         Print help\n",
+            "reason": "Outputs the help message showing available command-line options when the user explicitly requests help or provides invalid options",
+            "resolution": "This is an informational message to guide users. No resolution required."
+        },
+        {
+            "function": "exit_with_error",
+            "message_template": "No - not available on this system.\n",
+            "reason": "AppArmor is not available on the system (ENOSYS error). This occurs when the kernel doesn't support AppArmor.",
+            "resolution": "Install a kernel with AppArmor support or recompile the current kernel with AppArmor enabled."
+        },
+        {
+            "function": "exit_with_error",
+            "message_template": "No - disabled at boot.\n",
+            "reason": "AppArmor is installed but was disabled during system boot (ECANCELED error)",
+            "resolution": "Enable AppArmor at boot time by modifying kernel parameters or system configuration."
+        },
+        {
+            "function": "exit_with_error",
+            "message_template": "Maybe - policy interface not available.\n",
+            "reason": "The AppArmor policy interface isn't available (ENOENT error), suggesting AppArmor might be partially installed or initialized",
+            "resolution": "Check if AppArmor is properly installed and the securityfs is mounted correctly."
+        },
+        {
+            "function": "exit_with_error",
+            "message_template": "Maybe - insufficient permissions to determine availability.\n",
+            "reason": "The user doesn't have sufficient permissions to determine if AppArmor is available (EPERM or EACCES error)",
+            "resolution": "Run the command with elevated privileges (e.g., using sudo) to properly check AppArmor status."
+        },
+        {
+            "function": "exit_with_error",
+            "message_template": "Partially - public shared interfaces are not available.\n",
+            "reason": "AppArmor is running, but public shared interfaces are not available (EBUSY error)",
+            "resolution": "This could be due to a system configuration issue. Check if AppArmor is running in a restricted mode or if there are issues with the shared interface configurations."
+        },
+        {
+            "function": "exit_with_error",
+            "message_template": "Error - %s\n",
+            "reason": "An unexpected error occurred when checking AppArmor status",
+            "resolution": "The specific error message provides details about what went wrong. Investigate based on the specific error message provided."
+        },
+        {
+            "function": "main",
+            "message_template": "unknown or incompatible options\n",
+            "reason": "The user provided too many or incompatible command-line options",
+            "resolution": "Review the command-line syntax and provide valid options as shown in the help message."
+        },
+        {
+            "function": "main",
+            "message_template": "unknown option '%s'\n",
+            "reason": "The user provided an unrecognized command-line option",
+            "resolution": "Use only the supported options (-x/--exclusive, -q/--quiet, -h/--help) as shown in the help message."
+        },
+        {
+            "function": "main",
+            "message_template": "Yes\n",
+            "reason": "AppArmor is enabled and functioning properly on the system",
+            "resolution": "This is an informational message indicating AppArmor is working correctly. No resolution required."
+        }
+    ]
+}

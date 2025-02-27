@@ -1,0 +1,31 @@
+{
+    "project": "apparmor",
+    "module": "../working/apparmor/tests/regression/apparmor/changehat.h",
+    "summary": "This header file defines a utility function for testing file operations in AppArmor. The do_open function attempts to open a file, write a test string, read it back, and compare the contents, reporting any errors to stderr.",
+    "logs": [
+        {
+            "function": "do_open",
+            "message_template": "FAIL: open %s failed - %s\n",
+            "reason": "Logs an error when the function fails to open the specified file. The first parameter is the filename and the second parameter is the error message from errno.",
+            "resolution": "Check file permissions, verify the file exists, and ensure the application has appropriate access rights. May also indicate filesystem issues or resource limitations."
+        },
+        {
+            "function": "do_open",
+            "message_template": "FAIL: write failed - %s\n",
+            "reason": "Logs an error when writing to the opened file fails. Shows the error message from errno explaining why the write operation failed.",
+            "resolution": "Check available disk space, verify write permissions on the file, and ensure the filesystem is not read-only or corrupted. May also indicate I/O errors or device issues."
+        },
+        {
+            "function": "do_open",
+            "message_template": "FAIL: read failed - %s\n",
+            "reason": "Logs an error when reading from the file fails or returns fewer bytes than expected. Includes the error message from errno.",
+            "resolution": "Verify the file wasn't truncated by another process, check for possible I/O errors or corruption. May indicate hardware issues if persistent."
+        },
+        {
+            "function": "do_open",
+            "message_template": "FAIL: comparison failed - %s\n",
+            "reason": "Logs an error when the data read back from the file doesn't match what was written. Indicates data corruption or modification.",
+            "resolution": "Check for concurrent access to the file by other processes, verify filesystem integrity, and consider potential hardware issues if the problem persists."
+        }
+    ]
+}

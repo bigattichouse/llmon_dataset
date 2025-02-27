@@ -1,0 +1,19 @@
+{
+    "project": "apparmor",
+    "module": "../working/apparmor/tests/regression/apparmor/net_raw.c",
+    "summary": "A regression test module for AppArmor that checks whether a process can create raw network sockets. This test attempts to open a raw socket and reports success or failure, which is useful for verifying that AppArmor's network access controls function correctly.",
+    "logs": [
+        {
+            "function": "main",
+            "message_template": "FAIL: Server: can't open raw socket",
+            "reason": "Indicates that the test program failed to create a raw socket. This would likely occur when AppArmor policy correctly restricts raw socket access or when the user doesn't have sufficient privileges to create raw sockets.",
+            "resolution": "If this failure is unexpected, verify that the AppArmor policy allows raw socket creation if intended, or ensure the test is running with sufficient privileges (typically requires root). If the restriction is intentional, this message confirms that the security control is working properly."
+        },
+        {
+            "function": "main",
+            "message_template": "PASS",
+            "reason": "Indicates that the test successfully created a raw socket, which suggests that the AppArmor profile allows raw socket access or is not enforcing restrictions on socket creation.",
+            "resolution": "If raw socket access should be restricted but this test passes, review and update the AppArmor profile to properly restrict raw socket creation. This is an informational message when the test behaves as expected."
+        }
+    ]
+}

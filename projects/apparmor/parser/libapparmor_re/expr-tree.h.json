@@ -1,0 +1,25 @@
+{
+    "project": "apparmor",
+    "module": "../working/apparmor/parser/libapparmor_re/expr-tree.h",
+    "summary": "Defines an expression tree for regular expressions used by AppArmor. Implements classes and algorithms to represent, manipulate, and convert regex syntax trees into finite automata for efficient pattern matching.",
+    "logs": [
+        {
+            "function": "dump (various node classes)",
+            "message_template": "Various regex syntax representations (e.g., '[]', '[^', '.', ')*', ')?', ')+', '< 0x')",
+            "reason": "Outputs debugging representations of regex syntax tree nodes when explicitly called for debugging purposes",
+            "resolution": "These are informational debug outputs, not errors. If they appear in logs, they are being explicitly included for diagnostic purposes."
+        },
+        {
+            "function": "debug_tree",
+            "message_template": "Various tree node representations",
+            "reason": "Outputs detailed debugging information about the expression tree structure",
+            "resolution": "This is diagnostic information used for troubleshooting regex parsing issues, not an error condition."
+        },
+        {
+            "function": "dump_syntax_tree",
+            "message_template": "Full regex syntax tree representation",
+            "reason": "Outputs the entire regular expression syntax tree for debugging purposes",
+            "resolution": "This is diagnostic information used during development or troubleshooting, not an error condition."
+        }
+    ]
+}

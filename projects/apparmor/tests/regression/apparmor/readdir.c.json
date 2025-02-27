@@ -1,0 +1,73 @@
+{
+    "project": "apparmor",
+    "module": "readdir.c",
+    "summary": "This module tests the behavior of directory reading functions (getdents/getdents64) under AppArmor by attempting to open and read a specified directory and checking if the result matches an expected value. It's primarily used for regression testing of AppArmor's filesystem access controls.",
+    "logs": [
+        {
+            "function": "preprocessor",
+            "message_template": "Neither SYS_getdents or SYS_getdents64 is defined, something has gone wrong!",
+            "reason": "Triggered at compile time if the system doesn't define either of the necessary system call numbers for directory enumeration. This would prevent the test from functioning properly.",
+            "resolution": "Check the build environment and ensure proper includes for the target architecture, as different platforms may define these system calls differently."
+        },
+        {
+            "function": "my_readdir",
+            "message_template": "open failed: %s\n",
+            "reason": "Logs when the test program fails to open the directory specified by the user. This could be due to permission issues, the directory not existing, or AppArmor blocking access.",
+            "resolution": "Verify the directory exists and the process has appropriate permissions. If under AppArmor, check if the AppArmor profile allows directory access."
+        },
+        {
+            "function": "my_readdir",
+            "message_template": "getdents failed: %s\n",
+            "reason": "Logs when the getdents syscall fails after successfully opening the directory. This could be due to memory issues or AppArmor blocking the directory read operation.",
+            "resolution": "Check AppArmor logs for denied operations. Ensure the AppArmor profile has the proper permissions to read directory contents."
+        },
+        {
+            "function": "my_readdir64",
+            "message_template": "open failed: %s\n",
+            "reason": "Logs when the test program fails to open the directory for the 64-bit version of the test. Similar to the 32-bit version, could be due to permissions, non-existent directory, or AppArmor restrictions.",
+            "resolution": "Verify the directory exists and the process has appropriate permissions. If under AppArmor, check if the AppArmor profile allows directory access."
+        },
+        {
+            "function": "my_readdir64",
+            "message_template": "getdents64 failed: %s\n",
+            "reason": "Logs when the getdents64 syscall fails after opening the directory. May occur when AppArmor blocks the operation or due to memory/system resource issues.",
+            "resolution": "Check AppArmor logs for denied operations. Ensure the AppArmor profile has proper permissions for directory content enumeration."
+        },
+        {
+            "function": "main",
+            "message_template": "usage: %s [dir] [expected retval]\n",
+            "reason": "Displayed when the program is invoked with incorrect command line arguments, instructing the user on proper usage.",
+            "resolution": "Use the correct command format by providing both the directory path and expected return value as arguments."
+        },
+        {
+            "function": "main",
+            "message_template": "ERROR: couldn't convert '%s' to an integer\n",
+            "reason": "Occurs when the second command line argument (expected return value) cannot be parsed as an integer.",
+            "resolution": "Provide a valid integer as the second argument, representing the expected return code from the directory read operations."
+        },
+        {
+            "function": "main",
+            "message_template": "expected = %d\n",
+            "reason": "Debug message showing the expected return value parsed from command line arguments.",
+            "resolution": "Informational log, no resolution required."
+        },
+        {
+            "function": "main",
+            "message_template": "FAIL - my_readdir returned %d, expected %d\n",
+            "reason": "Test failure message when the 32-bit directory reading function returns a different value than expected, indicating a test failure or unexpected behavior.",
+            "resolution": "Review AppArmor profile settings and compare actual vs. expected return codes to identify why the test is failing. May require adjusting either the test expectations or the AppArmor profile."
+        },
+        {
+            "function": "main",
+            "message_template": "FAIL - my_readdir64 returned %d, expected %d\n",
+            "reason": "Test failure message when the 64-bit directory reading function returns a different value than expected, indicating a test failure or unexpected behavior.",
+            "resolution": "Review AppArmor profile settings and compare actual vs. expected return codes to identify why the test is failing. May require adjusting either the test expectations or the AppArmor profile."
+        },
+        {
+            "function": "main",
+            "message_template": "PASS\n",
+            "reason": "Indicates that both directory reading tests succeeded, with actual return values matching expected values.",
+            "resolution": "Informational log, no resolution required. Test succeeded."
+        }
+    ]
+}

@@ -1,0 +1,49 @@
+{
+    "project": "apparmor",
+    "module": "../working/apparmor/tests/regression/apparmor/openat.c",
+    "summary": "This module is part of the AppArmor regression test suite and specifically tests the openat system call functionality. It creates test scenarios where a directory is opened, optionally deleted or renamed, and then attempts to open a file within that directory to verify AppArmor's handling of such operations.",
+    "logs": [
+        {
+            "function": "usage",
+            "message_template": "usage: %s [--delete] dir file\n",
+            "reason": "Displays usage information when the program is invoked with incorrect arguments or with the help option",
+            "resolution": "Use the command with proper arguments following the displayed usage pattern"
+        },
+        {
+            "function": "usage",
+            "message_template": "%s\n",
+            "reason": "Displays version or identification information as part of the usage help",
+            "resolution": "Informational message, no resolution required"
+        },
+        {
+            "function": "main",
+            "message_template": "FAIL: open %s failed - %s\n",
+            "reason": "Reports failure when opening the specified directory fails, likely due to permission issues or the directory not existing",
+            "resolution": "Verify the directory exists and has appropriate permissions, or check if AppArmor profiles are correctly configured to allow directory access"
+        },
+        {
+            "function": "main",
+            "message_template": "FAIL: rmdir %s failed - %s\n",
+            "reason": "Reports failure when removing the directory fails, which could happen if the directory is not empty or due to permission issues",
+            "resolution": "Ensure the directory is empty and the user has permissions to remove it, or check AppArmor profile settings for directory removal operations"
+        },
+        {
+            "function": "main",
+            "message_template": "FAIL: rename %s, %s failed - %s\n",
+            "reason": "Reports failure when renaming the directory fails, which could be due to permission issues or the target path already existing",
+            "resolution": "Check that the user has permissions to rename the directory and that the target name doesn't already exist, or verify AppArmor profile configurations for rename operations"
+        },
+        {
+            "function": "main",
+            "message_template": "FAIL: openat %s failed - %s\n",
+            "reason": "Reports failure when opening a file using openat fails, which is the key test in this module and could fail due to permission issues or AppArmor restrictions",
+            "resolution": "Examine AppArmor logs for denied operations related to openat calls, and adjust the AppArmor profile to allow the operation if legitimate"
+        },
+        {
+            "function": "main",
+            "message_template": "PASS\n",
+            "reason": "Indicates that all operations in the test completed successfully, meaning openat worked correctly with the current AppArmor profile settings",
+            "resolution": "Informational message indicating successful test completion, no resolution required"
+        }
+    ]
+}

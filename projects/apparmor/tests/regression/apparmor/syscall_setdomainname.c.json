@@ -1,0 +1,49 @@
+{
+    "project": "apparmor",
+    "module": "../working/apparmor/tests/regression/apparmor/syscall_setdomainname.c",
+    "summary": "This module tests the functionality of setdomainname and getdomainname system calls under AppArmor's regression testing framework. It attempts to change the system's domain name to a user-provided value, verifies the change, and then restores the original domain name.",
+    "logs": [
+        {
+            "function": "main",
+            "message_template": "usage: %s domain\n",
+            "reason": "Displays usage information when the user fails to provide exactly one command-line argument (the domain name). Likely due to incorrect invocation of the test program.",
+            "resolution": "Run the program with exactly one argument, which should be the domain name to test with."
+        },
+        {
+            "function": "main",
+            "message_template": "FAIL: invalid domain '%s'\n",
+            "reason": "Reports that the provided domain name is invalid, either empty or too long. Happens when the user provides an inappropriate domain name as the command-line argument.",
+            "resolution": "Provide a valid domain name that is not empty and less than BUFSIZE (4096) characters."
+        },
+        {
+            "function": "main",
+            "message_template": "FAIL: getdomainname failed - %s\n",
+            "reason": "Reports that the getdomainname system call failed when trying to retrieve the current domain name. Likely due to insufficient permissions or a system configuration issue.",
+            "resolution": "Check system permissions, ensure AppArmor is configured correctly, and verify the test is run with appropriate privileges."
+        },
+        {
+            "function": "main",
+            "message_template": "FAIL: setdomainname failed - %s\n",
+            "reason": "Reports that the setdomainname system call failed when trying to set the new domain name. Likely due to insufficient permissions or AppArmor restricting the operation.",
+            "resolution": "Ensure the test is run with sufficient privileges (likely root) and that the AppArmor profile allows the setdomainname operation."
+        },
+        {
+            "function": "main",
+            "message_template": "FAIL: attempted to set domainname to '%s', but '%s' was the result\n",
+            "reason": "Reports that the domain name set differs from what was requested. This indicates a potential system issue or unexpected behavior in the setdomainname function.",
+            "resolution": "Investigate why the domain name was not set correctly. This could be due to system limitations, character encoding issues, or potential bugs in the implementation."
+        },
+        {
+            "function": "main",
+            "message_template": "FAIL: setdomainname failed restting to old name - %s\n",
+            "reason": "Reports that the attempt to restore the original domain name failed. This occurs after the test completed but couldn't restore the original state.",
+            "resolution": "Manually reset the system's domain name. Investigate why the reset failed, which may indicate persistent permission or configuration issues."
+        },
+        {
+            "function": "main",
+            "message_template": "PASS\n",
+            "reason": "Indicates that all test operations succeeded: the domain name was changed, verified, and restored successfully.",
+            "resolution": "Information log, no resolution required. This indicates successful test completion."
+        }
+    ]
+}

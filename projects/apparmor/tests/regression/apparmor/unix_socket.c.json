@@ -1,0 +1,151 @@
+{
+    "project": "apparmor",
+    "module": "../working/apparmor/tests/regression/apparmor/unix_socket.c",
+    "summary": "This module is a test program for Unix socket functionality, testing various socket types (stream, datagram, seqpacket) and addressing methods (pathname, abstract, unnamed, autobind). It creates a server socket, spawns a client process, and verifies correct message transmission between them.",
+    "logs": [
+        {
+            "function": "connection_based_messaging",
+            "message_template": "FAIL - accept",
+            "reason": "Logs when the accept() system call fails to accept a connection on the server socket. Likely due to resource limitations, permissions issues, or network configuration problems.",
+            "resolution": "Check for resource limits (max file descriptors), socket permissions, and network configuration. May require increasing system limits or adjusting permissions."
+        },
+        {
+            "function": "connection_based_messaging",
+            "message_template": "FAIL - write",
+            "reason": "Logs when the write() system call fails to send data to the connected peer socket. Could be due to closed connection, buffer issues, or permissions.",
+            "resolution": "Verify the connection is still active and peer is still running. Check for buffer overflow conditions or permission restrictions."
+        },
+        {
+            "function": "connection_based_messaging",
+            "message_template": "FAIL - read",
+            "reason": "Logs when the read() system call fails to receive data from the connected peer socket. Could be due to closed connection, timeout, or permissions.",
+            "resolution": "Ensure the peer is still connected and sending data. Check for timeouts and verify AppArmor permissions allow socket communications."
+        },
+        {
+            "function": "connectionless_messaging",
+            "message_template": "FAIL - recvfrom",
+            "reason": "Logs when the recvfrom() system call fails while trying to receive data from a datagram socket. Could be due to permissions, invalid socket, or buffer issues.",
+            "resolution": "Check AppArmor profile permissions for socket operations. Verify the socket is properly configured for datagram communication."
+        },
+        {
+            "function": "connectionless_messaging",
+            "message_template": "FAIL - sendto",
+            "reason": "Logs when the sendto() system call fails to send data to a specified address on a datagram socket. Could be due to permissions, invalid address, or buffer issues.",
+            "resolution": "Verify the destination address is valid and reachable. Check AppArmor profile permissions for network operations."
+        },
+        {
+            "function": "connectionless_messaging",
+            "message_template": "FAIL - recv",
+            "reason": "Logs when the recv() system call fails to receive data from a datagram socket. Could be due to permissions, invalid socket, or buffer issues.",
+            "resolution": "Check AppArmor profile permissions for socket operations. Verify the socket is properly configured and the peer is sending data."
+        },
+        {
+            "function": "main",
+            "message_template": "Usage: %s <socket> <type> <message> <client>\n\n  socket\t\ta path for a bound socket or a name prepended with '@' for an abstract socket\n  type\t\tstream, dgram, or seqpacket\n",
+            "reason": "Displays usage information when the program is invoked with incorrect arguments. Shows the expected command-line format.",
+            "resolution": "Follow the usage instructions to provide the correct arguments: socket path (or @abstract-name), socket type, message content, and client program path."
+        },
+        {
+            "function": "main",
+            "message_template": "FAIL - socket addr too big\n",
+            "reason": "Logs when the provided socket address (for abstract socket) exceeds the maximum allowed size for sun_path in sockaddr_un structure.",
+            "resolution": "Use a shorter socket name. The maximum length for abstract socket names is typically 108 bytes (size of sun_path field in sockaddr_un)."
+        },
+        {
+            "function": "main",
+            "message_template": "FAIL - socket addr too big\n",
+            "reason": "Logs when the provided socket pathname exceeds the maximum allowed size for sun_path in sockaddr_un structure.",
+            "resolution": "Use a shorter socket pathname. The maximum length for Unix domain socket pathnames is typically 108 bytes (size of sun_path field in sockaddr_un)."
+        },
+        {
+            "function": "main",
+            "message_template": "FAIL - bad socket type: %s\n",
+            "reason": "Logs when an invalid socket type is provided as a command-line argument. The program only accepts 'stream', 'dgram', or 'seqpacket'.",
+            "resolution": "Use one of the supported socket types: 'stream', 'dgram', or 'seqpacket'."
+        },
+        {
+            "function": "main",
+            "message_template": "FAIL - message too big\n",
+            "reason": "Logs when the message to be sent exceeds the maximum allowed buffer size (MSG_BUF_MAX, defined as 1024 bytes).",
+            "resolution": "Use a shorter message that fits within the 1024-byte limit defined by MSG_BUF_MAX."
+        },
+        {
+            "function": "main",
+            "message_template": "FAIL - socketpair",
+            "reason": "Logs when the socketpair() system call fails to create a pair of connected sockets for unnamed socket testing. Could be due to resource limits or permissions.",
+            "resolution": "Check for resource limitations (max file descriptors) and verify AppArmor profile permissions allow creating socket pairs."
+        },
+        {
+            "function": "main",
+            "message_template": "FAIL - fcntl",
+            "reason": "Logs when the fcntl() system call fails to set the close-on-exec flag for the socket. Could be due to invalid file descriptor or permissions.",
+            "resolution": "Verify the socket file descriptor is valid and the AppArmor profile allows fcntl operations on sockets."
+        },
+        {
+            "function": "main",
+            "message_template": "FAIL - socket",
+            "reason": "Logs when the socket() system call fails to create a new socket. Could be due to resource limits, permissions, or invalid arguments.",
+            "resolution": "Check for resource limitations (max file descriptors) and verify AppArmor profile permissions allow creating sockets of the specified type."
+        },
+        {
+            "function": "main",
+            "message_template": "FAIL - bind",
+            "reason": "Logs when the bind() system call fails to bind the socket to the specified address. Could be due to permissions, address already in use, or invalid address.",
+            "resolution": "Check if another process is using the same socket address. Verify file permissions if using a pathname socket. Ensure AppArmor allows binding to the specified socket path."
+        },
+        {
+            "function": "main",
+            "message_template": "FAIL - listen",
+            "reason": "Logs when the listen() system call fails to mark the socket as passive (listening for connections). Could be due to invalid socket type or permissions.",
+            "resolution": "Verify the socket is of a connection-oriented type (SOCK_STREAM or SOCK_SEQPACKET) and AppArmor allows the listen operation."
+        },
+        {
+            "function": "main",
+            "message_template": "FAIL - getsockname",
+            "reason": "Logs when the getsockname() system call fails to retrieve the socket's bound address. Used during autobind to determine the assigned address.",
+            "resolution": "Ensure the socket is valid and properly bound. Check AppArmor profile permissions for socket operations."
+        },
+        {
+            "function": "main",
+            "message_template": "FAIL - getsockname: address too long",
+            "reason": "Logs when getsockname() returns an address that exceeds the size of the sockaddr_un structure. This should not happen under normal circumstances.",
+            "resolution": "This likely indicates a kernel bug or memory corruption. Report the issue to the AppArmor developers with detailed reproduction steps."
+        },
+        {
+            "function": "main",
+            "message_template": "FAIL - fork",
+            "reason": "Logs when the fork() system call fails to create a child process for the client. Could be due to resource limits or permissions.",
+            "resolution": "Check system resource limits, particularly max processes (ulimit -u) and available memory. The system may be under heavy load or out of resources."
+        },
+        {
+            "function": "main",
+            "message_template": "FAIL - asprintf",
+            "reason": "Logs when the asprintf() function fails to allocate memory and format a string containing the peer socket file descriptor. Likely due to memory allocation failure.",
+            "resolution": "Check for memory pressure on the system. If persistent, increase available memory or reduce memory usage in other applications."
+        },
+        {
+            "function": "main",
+            "message_template": "FAIL - execl",
+            "reason": "Logs when the execl() system call fails to execute the client program. Could be due to permissions, missing executable, or resource limits.",
+            "resolution": "Verify the client program exists, is executable, and is in the expected path. Check permissions and AppArmor profile settings for executing the client."
+        },
+        {
+            "function": "main",
+            "message_template": "FAIL - buffer comparison. Got \"%s\", expected \"%s\"\n",
+            "reason": "Logs when the message received back from the client does not match the original message sent. Indicates a data corruption or communication issue.",
+            "resolution": "This suggests the message was modified during transmission or the client is not properly echoing the message. Debug the client application and check for data handling issues."
+        },
+        {
+            "function": "main",
+            "message_template": "FAIL - shutdown",
+            "reason": "Logs when the shutdown() system call fails to shut down the socket connection. Could be due to invalid socket state or permissions.",
+            "resolution": "Verify the socket is still valid and connected. Check AppArmor profile permissions for socket shutdown operations."
+        },
+        {
+            "function": "main",
+            "message_template": "PASS\n",
+            "reason": "Logs when all tests pass successfully, indicating that the Unix socket functionality works as expected with the current AppArmor profile.",
+            "resolution": "Information log, no resolution required. This indicates successful test completion."
+        }
+    ]
+}

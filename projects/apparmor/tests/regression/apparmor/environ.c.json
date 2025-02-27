@@ -1,0 +1,31 @@
+{
+    "project": "apparmor",
+    "module": "../working/apparmor/tests/regression/apparmor/environ.c",
+    "summary": "This test module verifies that environment variables can be properly set and accessed by programs running under AppArmor confinement. It forks a child process with a specified environment variable and reports success or failure based on the child's execution outcome.",
+    "logs": [
+        {
+            "function": "main",
+            "message_template": "Usage: %s program VAR=value\n",
+            "reason": "Logs an error message when the program is called with incorrect command-line arguments. This occurs when there are fewer than 3 arguments or the second argument doesn't contain an equals sign.",
+            "resolution": "Ensure the program is called with the correct format: environ <program> VAR=value"
+        },
+        {
+            "function": "main",
+            "message_template": "PASS\n",
+            "reason": "Logs a success message when the child process executes successfully and returns a zero exit code, indicating that the environment variable was properly processed.",
+            "resolution": "Informational log, no resolution required"
+        },
+        {
+            "function": "main",
+            "message_template": "FAIL: Child failed\n",
+            "reason": "Logs a failure message when the child process exits with a non-zero exit code or terminates due to a signal, indicating a problem with executing the program or handling the environment variable.",
+            "resolution": "Check if the specified program exists, has execute permissions, and can properly handle the environment variable provided"
+        },
+        {
+            "function": "main",
+            "message_template": "FAIL: fork() failed:",
+            "reason": "Logs a failure message when the fork() system call fails to create a child process. The perror function appends the error description based on errno.",
+            "resolution": "This typically indicates system resource limitations such as reaching the maximum number of processes or insufficient memory. Check system resource availability and process limits."
+        }
+    ]
+}

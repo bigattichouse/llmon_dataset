@@ -1,0 +1,31 @@
+{
+    "project": "apparmor",
+    "module": "libraries/libapparmor/src/tst_kernel.c",
+    "summary": "A test module that verifies the functionality of the splitcon and aa_splitcon functions, which are responsible for parsing AppArmor security context strings into labels and modes. The tests cover various input formats including empty strings, paths, profile names, and special characters.",
+    "logs": [
+        {
+            "function": "do_test_splitcon",
+            "message_template": "FAIL: %s: label \"%s\" != \"%s\"\n",
+            "reason": "Logs a test failure when the actual label from splitcon does not match the expected label. This typically indicates a parsing error in the context string splitting functionality.",
+            "resolution": "Review the splitcon function implementation to ensure it correctly handles the test case that failed. Compare the expected and actual label values to understand what's incorrect in the parsing logic."
+        },
+        {
+            "function": "do_test_splitcon",
+            "message_template": "FAIL: %s: mode \"%s\" != \"%s\"\n",
+            "reason": "Logs a test failure when the actual mode from splitcon does not match the expected mode. This indicates an issue with extracting the mode part (like 'enforce' or 'complain') from a context string.",
+            "resolution": "Debug the splitcon function's mode extraction logic. The issue could be related to parenthesis handling or string parsing. Check if the test input has unusual formatting that might be causing the parsing to fail."
+        },
+        {
+            "function": "do_test_aa_splitcon",
+            "message_template": "FAIL: %s: label \"%s\" != \"%s\"\n",
+            "reason": "Logs a test failure when the actual label from aa_splitcon does not match the expected label. This usually indicates issues with the higher-level security context parsing function.",
+            "resolution": "Examine the aa_splitcon implementation for bugs in handling the specific test case. Since aa_splitcon is a wrapper around splitcon, the issue might be in how it preprocesses inputs before calling the lower-level function."
+        },
+        {
+            "function": "do_test_aa_splitcon",
+            "message_template": "FAIL: %s: mode \"%s\" != \"%s\"\n",
+            "reason": "Logs a test failure when the actual mode from aa_splitcon does not match the expected mode. This reveals problems in parsing the enforcement mode in the AppArmor context.",
+            "resolution": "Check the aa_splitcon function's mode parsing logic, especially for complex cases like nested parentheses or unexpected string formats. The test failure provides details about what specific test case is failing."
+        }
+    ]
+}

@@ -1,0 +1,31 @@
+{
+    "project": "apparmor",
+    "module": "../working/apparmor/tests/regression/apparmor/swap.c",
+    "summary": "This module is a test utility for AppArmor that enables or disables swap space using a specified swap file. It validates that swapon and swapoff operations work correctly under AppArmor confinement.",
+    "logs": [
+        {
+            "function": "main",
+            "message_template": "usage: %s [on|off] swapfile\n",
+            "reason": "Displayed when the program is executed with incorrect number of arguments or with an invalid operation parameter (not 'on' or 'off')",
+            "resolution": "Ensure the program is called with exactly two arguments: the operation ('on' or 'off') and the path to the swap file"
+        },
+        {
+            "function": "main",
+            "message_template": "FAIL: swapon %s failed - %s\n",
+            "reason": "Displayed when the swapon operation fails. This could be due to insufficient permissions, invalid swap file, or the file already being in use as swap space",
+            "resolution": "Check that the swap file exists, has correct permissions, is properly formatted as swap space, and is not already in use. Also verify that AppArmor profile allows swap operations"
+        },
+        {
+            "function": "main",
+            "message_template": "FAIL: swapoff %s failed - %s\n",
+            "reason": "Displayed when the swapoff operation fails. This could be due to insufficient permissions, the specified file not being a swap file, or the swap space is currently in use",
+            "resolution": "Check that the swap file exists, has correct permissions, is currently being used as swap space, and that processes aren't actively using the swap. Also verify that AppArmor profile allows swap operations"
+        },
+        {
+            "function": "main",
+            "message_template": "PASS\n",
+            "reason": "Displayed when the swapon or swapoff operation completes successfully",
+            "resolution": "Informational message, no resolution required"
+        }
+    ]
+}

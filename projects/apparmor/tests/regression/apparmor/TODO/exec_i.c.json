@@ -1,0 +1,6 @@
+{
+    "project": "apparmor",
+    "module": "../working/apparmor/tests/regression/apparmor/TODO/exec_i.c",
+    "summary": "This is a placeholder file for a future regression test related to AppArmor's handling of inherited execution. The test has not been implemented yet and currently only contains a comment indicating its purpose.",
+    "logs": []
+}

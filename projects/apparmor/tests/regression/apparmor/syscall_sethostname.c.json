@@ -1,0 +1,49 @@
+{
+    "project": "apparmor",
+    "module": "../working/apparmor/tests/regression/apparmor/syscall_sethostname.c",
+    "summary": "A regression test program that verifies whether the sethostname syscall works correctly under AppArmor confinement. It tests getting the current hostname, setting a new one, verifying the change, and resetting to the original hostname.",
+    "logs": [
+        {
+            "function": "main",
+            "message_template": "usage: %s hostname\n",
+            "reason": "Indicates the program was called with incorrect arguments. The user must provide exactly one argument which is the hostname to set.",
+            "resolution": "Run the program with a single hostname argument, for example: './syscall_sethostname mynewhostname'"
+        },
+        {
+            "function": "main",
+            "message_template": "FAIL: invalid hostname '%s'\n",
+            "reason": "The provided hostname is either empty or too long (over 4096 characters).",
+            "resolution": "Provide a valid hostname that is non-empty and shorter than 4096 characters."
+        },
+        {
+            "function": "main",
+            "message_template": "FAIL: gethostname failed - %s\n",
+            "reason": "The gethostname system call failed when trying to get the current hostname. This could be due to insufficient permissions or other system-level issues.",
+            "resolution": "Ensure the AppArmor profile allows gethostname operation. Check if the test is running with sufficient privileges."
+        },
+        {
+            "function": "main",
+            "message_template": "FAIL: sethostname failed - %s\n",
+            "reason": "The sethostname system call failed when trying to set the new hostname. This is often due to insufficient permissions or an AppArmor profile restricting the operation.",
+            "resolution": "Verify the AppArmor profile allows sethostname operation. The test likely needs to run with root privileges or have the CAP_SYS_ADMIN capability."
+        },
+        {
+            "function": "main",
+            "message_template": "FAIL: attempted to set hostname to '%s', but '%s' was the result\n",
+            "reason": "The hostname was changed but not to the expected value. This indicates partial success but potential truncation or other modification of the hostname.",
+            "resolution": "Check if there are any system-level hostname validation or modification rules. Verify that the hostname meets system requirements."
+        },
+        {
+            "function": "main",
+            "message_template": "FAIL: sethostname failed restting to old name - %s\n",
+            "reason": "Failed to reset the hostname to its original value, leaving the system with the new hostname permanently. This is a cleanup error after the main test.",
+            "resolution": "Manually reset the hostname using the 'hostname' command. This error indicates a potential inconsistency in permission handling."
+        },
+        {
+            "function": "main",
+            "message_template": "PASS\n",
+            "reason": "The test successfully completed all operations: getting original hostname, setting new hostname, verifying the change, and resetting to the original hostname.",
+            "resolution": "No action needed. This is an informational message indicating successful test completion."
+        }
+    ]
+}

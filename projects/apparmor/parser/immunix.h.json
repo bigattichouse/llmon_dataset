@@ -1,0 +1,25 @@
+{
+    "project": "apparmor",
+    "module": "immunix.h",
+    "summary": "This header file defines constants, macros, and functions for the AppArmor parser, including permission flags, permission checking macros, and debug logging functionality. It primarily handles the encoding and manipulation of permissions used in AppArmor profiles.",
+    "logs": [
+        {
+            "function": "PDEBUG",
+            "message_template": "parser: %s",
+            "reason": "Outputs debug information when the DEBUG flag is defined. This is a general debug message prefix used with various specific messages.",
+            "resolution": "This is a debug message that should only appear during development or when DEBUG is enabled. No resolution required unless the actual message indicates a specific issue."
+        },
+        {
+            "function": "is_merged_x_consistent",
+            "message_template": "failed user merge 0x%x 0x%x\n",
+            "reason": "Debug message indicating inconsistent user executable permissions during a merge operation. This occurs when two permissions with different exec types are being merged.",
+            "resolution": "Check the conflicting profile permissions being merged. The profiles likely have incompatible executable permission definitions that need to be harmonized."
+        },
+        {
+            "function": "is_merged_x_consistent",
+            "message_template": "failed other merge 0x%x 0x%x\n",
+            "reason": "Debug message indicating inconsistent 'other' executable permissions during a merge operation. This occurs when merging profiles with conflicting exec types.",
+            "resolution": "Review the conflicting profile permissions for 'other' users. The profiles likely have incompatible executable permission definitions that need to be aligned."
+        }
+    ]
+}

@@ -1,0 +1,31 @@
+{
+    "project": "apparmor",
+    "module": "../working/apparmor/tests/regression/apparmor/at_secure.c",
+    "summary": "This module checks if the AT_SECURE auxiliary vector value matches an expected value, which is used in regression testing for AppArmor. It verifies the secure execution state of a process, which is important for security-sensitive applications.",
+    "logs": [
+        {
+            "function": "check_at_secure",
+            "message_template": "FAIL - getauxval",
+            "reason": "Logs an error when the getauxval function fails to retrieve the AT_SECURE value. This likely occurs if the system doesn't support auxiliary vectors or if there's an issue with the kernel.",
+            "resolution": "Check if the kernel supports auxiliary vectors and ensure that the system is running a compatible version. This could also indicate a more serious system issue that requires updating the kernel or fixing system libraries."
+        },
+        {
+            "function": "check_at_secure",
+            "message_template": "FAIL - AT_SECURE value (%lu) did not match the expected value (%lu)",
+            "reason": "Logs an error when the AT_SECURE value doesn't match the expected value. This indicates a potential security issue or change in the process's security context.",
+            "resolution": "Investigate why the security context is different than expected. This could be due to AppArmor profile changes, system security policy changes, or the program being run in an unexpected environment (e.g., with elevated privileges)."
+        },
+        {
+            "function": "check_at_secure",
+            "message_template": "PASS",
+            "reason": "Logs a success message when the AT_SECURE value matches the expected value, indicating the security context is as expected.",
+            "resolution": "Informational log, no resolution required."
+        },
+        {
+            "function": "main",
+            "message_template": "usage: %s EXPECTED_AT_SECURE",
+            "reason": "Logs usage instructions when the program is called with incorrect arguments, informing the user of the correct usage pattern.",
+            "resolution": "Run the program with the correct argument format, providing the expected AT_SECURE value as a single integer argument."
+        }
+    ]
+}

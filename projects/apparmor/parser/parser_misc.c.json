@@ -1,0 +1,319 @@
+{
+    "project": "apparmor",
+    "module": "parser_misc.c",
+    "summary": "This module provides utility functions for the AppArmor parser, including capability handling, permission parsing, string processing, and label validation. It contains fundamental helper methods used throughout the parser to process, validate and convert various elements of AppArmor policy syntax.",
+    "logs": [
+        {
+            "function": "is_blacklisted",
+            "message_template": "Ignoring: '%s'",
+            "reason": "Logs when a blacklisted name is encountered during profile parsing, which results in the item being ignored",
+            "resolution": "Check if the path or name is intentionally blacklisted. If not, you may need to update the blacklist configuration."
+        },
+        {
+            "function": "find_cap_entry_by_name",
+            "message_template": "Found %s %s",
+            "reason": "Debug message when a capability is found by name",
+            "resolution": "Informational log, no resolution required"
+        },
+        {
+            "function": "find_cap_entry_by_num",
+            "message_template": "Found %d %d",
+            "reason": "Debug message when a capability is found by number",
+            "resolution": "Informational log, no resolution required"
+        },
+        {
+            "function": "name_to_capability",
+            "message_template": "Unable to find %s %s",
+            "reason": "Debug message when a capability name cannot be found",
+            "resolution": "Informational log, no resolution required"
+        },
+        {
+            "function": "capable_add_cap",
+            "message_template": "feature capability '%s:%d' does not equal expected %d. Ignoring ...",
+            "reason": "Warns when a capability feature doesn't match the expected value",
+            "resolution": "This may indicate a mismatch between the system's capabilities and what AppArmor expects. Check the capability declarations or update your AppArmor version."
+        },
+        {
+            "function": "capable_add_cap",
+            "message_template": "Out of memory",
+            "reason": "Error when memory allocation fails while adding a capability",
+            "resolution": "The system is likely running out of memory. Free up resources or add more RAM to the system."
+        },
+        {
+            "function": "clear_cap_flag",
+            "message_template": "Clearing capability flag for capability \"%s\"",
+            "reason": "Debug message when clearing flags for a capability",
+            "resolution": "Informational log, no resolution required"
+        },
+        {
+            "function": "add_cap_feature_mask",
+            "message_template": "caplen is > remaining feature string",
+            "reason": "Debug message when capability length is invalid during feature parsing",
+            "resolution": "Informational log, no resolution required"
+        },
+        {
+            "function": "add_cap_feature_mask",
+            "message_template": "Adding %d capabilities",
+            "reason": "Debug message when adding capabilities from feature mask",
+            "resolution": "Informational log, no resolution required"
+        },
+        {
+            "function": "process_var",
+            "message_template": "ASSERT: Found var '%s' without variable prefix",
+            "reason": "Error when a variable is found without the expected prefix (@ or $)",
+            "resolution": "Check your AppArmor policy for malformed variable references. Variables should start with @ or $."
+        },
+        {
+            "function": "process_var",
+            "message_template": "ASSERT: No matching '}' in variable '%s'",
+            "reason": "Error when a variable has an opening brace but no closing brace",
+            "resolution": "Fix the variable syntax in your AppArmor policy. Ensure all opening braces have matching closing braces."
+        },
+        {
+            "function": "warn_uppercase",
+            "message_template": "Uppercase qualifiers \"RWLIMX\" are deprecated, please convert to lowercase\nSee the apparmor.d(5) manpage for details.",
+            "reason": "Warning when deprecated uppercase permission qualifiers are used",
+            "resolution": "Update your AppArmor policy to use lowercase permission qualifiers instead of uppercase ones."
+        },
+        {
+            "function": "parse_sub_perms",
+            "message_template": "Parsing perms: %s",
+            "reason": "Debug message showing permissions being parsed",
+            "resolution": "Informational log, no resolution required"
+        },
+        {
+            "function": "parse_sub_perms",
+            "message_template": "Parsing perms: found %s READ imply X",
+            "reason": "Debug message when read permission implies execute permission",
+            "resolution": "Informational log, no resolution required"
+        },
+        {
+            "function": "parse_sub_perms",
+            "message_template": "Parsing perms: found %s READ",
+            "reason": "Debug message when read permission is found during parsing",
+            "resolution": "Informational log, no resolution required"
+        },
+        {
+            "function": "parse_sub_perms",
+            "message_template": "Parsing perms: found %s WRITE",
+            "reason": "Debug message when write permission is found during parsing",
+            "resolution": "Informational log, no resolution required"
+        },
+        {
+            "function": "parse_sub_perms",
+            "message_template": "Conflict 'a' and 'w' perms are mutually exclusive.",
+            "reason": "Error when both append ('a') and write ('w') permissions are specified, which is not allowed",
+            "resolution": "Update your AppArmor policy to use either append ('a') or write ('w') permission, but not both, as they are mutually exclusive."
+        },
+        {
+            "function": "parse_sub_perms",
+            "message_template": "Parsing perms: found %s APPEND",
+            "reason": "Debug message when append permission is found during parsing",
+            "resolution": "Informational log, no resolution required"
+        },
+        {
+            "function": "parse_sub_perms",
+            "message_template": "Parsing perms: found %s LINK",
+            "reason": "Debug message when link permission is found during parsing",
+            "resolution": "Informational log, no resolution required"
+        },
+        {
+            "function": "parse_sub_perms",
+            "message_template": "Parsing perms: found %s LOCK",
+            "reason": "Debug message when lock permission is found during parsing",
+            "resolution": "Informational log, no resolution required"
+        },
+        {
+            "function": "parse_sub_perms",
+            "message_template": "Parsing perms: found INHERIT",
+            "reason": "Debug message when inherit permission mode is found during parsing",
+            "resolution": "Informational log, no resolution required"
+        },
+        {
+            "function": "parse_sub_perms",
+            "message_template": "Exec qualifier 'i' invalid, conflicting qualifier already specified",
+            "reason": "Error when an inherit exec qualifier conflicts with another qualifier",
+            "resolution": "Fix your AppArmor policy by removing conflicting exec qualifiers. Only use one type of exec qualifier per rule."
+        },
+        {
+            "function": "parse_sub_perms",
+            "message_template": "Unconfined exec qualifier (%c%c) allows some dangerous environment variables to be passed to the unconfined process; 'man 5 apparmor.d' for details.",
+            "reason": "Warning about using unconfined exec qualifier which may be a security risk",
+            "resolution": "Review the security implications of using unconfined exec qualifiers. Consider using a more restrictive approach if possible."
+        },
+        {
+            "function": "parse_sub_perms",
+            "message_template": "Parsing perms: found UNCONFINED",
+            "reason": "Debug message when unconfined permission mode is found during parsing",
+            "resolution": "Informational log, no resolution required"
+        },
+        {
+            "function": "parse_sub_perms",
+            "message_template": "Exec qualifier '%c' invalid, conflicting qualifier already specified",
+            "reason": "Error when an exec qualifier conflicts with another qualifier",
+            "resolution": "Fix your AppArmor policy by removing conflicting exec qualifiers. Only use one type of exec qualifier per rule."
+        },
+        {
+            "function": "parse_sub_perms",
+            "message_template": "Exec qualifier '%c%c' invalid, conflicting qualifier already specified",
+            "reason": "Error when an exec qualifier with subtype conflicts with another qualifier",
+            "resolution": "Fix your AppArmor policy by removing conflicting exec qualifiers. Only use one type of exec qualifier per rule."
+        },
+        {
+            "function": "parse_sub_perms",
+            "message_template": "Parsing perms: found %s MMAP",
+            "reason": "Debug message when mmap permission is found during parsing",
+            "resolution": "Informational log, no resolution required"
+        },
+        {
+            "function": "parse_sub_perms",
+            "message_template": "Parsing perms: found invalid upper case char %c",
+            "reason": "Debug message when an invalid uppercase character is found in permissions",
+            "resolution": "Informational log, no resolution required"
+        },
+        {
+            "function": "parse_sub_perms",
+            "message_template": "Internal: unexpected perms character '%c' in input",
+            "reason": "Error when an unexpected character is found in permission specification",
+            "resolution": "Check your AppArmor policy for invalid characters in permission specifications. Only valid permission characters should be used."
+        },
+        {
+            "function": "parse_sub_perms",
+            "message_template": "Parsed perms: %s 0x%x",
+            "reason": "Debug message showing the final parsed permissions",
+            "resolution": "Informational log, no resolution required"
+        },
+        {
+            "function": "parse_perms",
+            "message_template": "Internal error generated invalid perm 0x%llx",
+            "reason": "Error when parsing results in invalid permission bits",
+            "resolution": "This indicates an internal parser error. Report the issue to the AppArmor developers with the specific policy that caused the error."
+        },
+        {
+            "function": "parse_X_sub_perms",
+            "message_template": "Parsing %s perms: %s",
+            "reason": "Debug message when parsing specialized permissions",
+            "resolution": "Informational log, no resolution required"
+        },
+        {
+            "function": "parse_X_sub_perms",
+            "message_template": "Parsing %s perms: found %s READ",
+            "reason": "Debug message when read permission is found during specialized parsing",
+            "resolution": "Informational log, no resolution required"
+        },
+        {
+            "function": "parse_X_sub_perms",
+            "message_template": "Parsing %s perms: found %s WRITE",
+            "reason": "Debug message when write permission is found during specialized parsing",
+            "resolution": "Informational log, no resolution required"
+        },
+        {
+            "function": "parse_X_sub_perms",
+            "message_template": "Parsing %s perms: found invalid upper case char %c",
+            "reason": "Debug message when an invalid uppercase character is found in specialized permissions",
+            "resolution": "Informational log, no resolution required"
+        },
+        {
+            "function": "parse_X_sub_perms",
+            "message_template": "Internal: unexpected %s perms character '%c' in input",
+            "reason": "Error when an unexpected character is found in specialized permission specification",
+            "resolution": "Check your AppArmor policy for invalid characters in permission specifications. Only valid permission characters should be used."
+        },
+        {
+            "function": "parse_X_sub_perms",
+            "message_template": "Parsed %s perms: %s 0x%x",
+            "reason": "Debug message showing the final parsed specialized permissions",
+            "resolution": "Informational log, no resolution required"
+        },
+        {
+            "function": "parse_X_perms",
+            "message_template": "Internal error generated invalid %s perm 0x%x",
+            "reason": "Error when parsing specialized permissions results in invalid bits",
+            "resolution": "This indicates an internal parser error. Report the issue to the AppArmor developers with the specific policy that caused the error."
+        },
+        {
+            "function": "_parse_label",
+            "message_template": "Namespace not terminated: %s",
+            "reason": "Error when a label has an unterminated namespace specification",
+            "resolution": "Fix the profile label in your AppArmor policy. Ensure namespace specifications are properly terminated with a colon."
+        },
+        {
+            "function": "_parse_label",
+            "message_template": "Empty namespace: %s",
+            "reason": "Error when a label has an empty namespace specification",
+            "resolution": "Fix the profile label in your AppArmor policy. Namespaces cannot be empty, they must contain a valid identifier."
+        },
+        {
+            "function": "_parse_label",
+            "message_template": "Empty named transition profile name: %s",
+            "reason": "Error when a label has an empty profile name in a named transition",
+            "resolution": "Fix the profile label in your AppArmor policy. Profile names in named transitions cannot be empty."
+        },
+        {
+            "function": "_parse_label",
+            "message_template": "Unknown error while parsing label: %s",
+            "reason": "Error when an unknown error occurs during label parsing",
+            "resolution": "This indicates an unexpected parsing error. Check your AppArmor policy for malformed profile labels."
+        },
+        {
+            "function": "parse_label",
+            "message_template": "Memory allocation error.",
+            "reason": "Error when memory allocation fails during label parsing",
+            "resolution": "The system is likely running out of memory. Free up resources or add more RAM to the system."
+        },
+        {
+            "function": "new_entry",
+            "message_template": " Insertion of: (%s)",
+            "reason": "Debug message when inserting a new entry",
+            "resolution": "Informational log, no resolution required"
+        },
+        {
+            "function": "debug_cod_entries",
+            "message_template": "--- Entries ---",
+            "reason": "Debug message header when displaying code entries",
+            "resolution": "Informational log, no resolution required"
+        },
+        {
+            "function": "debug_cod_entries",
+            "message_template": "Perms:\t",
+            "reason": "Debug message when displaying permissions",
+            "resolution": "Informational log, no resolution required"
+        },
+        {
+            "function": "debug_cod_entries",
+            "message_template": "\tName:\t(%s)",
+            "reason": "Debug message when displaying an entry name",
+            "resolution": "Informational log, no resolution required"
+        },
+        {
+            "function": "debug_cod_entries",
+            "message_template": "\tName:\tNULL",
+            "reason": "Debug message when displaying a NULL entry name",
+            "resolution": "Informational log, no resolution required"
+        },
+        {
+            "function": "debug_cod_entries",
+            "message_template": "\tlink:\t(%s)",
+            "reason": "Debug message when displaying a link",
+            "resolution": "Informational log, no resolution required"
+        },
+        {
+            "function": "check_x_qualifier",
+            "message_template": "Invalid perms, in deny rules 'x' must not be preceded by exec qualifier 'i', 'p', or 'u'",
+            "reason": "Error when a deny rule has an 'x' with exec qualifiers",
+            "resolution": "Fix your AppArmor policy by removing exec qualifiers from deny rules with 'x' permission. In deny rules, plain 'x' should be used without qualifiers."
+        },
+        {
+            "function": "check_x_qualifier",
+            "message_template": "Invalid perms, 'x' must be preceded by exec qualifier 'i', 'p', or 'u'",
+            "reason": "Error when a non-deny rule has an 'x' without exec qualifiers",
+            "resolution": "Fix your AppArmor policy by adding proper exec qualifiers to rules with 'x' permission. In non-deny rules, 'x' must have an appropriate qualifier."
+        },
+        {
+            "function": "move_conditional_value",
+            "message_template": "%s conditional \"%s\" can only be specified once",
+            "reason": "Error when a conditional is specified multiple times",
+            "resolution": "Fix your AppArmor policy by ensuring each conditional is only specified once in a rule."
+        }
+    ]
+}

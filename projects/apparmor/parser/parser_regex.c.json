@@ -1,0 +1,91 @@
+{
+    "project": "apparmor",
+    "module": "../working/apparmor/parser/parser_regex.c",
+    "summary": "This module handles the conversion of AppArmor regular expressions to PCRE format for security policy enforcement. It performs regex validation, syntax checking, and transformation to ensure proper security rule application.",
+    "logs": [
+        {
+            "function": "append_glob",
+            "message_template": "%s: Invalid glob type %d\n",
+            "reason": "Logs an error when an invalid glob type is encountered during regex processing. This typically occurs when the glob type is not recognized.",
+            "resolution": "Check the glob type value to ensure it's one of the expected types (glob_default or glob_null). This may indicate a code issue in the parser."
+        },
+        {
+            "function": "convert_aaregex_to_pcre",
+            "message_template": "%s: Regex grouping error: Invalid close ], no matching open [ detected\n",
+            "reason": "Reports an error when a closing bracket ']' is found without a corresponding opening bracket '[' in the regex pattern.",
+            "resolution": "Correct the AppArmor profile by ensuring all character classes '[...]' are properly closed, and no unmatched closing brackets exist."
+        },
+        {
+            "function": "convert_aaregex_to_pcre",
+            "message_template": "%s: Regex grouping error: Exceeded maximum nesting of {}\n",
+            "reason": "Logs an error when the nesting of alternation groups '{}' exceeds the maximum allowed depth (50 levels).",
+            "resolution": "Simplify the profile's regex pattern by reducing the nesting depth of alternation groups, possibly by breaking complex patterns into separate rules."
+        },
+        {
+            "function": "convert_aaregex_to_pcre",
+            "message_template": "%s: Regex grouping error: Invalid number of items between {}\n",
+            "reason": "Reports an error when an empty alternation group '{}' is found in the regex pattern, which is not valid syntax.",
+            "resolution": "Ensure all alternation groups contain at least one item. For example, use '{item}' instead of '{}'."
+        },
+        {
+            "function": "convert_aaregex_to_pcre",
+            "message_template": "%s: Regex grouping error: Invalid close }, no matching open { detected\n",
+            "reason": "Logs an error when a closing brace '}' is found without a corresponding opening brace '{' in the regex pattern.",
+            "resolution": "Correct the AppArmor profile by ensuring all alternation groups '{...}' are properly closed, and no unmatched closing braces exist."
+        },
+        {
+            "function": "convert_aaregex_to_pcre",
+            "message_template": "Character %c was quoted unnecessarily, dropped preceding quote ('\\') character\n",
+            "reason": "Warns when an escape character is used to quote a character that doesn't need to be escaped in AppArmor regex syntax.",
+            "resolution": "While this is just a warning and the parser will handle it correctly, consider removing unnecessary escape characters in the profile for clarity."
+        },
+        {
+            "function": "convert_aaregex_to_pcre",
+            "message_template": "%s: Regex grouping error: Unclosed grouping or character class, expecting close }\n",
+            "reason": "Reports an error when a regex pattern contains an unclosed group or character class at the end of the input.",
+            "resolution": "Review the pattern and ensure all opening braces '{' or brackets '[' have corresponding closing ones. Add missing closing characters as needed."
+        },
+        {
+            "function": "convert_aaregex_to_pcre",
+            "message_template": "%s: Regex error: trailing '\\' escape character\n",
+            "reason": "Logs an error when a regex pattern ends with an escape character '\\', which is invalid syntax.",
+            "resolution": "Remove the trailing backslash from the pattern or complete the escaped sequence with the intended character."
+        },
+        {
+            "function": "convert_aaregex_to_pcre",
+            "message_template": "%s: Unable to parse input line '%s'\n",
+            "reason": "Reports a general parsing error when the regex pattern cannot be processed due to various syntax issues.",
+            "resolution": "Review the entire pattern for syntax errors like unclosed groups, invalid escape sequences, or malformed character classes."
+        },
+        {
+            "function": "warn_once_xattr",
+            "message_template": "xattr attachment conditional ignored",
+            "reason": "Warns when extended attribute (xattr) attachment conditionals are used but not supported by the current kernel.",
+            "resolution": "Either ensure your kernel supports xattr features or remove xattr attachment conditionals from your profiles. Check if kernel was compiled with CONFIG_SECURITY_PATH=y."
+        },
+        {
+            "function": "process_profile_name_xmatch",
+            "message_template": "%s: Invalid profile name '%s' - bad regular expression\n",
+            "reason": "Logs an error when a profile name contains an invalid regular expression pattern.",
+            "resolution": "Check the profile name for invalid regex syntax and correct it. Profile names should have valid regex patterns for proper matching."
+        },
+        {
+            "function": "process_dfa_entry",
+            "message_template": "Warning kernel does not support audit modifier for change_profile rule.\n",
+            "reason": "Warns when an audit modifier is used with a change_profile rule, which is not supported by the kernel.",
+            "resolution": "Either update to a kernel version that supports this feature or remove audit modifiers from change_profile rules in the profile."
+        },
+        {
+            "function": "process_dfa_entry",
+            "message_template": "The current kernel does not support stacking of named transitions: %s\n",
+            "reason": "Reports an error when attempting to use stacked named transitions that aren't supported by the current kernel.",
+            "resolution": "Either upgrade to a kernel that supports profile stacking or modify your profiles to avoid using stacked named transitions."
+        },
+        {
+            "function": "post_process_entries",
+            "message_template": "profile %s: has merged rules (%s) with multiple x modifiers\n",
+            "reason": "Warns about profile rules with multiple execute (x) modifiers that have been merged, which could lead to unexpected behavior.",
+            "resolution": "Review the profile and separate rules with different execute modifiers to ensure clear, predictable execution permissions."
+        }
+    ]
+}

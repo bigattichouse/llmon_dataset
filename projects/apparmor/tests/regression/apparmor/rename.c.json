@@ -1,0 +1,25 @@
+{
+    "project": "apparmor",
+    "module": "../working/apparmor/tests/regression/apparmor/rename.c",
+    "summary": "This module is a regression test for the rename system call in AppArmor. It tests whether a process confined by AppArmor can successfully rename a file, which helps verify that the security policy correctly handles file rename operations.",
+    "logs": [
+        {
+            "function": "main",
+            "message_template": "usage: %s oldfile newfile\n",
+            "reason": "Displayed when the program is not provided with exactly two arguments (source and destination filenames). This indicates improper usage of the test program.",
+            "resolution": "Use the correct command syntax by providing exactly two arguments: the source file and the destination file."
+        },
+        {
+            "function": "main",
+            "message_template": "FAIL: rename from %s to %s failed - %s\n",
+            "reason": "Logged when the rename system call fails. This could be due to permission issues (AppArmor policy restrictions), non-existent source file, or the destination path not being writable.",
+            "resolution": "Check AppArmor policy to ensure rename operations are allowed for the paths in question. Verify file existence and permissions. Review AppArmor logs for policy violations related to this operation."
+        },
+        {
+            "function": "main",
+            "message_template": "PASS\n",
+            "reason": "Indicates that the rename operation completed successfully, meaning AppArmor correctly allowed the operation as expected.",
+            "resolution": "This is informational only; no resolution required as it indicates success."
+        }
+    ]
+}

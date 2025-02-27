@@ -1,0 +1,37 @@
+{
+    "project": "apparmor",
+    "module": "tests/regression/apparmor/posix_mq.h",
+    "summary": "A header file for POSIX message queue and semaphore testing that defines constants for IPC mechanism paths, buffer structures for shared memory and messages, and a sample message string. It's used for regression testing of AppArmor's handling of POSIX message queues and semaphores.",
+    "logs": [
+        {
+            "function": "N/A",
+            "message_template": "/testmq",
+            "reason": "This is a path constant for a POSIX message queue that might appear in logs if queue operations fail",
+            "resolution": "Ensure the path is accessible and that proper permissions are set for message queue operations. Check if AppArmor is correctly configured to allow access to this resource."
+        },
+        {
+            "function": "N/A",
+            "message_template": "/unnamedsemtest",
+            "reason": "This is a path constant for shared memory with unnamed semaphores that might appear in logs if shared memory operations fail",
+            "resolution": "Verify shared memory accessibility and permissions. Ensure AppArmor profile allows access to shared memory operations at this path."
+        },
+        {
+            "function": "N/A",
+            "message_template": "/namedsemtest",
+            "reason": "This is a path constant for named semaphores that might appear in logs if semaphore operations fail",
+            "resolution": "Check semaphore accessibility and permissions. Make sure AppArmor is configured to allow semaphore operations at this path."
+        },
+        {
+            "function": "N/A",
+            "message_template": "/tmp/mqueuepipe",
+            "reason": "This is a path constant for a pipe that might appear in logs if pipe operations fail",
+            "resolution": "Ensure the /tmp directory is accessible and has proper permissions. Verify AppArmor allows access to create and use pipes in this location."
+        },
+        {
+            "function": "N/A",
+            "message_template": "hello world",
+            "reason": "This is a sample message string that might appear in logs during message passing tests",
+            "resolution": "This is likely informational only and indicates test message content. No specific resolution needed unless seen in error context."
+        }
+    ]
+}

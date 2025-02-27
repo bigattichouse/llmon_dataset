@@ -1,0 +1,91 @@
+{
+    "project": "apparmor",
+    "module": "../working/apparmor/parser/parser.h",
+    "summary": "The parser.h header defines structures, constants, and function declarations for the AppArmor security policy parser. It includes definitions for parsing profile rules, processing regular expressions, handling variables, and loading policies into the kernel.",
+    "logs": [
+        {
+            "function": "PDEBUG",
+            "message_template": "parser: %s",
+            "reason": "Outputs debug messages with the parser prefix when DEBUG is enabled. These messages help developers trace the execution flow of the parser.",
+            "resolution": "Debug logs do not require resolution as they are informational. To see more detailed debug information, compile with DEBUG defined."
+        },
+        {
+            "function": "PERROR",
+            "message_template": "%s",
+            "reason": "Outputs error messages to stderr while preserving the errno value. Used to report critical errors in parser operation.",
+            "resolution": "Check the specific error message for details. May require fixing configuration issues, profile syntax, or addressing file system permissions problems."
+        },
+        {
+            "function": "pwarnf",
+            "message_template": "Various warning messages",
+            "reason": "Outputs conditional warnings based on warning flags. The function allows marking some warnings as errors based on the werr parameter.",
+            "resolution": "Address the specific warning by correcting profile syntax issues, deprecated features, or configuration problems as indicated in the warning message."
+        },
+        {
+            "function": "pwarn",
+            "message_template": "Various warning messages",
+            "reason": "Conditionally outputs warnings based on configured warning flags (parseopts.warn) and can treat warnings as errors based on parseopts.Werror.",
+            "resolution": "Depends on the specific warning. May require adjusting profile syntax, updating deprecated configurations, or addressing security policy issues."
+        },
+        {
+            "function": "common_warn_once",
+            "message_template": "%s",
+            "reason": "Outputs a warning message for a given name, but only outputs it once to prevent log spam.",
+            "resolution": "Address the specific warning as described in the message. The warning is generally about configuration issues or deprecated features."
+        },
+        {
+            "function": "yyerror",
+            "message_template": "Various parser error messages",
+            "reason": "Reports syntax or semantic errors encountered during the parsing of AppArmor profile files.",
+            "resolution": "Check the profile file syntax at the indicated line number and correct any errors according to the AppArmor profile language specification."
+        },
+        {
+            "function": "debug_cod_entries",
+            "message_template": "Various cod_entry debug information",
+            "reason": "Outputs debug information about the cod_entry structures which represent file access rules in AppArmor profiles.",
+            "resolution": "Information only, no resolution required. Used for debugging purposes."
+        },
+        {
+            "function": "display_version",
+            "message_template": "Version information",
+            "reason": "Displays the version information of the AppArmor parser tool.",
+            "resolution": "Informational message, no resolution required."
+        },
+        {
+            "function": "print_prompt_compat_mode",
+            "message_template": "Prompt compatibility mode information",
+            "reason": "Outputs information about the current prompt compatibility mode settings to the specified file descriptor.",
+            "resolution": "Informational message, no resolution required unless the compatibility mode is not as expected."
+        },
+        {
+            "function": "dump_symtab",
+            "message_template": "Symbol table information",
+            "reason": "Outputs the contents of the symbol table for debugging purposes.",
+            "resolution": "Informational message for debugging, no resolution required."
+        },
+        {
+            "function": "dump_expanded_symtab",
+            "message_template": "Expanded symbol table information",
+            "reason": "Outputs the contents of the expanded symbol table for debugging purposes.",
+            "resolution": "Informational message for debugging, no resolution required."
+        },
+        {
+            "function": "dump_policy",
+            "message_template": "Policy information",
+            "reason": "Outputs the complete AppArmor policy information for debugging or verification purposes.",
+            "resolution": "Informational message, no resolution required unless policy content is not as expected."
+        },
+        {
+            "function": "dump_policy_names",
+            "message_template": "Policy names information",
+            "reason": "Outputs the names of all profiles in the current policy for debugging or verification purposes.",
+            "resolution": "Informational message, no resolution required unless profile names are not as expected."
+        },
+        {
+            "function": "dump_policy_hats",
+            "message_template": "Policy hats information",
+            "reason": "Outputs information about subprofiles (hats) within the specified profile for debugging purposes.",
+            "resolution": "Informational message, no resolution required unless hat information is not as expected."
+        }
+    ]
+}

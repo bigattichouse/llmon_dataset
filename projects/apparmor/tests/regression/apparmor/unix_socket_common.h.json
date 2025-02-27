@@ -1,0 +1,6 @@
+{
+    "project": "apparmor",
+    "module": "../working/apparmor/tests/regression/apparmor/unix_socket_common.h",
+    "summary": "A header file that declares functions for getting and setting I/O timeout values for Unix sockets, used in AppArmor regression tests.",
+    "logs": []
+}

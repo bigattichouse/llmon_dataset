@@ -1,0 +1,6 @@
+{
+    "project": "apparmor",
+    "module": "../working/apparmor/libraries/libapparmor/include/sys/apparmor_private.h",
+    "summary": "This header file contains private function declarations for the AppArmor library, including utilities for memory management, file operations, string formatting, and directory traversal. It provides internal helper functions not intended for public use that support the core functionality of the AppArmor security module.",
+    "logs": []
+}

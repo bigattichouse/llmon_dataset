@@ -1,0 +1,19 @@
+{
+    "project": "apparmor",
+    "module": "../working/apparmor/parser/network.h",
+    "summary": "This header file defines the network_rule class and related structures for AppArmor's parser, which handle network access controls, permissions, and conditions for IP addresses and ports.",
+    "logs": [
+        {
+            "function": "valid_prefix",
+            "message_template": "priority prefix not allowed on network rules",
+            "reason": "This error occurs when a user attempts to apply a priority prefix to a network rule, which is not supported in AppArmor's network rule syntax.",
+            "resolution": "Remove the priority prefix from the network rule definition in the AppArmor profile. Check the AppArmor documentation for the correct syntax for network rules."
+        },
+        {
+            "function": "valid_prefix",
+            "message_template": "owner prefix not allowed on network rules",
+            "reason": "This error occurs when a user attempts to apply an owner prefix to a network rule, which is not supported in AppArmor's network rule syntax.",
+            "resolution": "Remove the owner prefix from the network rule definition in the AppArmor profile. Review the AppArmor documentation for the proper format of network rules."
+        }
+    ]
+}

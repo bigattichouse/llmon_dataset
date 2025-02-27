@@ -1,0 +1,6 @@
+{
+    "project": "apparmor",
+    "module": "../working/apparmor/parser/common_flags.h",
+    "summary": "This header file defines data structures and an external variable for managing parser option flags in AppArmor. It includes flags for controlling parsing behavior, dump options, warnings, and error handling, but contains no implementation or logging functionality.",
+    "logs": []
+}

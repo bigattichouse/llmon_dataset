@@ -1,0 +1,163 @@
+{
+    "project": "apparmor",
+    "module": "../working/apparmor/libraries/libapparmor/src/policy_cache.c",
+    "summary": "This module implements AppArmor policy cache management, providing functions to create, access, and manage policy cache directories that store compiled policies based on kernel features. It supports overlay directories, cache replication, and policy updates.",
+    "logs": [
+        {
+            "function": "cache_miss_cb",
+            "message_template": "aa_features_check() failed for dirfd '%d' '%s'",
+            "reason": "Logs when feature checking fails for a potential cache directory, indicating incompatibility between the cache and kernel features",
+            "resolution": "Check if the cache directory is valid and compatible with the current kernel. May require rebuilding the cache with current features."
+        },
+        {
+            "function": "cache_dir_from_path_and_features",
+            "message_template": "cache_dir_from_path_and_features() found '%s'",
+            "reason": "Logs when a suitable cache directory is found for the given features",
+            "resolution": "Informational log, no resolution required"
+        },
+        {
+            "function": "cache_dir_from_path_and_features",
+            "message_template": "aa_features_check() failed for dirfd '%d' %s",
+            "reason": "Logs when feature checking fails for a potential cache directory path",
+            "resolution": "Check if the cache directory is valid and compatible with the current kernel. May require rebuilding the cache."
+        },
+        {
+            "function": "cache_dir_from_path_and_features",
+            "message_template": "Cache collision '%s' falling back to next dir on fd '%d' path %s",
+            "reason": "Logs when a cache collision occurs and the system is trying alternative directories",
+            "resolution": "Informational log, but may indicate caching issues if appearing frequently. Consider cleaning old cache directories."
+        },
+        {
+            "function": "cache_dir_from_path_and_features",
+            "message_template": "cache_dir_from_path_and_features() callback found '%s'",
+            "reason": "Logs when the callback successfully finds a matching feature directory",
+            "resolution": "Informational log, no resolution required"
+        },
+        {
+            "function": "cache_dir_from_path_and_features",
+            "message_template": "cache_dir_from_path_and_features() callback returned an error'%m'",
+            "reason": "Logs when the callback encounters an error while searching for matching feature directories",
+            "resolution": "Check the specific error message and file permissions. May require manual intervention to fix cache directories."
+        },
+        {
+            "function": "cache_dir_from_path_and_features",
+            "message_template": "Cache collision no dir found using %d + 1 = %s",
+            "reason": "Logs when no matching directory is found after a collision and a new directory name is being generated",
+            "resolution": "Informational log, but may indicate cache proliferation. Consider cleaning old cache directories if this occurs frequently."
+        },
+        {
+            "function": "open_or_create_cache_dir",
+            "message_template": "Can't create cache location '%s': %m",
+            "reason": "Logs when the system fails to create the cache base location",
+            "resolution": "Check permissions on the parent directory and ensure the process has write access. May need to manually create the directory with proper permissions."
+        },
+        {
+            "function": "open_or_create_cache_dir",
+            "message_template": "Can't create cache directory '%s': %m",
+            "reason": "Logs when the system fails to create a specific cache directory for features",
+            "resolution": "Check permissions on the parent cache location and ensure the process has write access. May need to manually create the directory with proper permissions."
+        },
+        {
+            "function": "open_or_create_cache_dir",
+            "message_template": "Can't update cache directory '%s': %m",
+            "reason": "Logs when the system fails to open an existing cache directory for updating",
+            "resolution": "Check permissions on the cache directory and ensure the process has write access. Verify the directory exists and isn't corrupted."
+        },
+        {
+            "function": "open_or_create_cache_dir",
+            "message_template": "Cache directory '%s' does not exist",
+            "reason": "Logs when a requested cache directory doesn't exist and creation wasn't requested",
+            "resolution": "Informational log. If the cache is needed, call the function with create=true or manually create the directory."
+        },
+        {
+            "function": "open_or_create_cache_dir",
+            "message_template": "Could not open cache_dir: %m",
+            "reason": "Logs when the system fails to open a cache directory for any reason",
+            "resolution": "Check the specific error message. May require fixing permissions, creating directories, or addressing filesystem issues."
+        },
+        {
+            "function": "aa_policy_cache_new",
+            "message_template": "%s: Failed to obtain features %m",
+            "reason": "Logs when the system cannot obtain kernel features needed for cache management",
+            "resolution": "Check if AppArmor is properly loaded in the kernel. May require reloading the AppArmor module or upgrading the kernel."
+        },
+        {
+            "function": "aa_policy_cache_new",
+            "message_template": "%s: Failed to open_or_create_dir %m",
+            "reason": "Logs when the system fails to open or create a cache directory during cache initialization",
+            "resolution": "Check permissions and existence of the cache directory path. May require manually creating directories with proper permissions."
+        },
+        {
+            "function": "aa_policy_cache_new",
+            "message_template": "%s: failed init_cache_features for dirfd '%d' name '%s' opened as pc->dirfd '%d'",
+            "reason": "Logs when initialization of cache features fails during policy cache creation",
+            "resolution": "Check if the features file can be written to the cache directory. May indicate permission issues or incompatible features."
+        },
+        {
+            "function": "aa_policy_cache_new",
+            "message_template": "%s: created policy_cache for dirfd '%d' name '%s' opened as pc->dirfd '%d'",
+            "reason": "Logs successful creation of a policy cache with directory information",
+            "resolution": "Informational log, no resolution required"
+        },
+        {
+            "function": "aa_policy_cache_add_ro_dir",
+            "message_template": "%s: exceeded number of supported cache overlays",
+            "reason": "Logs when attempting to add more overlay directories than the maximum supported",
+            "resolution": "Modify the application to use fewer overlay directories or increase MAX_POLICY_CACHE_OVERLAY_DIRS in the code and recompile."
+        },
+        {
+            "function": "aa_policy_cache_add_ro_dir",
+            "message_template": "%s: failed to open_or_create_cache_dir %m",
+            "reason": "Logs when adding a read-only directory to the cache fails due to directory access issues",
+            "resolution": "Check if the directory exists and the process has permission to access it. May require creating the directory or fixing permissions."
+        },
+        {
+            "function": "aa_policy_cache_dir_path",
+            "message_template": "aa_policy_cache directory: %d does not exist",
+            "reason": "Logs when attempting to get the path for a non-existent cache directory index",
+            "resolution": "Check that the requested directory index is valid. Applications should only request directories within the range returned by aa_policy_cache_no_dirs()."
+        },
+        {
+            "function": "aa_policy_cache_dir_path",
+            "message_template": "Can't return the path to the aa_policy_cache directory: %m",
+            "reason": "Logs when unable to determine the filesystem path for a cache directory",
+            "resolution": "Check if /proc is mounted and accessible. This error often occurs if /proc is unavailable or if the file descriptor is invalid."
+        },
+        {
+            "function": "aa_policy_cache_dirfd",
+            "message_template": "aa_policy_cache directory: %d does not exist",
+            "reason": "Logs when attempting to get the file descriptor for a non-existent cache directory index",
+            "resolution": "Check that the requested directory index is valid. Applications should only request directories within the range returned by aa_policy_cache_no_dirs()."
+        },
+        {
+            "function": "aa_policy_cache_filename",
+            "message_template": "Can't return the path to the aa_policy_cache cachename: %m",
+            "reason": "Logs when unable to determine the filesystem path for a cache file",
+            "resolution": "Check if /proc is mounted and accessible. This error often occurs if /proc is unavailable or if the file descriptor is invalid."
+        },
+        {
+            "function": "aa_policy_cache_dir_path_preview",
+            "message_template": "Can't return the path to the aa_policy_cache cache location: %m",
+            "reason": "Logs when unable to determine the filesystem path for the cache location during preview",
+            "resolution": "Check if /proc is mounted and accessible. This error often occurs if /proc is unavailable or if the file descriptor is invalid."
+        },
+        {
+            "function": "aa_policy_cache_dir_path_preview",
+            "message_template": "Looking up cachedir path for AT_FDCWD",
+            "reason": "Logs when looking up the cache directory path using the current working directory",
+            "resolution": "Informational log, no resolution required"
+        },
+        {
+            "function": "aa_policy_cache_dir_path_preview",
+            "message_template": "Can't return the path to the aa_policy_cache directory: %m",
+            "reason": "Logs when unable to determine the cache directory path during preview",
+            "resolution": "Check the specific error message. May require fixing permissions, creating directories, or addressing filesystem issues."
+        },
+        {
+            "function": "aa_policy_cache_dir_path_preview",
+            "message_template": "aa_policy_cache_dir_path_preview() returning '%s'",
+            "reason": "Logs the path being returned by the preview function",
+            "resolution": "Informational log, no resolution required"
+        }
+    ]
+}

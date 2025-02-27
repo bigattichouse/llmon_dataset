@@ -1,0 +1,25 @@
+{
+    "project": "apparmor",
+    "module": "../working/apparmor/parser/parser_alias.c",
+    "summary": "This module manages alias rules for AppArmor profiles, allowing paths to be aliased to other paths. It provides functionality to create, replace, and free aliases within profiles and implements the internal data structures and algorithms for alias storage and lookup.",
+    "logs": [
+        {
+            "function": "new_alias",
+            "message_template": "Failed to allocate memory: %s\n",
+            "reason": "Logs an error when memory allocation for the alias structure fails. This typically occurs when the system is under memory pressure or has insufficient memory available.",
+            "resolution": "Check system memory resources and possibly increase available memory. Consider terminating unnecessary processes to free up memory."
+        },
+        {
+            "function": "new_alias",
+            "message_template": "'%s' is already defined\n",
+            "reason": "Logs a warning when attempting to define an alias that already exists. This happens when a duplicate alias is detected in the configuration.",
+            "resolution": "Review AppArmor configuration files for duplicate alias definitions and remove the redundant entries. The system will continue but might not behave as expected if aliases have different intended destinations."
+        },
+        {
+            "function": "do_alias",
+            "message_template": "Failed to allocate memory: %s\n",
+            "reason": "Logs an error when memory allocation fails while creating a new alias string. This occurs when the system cannot allocate memory for the new path after substituting the alias.",
+            "resolution": "Check system memory availability and free up resources if necessary. This condition indicates the system is under severe memory pressure, which might affect other operations."
+        }
+    ]
+}

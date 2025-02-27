@@ -1,0 +1,109 @@
+{
+    "project": "apparmor",
+    "module": "../working/apparmor/binutils/aa_exec.c",
+    "summary": "This module provides the aa-exec utility which allows executing a program confined by a specified AppArmor profile or namespace. It handles options for immediate profile changes, debugging output, and verbose execution details.",
+    "logs": [
+        {
+            "function": "usage",
+            "message_template": "USAGE: %s [OPTIONS] <prog> <args>\n\nConfine <prog> with the specified PROFILE.\n\nOPTIONS:\n  -p PROFILE, --profile=PROFILE\t\tPROFILE to confine <prog> with\n  -n NAMESPACE, --namespace=NAMESPACE\tNAMESPACE to confine <prog> in\n  -d, --debug\t\t\t\tshow messages with debugging information\n  -i, --immediate\t\t\tchange profile immediately instead of at exec\n  -v, --verbose\t\t\t\tshow messages with stats\n  -h, --help\t\t\t\tdisplay this help\n",
+            "reason": "Displays usage information when help is requested or when invalid arguments are provided",
+            "resolution": "No resolution needed; this is informational output to guide the user on proper command usage"
+        },
+        {
+            "function": "_error",
+            "message_template": "[%ld] aa-exec: ERROR: ",
+            "reason": "Prefix for all error messages in the program, providing the process ID for context",
+            "resolution": "This is just a message prefix; specific errors will follow this prefix and have their own resolutions"
+        },
+        {
+            "function": "_debug",
+            "message_template": "[%ld] aa-exec: DEBUG: ",
+            "reason": "Prefix for all debug messages in the program, providing the process ID for context",
+            "resolution": "This is just a message prefix for debugging; no resolution needed as it's informational"
+        },
+        {
+            "function": "_verbose",
+            "message_template": "[%ld] ",
+            "reason": "Prefix for all verbose output messages, providing the process ID for context",
+            "resolution": "This is just a message prefix for verbose output; no resolution needed as it's informational"
+        },
+        {
+            "function": "verbose_print_argv",
+            "message_template": "[%ld] exec",
+            "reason": "Shows the command being executed with all its arguments when verbose mode is enabled",
+            "resolution": "Informational log for debugging purposes; no resolution required"
+        },
+        {
+            "function": "parse_args",
+            "message_template": "Multiple -p/--profile parameters given",
+            "reason": "Error occurs when more than one profile parameter is provided on the command line, which is not allowed",
+            "resolution": "Modify your command to include only one -p/--profile parameter"
+        },
+        {
+            "function": "parse_args",
+            "message_template": "Multiple -n/--namespace parameters given",
+            "reason": "Error occurs when more than one namespace parameter is provided on the command line, which is not allowed",
+            "resolution": "Modify your command to include only one -n/--namespace parameter"
+        },
+        {
+            "function": "build_name",
+            "message_template": "name too long (%zu > %zu)",
+            "reason": "Error when the combined namespace and profile name exceeds the maximum allowed length (PATH_MAX)",
+            "resolution": "Use shorter namespace and/or profile names to ensure they fit within the system's PATH_MAX limitation"
+        },
+        {
+            "function": "main",
+            "message_template": "aa_change_profile(\"%s\")",
+            "reason": "Verbose message showing the attempt to immediately change the AppArmor profile",
+            "resolution": "Informational log for debugging purposes; no resolution required"
+        },
+        {
+            "function": "main",
+            "message_template": "%d = aa_change_profile(\"%s\")",
+            "reason": "Debug message showing the result of attempting to change the AppArmor profile immediately",
+            "resolution": "If non-zero result, check other error messages for details on why the profile change failed"
+        },
+        {
+            "function": "main",
+            "message_template": "aa_change_onexec(\"%s\")",
+            "reason": "Verbose message showing the attempt to change the AppArmor profile on next exec",
+            "resolution": "Informational log for debugging purposes; no resolution required"
+        },
+        {
+            "function": "main",
+            "message_template": "%d = aa_change_onexec(\"%s\")",
+            "reason": "Debug message showing the result of attempting to change the AppArmor profile on next exec",
+            "resolution": "If non-zero result, check other error messages for details on why the profile change failed"
+        },
+        {
+            "function": "main",
+            "message_template": "%s '%s' does not exist",
+            "reason": "Error when the specified profile or namespace does not exist in the AppArmor system",
+            "resolution": "Verify that the profile or namespace name is correct and that it has been properly loaded into the AppArmor system"
+        },
+        {
+            "function": "main",
+            "message_template": "insufficient permissions to change to the %s '%s'",
+            "reason": "Error when the process lacks the necessary permissions to switch to the specified profile or namespace",
+            "resolution": "Run the command with elevated privileges (e.g., using sudo) or adjust permissions in the AppArmor policy"
+        },
+        {
+            "function": "main",
+            "message_template": "AppArmor interface not available",
+            "reason": "Error when the AppArmor system is not properly configured or enabled on the system",
+            "resolution": "Ensure AppArmor is properly installed, configured, and enabled on your system"
+        },
+        {
+            "function": "main",
+            "message_template": "%m",
+            "reason": "Generic error message showing the system error description when a profile change fails for reasons other than those specifically handled",
+            "resolution": "Address the specific system error described in the message, which may vary based on the context"
+        },
+        {
+            "function": "main",
+            "message_template": "Failed to execute \"%s\": %m",
+            "reason": "Error when the specified program cannot be executed after profile changes",
+            "resolution": "Verify that the program exists, is executable, and is in the PATH. Check the specific error message for details on why execution failed"
+        }
+    ]
+}

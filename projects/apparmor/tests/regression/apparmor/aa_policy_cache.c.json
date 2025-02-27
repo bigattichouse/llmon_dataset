@@ -1,0 +1,79 @@
+{
+    "project": "apparmor",
+    "module": "aa_policy_cache.c",
+    "summary": "A test utility for AppArmor policy cache operations that provides functions to create, access, remove, and replace policy caches. It serves as a command-line tool for testing and managing AppArmor policy cache functionality with different options like 'new', 'cache-dir', 'remove', 'remove-policy', and 'replace-all'.",
+    "logs": [
+        {
+            "function": "usage",
+            "message_template": "FAIL - usage: %s %s [%s N] <PATH>\n              %s %s <PATH>\n              %s %s <PATH>\n              %s %s <PROFILE_NAME>\n              %s %s [%s N] <PATH>\n",
+            "reason": "Displays an error message when the command-line arguments don't match the expected format, showing the correct usage of the tool",
+            "resolution": "Review the command syntax and ensure you're providing the correct number and type of arguments as shown in the usage message"
+        },
+        {
+            "function": "test_new",
+            "message_template": "FAIL - aa_policy_cache_new",
+            "reason": "Logs an error when creating a new policy cache fails, using perror to append the system error message",
+            "resolution": "Check that the specified path exists and is accessible, and that the process has the required permissions to create a policy cache there"
+        },
+        {
+            "function": "test_cache_dir",
+            "message_template": "FAIL - aa_policy_cache_new",
+            "reason": "Logs an error when attempting to get the policy cache directory path fails",
+            "resolution": "Verify that the path is valid and that the process has the necessary permissions to access the directory"
+        },
+        {
+            "function": "test_cache_dir",
+            "message_template": "%s\n",
+            "reason": "Displays the cache directory path on successful retrieval",
+            "resolution": "Information log, no resolution required"
+        },
+        {
+            "function": "test_remove",
+            "message_template": "FAIL - aa_policy_cache_remove",
+            "reason": "Logs an error when removing a policy cache fails, with the system error message appended",
+            "resolution": "Check that the specified cache exists and that the process has permissions to remove it"
+        },
+        {
+            "function": "test_remove_policy",
+            "message_template": "FAIL - aa_kernel_interface_new",
+            "reason": "Logs an error when creating a new kernel interface fails, which is required for removing a policy",
+            "resolution": "Verify that AppArmor is properly installed and that the kernel supports the required AppArmor features"
+        },
+        {
+            "function": "test_remove_policy",
+            "message_template": "FAIL - aa_kernel_interface_remove_policy",
+            "reason": "Logs an error when removing a policy from the kernel fails",
+            "resolution": "Ensure that the policy name is correct, that the policy exists, and that the process has sufficient permissions to remove policies"
+        },
+        {
+            "function": "test_replace_all",
+            "message_template": "FAIL - aa_policy_cache_new",
+            "reason": "Logs an error when creating a policy cache fails during a replace all operation",
+            "resolution": "Check that the cache path exists, is accessible, and that the process has permissions to create a policy cache"
+        },
+        {
+            "function": "test_replace_all",
+            "message_template": "FAIL - aa_policy_cache_replace_all",
+            "reason": "Logs an error when replacing all policies in the cache fails",
+            "resolution": "Verify that the policies are correctly formatted and that the process has permissions to update policies"
+        },
+        {
+            "function": "main",
+            "message_template": "FAIL - strtoul",
+            "reason": "Logs an error when converting the max-caches argument from string to unsigned long fails",
+            "resolution": "Ensure that the max-caches value is a valid positive number"
+        },
+        {
+            "function": "main",
+            "message_template": "FAIL - %lu larger than UINT16_MAX\n",
+            "reason": "Logs an error when the max-caches value exceeds the maximum allowed value (UINT16_MAX)",
+            "resolution": "Provide a max-caches value that is less than or equal to 65535 (UINT16_MAX)"
+        },
+        {
+            "function": "main",
+            "message_template": "PASS\n",
+            "reason": "Indicates that the requested operation completed successfully",
+            "resolution": "Information log, no resolution required"
+        }
+    ]
+}

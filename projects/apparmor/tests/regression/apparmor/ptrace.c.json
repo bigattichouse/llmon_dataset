@@ -1,0 +1,115 @@
+{
+    "project": "apparmor",
+    "module": "tests/regression/apparmor/ptrace.c",
+    "summary": "This module is a test program for AppArmor that verifies ptrace functionality by setting up different tracing scenarios between parent and child processes. It allows testing both when a parent traces a child process and when a child traces itself, with options to customize the number of syscalls and use a helper process.",
+    "logs": [
+        {
+            "function": "read_ptrace_registers",
+            "message_template": "Need to define ARCH_REGS_STRUCT for this architecture",
+            "reason": "Logs an error when the code is compiled for an architecture that doesn't have a defined register structure for ptrace operations",
+            "resolution": "Define the appropriate register structure for the architecture in the code or add support for the architecture in the preprocessor directives"
+        },
+        {
+            "function": "read_ptrace_registers",
+            "message_template": "FAIL:  parent ptrace(PTRACE_GETREGS) failed - ",
+            "reason": "Logs an error when the parent process fails to retrieve registers from the child process using ptrace with PTRACE_GETREGS or PTRACE_GETREGSET",
+            "resolution": "Check if the process has proper permissions to use ptrace. Ensure the child process exists and is properly traced. Check system ptrace restrictions like /proc/sys/kernel/yama/ptrace_scope"
+        },
+        {
+            "function": "do_parent",
+            "message_template": "FAIL: unexpected alarm already set\n",
+            "reason": "Logs an error when trying to set an alarm but one is already active, indicating a potential issue with the test setup",
+            "resolution": "Investigate why an alarm is already set before the test starts. Ensure no other parts of the code or test framework are setting alarms"
+        },
+        {
+            "function": "do_parent",
+            "message_template": "FAIL: parent ptrace(PTRACE_ATTACH) failed - ",
+            "reason": "Logs an error when the parent process fails to attach to the child process using ptrace",
+            "resolution": "Check if the system allows ptrace attachments (ptrace_scope settings). Verify the target process exists and the caller has sufficient permissions. Make sure no other debugger is attached to the child"
+        },
+        {
+            "function": "do_parent",
+            "message_template": "FAIL: parent ptrace(PTRACE_SINGLESTEP) failed - ",
+            "reason": "Logs an error when the parent process fails to execute a single step of the child process using PTRACE_SYSCALL",
+            "resolution": "Ensure that the child process is properly attached and in a stopped state. Check if the system supports the requested ptrace operation"
+        },
+        {
+            "function": "do_parent",
+            "message_template": "FAIL:  parent ptrace(PTRACE_DETACH) failed - ",
+            "reason": "Logs an error when the parent process fails to detach from the child process",
+            "resolution": "Verify that the child is properly attached and in a state where detaching is allowed. Check system restrictions and permissions"
+        },
+        {
+            "function": "do_child",
+            "message_template": "FAIL: child/helper SIGSTOP itself failed -",
+            "reason": "Logs an error when the child or helper process fails to stop itself using SIGSTOP",
+            "resolution": "Check process permissions and signal handling setup. Ensure the process hasn't masked or ignored SIGSTOP signals"
+        },
+        {
+            "function": "do_child",
+            "message_template": "FAIL: child ptrace(PTRACE_TRACEME) failed - ",
+            "reason": "Logs an error when the child process fails to set itself up for tracing using PTRACE_TRACEME",
+            "resolution": "Check system ptrace restrictions. Ensure no other process is already tracing this process. Verify AppArmor profile allows the process to use ptrace"
+        },
+        {
+            "function": "do_child",
+            "message_template": "FAIL: child SIGSTOP itself failed -",
+            "reason": "Logs an error when the child process fails to stop itself using SIGSTOP after setting up ptrace",
+            "resolution": "Check process signal handling. Ensure SIGSTOP is not being caught, ignored, or blocked by the process"
+        },
+        {
+            "function": "do_child",
+            "message_template": "FAIL: child exec failed - ",
+            "reason": "Logs an error when the child process fails to execute the specified program",
+            "resolution": "Verify the program path exists and is executable. Check permissions and that the specified program is compatible with the system"
+        },
+        {
+            "function": "sigalrm_handler",
+            "message_template": "FAIL: parent timed out waiting for child\n",
+            "reason": "Logs an error when the parent process times out waiting for the child process to respond",
+            "resolution": "Check if the child process is hanging or deadlocked. Increase the timeout value if the operation legitimately needs more time. Verify that syscalls being traced aren't blocking indefinitely"
+        },
+        {
+            "function": "main",
+            "message_template": "usage: %s [-c] [-n #syscall] program [args ...]\n",
+            "reason": "Displays usage instructions when the program is invoked with incorrect arguments",
+            "resolution": "Provide the correct command-line arguments as specified in the usage message"
+        },
+        {
+            "function": "main",
+            "message_template": "FAIL - signal failed: ",
+            "reason": "Logs an error when setting up the signal handler for SIGALRM fails",
+            "resolution": "Check system resources and limits. Ensure the process has permissions to set up signal handlers"
+        },
+        {
+            "function": "main",
+            "message_template": "FAIL: parent failed: ",
+            "reason": "Logs an error when the parent process experiences a failure during execution",
+            "resolution": "Check the preceding error message for specific details about the failure. Look for system restrictions or permission issues related to ptrace operations"
+        },
+        {
+            "function": "main",
+            "message_template": "PASS\n",
+            "reason": "Indicates that the test completed successfully",
+            "resolution": "Informational message, no resolution required"
+        },
+        {
+            "function": "main",
+            "message_template": "FAIL: child killed: ",
+            "reason": "Logs an error when the child process was terminated by a signal",
+            "resolution": "Check why the child process received a fatal signal. Look for segmentation faults, assertion failures, or external signals that might be terminating the process"
+        },
+        {
+            "function": "main",
+            "message_template": "FAIL: child failed: ",
+            "reason": "Logs an error when the child process exits with an error",
+            "resolution": "Check the child process execution. Look for permission issues, missing files, or other errors that could cause the child to fail"
+        },
+        {
+            "function": "main",
+            "message_template": "FAIL: fork failed - ",
+            "reason": "Logs an error when the fork system call fails to create a child process",
+            "resolution": "Check system resources - process limits, memory availability. Ensure the process has permissions to fork. Check system logs for resource exhaustion"
+        }
+    ]
+}

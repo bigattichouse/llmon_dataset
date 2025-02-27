@@ -1,0 +1,43 @@
+{
+    "project": "apparmor",
+    "module": "../working/apparmor/parser/policy_cache.h",
+    "summary": "AppArmor policy cache management header defining functions and variables for handling cache operations. Provides functionality for timestamp management, cache validation, file operations, and configuration options for controlling cache behavior.",
+    "logs": [
+        {
+            "function": "valid_cached_file_version",
+            "message_template": "Invalid cache file version in %s",
+            "reason": "The function checks if a cached file has a valid version. This message would be logged when a cache file with an incompatible version is detected.",
+            "resolution": "Remove the outdated cache files or update AppArmor to match the cache file version. This typically occurs after upgrading AppArmor to a newer version."
+        },
+        {
+            "function": "cache_hit",
+            "message_template": "Cache hit for %s",
+            "reason": "Logs when a successful cache hit occurs, indicating the system found and is using a cached policy file.",
+            "resolution": "Informational message, no resolution required."
+        },
+        {
+            "function": "setup_cache_tmp",
+            "message_template": "Failed to create temporary cache file %s",
+            "reason": "The function creates a temporary cache file. This message would be logged when the creation fails, possibly due to permission issues or disk space constraints.",
+            "resolution": "Check permissions for the AppArmor cache directory, ensure adequate disk space, and verify the AppArmor user has write permissions."
+        },
+        {
+            "function": "install_cache",
+            "message_template": "Failed to rename temporary cache file %s to %s",
+            "reason": "Logged when the system fails to finalize a cache file by renaming the temporary file to its permanent name.",
+            "resolution": "Check filesystem permissions, available disk space, and verify no other process is locking the target file."
+        },
+        {
+            "function": "valid_read_cache",
+            "message_template": "Cache file %s is not valid for reading",
+            "reason": "The function validates if a cache file can be read. This message would indicate issues with file permissions, corruption, or incompatible format.",
+            "resolution": "Check file permissions, remove corrupt cache files, or rebuild the cache with the current AppArmor version."
+        },
+        {
+            "function": "cache_filename",
+            "message_template": "Failed to construct cache filename for %s",
+            "reason": "Indicates a failure in generating the appropriate cache filename, possibly due to invalid input parameters or path construction issues.",
+            "resolution": "Verify the AppArmor configuration, especially paths and policy names. Ensure the cache directory structure is correctly set up."
+        }
+    ]
+}

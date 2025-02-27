@@ -1,0 +1,73 @@
+{
+    "project": "apparmor",
+    "module": "tests/regression/apparmor/mount.c",
+    "summary": "This module provides a utility for testing mount and umount operations with various options and flags as part of the AppArmor regression test suite. It supports mounting filesystems with different parameters and validates the success or failure of these operations.",
+    "logs": [
+        {
+            "function": "get_mnt_opt_bit",
+            "message_template": "FAIL: invalid option\n",
+            "reason": "The function exits with an error when an unsupported mount option is specified. This occurs when a mount option string doesn't match any entry in the mnt_opts_table.",
+            "resolution": "Check the mount options provided to ensure they are valid. Reference the mnt_opts_table in the code for supported options."
+        },
+        {
+            "function": "usage",
+            "message_template": "Usage: %s mount|umount <source> <target> [options]\n",
+            "reason": "Displays program usage information when the user supplies incorrect arguments or explicitly requests help.",
+            "resolution": "Informational message; follow the usage instructions to correctly invoke the program."
+        },
+        {
+            "function": "usage",
+            "message_template": "Options are:\n",
+            "reason": "Part of the usage information that introduces the list of available command line options.",
+            "resolution": "Informational message; no resolution required."
+        },
+        {
+            "function": "usage",
+            "message_template": "-o        flags sent to the mount syscall\n",
+            "reason": "Explains the -o option which is used to specify mount flags.",
+            "resolution": "Informational message; no resolution required."
+        },
+        {
+            "function": "usage",
+            "message_template": "-d        data sent to the mount syscall\n",
+            "reason": "Explains the -d option which is used to provide data to the mount syscall.",
+            "resolution": "Informational message; no resolution required."
+        },
+        {
+            "function": "usage",
+            "message_template": "-t        type of synthetic filesystem (e.g. proc) for mount syscall\n",
+            "reason": "Explains the -t option which is used to specify the filesystem type.",
+            "resolution": "Informational message; no resolution required."
+        },
+        {
+            "function": "main",
+            "message_template": "FAIL: missing positional arguments\n",
+            "reason": "The program requires at least three positional arguments (operation, source, target), and this error is shown when fewer are provided.",
+            "resolution": "Provide all required positional arguments: the operation (mount/umount), source, and target mount point."
+        },
+        {
+            "function": "main",
+            "message_template": "FAIL: mount %s on %s failed - %s\n",
+            "reason": "The mount operation failed with the specified error. This occurs when the mount syscall returns an error code.",
+            "resolution": "Check the specific error message for details. Common issues include: insufficient permissions (run as root/sudo), invalid mount source or target, or unsupported filesystem type or options."
+        },
+        {
+            "function": "main",
+            "message_template": "FAIL: umount %s failed - %s\n",
+            "reason": "The umount operation failed with the specified error. This happens when the umount syscall returns an error code.",
+            "resolution": "Check the specific error message for details. Common issues include: insufficient permissions (run as root/sudo), target not mounted, or device is busy (has open files or is the current working directory)."
+        },
+        {
+            "function": "main",
+            "message_template": "usage: %s [mount|umount] loopdev mountpoint\n",
+            "reason": "Displayed when an invalid operation (not 'mount' or 'umount') is specified.",
+            "resolution": "Use either 'mount' or 'umount' as the operation argument."
+        },
+        {
+            "function": "main",
+            "message_template": "PASS\n",
+            "reason": "Indicates that the mount or umount operation completed successfully.",
+            "resolution": "Informational message; no resolution required."
+        }
+    ]
+}

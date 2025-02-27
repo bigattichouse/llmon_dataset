@@ -1,0 +1,25 @@
+{
+    "project": "apparmor",
+    "module": "../working/apparmor/tests/regression/apparmor/unix_socket_common.c",
+    "summary": "This module provides utility functions for setting and retrieving socket I/O timeout values. It contains two functions: one to get current receive timeout values from a socket and another to set both receive and send timeout values. These functions are used in AppArmor regression tests for socket operations.",
+    "logs": [
+        {
+            "function": "get_sock_io_timeo",
+            "message_template": "FAIL - getsockopt",
+            "reason": "Logs an error when the getsockopt system call fails to retrieve socket receive timeout values. Likely due to an invalid socket descriptor or insufficient permissions.",
+            "resolution": "Verify that the socket descriptor is valid and that the process has appropriate permissions. This could also indicate memory corruption or a socket that has been closed prematurely."
+        },
+        {
+            "function": "set_sock_io_timeo",
+            "message_template": "FAIL - setsockopt (SO_RCVTIMEO)",
+            "reason": "Logs an error when the setsockopt system call fails to set socket receive timeout value. Could occur due to invalid socket descriptor, insufficient permissions, or invalid timeout value.",
+            "resolution": "Check socket descriptor validity and process permissions. Ensure the socket is in a state where receive timeout can be modified. May need to verify the socket has not been closed or is not in an error state."
+        },
+        {
+            "function": "set_sock_io_timeo",
+            "message_template": "FAIL - setsockopt (SO_SNDTIMEO)",
+            "reason": "Logs an error when the setsockopt system call fails to set socket send timeout value. Failure typically occurs for the same reasons as the receive timeout setting failure.",
+            "resolution": "Check socket descriptor validity and process permissions. Ensure the socket is in a state where send timeout can be modified. May need to verify the socket has not been closed or is not in an error state."
+        }
+    ]
+}

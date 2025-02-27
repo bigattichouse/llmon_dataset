@@ -1,0 +1,37 @@
+{
+    "project": "apparmor",
+    "module": "../working/apparmor/tests/regression/apparmor/unix_fd_common.c",
+    "summary": "This module provides functionality for Unix domain socket communication with file descriptor passing used in AppArmor regression tests. It implements a client-side function that connects to a Unix socket, receives a file descriptor, reads from it, and sends a response based on success or failure.",
+    "logs": [
+        {
+            "function": "get_unix_clientfd",
+            "message_template": "FAIL CLIENT - sock %s\n",
+            "reason": "This error occurs when the system fails to create a Unix domain socket. The error string from errno is included in the log message.",
+            "resolution": "This could happen due to system resource limitations or insufficient permissions. Check if the system has reached its limit for open file descriptors and ensure the process has appropriate permissions to create sockets."
+        },
+        {
+            "function": "get_unix_clientfd",
+            "message_template": "FAIL CLIENT - connect %s\n",
+            "reason": "This error occurs when the client fails to connect to the specified Unix domain socket. The error string from errno is included in the log message.",
+            "resolution": "Verify that the target socket path exists and has the correct permissions. The socket server may not be running, or the socket path may be incorrect. Additionally, check for filesystem restrictions that might prevent socket access."
+        },
+        {
+            "function": "get_unix_clientfd",
+            "message_template": "FAIL CLIENT - recvmsg\n",
+            "reason": "This error occurs when the client fails to receive a message containing a file descriptor from the server using recvmsg.",
+            "resolution": "This could be due to connectivity issues, protocol mismatch, or server-side errors. Verify that the server is properly sending the message with the file descriptor attached and that there are no network interruptions."
+        },
+        {
+            "function": "get_unix_clientfd",
+            "message_template": "FAIL CLIENT - could not read\n",
+            "reason": "This error occurs when the client fails to read data from the received file descriptor using pread.",
+            "resolution": "The file descriptor may be invalid or closed, or the file itself may be empty or inaccessible. Check that the server is sending a valid file descriptor and that the associated file is readable."
+        },
+        {
+            "function": "get_unix_clientfd",
+            "message_template": "FAILFAILFAILFAIL",
+            "reason": "This message is sent over the socket to the server when the client fails to read from the received file descriptor.",
+            "resolution": "This is an application-level error indication to the server. The server should check that it's sending a valid file descriptor that points to readable content and handle this error response appropriately."
+        }
+    ]
+}

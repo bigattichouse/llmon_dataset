@@ -1,0 +1,6 @@
+{
+    "project": "apparmor",
+    "module": "../working/apparmor/parser/default_features.c",
+    "summary": "This module defines constant character strings that represent different feature ABIs (Application Binary Interfaces) for the AppArmor policy parser. It provides default feature configurations for pre-features ABIs (match_n_abi, match_c_abi, match_cn_abi) and a default feature ABI used when no specific ABI is provided.",
+    "logs": []
+}

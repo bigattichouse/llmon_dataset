@@ -1,0 +1,6 @@
+{
+    "project": "apparmor",
+    "module": "../working/apparmor/tests/regression/apparmor/unix_fd_common.h",
+    "summary": "A header file that declares a function for obtaining a file descriptor for a Unix domain socket client connection. This module is part of the AppArmor regression test suite and likely facilitates testing of Unix domain socket functionality with AppArmor profiles.",
+    "logs": []
+}

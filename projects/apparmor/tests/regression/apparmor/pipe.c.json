@@ -1,0 +1,67 @@
+{
+    "project": "apparmor",
+    "module": "../working/apparmor/tests/regression/apparmor/pipe.c",
+    "summary": "This module tests the pipe functionality in the context of AppArmor's changehat operation. It creates a pipe between parent and child processes to verify data can be properly transmitted between processes when running under different security contexts.",
+    "logs": [
+        {
+            "function": "do_read",
+            "message_template": "FAIL: read failed - no descriptor passed",
+            "reason": "Logs an error when attempting to read from an invalid file descriptor. This likely occurs if the pipe was not properly created or the file descriptor wasn't properly passed.",
+            "resolution": "Check that the pipe is properly created and that valid file descriptors are being passed to the read function."
+        },
+        {
+            "function": "do_read",
+            "message_template": "FAIL: read failed - %s",
+            "reason": "Logs an error when the read operation from the pipe fails, displaying the specific system error. This could happen due to permissions issues, closed pipe, or other system-level errors.",
+            "resolution": "Check AppArmor permissions to ensure the profile allows reading from pipes. Also verify the pipe hasn't been prematurely closed."
+        },
+        {
+            "function": "do_read",
+            "message_template": "FAIL: comparison failed - %s",
+            "reason": "Logs an error when the data read from the pipe doesn't match the expected data. This indicates data corruption or incomplete transmission.",
+            "resolution": "Investigate potential issues with data transmission between processes, which could be related to AppArmor's security restrictions or system resource constraints."
+        },
+        {
+            "function": "do_write",
+            "message_template": "FAIL: write failed - %s",
+            "reason": "Logs an error when writing to the pipe fails, displaying the specific system error. This could be due to permissions issues or a closed pipe.",
+            "resolution": "Check AppArmor permissions to ensure the profile allows writing to pipes. Also verify the pipe hasn't been prematurely closed or filled to capacity."
+        },
+        {
+            "function": "main",
+            "message_template": "usage: %s hatname",
+            "reason": "Displays program usage information when incorrect command-line arguments are provided.",
+            "resolution": "Run the program with the correct arguments: provide a hat name as the first argument."
+        },
+        {
+            "function": "main",
+            "message_template": "FAIL: changehat %s failed - %s",
+            "reason": "Logs an error when the changehat operation fails, which could be due to AppArmor not being enabled, incorrect hat name, or insufficient permissions.",
+            "resolution": "Verify that AppArmor is enabled, the hat name exists in the profile, and the process has permission to change to the specified hat."
+        },
+        {
+            "function": "main",
+            "message_template": "FAIL: pipe() failed - %s",
+            "reason": "Logs an error when the pipe creation fails, which could be due to system resource limitations or AppArmor restrictions.",
+            "resolution": "Check system limits on number of pipes, and ensure AppArmor profile allows pipe creation. This could also indicate the system is low on resources."
+        },
+        {
+            "function": "main",
+            "message_template": "FAIL: fork failed - %s",
+            "reason": "Logs an error when the fork operation fails, which is typically due to system resource limitations.",
+            "resolution": "Check system limits on number of processes, available memory, and ensure AppArmor profile allows process creation."
+        },
+        {
+            "function": "main",
+            "message_template": "FAIL: wait failed - %s",
+            "reason": "Logs an error when the wait operation for the child process fails, which could indicate issues with process management.",
+            "resolution": "This is a rare error that could indicate serious system issues. Check for zombie processes and system stability issues."
+        },
+        {
+            "function": "main",
+            "message_template": "PASS",
+            "reason": "Indicates successful completion of the pipe test with changehat functionality.",
+            "resolution": "Informational log, no resolution required."
+        }
+    ]
+}

@@ -1,0 +1,25 @@
+{
+    "project": "apparmor",
+    "module": "../working/apparmor/changehat/tomcat_apparmor/tomcat_5_5/src/jni_src/JNIChangeHat.c",
+    "summary": "This module provides a JNI (Java Native Interface) bridge for Java applications to interact with AppArmor's change_hat functionality. It allows Java code to change security contexts (hats) and return to previous security contexts, enabling fine-grained access control in Java applications like Tomcat.",
+    "logs": [
+        {
+            "function": "Java_com_novell_apparmor_JNIChangeHat_changehat_1in",
+            "message_template": "Return value EINVAL",
+            "reason": "Indicates that the function was called with a NULL hat name parameter, which is invalid.",
+            "resolution": "Ensure the Java application is passing a valid hat name. Check the Java code for null references or empty strings being passed to the changehat_in method."
+        },
+        {
+            "function": "Java_com_novell_apparmor_JNIChangeHat_changehat_1in",
+            "message_template": "Return value of errno from change_hat",
+            "reason": "The AppArmor change_hat operation failed. This could be due to invalid hat names, permission issues, or AppArmor not being properly configured.",
+            "resolution": "Verify AppArmor is properly configured with the hat being accessed. Check that the application has appropriate permissions and that the hat exists in the AppArmor policy."
+        },
+        {
+            "function": "Java_com_novell_apparmor_JNIChangeHat_changehat_1out",
+            "message_template": "Return value of errno from change_hat",
+            "reason": "The AppArmor change_hat operation to return to the parent context failed. This is typically due to an invalid token being provided.",
+            "resolution": "Ensure the same token is used for exiting a hat as was used for entering it. Verify that the AppArmor policy allows transitions between the current hat and parent context."
+        }
+    ]
+}

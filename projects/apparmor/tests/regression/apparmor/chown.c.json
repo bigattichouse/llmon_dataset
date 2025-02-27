@@ -1,0 +1,31 @@
+{
+    "project": "apparmor",
+    "module": "../working/apparmor/tests/regression/apparmor/chown.c",
+    "summary": "This module is a regression test for the AppArmor security module that tests the ability of a confined process to change file ownership using the chown system call. It attempts to change the owner of a specified file to a given UID and reports success or failure.",
+    "logs": [
+        {
+            "function": "main",
+            "message_template": "usage: %s file username|uid\n",
+            "reason": "Reports incorrect usage when the program is executed with the wrong number of command-line arguments. The expected arguments are a file path and a user ID.",
+            "resolution": "Ensure the program is called with exactly two arguments: the target file path and the numeric user ID or username to change ownership to."
+        },
+        {
+            "function": "main",
+            "message_template": "FAIL: bad uid %s\n",
+            "reason": "Indicates that the provided user ID argument could not be parsed as a valid integer value.",
+            "resolution": "Provide a valid numeric user ID as the second command-line argument."
+        },
+        {
+            "function": "main",
+            "message_template": "FAIL: chown %s %d failed - %s\n",
+            "reason": "Reports that the chown operation failed, along with the specific file, UID, and system error message. This could happen due to insufficient permissions, non-existent file, or other system-level errors.",
+            "resolution": "Check file permissions, ensure the file exists, verify the user has appropriate privileges to change ownership, and address any system-specific errors reported in the message."
+        },
+        {
+            "function": "main",
+            "message_template": "PASS\n",
+            "reason": "Indicates that the chown operation completed successfully, changing the file's ownership to the specified UID.",
+            "resolution": "Informational message, no resolution required."
+        }
+    ]
+}

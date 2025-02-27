@@ -1,0 +1,6 @@
+{
+    "project": "apparmor",
+    "module": "../working/apparmor/tests/regression/apparmor/TODO/exec_u.c",
+    "summary": "This module is a placeholder for a future regression test that will test unconstrained exec functionality in AppArmor. The file is currently incomplete and contains only a comment indicating its intended purpose.",
+    "logs": []
+}

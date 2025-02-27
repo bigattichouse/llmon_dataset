@@ -1,0 +1,43 @@
+{
+    "project": "apparmor",
+    "module": "../working/apparmor/tests/regression/apparmor/fchgrp.c",
+    "summary": "This module is a regression test for the AppArmor security system that specifically tests the fchown system call functionality for changing a file's group ownership. It attempts to open a file and change its group ID, reporting success or failure with detailed error messages.",
+    "logs": [
+        {
+            "function": "main",
+            "message_template": "usage: %s file groupname|gid\n",
+            "reason": "Displays usage instructions when the program is invoked with incorrect number of arguments. This helps users understand how to correctly use the test program.",
+            "resolution": "Provide the correct command-line arguments: a file path and a valid group name or group ID."
+        },
+        {
+            "function": "main",
+            "message_template": "FAIL: bad gid %s\n",
+            "reason": "Reports that the provided group ID argument is not a valid numeric value. The test can't proceed if it cannot determine a valid GID.",
+            "resolution": "Provide a valid numeric group ID as the second argument to the program."
+        },
+        {
+            "function": "main",
+            "message_template": "FAIL: open %s failed - %s\n",
+            "reason": "Indicates that opening the specified file failed, showing both the filename and the specific error message. This could be due to permission issues, non-existent file, or other file system errors.",
+            "resolution": "Check if the file exists, has correct permissions, and the AppArmor policy allows access to it. The error message details will provide specific guidance."
+        },
+        {
+            "function": "main",
+            "message_template": "FAIL: open",
+            "reason": "Secondary error message when file opening fails, using perror to output the error with standard formatting. This provides the same information as the previous message but in a different format.",
+            "resolution": "Same as for the 'open failed' message - check file existence, permissions, and AppArmor policy restrictions."
+        },
+        {
+            "function": "main",
+            "message_template": "FAIL: fchgrp %s %d failed - %s\n",
+            "reason": "Reports that changing the group ownership of the file failed, showing the filename, target GID, and specific error message. This typically happens due to permission issues or AppArmor policy restrictions.",
+            "resolution": "Verify the user has sufficient permissions to change file ownership, check if the target group exists, and confirm that the AppArmor policy allows the operation."
+        },
+        {
+            "function": "main",
+            "message_template": "PASS\n",
+            "reason": "Indicates successful completion of the test, meaning the file was successfully opened and its group ownership changed.",
+            "resolution": "Informational message, no resolution required."
+        }
+    ]
+}

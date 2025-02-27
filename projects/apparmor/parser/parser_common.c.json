@@ -1,0 +1,79 @@
+{
+    "project": "apparmor",
+    "module": "parser_common.c",
+    "summary": "This module provides common utilities for the AppArmor parser, including warning/error reporting mechanisms, compatibility mode handling, and various configuration options that control parser behavior and feature support.",
+    "logs": [
+        {
+            "function": "pwarnf",
+            "message_template": "%s from %s (%s%sline %d): %s",
+            "reason": "Formats and outputs warning or error messages to stderr with context information including the profile name, filename, and line number. Triggered when parser encounters issues that need user attention.",
+            "resolution": "Check the specific warning message content and fix the issue in the AppArmor profile. This could involve correcting syntax or addressing deprecated features. If warnings are converted to errors, it will terminate program execution."
+        },
+        {
+            "function": "pwarnf",
+            "message_template": "Warning converted to Error",
+            "reason": "Indicates that a warning has been escalated to an error due to the Werror flag being set, causing program termination.",
+            "resolution": "Either fix the issue causing the warning or modify the parser configuration to not treat this type of warning as an error by adjusting the Werror flags."
+        },
+        {
+            "function": "pwarnf",
+            "message_template": "Warning",
+            "reason": "Standard prefix for warning messages indicating potential issues that don't prevent parsing.",
+            "resolution": "Review the warning message and decide if the profile needs adjustment. Warnings can usually be ignored but may indicate suboptimal configurations."
+        },
+        {
+            "function": "common_warn_once",
+            "message_template": "Warning converted to Error",
+            "reason": "Indicates that a warning about a rule not being enforced has been escalated to an error, which will cause program termination.",
+            "resolution": "Either fix the issue in the profile or adjust the Werror flags to not treat WARN_RULE_NOT_ENFORCED as an error."
+        },
+        {
+            "function": "common_warn_once",
+            "message_template": "Warning",
+            "reason": "Standard prefix for warning messages displayed once per profile to avoid repetition.",
+            "resolution": "Review the specific warning content and adjust the profile if needed. These warnings usually indicate rules that won't be enforced due to kernel feature limitations."
+        },
+        {
+            "function": "common_warn_once",
+            "message_template": "Warning from profile %s (%s): %s",
+            "reason": "A warning issued once per profile with details about which profile and file has an issue.",
+            "resolution": "Check the specific warning message and address the issue in the indicated profile. Often related to rules that cannot be enforced with the current kernel capabilities."
+        },
+        {
+            "function": "print_prompt_compat_mode",
+            "message_template": "ignore",
+            "reason": "Outputs the current prompt compatibility mode when set to PROMPT_COMPAT_IGNORE.",
+            "resolution": "Informational message, no resolution required. This indicates the parser is configured to ignore prompting."
+        },
+        {
+            "function": "print_prompt_compat_mode",
+            "message_template": "flag",
+            "reason": "Outputs the current prompt compatibility mode when set to PROMPT_COMPAT_FLAG.",
+            "resolution": "Informational message, no resolution required. This indicates the flag-based compatibility mode is being used."
+        },
+        {
+            "function": "print_prompt_compat_mode",
+            "message_template": "permsv2",
+            "reason": "Outputs the current prompt compatibility mode when set to PROMPT_COMPAT_PERMSV2.",
+            "resolution": "Informational message, no resolution required. This indicates version 2 of the permissions table is being used for prompting."
+        },
+        {
+            "function": "print_prompt_compat_mode",
+            "message_template": "permsv1",
+            "reason": "Outputs the current prompt compatibility mode when set to PROMPT_COMPAT_PERMSV1.",
+            "resolution": "Informational message, no resolution required. This indicates version 1 of the permissions table is being used for prompting."
+        },
+        {
+            "function": "print_prompt_compat_mode",
+            "message_template": "dev",
+            "reason": "Outputs the current prompt compatibility mode when set to PROMPT_COMPAT_DEV.",
+            "resolution": "Informational message, no resolution required. This indicates the device-based prompting mode is being used."
+        },
+        {
+            "function": "print_prompt_compat_mode",
+            "message_template": "Unknown prompt compat mode '%d'",
+            "reason": "Indicates an invalid or unsupported prompt compatibility mode has been specified.",
+            "resolution": "Check the prompt_compat_mode setting and ensure it is one of the supported values. This likely indicates a configuration error or an attempt to use a mode not supported by the current kernel."
+        }
+    ]
+}

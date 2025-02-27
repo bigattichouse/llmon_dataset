@@ -1,0 +1,13 @@
+{
+    "project": "apparmor",
+    "module": "../working/apparmor/parser/capability.h",
+    "summary": "This header file defines constants, function declarations, and data structures for handling Linux capabilities in AppArmor. It includes definitions for capability constants, flags, and functions for capability management and debugging.",
+    "logs": [
+        {
+            "function": "__debug_capabilities",
+            "message_template": "Debug information about capability set",
+            "reason": "Provides debug information about a capability set and its associated name, likely for troubleshooting capability-related issues in AppArmor",
+            "resolution": "This is an informational debug message meant for developers. No resolution is required, but it may be useful for understanding capability configuration and troubleshooting permission issues."
+        }
+    ]
+}

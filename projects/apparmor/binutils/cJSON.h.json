@@ -1,0 +1,6 @@
+{
+    "project": "apparmor",
+    "module": "../working/apparmor/binutils/cJSON.h",
+    "summary": "cJSON.h is a header file that defines the interface for a lightweight JSON parser and generator in C. It provides data structures and function declarations for creating, parsing, manipulating, and serializing JSON data, without containing any actual logging mechanisms.",
+    "logs": []
+}

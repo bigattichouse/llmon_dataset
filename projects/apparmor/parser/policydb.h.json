@@ -1,0 +1,6 @@
+{
+    "project": "apparmor",
+    "module": "../working/apparmor/parser/policydb.h",
+    "summary": "This header file defines constants for different classes of mediation types used in the AppArmor policy database. It categorizes various resources and operations that AppArmor policies can mediate, such as file access, network access, capabilities, and signals. The file also includes an external declaration for a table containing string representations of these class types.",
+    "logs": []
+}

@@ -1,0 +1,6 @@
+{
+    "project": "apparmor",
+    "module": "../working/apparmor/parser/libapparmor_re/apparmor_re.h",
+    "summary": "This header file defines constants and bit flags used to control the behavior and debugging output of AppArmor's regular expression DFA (Deterministic Finite Automaton) engine, which is used for pattern matching in security policy enforcement.",
+    "logs": []
+}

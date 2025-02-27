@@ -1,0 +1,6 @@
+{
+    "project": "apparmor",
+    "module": "../working/apparmor/tests/regression/apparmor/net_inet.h",
+    "summary": "This module provides utility functions for parsing and converting between IPv4 and IPv6 addresses. It defines a unified structure to store network address information and includes functions to convert between string representations and internal structures, as well as to standard socket address structures.",
+    "logs": []
+}

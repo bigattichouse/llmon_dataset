@@ -1,0 +1,145 @@
+{
+    "project": "apparmor",
+    "module": "aa_load.c",
+    "summary": "This module provides functionality to load precompiled AppArmor policies from cache locations into the kernel. It supports loading from files, directories, and hierarchical cache structures, with options for verbose output and dry runs.",
+    "logs": [
+        {
+            "function": "have_enough_privilege",
+            "message_template": "%s: Sorry. You need root privileges to run this program.",
+            "reason": "The program is being run by a user without root privileges, which is required to load AppArmor policies.",
+            "resolution": "Run the program with sudo or as the root user."
+        },
+        {
+            "function": "have_enough_privilege",
+            "message_template": "%s: Aborting! You've set this program setuid root. Anybody who can run this program can update your AppArmor profiles.",
+            "reason": "The program has been configured with the setuid bit, which is a security risk as it would allow any user to modify AppArmor policies.",
+            "resolution": "Remove the setuid bit from the executable and use sudo or proper permission management instead."
+        },
+        {
+            "function": "load_policy_file",
+            "message_template": "Failed to open kernel interface '%s': %m",
+            "reason": "Unable to establish communication with the AppArmor kernel interface for loading policy files.",
+            "resolution": "Ensure AppArmor is properly installed and the kernel module is loaded. Check system logs for kernel-related errors."
+        },
+        {
+            "function": "load_policy_file",
+            "message_template": "Failed to load policy into kernel '%s': %m",
+            "reason": "The system was unable to load the specified AppArmor policy into the kernel.",
+            "resolution": "Verify that the policy file exists, is readable, and is in the correct format. Check if the policy is compatible with the current kernel version."
+        },
+        {
+            "function": "validate_features",
+            "message_template": "Failed to obtain features: %m",
+            "reason": "Unable to retrieve the kernel's AppArmor feature set for validation.",
+            "resolution": "Ensure AppArmor is properly installed and the kernel module is loaded. Check kernel logs for AppArmor-related issues."
+        },
+        {
+            "function": "validate_features",
+            "message_template": "Overlay features do not match kernel features",
+            "reason": "The features in the policy cache don't match those supported by the current kernel, which may lead to inconsistent policy enforcement.",
+            "resolution": "Rebuild the AppArmor policy cache for the current kernel version using aa-compile or similar tools."
+        },
+        {
+            "function": "load_policy_dir",
+            "message_template": "Failed to open directory '%s': %m",
+            "reason": "Unable to access the directory containing AppArmor policy cache files.",
+            "resolution": "Check that the directory exists and has appropriate permissions. Ensure the path is correct."
+        },
+        {
+            "function": "load_policy_dir",
+            "message_template": "Failure allocating memory",
+            "reason": "The system was unable to allocate memory needed for constructing file paths.",
+            "resolution": "Check for system memory pressure or resource constraints. Consider freeing up memory by closing other applications."
+        },
+        {
+            "function": "load_policy_by_hash",
+            "message_template": "Failed to open policy cache '%s': %m",
+            "reason": "Unable to access the policy cache repository for loading policies.",
+            "resolution": "Verify that the cache location exists and has appropriate permissions. Ensure AppArmor is properly configured."
+        },
+        {
+            "function": "load_policy_by_hash",
+            "message_template": "Failed to find cache location '%s': %m",
+            "reason": "The system couldn't determine the appropriate cache location for the current kernel.",
+            "resolution": "Check that the AppArmor cache is properly set up and contains entries for the current kernel version."
+        },
+        {
+            "function": "load_policy_by_hash",
+            "message_template": "Loading cache from '%s'",
+            "reason": "Debug message indicating which cache location is being used for loading policies.",
+            "resolution": "This is an informational message, no resolution required."
+        },
+        {
+            "function": "load_policy_by_hash",
+            "message_template": "Failed to load policy cache '%s': %m",
+            "reason": "Unable to load the AppArmor policies from the specified cache location.",
+            "resolution": "Verify that the cache files exist, are readable, and are in the correct format. Rebuild the cache if necessary."
+        },
+        {
+            "function": "load_policy_by_hash",
+            "message_template": "Success - Loaded policy cache '%s'",
+            "reason": "Successfully loaded AppArmor policies from the specified cache location.",
+            "resolution": "This is an informational message, no resolution required."
+        },
+        {
+            "function": "load_arg",
+            "message_template": "Failed to parse overlay locations: %m",
+            "reason": "Unable to parse the specified overlay path string into individual locations.",
+            "resolution": "Check the format of the overlay path string. Ensure it follows the expected format with proper separators."
+        },
+        {
+            "function": "load_arg",
+            "message_template": "Trying to open %s",
+            "reason": "Debug message indicating an attempt to access a specific cache location.",
+            "resolution": "This is an informational message, no resolution required."
+        },
+        {
+            "function": "load_arg",
+            "message_template": "Failed stat of '%s': %m",
+            "reason": "Unable to retrieve file status information for the specified path.",
+            "resolution": "Verify that the path exists and is accessible. Check file permissions and path correctness."
+        },
+        {
+            "function": "load_arg",
+            "message_template": "Failed load policy by hash '%s': %m",
+            "reason": "Unable to load AppArmor policy using the hash-based lookup method.",
+            "resolution": "Check that the hash directory structure exists and is properly organized. Rebuild the cache if necessary."
+        },
+        {
+            "function": "load_arg",
+            "message_template": "Failed load policy by directory '%s': %m",
+            "reason": "Unable to load AppArmor policy from the specified directory.",
+            "resolution": "Verify that the directory contains valid policy cache files and has appropriate permissions."
+        },
+        {
+            "function": "process_args",
+            "message_template": "error in argument processing",
+            "reason": "An error occurred while processing command-line arguments.",
+            "resolution": "Check the command-line arguments for correctness. Refer to the help message for proper usage."
+        },
+        {
+            "function": "process_args",
+            "message_template": "unknown argument: '%s'",
+            "reason": "An unrecognized command-line argument was provided.",
+            "resolution": "Check the argument syntax and refer to the help message for supported options."
+        },
+        {
+            "function": "main",
+            "message_template": "Loaded policy config",
+            "reason": "Successfully loaded AppArmor policy configuration.",
+            "resolution": "This is an informational message, no resolution required."
+        },
+        {
+            "function": "main",
+            "message_template": "Loading policy from default location '%s'",
+            "reason": "No specific policy location was provided, so loading from the default location.",
+            "resolution": "This is an informational message, no resolution required."
+        },
+        {
+            "function": "main",
+            "message_template": "No policy specified, and no policy config or policy in default locations",
+            "reason": "Debug message indicating that no policy was specified and none could be found in default locations.",
+            "resolution": "Specify a policy location explicitly, or ensure that policies exist in the default locations."
+        }
+    ]
+}

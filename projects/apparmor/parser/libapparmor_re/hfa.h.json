@@ -1,0 +1,43 @@
+{
+    "project": "apparmor",
+    "module": "../working/apparmor/parser/libapparmor_re/hfa.h",
+    "summary": "This module defines data structures and algorithms for implementing a Deterministic Finite Automaton (DFA) used by AppArmor for pattern matching in security policies. It includes classes for representing permission bits, state transitions, and operations for constructing, minimizing, and encoding the DFA.",
+    "logs": [
+        {
+            "function": "perms_t::add",
+            "message_template": "throw 1",
+            "reason": "Exception thrown when attempting to merge inconsistent executable permissions between two permission sets. This typically occurs when there are conflicting execute permission types that cannot be reconciled.",
+            "resolution": "Review the AppArmor policy for conflicting execute permission specifications. This may require adjusting the policy to ensure consistent permission types are used."
+        },
+        {
+            "function": "State::State",
+            "message_template": "error from accept_perms",
+            "reason": "Error when computing permissions associated with a state during DFA construction. The error is propagated from the accept_perms function which processes permission nodes.",
+            "resolution": "This may indicate a problem with the permission specification in the AppArmor policy. Check policy syntax and permission combinations for incompatibilities."
+        },
+        {
+            "function": "State::dump",
+            "message_template": "State dump formatting",
+            "reason": "Informational output when dumping state information for debugging or verbose output purposes. This includes state transitions and permission information.",
+            "resolution": "This is informational output and doesn't require resolution. It's used for debugging and understanding the DFA structure."
+        },
+        {
+            "function": "DFA::dump_diff_encode",
+            "message_template": "Differential encoding information",
+            "reason": "Informational output when dumping information about differentially encoded states in the DFA, which is an optimization technique used to reduce memory usage.",
+            "resolution": "This is informational output for debugging purposes and doesn't require resolution."
+        },
+        {
+            "function": "perms_t::dump",
+            "message_template": "(0x %x/%x/%x/%x/%x)",
+            "reason": "Outputs hexadecimal representation of permission bits (allow/deny/prompt/audit/quiet) for debugging purposes.",
+            "resolution": "This is an informational log for debugging and doesn't require resolution."
+        },
+        {
+            "function": "perms_t::dump_header",
+            "message_template": "(allow/deny/prompt/audit/quiet)",
+            "reason": "Outputs the header for permission bits display, indicating the meaning of each field in the permission bits dump.",
+            "resolution": "This is an informational log for debugging and doesn't require resolution."
+        }
+    ]
+}

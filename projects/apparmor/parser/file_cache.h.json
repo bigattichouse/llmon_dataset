@@ -1,0 +1,6 @@
+{
+    "project": "apparmor",
+    "module": "../working/apparmor/parser/file_cache.h",
+    "summary": "This module defines a simple file caching system for AppArmor. It provides a class called IncludeCache_t that keeps track of included files using a set data structure, preventing duplicate inclusions.",
+    "logs": []
+}

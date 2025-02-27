@@ -1,0 +1,19 @@
+{
+    "project": "apparmor",
+    "module": "../working/apparmor/tests/stress/apparmor/open.c",
+    "summary": "This module is a stress test program that repeatedly opens a file (default '/bin/ls') to test file access permissions under AppArmor. It tracks successful and failed open attempts, printing error messages for failures and reporting summary statistics upon completion.",
+    "logs": [
+        {
+            "function": "main",
+            "message_template": "open: %s\n",
+            "reason": "Logs the specific error when a file open operation fails. This helps identify permission issues or other errors that might be occurring during the stress test.",
+            "resolution": "Check AppArmor profiles to ensure appropriate file access permissions are configured. Also verify file existence, permissions, and that the system has enough file descriptors available."
+        },
+        {
+            "function": "main",
+            "message_template": "Iterations: %d\tSuccess: %d\t Fail: %d\n",
+            "reason": "Outputs summary statistics after completing the stress test, showing the total number of iterations along with successful and failed open operations.",
+            "resolution": "Informational log, no resolution required. If a high failure rate is observed, investigate the errors reported in the individual failure messages."
+        }
+    ]
+}

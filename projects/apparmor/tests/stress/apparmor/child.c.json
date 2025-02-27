@@ -1,0 +1,13 @@
+{
+    "project": "apparmor",
+    "module": "../working/apparmor/tests/stress/apparmor/child.c",
+    "summary": "This module is a stress test for AppArmor that continuously creates and terminates child processes. It forks 500 processes in a loop, immediately exits the child processes, and then repeats the process indefinitely while keeping track of zombie processes.",
+    "logs": [
+        {
+            "function": "main",
+            "message_template": "fork: %s\n",
+            "reason": "Logs an error message when the fork system call fails to create a new process. This would typically occur when the system has reached its process limit or is out of memory.",
+            "resolution": "If this error occurs, consider increasing system limits such as maximum number of processes (ulimit -u), checking for memory leaks, or reducing system load. In a test environment, this may be expected behavior when testing system limits."
+        }
+    ]
+}

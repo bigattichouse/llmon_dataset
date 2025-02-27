@@ -1,0 +1,85 @@
+{
+    "project": "apparmor",
+    "module": "policy_cache.c",
+    "summary": "This module handles AppArmor policy file caching, providing functions to validate cache files, manage cache timestamps, and handle the creation, validation, and installation of policy cache files. It ensures cache files match the current version and are up-to-date with the latest policy files.",
+    "logs": [
+        {
+            "function": "valid_cached_file_version",
+            "message_template": "Error: Could not read cache file '%s', skipping...\n",
+            "reason": "Logs an error when the cache file cannot be opened for reading, which might occur due to permission issues or the file not existing.",
+            "resolution": "Check file permissions and ensure the cache file exists. The system will skip using the cache and may regenerate it if configured to do so."
+        },
+        {
+            "function": "valid_cached_file_version",
+            "message_template": "%s: cache file '%s' invalid size\n",
+            "reason": "Warning when a cache file's size is too small to contain the required header and version information, indicating the file may be corrupted or incomplete.",
+            "resolution": "The cache file may need to be regenerated. This typically happens automatically in subsequent runs, but you can manually clear the cache directory if problems persist."
+        },
+        {
+            "function": "valid_cached_file_version",
+            "message_template": "%s: cache file '%s' has wrong header\n",
+            "reason": "Warning that the cache file's header doesn't match the expected value, indicating the file might be corrupted or created by a different version of AppArmor.",
+            "resolution": "The system will automatically regenerate the cache if configured. If issues persist, clear the cache directory manually or check for AppArmor version mismatches."
+        },
+        {
+            "function": "valid_cached_file_version",
+            "message_template": "%s: cache file '%s' has wrong version\n",
+            "reason": "Warning when the cache file was created with different version parameters (complain mode, policy version, or ABI versions), making it incompatible with the current configuration.",
+            "resolution": "This is normal after AppArmor upgrades or when switching between complain/enforce modes. The system will regenerate the cache automatically if configured to do so."
+        },
+        {
+            "function": "update_mru_tstamp",
+            "message_template": "%s: file '%s' is newer than cache file\n",
+            "reason": "Warning that a policy file has been modified since the cache was created, indicating the cache might be outdated.",
+            "resolution": "The system will automatically regenerate the cache file if configured to do so. This is normal behavior after policy file updates."
+        },
+        {
+            "function": "cache_filename",
+            "message_template": "Memory allocation error.",
+            "reason": "Error when the system cannot allocate memory for a new cache filename, likely due to system resource constraints.",
+            "resolution": "Check system memory usage and consider freeing up resources. This issue might require system-level intervention if it occurs regularly."
+        },
+        {
+            "function": "valid_read_cache",
+            "message_template": "%s: Invalid or missing cache file '%s' (%s)\n",
+            "reason": "Warning that a cache file is missing or invalid, with additional error information. This occurs during cache validation checks.",
+            "resolution": "Usually no action is needed as the system will regenerate the cache if configured to do so. If issues persist, check directory permissions and disk space."
+        },
+        {
+            "function": "cache_hit",
+            "message_template": "Cache hit: %s\n",
+            "reason": "Informational message indicating that a valid cache file was found and will be used, which helps optimize performance.",
+            "resolution": "This is an informational message only, no action required. It indicates normal and efficient operation."
+        },
+        {
+            "function": "setup_cache_tmp",
+            "message_template": "asprintf",
+            "reason": "Error when memory allocation fails during the creation of a temporary cache filename, likely due to system resource constraints.",
+            "resolution": "Check system memory usage and consider freeing up resources. Persistent occurrences may require increasing available memory."
+        },
+        {
+            "function": "setup_cache_tmp",
+            "message_template": "mkstemp",
+            "reason": "Error when creating a temporary file for the cache, which may occur due to permission issues or disk space constraints.",
+            "resolution": "Check directory permissions, disk space, and file descriptor limits. Ensure the AppArmor process has write access to the cache directory."
+        },
+        {
+            "function": "install_cache",
+            "message_template": "%s: Failed to set the mtime of cache file '%s': %m\n",
+            "reason": "Error when attempting to set the modification time of a newly created cache file, which might happen due to filesystem issues or permission problems.",
+            "resolution": "Check filesystem permissions and ensure the AppArmor process has the necessary permissions to modify file attributes in the cache directory."
+        },
+        {
+            "function": "install_cache",
+            "message_template": "Failed to write cache: %s\n",
+            "reason": "Warning when the system fails to finalize the cache file by renaming the temporary file, often due to permission issues or filesystem problems.",
+            "resolution": "Check directory permissions and available disk space. Ensure no other process is locking the cache files. The system will typically retry on subsequent runs."
+        },
+        {
+            "function": "install_cache",
+            "message_template": "Wrote cache: %s\n",
+            "reason": "Informational message indicating that a cache file was successfully created and installed, confirming proper operation.",
+            "resolution": "This is an informational message only, no action required. It indicates successful cache generation."
+        }
+    ]
+}

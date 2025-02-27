@@ -1,0 +1,6 @@
+{
+    "project": "apparmor",
+    "module": "../working/apparmor/tests/regression/apparmor/TODO/syscall_others.c",
+    "summary": "This module is a TODO note for AppArmor regression tests listing syscalls that require test coverage. It specifically mentions create_module, init_module, delete_module, vm86, and vm86old syscalls as needing tests to be created and integrated with the syscall.sh test driver.",
+    "logs": []
+}

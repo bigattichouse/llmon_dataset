@@ -1,0 +1,6 @@
+{
+    "project": "apparmor",
+    "module": "../working/apparmor/parser/lib.h",
+    "summary": "A utility header file for the AppArmor parser that defines attribute-based memory management macros and declares helper functions for string parsing, numerical conversion, and directory traversal. This module provides common functionality used throughout the AppArmor parser codebase but does not include any logging functionality itself.",
+    "logs": []
+}

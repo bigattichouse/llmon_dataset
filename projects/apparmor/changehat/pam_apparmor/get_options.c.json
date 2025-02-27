@@ -1,0 +1,37 @@
+{
+    "project": "apparmor",
+    "module": "../working/apparmor/changehat/pam_apparmor/get_options.c",
+    "summary": "This module handles the parsing and validation of configuration options for the PAM AppArmor module. It processes command-line arguments to configure how AppArmor hat (profile) transitions should be applied during user authentication, supporting options like 'debug' and hat type ordering.",
+    "logs": [
+        {
+            "function": "parse_option",
+            "message_template": "Unknown option: `%s'\n",
+            "reason": "Logs an error when an unrecognized option is provided. This likely occurs when the PAM configuration contains invalid or misspelled options for the AppArmor module.",
+            "resolution": "Check the PAM configuration file and ensure that only valid options are specified for the AppArmor module. Valid options include 'debug' and 'order=' followed by a comma-separated list of 'group', 'user', and 'default'."
+        },
+        {
+            "function": "parse_option",
+            "message_template": "Memory allocation error: %s",
+            "reason": "Logs an error when memory allocation fails while processing options. This could occur during heavy system load or memory constraints.",
+            "resolution": "Check system memory resources and consider increasing available memory. If the problem persists, investigate potential memory leaks in the application or system."
+        },
+        {
+            "function": "parse_option",
+            "message_template": "Unknown option: `%s'\n",
+            "reason": "Logs an error when an unrecognized hat type is specified in the 'order=' option. This occurs when something other than 'group', 'user', or 'default' is provided.",
+            "resolution": "Review the PAM configuration file and ensure that only valid hat types ('group', 'user', 'default') are specified in the 'order=' option."
+        },
+        {
+            "function": "parse_option",
+            "message_template": "Duplicate hat type: %s\n",
+            "reason": "Logs an error when the same hat type appears multiple times in the 'order=' option. Each hat type should only be specified once.",
+            "resolution": "Check the PAM configuration and remove duplicate hat types from the 'order=' option. Each of 'group', 'user', and 'default' should appear at most once."
+        },
+        {
+            "function": "parse_option",
+            "message_template": "Unable to add hat type '%s'\n",
+            "reason": "Logs an error when more hat types are specified than the system can handle (exceeding MAX_HAT_TYPES). This is likely a configuration error.",
+            "resolution": "Reduce the number of hat types specified in the 'order=' option. The code is designed to handle a maximum of 3 hat types (as defined by MAX_HAT_TYPES)."
+        }
+    ]
+}

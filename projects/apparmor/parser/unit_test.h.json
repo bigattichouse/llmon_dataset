@@ -1,0 +1,19 @@
+{
+    "project": "apparmor",
+    "module": "../working/apparmor/parser/unit_test.h",
+    "summary": "This header provides utility functions and macros for unit testing the AppArmor parser. It includes error reporting functionality for parser errors and test assertion failures, which are only active when the UNIT_TEST macro is defined.",
+    "logs": [
+        {
+            "function": "yyerror",
+            "message_template": "AppArmor parser error: %s\n",
+            "reason": "This error is logged when the AppArmor parser encounters a syntax or semantic error while parsing AppArmor profiles. Likely occurs when profiles contain invalid syntax or reference non-existent resources.",
+            "resolution": "Check the AppArmor profile syntax for errors. The specific error message will provide details about what went wrong. Common issues include malformed rules, missing brackets, or incorrect path specifications in profiles."
+        },
+        {
+            "function": "MY_TEST",
+            "message_template": "FAIL: %s\n",
+            "reason": "This error is logged when a unit test assertion fails during the AppArmor parser's unit testing. Only occurs in development environments when running tests.",
+            "resolution": "This is a development-time error that indicates a test failure. Developers should fix the code to make the test pass. The specific error message will indicate what test failed and why."
+        }
+    ]
+}

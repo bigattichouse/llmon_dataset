@@ -1,0 +1,151 @@
+{
+    "project": "apparmor",
+    "module": "../working/apparmor/tests/regression/apparmor/userns.c",
+    "summary": "This module tests user namespace functionality in Linux using three different methods: clone, unshare, and setns. It creates user namespaces, verifies their functionality, and reports success or detailed error messages for various failure conditions.",
+    "logs": [
+        {
+            "function": "usage",
+            "message_template": "Usage: %s [options]\n",
+            "reason": "Informs the user about the correct command-line usage when invalid arguments are provided",
+            "resolution": "Use the tool with the correct command-line options as specified in the usage message"
+        },
+        {
+            "function": "usage",
+            "message_template": "Options can be:\n",
+            "reason": "Lists the available command-line options to the user",
+            "resolution": "Review the available options and use the appropriate ones for your test case"
+        },
+        {
+            "function": "usage",
+            "message_template": "    -c   create user namespace using clone\n",
+            "reason": "Describes the -c option for using clone to create a user namespace",
+            "resolution": "Use -c if you want to test user namespace creation via clone()"
+        },
+        {
+            "function": "usage",
+            "message_template": "    -u   create user namespace using unshare\n",
+            "reason": "Describes the -u option for using unshare to create a user namespace",
+            "resolution": "Use -u if you want to test user namespace creation via unshare()"
+        },
+        {
+            "function": "usage",
+            "message_template": "    -s   create user namespace using setns. requires the path of binary that will create the user namespace\n",
+            "reason": "Describes the -s option for using setns to create a user namespace",
+            "resolution": "Use -s with a binary path if you want to test user namespace creation via setns()"
+        },
+        {
+            "function": "usage",
+            "message_template": "    -p   named pipe path. used by setns\n",
+            "reason": "Describes the -p option for specifying a named pipe path when using setns",
+            "resolution": "Use -p with a pipe path when using the setns (-s) option"
+        },
+        {
+            "function": "userns_setns",
+            "message_template": "FAIL - failed to allocate pipes\n",
+            "reason": "The get_pipes() function failed to allocate memory for the named pipes, likely due to memory constraints",
+            "resolution": "Check system memory availability and ensure the pipe helper is functioning correctly"
+        },
+        {
+            "function": "userns_setns",
+            "message_template": "FAIL - setns parent mkfifo",
+            "reason": "The creation of the named pipe with mkfifo() failed, potentially due to file system permissions or an existing file",
+            "resolution": "Check file system permissions, ensure the path is writable, and verify no file exists at the specified path"
+        },
+        {
+            "function": "userns_setns",
+            "message_template": "FAIL - could not fork",
+            "reason": "The fork() call to create a new process failed, possibly due to system resource limitations",
+            "resolution": "Check system resources, particularly process limits and memory, and try again when resources are available"
+        },
+        {
+            "function": "userns_setns",
+            "message_template": "FAIL %d - execlp %s %s- %m\n",
+            "reason": "The execl() call to launch the client program failed, possibly due to the file not existing or lacking execute permissions",
+            "resolution": "Verify the client program exists, has execute permissions, and the path is correct"
+        },
+        {
+            "function": "userns_setns",
+            "message_template": "FAIL - couldn't open parent pipe\n",
+            "reason": "Opening the named pipe for reading failed, possibly due to permissions or the pipe not existing",
+            "resolution": "Check that the named pipe exists and has appropriate read permissions"
+        },
+        {
+            "function": "userns_setns",
+            "message_template": "FAIL - parent could not read from pipe\n",
+            "reason": "Reading from the named pipe failed, possibly due to the child process not writing to it or terminating prematurely",
+            "resolution": "Verify the child process is correctly writing to the pipe and check for premature termination"
+        },
+        {
+            "function": "userns_setns",
+            "message_template": "FAIL - pidfd_open",
+            "reason": "The pidfd_open system call failed, possibly due to the process no longer existing or system limitations",
+            "resolution": "Verify the child process is still running and check if the kernel supports pidfd_open (requires Linux 5.3+)"
+        },
+        {
+            "function": "userns_setns",
+            "message_template": "FAIL - setns",
+            "reason": "The setns system call failed, possibly due to insufficient permissions or unsupported namespace type",
+            "resolution": "Verify the process has appropriate capabilities (CAP_SYS_ADMIN) and the kernel supports user namespaces"
+        },
+        {
+            "function": "userns_setns",
+            "message_template": "FAIL - child could not write in pipe\n",
+            "reason": "Writing to the child pipe failed, possibly due to permissions or the pipe not existing",
+            "resolution": "Check that the child pipe exists and has appropriate write permissions"
+        },
+        {
+            "function": "userns_setns",
+            "message_template": "FAIL - setns waitpid",
+            "reason": "The waitpid function call failed when waiting for the child process to complete",
+            "resolution": "Check if the child process has already been waited for or has been reaped by another process"
+        },
+        {
+            "function": "userns_setns",
+            "message_template": "FAIL - setns child ended with failure %d\n",
+            "reason": "The child process exited with a non-zero status code, indicating an error during its execution",
+            "resolution": "Check the child process logs for specific errors and fix the underlying issue in the child process"
+        },
+        {
+            "function": "userns_setns",
+            "message_template": "FAIL - could not remove parentpipe",
+            "reason": "The unlink function failed to remove the parent pipe file, possibly due to permissions or the file being in use",
+            "resolution": "Check file permissions and ensure no other process is using the named pipe"
+        },
+        {
+            "function": "userns_unshare",
+            "message_template": "FAIL - unshare",
+            "reason": "The unshare system call failed, possibly due to insufficient permissions or kernel not supporting user namespaces",
+            "resolution": "Verify the process has appropriate capabilities (CAP_SYS_ADMIN) and the kernel supports user namespaces"
+        },
+        {
+            "function": "userns_clone",
+            "message_template": "FAIL - clone",
+            "reason": "The clone system call failed, possibly due to insufficient permissions, memory, or kernel not supporting user namespaces",
+            "resolution": "Verify the process has appropriate capabilities, sufficient memory, and the kernel supports user namespaces"
+        },
+        {
+            "function": "userns_clone",
+            "message_template": "FAIL - clone waitpid",
+            "reason": "The waitpid function call failed when waiting for the child process created by clone to complete",
+            "resolution": "Check if the child process has already been waited for or has been reaped by another process"
+        },
+        {
+            "function": "userns_clone",
+            "message_template": "FAIL - child ended with failure %d\n",
+            "reason": "The child process created by clone exited with a non-zero status code, indicating an error during its execution",
+            "resolution": "Check the child process implementation for errors and fix any issues in the child function"
+        },
+        {
+            "function": "main",
+            "message_template": "FAIL - user namespace method not defined\n",
+            "reason": "No valid user namespace creation method was specified in the command-line arguments",
+            "resolution": "Specify one of the supported methods using -c, -u, or -s options"
+        },
+        {
+            "function": "main",
+            "message_template": "PASS\n",
+            "reason": "The user namespace test completed successfully with the specified method",
+            "resolution": "Informational message indicating success, no resolution required"
+        }
+    ]
+}

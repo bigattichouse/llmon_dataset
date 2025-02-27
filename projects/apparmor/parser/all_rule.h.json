@@ -1,0 +1,25 @@
+{
+    "project": "apparmor",
+    "module": "../working/apparmor/parser/all_rule.h",
+    "summary": "This module defines the 'all_rule' class, a type of rule in AppArmor that represents a rule that applies to all resources. It validates prefixes, handles rule comparison and merging, and manages policy generation.",
+    "logs": [
+        {
+            "function": "valid_prefix",
+            "message_template": "priority prefix not allowed on all rules",
+            "reason": "This error occurs when attempting to use a priority prefix with an 'all' rule, which is not supported in AppArmor's policy language.",
+            "resolution": "Remove the priority prefix from the 'all' rule in the AppArmor profile. Review the AppArmor policy syntax documentation for correct rule definition."
+        },
+        {
+            "function": "valid_prefix",
+            "message_template": "owner prefix not allowed on all rules",
+            "reason": "This error occurs when attempting to use an owner prefix with an 'all' rule, which is not supported in AppArmor's policy language.",
+            "resolution": "Remove the owner prefix from the 'all' rule in the AppArmor profile. Check the AppArmor policy syntax documentation for proper rule formation."
+        },
+        {
+            "function": "dump",
+            "message_template": "all",
+            "reason": "This is the string representation of the 'all' rule when the profile is being dumped or displayed.",
+            "resolution": "This is an informational output, no resolution required."
+        }
+    ]
+}

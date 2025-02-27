@@ -1,0 +1,67 @@
+{
+    "project": "apparmor",
+    "module": "../working/apparmor/tests/regression/apparmor/link_subset.c",
+    "summary": "This module tests the behavior of file linking under different permission combinations in AppArmor. It verifies if certain permission sets allow linking between files and compares the results with expected behavior to validate AppArmor's link permission handling.",
+    "logs": [
+        {
+            "function": "main",
+            "message_template": "usage: %s target_file link_file\n",
+            "reason": "Displayed when the program is invoked with incorrect number of arguments",
+            "resolution": "Ensure the program is called with exactly two arguments: target_file and link_file"
+        },
+        {
+            "function": "build_filename",
+            "message_template": "%s%s",
+            "reason": "Used to construct filenames with permission strings",
+            "resolution": "Informational message, no resolution required"
+        },
+        {
+            "function": "main",
+            "message_template": "%s%s:%s",
+            "reason": "Formats and outputs filename with permissions when the program is run with --filenames option",
+            "resolution": "Informational message, no resolution required"
+        },
+        {
+            "function": "main",
+            "message_template": "FAIL(%s) - link %s to %s (%s expected to %s)\n",
+            "reason": "Reports when a link operation result doesn't match the expected behavior based on permission subset rules",
+            "resolution": "This indicates a potential issue with AppArmor's permission handling for links. Check the AppArmor policy and ensure the kernel implementation matches the expected behavior in the test"
+        },
+        {
+            "function": "main",
+            "message_template": "FAIL(%s) - failed change_hat remove_link\n",
+            "reason": "Reports when the program fails to change to the 'remove_link' hat",
+            "resolution": "Verify that the AppArmor policy allows hat transitions to 'remove_link' and that AppArmor is correctly loaded in the kernel"
+        },
+        {
+            "function": "main",
+            "message_template": "FAIL(%s) - failed to remove link file %s\n",
+            "reason": "Reports when the program fails to remove a link file after testing",
+            "resolution": "Check file permissions and ensure the AppArmor policy grants appropriate permissions to delete the test files"
+        },
+        {
+            "function": "main",
+            "message_template": "FAIL(%s) - failed change_hat NULL\n",
+            "reason": "Reports when the program fails to reset to the default hat",
+            "resolution": "Verify that the AppArmor policy allows returning to the default profile and that AppArmor is correctly loaded in the kernel"
+        },
+        {
+            "function": "main",
+            "message_template": "FAIL - %d of %d link subset tests failed\n",
+            "reason": "Summary report indicating that some link permission subset tests failed",
+            "resolution": "Review the specific test failures logged earlier to identify issues with AppArmor's permission subset handling for links"
+        },
+        {
+            "function": "main",
+            "message_template": "PASS\n",
+            "reason": "Summary report indicating that all link permission subset tests passed",
+            "resolution": "Informational message, no resolution required"
+        },
+        {
+            "function": "main",
+            "message_template": "FAIL - %s\n",
+            "reason": "General failure message, typically used when memory allocation fails",
+            "resolution": "Check system resources (particularly memory) and consider addressing resource constraints"
+        }
+    ]
+}

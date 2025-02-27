@@ -1,0 +1,97 @@
+{
+    "project": "apparmor",
+    "module": "libraries/libapparmor/src/kernel_interface.c",
+    "summary": "This module provides an interface for interacting with the Linux kernel's AppArmor security module through the filesystem interface. It handles policy loading, replacement, and removal operations, supporting both atomic and non-atomic policy updates based on kernel capabilities.",
+    "logs": [
+        {
+            "function": "find_iface_dir",
+            "message_template": "Failed to find AppArmor filesystem mountpoint",
+            "reason": "The function was unable to find where the AppArmor interface is mounted in the filesystem. This could happen if AppArmor is not enabled in the kernel or if the securityfs is not mounted.",
+            "resolution": "Ensure AppArmor is enabled in the kernel and that securityfs is mounted. Check if '/sys/kernel/security/apparmor' exists or try mounting securityfs with 'mount -t securityfs securityfs /sys/kernel/security'."
+        },
+        {
+            "function": "find_iface_dir",
+            "message_template": "/sys/kernel/security/apparmor",
+            "reason": "The function is using the default AppArmor filesystem location when the mountpoint couldn't be found automatically.",
+            "resolution": "If this path doesn't exist, ensure AppArmor is properly installed and enabled in your kernel."
+        },
+        {
+            "function": "write_buffer",
+            "message_template": "Failed to write policy buffer to kernel",
+            "reason": "The function encountered an error while writing the policy buffer to the kernel interface. This could be due to permissions, invalid policy format, or kernel rejection.",
+            "resolution": "Check that the process has sufficient permissions to write to the AppArmor interface. Verify the policy is correctly formatted and compatible with the running kernel version."
+        },
+        {
+            "function": "write_buffer",
+            "message_template": "Incomplete write to kernel interface",
+            "reason": "Only a portion of the policy buffer was written to the kernel interface. This is treated as a protocol error (EPROTO).",
+            "resolution": "This could indicate a kernel buffer size limitation or filesystem issue. Check available disk space and kernel logs for more details."
+        },
+        {
+            "function": "write_policy_buffer_to_iface",
+            "message_template": "Failed to open AppArmor interface file",
+            "reason": "The function could not open the specified AppArmor interface file (.load, .remove, or .replace) in the AppArmor filesystem.",
+            "resolution": "Verify that AppArmor is properly installed and the securityfs is mounted. Check permissions on the AppArmor interface directory."
+        },
+        {
+            "function": "write_policy_fd_to_iface",
+            "message_template": "Memory allocation failed when reading policy",
+            "reason": "Failed to allocate memory for the policy buffer when reading from a file descriptor.",
+            "resolution": "Check system memory availability. This might occur when trying to load a very large policy on a memory-constrained system."
+        },
+        {
+            "function": "write_policy_fd_to_iface",
+            "message_template": "Failed to read policy from file descriptor",
+            "reason": "The function encountered an error while reading policy data from the provided file descriptor.",
+            "resolution": "Verify that the file descriptor is valid, readable, and that the file contains valid AppArmor policy data."
+        },
+        {
+            "function": "write_policy_file_to_iface",
+            "message_template": "Failed to open policy file",
+            "reason": "The function could not open the specified policy file for reading.",
+            "resolution": "Check that the policy file exists and is readable by the current user. Verify the path is correct."
+        },
+        {
+            "function": "aa_kernel_interface_new",
+            "message_template": "Failed to allocate kernel_interface structure",
+            "reason": "Memory allocation for the kernel interface structure failed.",
+            "resolution": "Check system memory availability. This is a basic allocation, so failure indicates serious memory pressure."
+        },
+        {
+            "function": "aa_kernel_interface_new",
+            "message_template": "Failed to detect kernel features",
+            "reason": "Could not detect the AppArmor features supported by the running kernel.",
+            "resolution": "Ensure AppArmor is enabled in the kernel and that securityfs is properly mounted. Check kernel logs for AppArmor-related errors."
+        },
+        {
+            "function": "aa_kernel_interface_new",
+            "message_template": "policy/set_load",
+            "reason": "Checking if the kernel supports atomic policy loading using the 'policy/set_load' feature.",
+            "resolution": "This is an informational check. If atomic policy loading is needed but not supported, consider upgrading to a newer kernel."
+        },
+        {
+            "function": "aa_kernel_interface_new",
+            "message_template": "Failed to open AppArmor interface directory",
+            "reason": "Could not open the AppArmor filesystem directory for reading.",
+            "resolution": "Verify that AppArmor is enabled and the securityfs is mounted. Check permissions on the AppArmor directory."
+        },
+        {
+            "function": "aa_kernel_interface_load_policy",
+            "message_template": ".load",
+            "reason": "Interface file for loading a new policy into the kernel.",
+            "resolution": "Errors when writing to this file indicate issues with the policy format or kernel rejection. Check policy syntax and kernel logs."
+        },
+        {
+            "function": "aa_kernel_interface_replace_policy",
+            "message_template": ".replace",
+            "reason": "Interface file for replacing an existing policy in the kernel.",
+            "resolution": "Errors when writing to this file may indicate that the policy doesn't exist, has syntax issues, or the kernel rejected it. Verify the policy exists and is correctly formatted."
+        },
+        {
+            "function": "aa_kernel_interface_remove_policy",
+            "message_template": ".remove",
+            "reason": "Interface file for removing a policy from the kernel.",
+            "resolution": "Errors when writing to this file typically indicate that the policy doesn't exist or cannot be removed due to dependencies. Verify the policy name is correct."
+        }
+    ]
+}

@@ -1,0 +1,31 @@
+{
+    "project": "apparmor",
+    "module": "../working/apparmor/tests/regression/apparmor/syscall_mknod.c",
+    "summary": "This module is a test program for the mknod system call that creates special file nodes of different types (block, character, FIFO, socket, or regular). It validates that the mknod system call works correctly with AppArmor permissions.",
+    "logs": [
+        {
+            "function": "main",
+            "message_template": "usage: %s b|c|f|s|r file\n",
+            "reason": "Indicates incorrect command-line usage when the program is executed with an incorrect number of arguments. The user needs to specify a file type and filename.",
+            "resolution": "Execute the program with the correct arguments: a file type (b for block, c for character, f for FIFO, s for socket, r for regular) and a filename."
+        },
+        {
+            "function": "main",
+            "message_template": "FAIL: type must be b|c|f|s|r\n",
+            "reason": "Reports that an invalid file type was specified as the first argument. Only b, c, f, s, or r are valid file types.",
+            "resolution": "Use a valid file type: b (block), c (character), f (FIFO), s (socket), or r (regular)."
+        },
+        {
+            "function": "main",
+            "message_template": "FAIL: mknod %s failed - %s\n",
+            "reason": "Indicates that the mknod system call failed to create the specified file. This could be due to permission issues, file system constraints, or other system errors.",
+            "resolution": "Check that the user has sufficient permissions to create special files. For block and character devices, the user typically needs root privileges. Also verify that the target filesystem supports the requested file type."
+        },
+        {
+            "function": "main",
+            "message_template": "PASS\n",
+            "reason": "Indicates that the mknod system call successfully created the requested file type.",
+            "resolution": "Informational message; no resolution required. This indicates the test passed successfully."
+        }
+    ]
+}

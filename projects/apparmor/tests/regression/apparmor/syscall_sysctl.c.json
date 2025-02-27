@@ -1,0 +1,37 @@
+{
+    "project": "apparmor",
+    "module": "../working/apparmor/tests/regression/apparmor/syscall_sysctl.c",
+    "summary": "This module tests the ability of an AppArmor profile to control sysctl operations by reading and modifying the kernel's max_threads parameter, verifying changes, and restoring the original value.",
+    "logs": [
+        {
+            "function": "read_max_threads",
+            "message_template": "FAIL: sysctl read failed - %s\n",
+            "reason": "Logs an error when the sysctl system call fails to read the current max_threads value, including the specific error message from strerror(errno). Likely due to permission issues or kernel configuration.",
+            "resolution": "Verify that the process has the necessary permissions to read kernel parameters. Check if AppArmor is blocking the sysctl operation or if the kernel configuration prevents this parameter from being read."
+        },
+        {
+            "function": "write_max_threads",
+            "message_template": "FAIL: sysctl write failed - %s\n",
+            "reason": "Logs an error when the sysctl system call fails to modify the max_threads value, including the specific error message from strerror(errno). Typically happens due to insufficient permissions or kernel restrictions.",
+            "resolution": "Ensure the process has the necessary permissions to modify kernel parameters. Verify that AppArmor profiles allow sysctl write operations, or check if the kernel prevents modification of this parameter for security reasons."
+        },
+        {
+            "function": "main",
+            "message_template": "PASS\n",
+            "reason": "Indicates that the read-only test was successful, confirming that the program can read the max_threads parameter as expected.",
+            "resolution": "Informational log, no resolution required."
+        },
+        {
+            "function": "main",
+            "message_template": "FAIL: read value does not match written values\n",
+            "reason": "Logs an error when the value read back after modification doesn't match the value that was written, indicating that the kernel either silently rejected the change or modified it.",
+            "resolution": "Check if there are kernel limits that constrain the max_threads value. The test attempts both increasing and decreasing the value, so if both fail, it may indicate that the kernel's implementation of this parameter has changed or that AppArmor is actively preventing the modification."
+        },
+        {
+            "function": "main",
+            "message_template": "PASS\n",
+            "reason": "Indicates that the complete test sequence was successful, including reading, modifying, and restoring the max_threads parameter.",
+            "resolution": "Informational log, no resolution required."
+        }
+    ]
+}

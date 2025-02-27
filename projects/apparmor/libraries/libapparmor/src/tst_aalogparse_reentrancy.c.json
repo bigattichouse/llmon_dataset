@@ -1,0 +1,73 @@
+{
+    "project": "apparmor",
+    "module": "../working/apparmor/libraries/libapparmor/src/tst_aalogparse_reentrancy.c",
+    "summary": "This module tests the thread-safety (reentrancy) of AppArmor's log parsing functionality by having multiple threads concurrently parse log messages and verify the results are correct and consistent.",
+    "logs": [
+        {
+            "function": "main",
+            "message_template": "Test requires more than 2 threads",
+            "reason": "This error occurs when the test is compiled with NUM_THREADS defined as 2 or less, which is insufficient for proper testing of thread safety.",
+            "resolution": "Recompile the test program with NUM_THREADS > 2."
+        },
+        {
+            "function": "main",
+            "message_template": "Could not init pthread barrier",
+            "reason": "This error occurs when initializing a pthread barrier fails, which is used to synchronize the start of log parsing among all threads.",
+            "resolution": "Check system resources, thread limits, and ensure pthread library is properly installed and functioning."
+        },
+        {
+            "function": "main",
+            "message_template": "Could not wait on pthread barrier",
+            "reason": "This error occurs when waiting on a pthread barrier fails, which would prevent threads from being properly synchronized.",
+            "resolution": "Check for thread errors, ensure all threads are active, and that the pthread library is functioning correctly."
+        },
+        {
+            "function": "main",
+            "message_template": "Could not join thread",
+            "reason": "This error occurs when joining a thread fails, which would prevent getting the parsed log results from a thread.",
+            "resolution": "Check for thread errors, ensure the thread is still active and hasn't terminated abnormally."
+        },
+        {
+            "function": "main",
+            "message_template": "Log failed to parse",
+            "reason": "This error occurs when parsing an AppArmor log message fails, returning a NULL record instead of a valid aa_log_record structure.",
+            "resolution": "Verify the log message format is valid and that the parser is handling the format correctly."
+        },
+        {
+            "function": "main",
+            "message_template": "Log should have parsed as v2 form",
+            "reason": "This error occurs when an AppArmor log message isn't parsed as version 2 syntax, which is expected for the test log messages.",
+            "resolution": "Ensure the log parser is correctly identifying and parsing version 2 syntax messages."
+        },
+        {
+            "function": "main",
+            "message_template": "Log should have parsed as denied",
+            "reason": "This error occurs when an AppArmor log message isn't identified as a 'DENIED' event, which is expected for the test log messages.",
+            "resolution": "Ensure the log parser is correctly identifying and classifying denied access events."
+        },
+        {
+            "function": "main",
+            "message_template": "Log 0 != Log even",
+            "reason": "This error occurs when a log record parsed by an even-numbered thread doesn't match the record parsed by thread 0, indicating inconsistent parsing results.",
+            "resolution": "Check for race conditions or thread safety issues in the log parsing code."
+        },
+        {
+            "function": "main",
+            "message_template": "Log 1 != Log odd",
+            "reason": "This error occurs when a log record parsed by an odd-numbered thread doesn't match the record parsed by thread 1, indicating inconsistent parsing results.",
+            "resolution": "Check for race conditions or thread safety issues in the log parsing code."
+        },
+        {
+            "function": "main",
+            "message_template": "Log 0 and log 1 shouldn't be equal",
+            "reason": "This error occurs when the log records parsed from two different log messages are incorrectly identified as equal, indicating a problem with the comparison function.",
+            "resolution": "Verify the aa_log_record_eq function is correctly comparing all relevant fields of the log records."
+        },
+        {
+            "function": "main",
+            "message_template": "Could not destroy pthread barrier",
+            "reason": "This error occurs when destroying a pthread barrier fails during cleanup, which could indicate resource leaks.",
+            "resolution": "Ensure all threads have finished using the barrier before attempting to destroy it."
+        }
+    ]
+}

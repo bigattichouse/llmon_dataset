@@ -1,0 +1,199 @@
+{
+    "project": "apparmor",
+    "module": "../working/apparmor/tests/regression/apparmor/posix_mq_rcv.c",
+    "summary": "This is a regression test module for AppArmor that tests POSIX message queue receiving functionality with different notification methods (mq_notify, select, poll, and epoll). The program creates a message queue, waits for messages using the specified notification method, and verifies that received messages match expectations.",
+    "logs": [
+        {
+            "function": "receive_message",
+            "message_template": "FAIL - could not mq_getattr",
+            "reason": "Logs an error when the program fails to get message queue attributes. This could occur if the message queue handle is invalid or if there are insufficient permissions.",
+            "resolution": "Check that the message queue exists and that the program has appropriate permissions to access it."
+        },
+        {
+            "function": "receive_message",
+            "message_template": "FAIL - could not malloc",
+            "reason": "Logs an error when memory allocation fails. This typically occurs when the system is out of memory or if the requested allocation is too large.",
+            "resolution": "Check system memory resources and consider reducing memory requirements of the application."
+        },
+        {
+            "function": "receive_message",
+            "message_template": "FAIL - could not mq_setattr",
+            "reason": "Logs an error when the program fails to set message queue attributes. This could occur due to insufficient permissions or an invalid queue descriptor.",
+            "resolution": "Verify that the message queue exists and that the program has write permissions for the queue attributes."
+        },
+        {
+            "function": "receive_message",
+            "message_template": "FAIL - could not receive msg",
+            "reason": "Logs an error when the program fails to receive a message from the queue. This could be due to a timeout, permissions issue, or if the queue is empty when using non-blocking mode.",
+            "resolution": "Ensure the sending program is properly sending messages to the queue and that timeouts are appropriately configured."
+        },
+        {
+            "function": "receive_message",
+            "message_template": "FAIL - msg received does not match: %s - %s\n",
+            "reason": "Logs an error when the received message doesn't match the expected message. This indicates a data corruption or incorrect message being sent.",
+            "resolution": "Debug the sending program to ensure it's sending the correct message format and content."
+        },
+        {
+            "function": "receive_message",
+            "message_template": "PASS\n",
+            "reason": "Logs a success message when a message is successfully received and matches the expected content.",
+            "resolution": "Informational log, no resolution required."
+        },
+        {
+            "function": "receive_message",
+            "message_template": "FAIL - could not close mq",
+            "reason": "Logs an error when failing to close the message queue. This could happen if the queue descriptor is invalid or already closed.",
+            "resolution": "Check for double-closing of the queue or other improper resource handling in the code."
+        },
+        {
+            "function": "receive_message",
+            "message_template": "FAIL - could not unlink mq",
+            "reason": "Logs an error when failing to unlink (remove) the message queue. This might occur due to insufficient permissions or if the queue name is invalid.",
+            "resolution": "Verify permissions and ensure the queue name is correct. This might also indicate a resource leak if the queue can't be properly cleaned up."
+        },
+        {
+            "function": "receive_message",
+            "message_template": "FAIL - could not remove pipe",
+            "reason": "Logs an error when failing to remove the named pipe used for notification. This can happen due to permission issues or if the pipe doesn't exist.",
+            "resolution": "Check file system permissions and ensure the path to the pipe is correct."
+        },
+        {
+            "function": "receive_mq_notify",
+            "message_template": "FAIL - could not mq_notify",
+            "reason": "Logs an error when the program fails to register for message queue notifications. This could be due to multiple processes attempting to register notifications for the same queue.",
+            "resolution": "Ensure only one process is attempting to register for notifications on the queue, or handle the error appropriately in the application logic."
+        },
+        {
+            "function": "receive_mq_notify",
+            "message_template": "FAIL - could not write to pipe\n",
+            "reason": "Logs an error when failing to write to the notification pipe. This could be due to the pipe being full or closed on the reading end.",
+            "resolution": "Ensure the pipe is properly set up and that the reading process is actively consuming data from the pipe."
+        },
+        {
+            "function": "receive_mq_notify",
+            "message_template": "FAIL - could not mq_notify: Connection timed out\n",
+            "reason": "Logs an error when the notification mechanism times out waiting for a message. This indicates no message was received within the specified timeout period.",
+            "resolution": "Check if the sending process is working correctly. Adjust the timeout value if necessary to accommodate slower message delivery."
+        },
+        {
+            "function": "receive_select",
+            "message_template": "FAIL - could not select",
+            "reason": "Logs an error when the select() system call fails while waiting for message queue activity. This could be due to invalid file descriptors or signal interruption.",
+            "resolution": "Ensure file descriptors are valid and consider handling EINTR (interrupted system call) errors by retrying the select call."
+        },
+        {
+            "function": "receive_poll",
+            "message_template": "FAIL - could not poll",
+            "reason": "Logs an error when the poll() system call fails while waiting for message queue activity. This could be due to invalid file descriptors or signal interruption.",
+            "resolution": "Verify that file descriptors are valid and consider implementing retry logic for interrupted system calls."
+        },
+        {
+            "function": "receive_epoll",
+            "message_template": "FAIL - could not create epoll",
+            "reason": "Logs an error when the program fails to create an epoll instance. This could be due to resource limitations or insufficient permissions.",
+            "resolution": "Check system limits for number of epoll instances and ensure the program has appropriate permissions."
+        },
+        {
+            "function": "receive_epoll",
+            "message_template": "FAIL - could not add mqd to epoll",
+            "reason": "Logs an error when failing to add the message queue descriptor to the epoll instance. This could be due to invalid descriptors or resource limitations.",
+            "resolution": "Verify that both the epoll instance and message queue descriptor are valid. Check system limits for number of monitored file descriptors."
+        },
+        {
+            "function": "receive_epoll",
+            "message_template": "FAIL - could not epoll_wait",
+            "reason": "Logs an error when the epoll_wait() system call fails while waiting for message queue activity. This could be due to invalid epoll instance or signal interruption.",
+            "resolution": "Ensure the epoll instance is valid and consider implementing retry logic for interrupted system calls."
+        },
+        {
+            "function": "usage",
+            "message_template": "Usage: %s [options]\n",
+            "reason": "Displays program usage information when incorrect command-line arguments are provided or when explicitly requested.",
+            "resolution": "Informational message, provide correct command-line arguments according to the usage instructions."
+        },
+        {
+            "function": "main",
+            "message_template": "invalid option for -n",
+            "reason": "Logs an error when an invalid notification method is specified with the -n option. Valid options are mq_notify, select, poll, and epoll.",
+            "resolution": "Use one of the supported notification methods: mq_notify, select, poll, or epoll."
+        },
+        {
+            "function": "main",
+            "message_template": "-k option must specify the queue name\n",
+            "reason": "Logs an error when the -k option is provided but no queue name is specified.",
+            "resolution": "Provide a valid queue name with the -k option."
+        },
+        {
+            "function": "main",
+            "message_template": "-c option must specify the client binary\n",
+            "reason": "Logs an error when the -c option is provided but no client binary path is specified.",
+            "resolution": "Provide a valid path to the client binary with the -c option."
+        },
+        {
+            "function": "main",
+            "message_template": "FAIL - could not set output file mode",
+            "reason": "Logs an error when failing to change the permissions of stdout or stderr. This could occur due to insufficient permissions.",
+            "resolution": "Ensure the program has appropriate permissions to modify its output file descriptors. This is typically only needed when changing user ID."
+        },
+        {
+            "function": "main",
+            "message_template": "FAIL - could not setuid",
+            "reason": "Logs an error when failing to change the user ID as specified by the -u option. This typically occurs when the program doesn't have the necessary permissions.",
+            "resolution": "Ensure the program is running with appropriate privileges (usually as root) to be able to change its user ID."
+        },
+        {
+            "function": "main",
+            "message_template": "Unrecognized option\n",
+            "reason": "Logs an error when an unrecognized command-line option is provided to the program.",
+            "resolution": "Use only the supported command-line options as described in the usage message."
+        },
+        {
+            "function": "main",
+            "message_template": "FAIL - could not open mq",
+            "reason": "Logs an error when failing to open the message queue. This could be due to insufficient permissions, invalid queue name, or resource limitations.",
+            "resolution": "Verify the queue name is correct and that the program has appropriate permissions. Check system limits for message queues."
+        },
+        {
+            "function": "main",
+            "message_template": "FAIL - could not mkfifo",
+            "reason": "Logs an error when failing to create a named pipe (FIFO) for notification. This could be due to insufficient permissions or the pipe already existing.",
+            "resolution": "Check file system permissions and ensure the path for the pipe is valid. Remove any existing pipe with the same name if appropriate."
+        },
+        {
+            "function": "main",
+            "message_template": "FAIL - couldn't open pipe\n",
+            "reason": "Logs an error when failing to open the notification pipe. This could be due to the pipe not existing or insufficient permissions.",
+            "resolution": "Ensure the pipe was successfully created and that the program has appropriate permissions to open it."
+        },
+        {
+            "function": "main",
+            "message_template": "FAIL - could not fork",
+            "reason": "Logs an error when failing to fork a child process to execute the client. This could be due to resource limitations or system instability.",
+            "resolution": "Check system resources such as available memory and process limits. Consider reducing the resource requirements of the application."
+        },
+        {
+            "function": "main",
+            "message_template": "client not specified",
+            "reason": "Logs an error when the client binary path is not specified but is required for the test to proceed.",
+            "resolution": "Specify the path to the client binary using the -c option."
+        },
+        {
+            "function": "main",
+            "message_template": "FAIL %d - execlp %s %s %s- %m\n",
+            "reason": "Logs an error when failing to execute the client binary with pipe file descriptor for mq_notify method. This could be due to the binary not existing or lacking execute permissions.",
+            "resolution": "Ensure the client binary exists at the specified path and has execute permissions. Check that all required arguments are valid."
+        },
+        {
+            "function": "main",
+            "message_template": "FAIL %d - execlp %s %s- %m\n",
+            "reason": "Logs an error when failing to execute the client binary for non-mq_notify methods. This could be due to the binary not existing or lacking execute permissions.",
+            "resolution": "Verify that the client binary exists at the specified path and has execute permissions. Ensure all required arguments are valid."
+        },
+        {
+            "function": "main",
+            "message_template": "FAIL - could unlink mq",
+            "reason": "Logs an error when failing to unlink (remove) the message queue during cleanup. This might occur due to insufficient permissions or if the queue name is invalid.",
+            "resolution": "Check permissions and ensure the queue name is correct. This might also indicate a resource leak if the queue can't be properly cleaned up."
+        }
+    ]
+}

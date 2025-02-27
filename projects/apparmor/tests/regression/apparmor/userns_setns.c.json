@@ -1,0 +1,49 @@
+{
+    "project": "apparmor",
+    "module": "../working/apparmor/tests/regression/apparmor/userns_setns.c",
+    "summary": "This module is a test program for AppArmor that tests user namespace functionality by creating a new user namespace with unshare() and communicating between processes using named pipes. It validates that a process can create and use user namespaces properly.",
+    "logs": [
+        {
+            "function": "main",
+            "message_template": "FAIL - failed to allocate pipes\n",
+            "reason": "Logs an error when the get_pipes() function fails to allocate memory for pipe names. Likely occurs due to memory allocation issues on the system.",
+            "resolution": "Check system memory resources and ensure sufficient memory is available for the test program."
+        },
+        {
+            "function": "main",
+            "message_template": "FAIL - setns child mkfifo",
+            "reason": "Logs an error when the mkfifo() function fails to create the named pipe for child process. Can occur due to permission issues or if the file already exists.",
+            "resolution": "Check permissions in the /tmp directory and ensure no stale pipes exist from previous test runs. May need to clean up /tmp or run with higher privileges."
+        },
+        {
+            "function": "main",
+            "message_template": "FAIL - couldn't open child pipe\n",
+            "reason": "Logs an error when opening the child pipe for reading fails. Likely occurs due to permission issues or if the pipe was not created correctly.",
+            "resolution": "Verify file permissions and ensure the pipe was created successfully. Check if another process is already using the pipe."
+        },
+        {
+            "function": "main",
+            "message_template": "FAIL - unshare",
+            "reason": "Logs an error when the unshare() system call fails to create a new user namespace. Common causes include insufficient privileges or kernel configuration issues.",
+            "resolution": "Ensure the test is run with sufficient privileges (usually root) and that the kernel supports user namespaces. Check kernel configuration and run 'sysctl kernel.unprivileged_userns_clone'."
+        },
+        {
+            "function": "main",
+            "message_template": "FAIL - child could not write in pipe\n",
+            "reason": "Logs an error when the child process fails to write to the parent pipe. Could occur if the parent pipe isn't properly set up or if there are permission issues.",
+            "resolution": "Check that the parent pipe exists and is properly set up. Verify permissions and ensure the pipe hasn't been closed prematurely."
+        },
+        {
+            "function": "main",
+            "message_template": "FAIL - child could not read from pipe\n",
+            "reason": "Logs an error when the child process fails to read from the child pipe. Likely occurs if the parent fails to write to the pipe or if there are communication issues.",
+            "resolution": "Ensure the parent process is properly writing to the pipe. Check for any unexpected termination of the parent process."
+        },
+        {
+            "function": "main",
+            "message_template": "FAIL - could not remove childpipe",
+            "reason": "Logs an error when the unlink() function fails to remove the child pipe during cleanup. This is a cleanup error that may not prevent the test from succeeding overall.",
+            "resolution": "Check file permissions and ensure no other process is currently using the pipe. This is less critical as it's a cleanup step, but may indicate permission problems."
+        }
+    ]
+}

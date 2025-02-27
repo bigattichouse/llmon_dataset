@@ -1,0 +1,6 @@
+{
+    "project": "apparmor",
+    "module": "../working/apparmor/parser/libapparmor_re/chfa.h",
+    "summary": "This header file defines the Compressed Hierarchical Finite Automaton (CHFA) class used by AppArmor's parser for regular expression processing. It provides functionality to create a compressed automaton from an HFA, manipulate states, and output the automaton in different formats.",
+    "logs": []
+}

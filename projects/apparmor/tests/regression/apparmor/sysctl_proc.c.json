@@ -1,0 +1,73 @@
+{
+    "project": "apparmor",
+    "module": "../working/apparmor/tests/regression/apparmor/sysctl_proc.c",
+    "summary": "A test utility that checks access permissions to sysctl entries in the /proc filesystem by performing read, write, or read-write operations based on command-line arguments, verifying whether the operations succeed as expected with the current AppArmor profile.",
+    "logs": [
+        {
+            "function": "main",
+            "message_template": "Usage: %s sysctl_path {r,w,rw} [value]\n",
+            "reason": "Displayed when the program is called with incorrect command-line arguments, showing the user the proper usage format.",
+            "resolution": "Use the correct command format as specified in the message: provide the sysctl path, operation mode (r, w, or rw), and a value when writing."
+        },
+        {
+            "function": "main",
+            "message_template": "FAIL: proc sysctl open r failed - %s\n",
+            "reason": "Indicates that opening the specified sysctl path in read-only mode failed, which could be due to insufficient permissions or a non-existent path.",
+            "resolution": "Verify the sysctl path exists and that the AppArmor profile allows read access to this path. Check the specific error message for more details."
+        },
+        {
+            "function": "main",
+            "message_template": "FAIL: proc sysctl read failed - %s\n",
+            "reason": "Indicates that reading from the opened sysctl file failed, which could occur if the file was modified or permissions changed after opening.",
+            "resolution": "Check system resource availability and AppArmor profile permissions. The specific error message will provide more context on why reading failed."
+        },
+        {
+            "function": "main",
+            "message_template": "FAIL: proc sysctl open w failed - %s\n",
+            "reason": "Indicates that opening the specified sysctl path in write-only mode failed, typically due to insufficient permissions or a read-only sysctl entry.",
+            "resolution": "Verify the AppArmor profile allows write access to this sysctl path and that the sysctl is writeable in general. Check the specific error message for more details."
+        },
+        {
+            "function": "main",
+            "message_template": "FAIL: proc sysctl write failed - %s\n",
+            "reason": "Indicates that writing to the opened sysctl file failed, which could be due to invalid data format or resource constraints.",
+            "resolution": "Ensure the value being written is appropriate for the sysctl entry. Some sysctl entries have specific format requirements. Check the error message for specific details."
+        },
+        {
+            "function": "main",
+            "message_template": "FAIL: proc sysctl open rw failed - %s\n",
+            "reason": "Indicates that opening the specified sysctl path in read-write mode failed, which requires both read and write permissions.",
+            "resolution": "Verify the AppArmor profile allows both read and write access to this path. Some sysctl entries may not support both operations. Check the error message for details."
+        },
+        {
+            "function": "main",
+            "message_template": "FAIL: proc sysctl read(rw) failed - %s\n",
+            "reason": "Indicates that reading from the sysctl file opened in read-write mode failed, which could be due to permissions or resource issues.",
+            "resolution": "Check that the AppArmor profile allows read access to this sysctl path even when opened with read-write permissions. The error message will provide more specific information."
+        },
+        {
+            "function": "main",
+            "message_template": "FAIL: proc sysctl write(rw) failed - %s\n",
+            "reason": "Indicates that writing back the same data to the sysctl file failed or wrote an unexpected number of bytes in read-write mode.",
+            "resolution": "Verify the AppArmor profile allows write access and that the sysctl entry accepts the data being written. Some sysctl entries may have specific requirements for write operations."
+        },
+        {
+            "function": "main",
+            "message_template": "FAIL: proc sysctl verify(rw) failed || %zd != %zd - %s\n",
+            "reason": "Indicates that the verification step in read-write mode failed because the size of data read after writing doesn't match the original size.",
+            "resolution": "This could indicate that the sysctl entry modifies data during write operations. Check if this is expected behavior for the specific sysctl entry being tested."
+        },
+        {
+            "function": "main",
+            "message_template": "FAIL: proc sysctl verify failed - %s\n",
+            "reason": "Indicates that the content of the data read after writing doesn't match what was written, even though the sizes match.",
+            "resolution": "This could indicate that the sysctl entry modifies or normalizes data during write operations. Check if this is expected behavior for the specific sysctl entry."
+        },
+        {
+            "function": "main",
+            "message_template": "PASS\n",
+            "reason": "Indicates that all requested operations on the sysctl entry were successful, verifying that the AppArmor profile allows the specified access.",
+            "resolution": "No resolution needed; this is an informational success message indicating the test passed."
+        }
+    ]
+}

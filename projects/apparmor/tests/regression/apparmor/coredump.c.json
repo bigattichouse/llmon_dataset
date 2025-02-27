@@ -1,0 +1,13 @@
+{
+    "project": "apparmor",
+    "module": "../working/apparmor/tests/regression/apparmor/coredump.c",
+    "summary": "A test case for AppArmor's coredump functionality that deliberately creates a segmentation fault by attempting to write to a NULL pointer. This is used to verify that AppArmor correctly handles program crashes and core dump generation.",
+    "logs": [
+        {
+            "function": "main",
+            "message_template": "This will cause a sigsegv\n",
+            "reason": "Informs the user that the program is about to cause a segmentation fault by dereferencing a NULL pointer. This is an expected behavior for testing purposes.",
+            "resolution": "No resolution needed as this is intentional behavior for testing purposes. If seen in production, it indicates the coredump test is running as designed."
+        }
+    ]
+}
