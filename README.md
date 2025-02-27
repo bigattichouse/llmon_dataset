@@ -8,12 +8,28 @@ Additionally, this dataset may be used to fine-tune an LLM to be better suited t
 # Data Updates
 By separating the dataset from the main codebase, it will be possible to use `git` as a simple distribution mechanism for source updates.
 
-
 # Design Philosophy
 Reading and analyzing errors in system logs is not trivial and requires a lot of general knowledge about how software works.
 Since most linux software is based on open source, why not use those project public git repos and anaylze the code base for instances of thrown errors and logged information. By having an LLM analyze all the individual models in the codebase, we can create a large knowledgebase of potential log messages and the original intent of those messages. Then, at run time, we can use RAG to locate relevant information and use that intermixed with the actual log messages to allow a small reasoning LLM to give us a summary of events and potential changes to be made.
 
 In all things, I hoped to keep this tool as dead simple as possible - using bash and C (or C++) to run with as few external requirements as possible. This should follow the unix philosophy of a single small tool to do each job well. It's definitely helped me create the pipeline using AI - since the LLMs can focus on one discrete task at a time.
+
+Example Summary and log information extracted for later use in RAG:
+```json
+{
+  "project": "sendmail",
+  "module": "../working/sendmail/sendmail/trace.c",
+  "summary": "This module implements trace flag handling for sendmail's debugging system. It parses both old-style (numeric) and new-style (pattern-based) trace flags and registers them with the debugging system, controlling what debug information gets logged elsewhere in the application.",
+  "logs": [
+    {
+      "function": "tTnewflag",
+      "message_template": "sm_debug_addsetting_x registration",
+      "reason": "Registers a debug setting with the specified pattern and level. This controls what will be logged elsewhere in the application when debug tracing is enabled.",
+      "resolution": "This is not a direct log message but a configuration action. If trace-related issues occur, check the trace flag syntax in configuration files or command line arguments. Valid formats include numeric flags, ranges, and pattern-based flags with optional level specifications."
+    }
+  ]
+}
+```
 
 # Build Process
 You should not need to build projects (apache/httpd), they should all be available in the `projects/` directory. The build process is only included in case you wish to add your own project to the dataset and initiate a pull request to have your project accessible to everyone. It's also nice if people want to help improve the build logic and pipeline when such tools are created.
